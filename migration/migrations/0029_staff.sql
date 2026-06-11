@@ -1,0 +1,39 @@
+-- Migration for staff table derived from staff.json
+SET session_replication_role = 'replica';
+
+CREATE TABLE IF NOT EXISTS public.staff (
+    "id" TEXT PRIMARY KEY,
+    "img" TEXT,
+    "email" TEXT,
+    "date" TIMESTAMP,
+    "mobile" TEXT,
+    "name" TEXT,
+    "address" TEXT,
+    "department" TEXT,
+    "status" TEXT,
+    "joining_date" TIMESTAMP,
+    "salary" TEXT,
+    "experience" TEXT,
+    "role" TEXT,
+    "date_of_birth" TIMESTAMP,
+    "gender" TEXT
+);
+
+INSERT INTO public.staff ("id", "img", "email", "date", "mobile", "name", "address", "department", "status", "joining_date", "salary", "experience", "role", "date_of_birth", "gender") VALUES ('001', 'assets/images/user/user1.jpg', 'test@email.com', '2018-02-25T14:22:18Z', '1234567890', 'Bertie Jones', '11, Shyam appt. Rajkot', 'Maintenance', 'Active', '2018-02-25', '25000', '5 years', 'General maintenance', '1990-06-15', 'Male') ON CONFLICT DO NOTHING;
+INSERT INTO public.staff ("id", "img", "email", "date", "mobile", "name", "address", "department", "status", "joining_date", "salary", "experience", "role", "date_of_birth", "gender") VALUES ('002', 'assets/images/user/user2.jpg', 'test@email.com', '2018-02-12T14:22:18Z', '1234567890', 'Sarah Smith', '22, tilak appt. surat', 'Administration', 'Active', '2018-02-12', '30000', '3 years', 'Clerk', '1995-04-10', 'Female') ON CONFLICT DO NOTHING;
+INSERT INTO public.staff ("id", "img", "email", "date", "mobile", "name", "address", "department", "status", "joining_date", "salary", "experience", "role", "date_of_birth", "gender") VALUES ('003', 'assets/images/user/user3.jpg', 'test@email.com', '2018-02-25T14:22:18Z', '1234567890', 'Bethaney Spence', '201, Shyamal, Puna', 'Library', 'Active', '2018-02-25', '35000', '4 years', 'Librarian', '1992-08-20', 'Female') ON CONFLICT DO NOTHING;
+INSERT INTO public.staff ("id", "img", "email", "date", "mobile", "name", "address", "department", "status", "joining_date", "salary", "experience", "role", "date_of_birth", "gender") VALUES ('004', 'assets/images/user/user4.jpg', 'test@email.com', '2018-02-25T14:22:18Z', '1234567890', 'Jay Soni', '11, Shyam appt. Rajkot', 'Administration', 'Active', '2018-02-25', '30000', '2 years', 'Clerk', '1993-11-12', 'Male') ON CONFLICT DO NOTHING;
+INSERT INTO public.staff ("id", "img", "email", "date", "mobile", "name", "address", "department", "status", "joining_date", "salary", "experience", "role", "date_of_birth", "gender") VALUES ('005', 'assets/images/user/user5.jpg', 'test@email.com', '2018-02-25T14:22:18Z', '1234567890', 'Pam Abbott', '11, Shyam appt. Rajkot', 'Procurement', 'Active', '2018-02-25', '40000', '6 years', 'Purchase Officer', '1988-05-30', 'Female') ON CONFLICT DO NOTHING;
+INSERT INTO public.staff ("id", "img", "email", "date", "mobile", "name", "address", "department", "status", "joining_date", "salary", "experience", "role", "date_of_birth", "gender") VALUES ('006', 'assets/images/user/user6.jpg', 'test@email.com', '2018-02-25T14:22:18Z', '1234567890', 'Wesley Casey', '11, Shyam appt. Rajkot', 'Administration', 'Active', '2018-02-25', '30000', '2 years', 'Receptionist', '1994-03-15', 'Male') ON CONFLICT DO NOTHING;
+INSERT INTO public.staff ("id", "img", "email", "date", "mobile", "name", "address", "department", "status", "joining_date", "salary", "experience", "role", "date_of_birth", "gender") VALUES ('007', 'assets/images/user/user7.jpg', 'test@email.com', '2018-02-25T14:22:18Z', '1234567890', 'Ivan Bell', '11, Shyam appt. Rajkot', 'Administration', 'Active', '2018-02-25', '30000', '1 year', 'Clerk', '1996-09-25', 'Male') ON CONFLICT DO NOTHING;
+INSERT INTO public.staff ("id", "img", "email", "date", "mobile", "name", "address", "department", "status", "joining_date", "salary", "experience", "role", "date_of_birth", "gender") VALUES ('008', 'assets/images/user/user8.jpg', 'test@email.com', '2018-02-25T14:22:18Z', '1234567890', 'Jay Soni', '11, Shyam appt. Rajkot', 'Teaching', 'Active', '2018-02-25', '50000', '3 years', 'Teacher', '1992-01-05', 'Male') ON CONFLICT DO NOTHING;
+INSERT INTO public.staff ("id", "img", "email", "date", "mobile", "name", "address", "department", "status", "joining_date", "salary", "experience", "role", "date_of_birth", "gender") VALUES ('009', 'assets/images/user/user9.jpg', 'test@email.com', '2018-02-25T14:22:18Z', '1234567890', 'Robin Graves', '11, Shyam appt. Rajkot', 'Transportation', 'Active', '2018-02-25', '30000', '5 years', 'Driver', '1989-07-15', 'Male') ON CONFLICT DO NOTHING;
+INSERT INTO public.staff ("id", "img", "email", "date", "mobile", "name", "address", "department", "status", "joining_date", "salary", "experience", "role", "date_of_birth", "gender") VALUES ('010', 'assets/images/user/user10.jpg', 'test@email.com', '2018-02-25T14:22:18Z', '1234567890', 'Elsie Cruz', '11, Shyam appt. Rajkot', 'Administration', 'Active', '2018-02-25', '30000', '4 years', 'Clerk', '1990-10-10', 'Female') ON CONFLICT DO NOTHING;
+INSERT INTO public.staff ("id", "img", "email", "date", "mobile", "name", "address", "department", "status", "joining_date", "salary", "experience", "role", "date_of_birth", "gender") VALUES ('011', 'assets/images/user/user1.jpg', 'test@email.com', '2018-02-25T14:22:18Z', '1234567890', 'Jay Soni', '11, Shyam appt. Rajkot', 'Administration', 'Active', '2018-02-25', '30000', '2 years', 'Receptionist', '1994-02-20', 'Male') ON CONFLICT DO NOTHING;
+INSERT INTO public.staff ("id", "img", "email", "date", "mobile", "name", "address", "department", "status", "joining_date", "salary", "experience", "role", "date_of_birth", "gender") VALUES ('012', 'assets/images/user/user1.jpg', 'test@email.com', '2018-02-25T14:22:18Z', '1234567890', 'Justin Copeland', '11, Shyam appt. Rajkot', 'Maintenance', 'Active', '2018-02-25', '25000', '5 years', 'Peon', '1991-05-05', 'Male') ON CONFLICT DO NOTHING;
+INSERT INTO public.staff ("id", "img", "email", "date", "mobile", "name", "address", "department", "status", "joining_date", "salary", "experience", "role", "date_of_birth", "gender") VALUES ('013', 'assets/images/user/user2.jpg', 'test@email.com', '2018-02-25T14:22:18Z', '1234567890', 'Sarah Smith', '22, tilak appt. surat', 'Administration', 'Active', '2018-02-25', '30000', '3 years', 'Clerk', '1995-04-10', 'Female') ON CONFLICT DO NOTHING;
+INSERT INTO public.staff ("id", "img", "email", "date", "mobile", "name", "address", "department", "status", "joining_date", "salary", "experience", "role", "date_of_birth", "gender") VALUES ('014', 'assets/images/user/user3.jpg', 'test@email.com', '2018-02-25T14:22:18Z', '1234567890', 'Kendra King', '201, Shyamal, Puna', 'Library', 'Active', '2018-02-25', '35000', '4 years', 'Librarian', '1992-08-20', 'Female') ON CONFLICT DO NOTHING;
+INSERT INTO public.staff ("id", "img", "email", "date", "mobile", "name", "address", "department", "status", "joining_date", "salary", "experience", "role", "date_of_birth", "gender") VALUES ('015', 'assets/images/user/user4.jpg', 'test@email.com', '2018-02-25T14:22:18Z', '1234567890', 'Jay Soni', '11, Shyam appt. Rajkot', 'Administration', 'Active', '2018-02-25', '30000', '2 years', 'Clerk', '1993-11-12', 'Male') ON CONFLICT DO NOTHING;
+INSERT INTO public.staff ("id", "img", "email", "date", "mobile", "name", "address", "department", "status", "joining_date", "salary", "experience", "role", "date_of_birth", "gender") VALUES ('016', 'assets/images/user/user5.jpg', 'test@email.com', '2018-02-25T14:22:18Z', '1234567890', 'Alexandra Clarke', '11, Shyam appt. Rajkot', 'Procurement', 'Active', '2018-02-25', '40000', '6 years', 'Purchase Officer', '1988-05-30', 'Female') ON CONFLICT DO NOTHING;
+
+SET session_replication_role = 'origin';

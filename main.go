@@ -67,6 +67,8 @@ func main() {
 	if dataDir == "" {
 		// Try to find the data directory automatically
 		pathsToTry := []string{
+			"migration/data",
+			"../migration/data",
 			"prisma/data",
 			"../prisma/data",
 			"./data",
@@ -79,7 +81,7 @@ func main() {
 		}
 	}
 	if dataDir == "" {
-		log.Fatal("❌ Error: Could not locate prisma/data directory. Please specify it using the -data-dir flag.")
+		log.Fatal("❌ Error: Could not locate migration/data or prisma/data directory. Please specify it using the -data-dir flag.")
 	}
 	fmt.Printf("📂 Using data directory: %s\n", dataDir)
 

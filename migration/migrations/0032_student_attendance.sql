@@ -1,0 +1,40 @@
+-- Migration for student_attendance table derived from student-attendance.json
+SET session_replication_role = 'replica';
+
+CREATE TABLE IF NOT EXISTS public.student_attendance (
+    "id" TEXT PRIMARY KEY,
+    "roll_no" TEXT,
+    "img" TEXT,
+    "s_name" TEXT,
+    "class" TEXT,
+    "date" TIMESTAMP,
+    "status" TEXT,
+    "note" TEXT,
+    "semester" TEXT,
+    "subject" TEXT,
+    "attendance_time" TEXT,
+    "present_count" INTEGER,
+    "absent_count" INTEGER,
+    "reason_for_absence" TEXT,
+    "approved" BOOLEAN,
+    "timestamp" TIMESTAMP
+);
+
+INSERT INTO public.student_attendance ("id", "roll_no", "img", "s_name", "class", "date", "status", "note", "semester", "subject", "attendance_time", "present_count", "absent_count", "reason_for_absence", "approved", "timestamp") VALUES ('001', '1', 'assets/images/user/user1.jpg', 'Jenish Shah', 'Class A', '2019-02-25T14:22:18Z', 'Absent', 'Leave for marriage function', 'Spring 2019', 'Mathematics', NULL, 15, 2, 'Family function', false, '2019-02-25T14:22:18Z') ON CONFLICT DO NOTHING;
+INSERT INTO public.student_attendance ("id", "roll_no", "img", "s_name", "class", "date", "status", "note", "semester", "subject", "attendance_time", "present_count", "absent_count", "reason_for_absence", "approved", "timestamp") VALUES ('002', '2', 'assets/images/user/user2.jpg', 'Priya Patel', 'Class A', '2019-02-17T14:22:18Z', 'Present', NULL, 'Spring 2019', 'Mathematics', '09:00', 15, 1, NULL, true, '2019-02-17T14:22:18Z') ON CONFLICT DO NOTHING;
+INSERT INTO public.student_attendance ("id", "roll_no", "img", "s_name", "class", "date", "status", "note", "semester", "subject", "attendance_time", "present_count", "absent_count", "reason_for_absence", "approved", "timestamp") VALUES ('003', '3', 'assets/images/user/user4.jpg', 'Mayank Jani', 'Class B', '2020-01-01T14:22:18Z', 'Present', NULL, 'Spring 2020', 'Science', '09:00', 10, 0, NULL, true, '2020-01-01T14:22:18Z') ON CONFLICT DO NOTHING;
+INSERT INTO public.student_attendance ("id", "roll_no", "img", "s_name", "class", "date", "status", "note", "semester", "subject", "attendance_time", "present_count", "absent_count", "reason_for_absence", "approved", "timestamp") VALUES ('004', '4', 'assets/images/user/user3.jpg', 'Bertie Jones', 'Class A', '2019-02-01T14:22:18Z', 'Absent', 'Leave for marriage function', 'Spring 2019', 'Mathematics', NULL, 14, 3, 'Family function', false, '2019-02-01T14:22:18Z') ON CONFLICT DO NOTHING;
+INSERT INTO public.student_attendance ("id", "roll_no", "img", "s_name", "class", "date", "status", "note", "semester", "subject", "attendance_time", "present_count", "absent_count", "reason_for_absence", "approved", "timestamp") VALUES ('005', '5', 'assets/images/user/user5.jpg', 'Jenish Shah', 'Class E', '2019-02-02T14:22:18Z', 'Present', NULL, 'Spring 2019', 'Mathematics', '09:00', 15, 1, NULL, true, '2019-02-02T14:22:18Z') ON CONFLICT DO NOTHING;
+INSERT INTO public.student_attendance ("id", "roll_no", "img", "s_name", "class", "date", "status", "note", "semester", "subject", "attendance_time", "present_count", "absent_count", "reason_for_absence", "approved", "timestamp") VALUES ('006', '6', 'assets/images/user/user6.jpg', 'Sarah Smith', 'Class C', '2019-02-26T14:22:18Z', 'Present', NULL, 'Spring 2019', 'English', '09:00', 15, 0, NULL, true, '2019-02-26T14:22:18Z') ON CONFLICT DO NOTHING;
+INSERT INTO public.student_attendance ("id", "roll_no", "img", "s_name", "class", "date", "status", "note", "semester", "subject", "attendance_time", "present_count", "absent_count", "reason_for_absence", "approved", "timestamp") VALUES ('007', '7', 'assets/images/user/user7.jpg', 'Pam Abbott', 'Class B', '2019-02-22T14:22:18Z', 'Absent', 'Leave for marriage function', 'Spring 2019', 'Mathematics', NULL, 14, 2, 'Family function', false, '2019-02-22T14:22:18Z') ON CONFLICT DO NOTHING;
+INSERT INTO public.student_attendance ("id", "roll_no", "img", "s_name", "class", "date", "status", "note", "semester", "subject", "attendance_time", "present_count", "absent_count", "reason_for_absence", "approved", "timestamp") VALUES ('008', '8', 'assets/images/user/user8.jpg', 'Bethaney Spence', 'Class A', '2019-02-19T14:22:18Z', 'Present', NULL, 'Spring 2019', 'Mathematics', '09:00', 15, 0, NULL, true, '2019-02-19T14:22:18Z') ON CONFLICT DO NOTHING;
+INSERT INTO public.student_attendance ("id", "roll_no", "img", "s_name", "class", "date", "status", "note", "semester", "subject", "attendance_time", "present_count", "absent_count", "reason_for_absence", "approved", "timestamp") VALUES ('009', '9', 'assets/images/user/user9.jpg', 'Ivan Bell', 'Class E', '2019-02-14T14:22:18Z', 'Absent', 'Leave for marriage function', 'Spring 2019', 'Mathematics', NULL, 13, 3, 'Family function', false, '2019-02-14T14:22:18Z') ON CONFLICT DO NOTHING;
+INSERT INTO public.student_attendance ("id", "roll_no", "img", "s_name", "class", "date", "status", "note", "semester", "subject", "attendance_time", "present_count", "absent_count", "reason_for_absence", "approved", "timestamp") VALUES ('010', '10', 'assets/images/user/user10.jpg', 'Jay Soni', 'Class B', '2019-02-27T14:22:18Z', 'Present', NULL, 'Spring 2019', 'Science', '09:00', 15, 0, NULL, true, '2019-02-27T14:22:18Z') ON CONFLICT DO NOTHING;
+INSERT INTO public.student_attendance ("id", "roll_no", "img", "s_name", "class", "date", "status", "note", "semester", "subject", "attendance_time", "present_count", "absent_count", "reason_for_absence", "approved", "timestamp") VALUES ('011', '11', 'assets/images/user/user4.jpg', 'Wesley Casey', 'Class A', '2019-02-21T14:22:18Z', 'Absent', 'Leave for marriage function', 'Spring 2019', 'Mathematics', NULL, 14, 3, 'Family function', false, '2019-02-21T14:22:18Z') ON CONFLICT DO NOTHING;
+INSERT INTO public.student_attendance ("id", "roll_no", "img", "s_name", "class", "date", "status", "note", "semester", "subject", "attendance_time", "present_count", "absent_count", "reason_for_absence", "approved", "timestamp") VALUES ('012', '12', 'assets/images/user/user7.jpg', 'Robin Graves', 'Class C', '2019-02-10T14:22:18Z', 'Present', NULL, 'Spring 2019', 'Mathematics', '09:00', 15, 0, NULL, true, '2019-02-10T14:22:18Z') ON CONFLICT DO NOTHING;
+INSERT INTO public.student_attendance ("id", "roll_no", "img", "s_name", "class", "date", "status", "note", "semester", "subject", "attendance_time", "present_count", "absent_count", "reason_for_absence", "approved", "timestamp") VALUES ('013', '13', 'assets/images/user/user2.jpg', 'Ivan Bell', 'Class F', '2019-02-10T14:22:18Z', 'Absent', 'Leave for marriage function', 'Spring 2019', 'Mathematics', NULL, 14, 4, 'Family function', false, '2019-02-10T14:22:18Z') ON CONFLICT DO NOTHING;
+INSERT INTO public.student_attendance ("id", "roll_no", "img", "s_name", "class", "date", "status", "note", "semester", "subject", "attendance_time", "present_count", "absent_count", "reason_for_absence", "approved", "timestamp") VALUES ('014', '14', 'assets/images/user/user1.jpg', 'Justin Copeland', 'Class E', '2019-02-16T14:22:18Z', 'Absent', 'Leave for marriage function', 'Spring 2019', 'Mathematics', NULL, 13, 5, 'Family function', false, '2019-02-16T14:22:18Z') ON CONFLICT DO NOTHING;
+INSERT INTO public.student_attendance ("id", "roll_no", "img", "s_name", "class", "date", "status", "note", "semester", "subject", "attendance_time", "present_count", "absent_count", "reason_for_absence", "approved", "timestamp") VALUES ('015', '15', 'assets/images/user/user8.jpg', 'Kendra King', 'Class F', '2019-02-04T14:22:18Z', 'Present', NULL, 'Spring 2019', 'Mathematics', '09:00', 15, 1, NULL, true, '2019-02-04T14:22:18Z') ON CONFLICT DO NOTHING;
+INSERT INTO public.student_attendance ("id", "roll_no", "img", "s_name", "class", "date", "status", "note", "semester", "subject", "attendance_time", "present_count", "absent_count", "reason_for_absence", "approved", "timestamp") VALUES ('016', '16', 'assets/images/user/user1.jpg', 'Alexandra Clarke', 'Class A', '2019-02-04T14:22:18Z', 'Present', NULL, 'Spring 2019', 'Mathematics', '09:00', 15, 0, NULL, true, '2019-02-04T14:22:18Z') ON CONFLICT DO NOTHING;
+
+SET session_replication_role = 'origin';

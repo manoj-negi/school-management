@@ -1,0 +1,40 @@
+-- Migration for fees table derived from fees.json
+SET session_replication_role = 'replica';
+
+CREATE TABLE IF NOT EXISTS public.fees (
+    "id" TEXT PRIMARY KEY,
+    "roll_no" TEXT,
+    "student_name" TEXT,
+    "class" TEXT,
+    "fees_type" TEXT,
+    "invoice_no" TEXT,
+    "payment_due_date" TIMESTAMP,
+    "payment_date" TIMESTAMP,
+    "payment_type" TEXT,
+    "status" TEXT,
+    "amount" TEXT,
+    "late_fee" TEXT,
+    "discount" TEXT,
+    "created_at" TIMESTAMP,
+    "updated_at" TIMESTAMP,
+    "notes" TEXT
+);
+
+INSERT INTO public.fees ("id", "roll_no", "student_name", "class", "fees_type", "invoice_no", "payment_due_date", "payment_date", "payment_type", "status", "amount", "late_fee", "discount", "created_at", "updated_at", "notes") VALUES ('001', '1', 'Jenish Shah', '10th Grade', 'library', 'IN-5645644', '2019-03-01T00:00:00Z', NULL, NULL, 'pending', '170$', '0$', '0$', '2019-02-25T14:22:18Z', '2019-02-25T14:22:18Z', 'N/A') ON CONFLICT DO NOTHING;
+INSERT INTO public.fees ("id", "roll_no", "student_name", "class", "fees_type", "invoice_no", "payment_due_date", "payment_date", "payment_type", "status", "amount", "late_fee", "discount", "created_at", "updated_at", "notes") VALUES ('002', '2', 'Priya Patel', '11th Grade', 'annual', 'IN-5645644', '2019-03-01T00:00:00Z', NULL, NULL, 'pending', '170$', '0$', '0$', '2019-02-17T14:22:18Z', '2019-02-17T14:22:18Z', 'N/A') ON CONFLICT DO NOTHING;
+INSERT INTO public.fees ("id", "roll_no", "student_name", "class", "fees_type", "invoice_no", "payment_due_date", "payment_date", "payment_type", "status", "amount", "late_fee", "discount", "created_at", "updated_at", "notes") VALUES ('003', '3', 'Mayank Jani', '7th Grade', 'other', 'IN-5645644', '2020-01-01T00:00:00Z', NULL, NULL, 'pending', '250$', '0$', '0$', '2020-01-01T14:22:18Z', '2020-01-01T14:22:18Z', 'N/A') ON CONFLICT DO NOTHING;
+INSERT INTO public.fees ("id", "roll_no", "student_name", "class", "fees_type", "invoice_no", "payment_due_date", "payment_date", "payment_type", "status", "amount", "late_fee", "discount", "created_at", "updated_at", "notes") VALUES ('004', '4', 'Bertie Jones', '8th Grade', 'annual', 'IN-5645644', '2019-03-01T00:00:00Z', '2019-02-10T14:22:18Z', 'cheque', 'paid', '340$', '0$', '0$', '2019-02-01T14:22:18Z', '2019-02-01T14:22:18Z', 'N/A') ON CONFLICT DO NOTHING;
+INSERT INTO public.fees ("id", "roll_no", "student_name", "class", "fees_type", "invoice_no", "payment_due_date", "payment_date", "payment_type", "status", "amount", "late_fee", "discount", "created_at", "updated_at", "notes") VALUES ('005', '5', 'Jenish Shah', '9th Grade', 'transport', 'IN-5645644', '2019-03-01T00:00:00Z', '2019-02-10T14:22:18Z', 'credit card', 'paid', '170$', '0$', '0$', '2019-02-02T14:22:18Z', '2019-02-02T14:22:18Z', 'N/A') ON CONFLICT DO NOTHING;
+INSERT INTO public.fees ("id", "roll_no", "student_name", "class", "fees_type", "invoice_no", "payment_due_date", "payment_date", "payment_type", "status", "amount", "late_fee", "discount", "created_at", "updated_at", "notes") VALUES ('006', '6', 'Sarah Smith', '11th Grade', 'exam', 'IN-5645644', '2019-03-01T00:00:00Z', '2019-02-10T14:22:18Z', 'cash', 'paid', '340$', '0$', '0$', '2019-02-26T14:22:18Z', '2019-02-26T14:22:18Z', 'N/A') ON CONFLICT DO NOTHING;
+INSERT INTO public.fees ("id", "roll_no", "student_name", "class", "fees_type", "invoice_no", "payment_due_date", "payment_date", "payment_type", "status", "amount", "late_fee", "discount", "created_at", "updated_at", "notes") VALUES ('007', '7', 'Pam Abbott', '7th Grade', 'tuition', 'IN-5645644', '2019-03-01T00:00:00Z', NULL, NULL, 'pending', '340$', '0$', '0$', '2019-02-22T14:22:18Z', '2019-02-22T14:22:18Z', 'N/A') ON CONFLICT DO NOTHING;
+INSERT INTO public.fees ("id", "roll_no", "student_name", "class", "fees_type", "invoice_no", "payment_due_date", "payment_date", "payment_type", "status", "amount", "late_fee", "discount", "created_at", "updated_at", "notes") VALUES ('008', '8', 'Bethaney Spence', '8th Grade', 'library', 'IN-5645644', '2019-03-01T00:00:00Z', '2019-02-10T14:22:18Z', 'credit card', 'paid', '250$', '0$', '0$', '2019-02-19T14:22:18Z', '2019-02-19T14:22:18Z', 'N/A') ON CONFLICT DO NOTHING;
+INSERT INTO public.fees ("id", "roll_no", "student_name", "class", "fees_type", "invoice_no", "payment_due_date", "payment_date", "payment_type", "status", "amount", "late_fee", "discount", "created_at", "updated_at", "notes") VALUES ('009', '9', 'Ivan Bell', '11th Grade', 'transport', 'IN-5645644', '2019-03-01T00:00:00Z', NULL, NULL, 'pending', '170$', '0$', '0$', '2019-02-14T14:22:18Z', '2019-02-14T14:22:18Z', 'N/A') ON CONFLICT DO NOTHING;
+INSERT INTO public.fees ("id", "roll_no", "student_name", "class", "fees_type", "invoice_no", "payment_due_date", "payment_date", "payment_type", "status", "amount", "late_fee", "discount", "created_at", "updated_at", "notes") VALUES ('010', '10', 'Jay Soni', '9th Grade', 'tuition', 'IN-5645644', '2019-03-01T00:00:00Z', '2019-02-10T14:22:18Z', 'credit card', 'paid', '340$', '0$', '0$', '2019-02-27T14:22:18Z', '2019-02-27T14:22:18Z', 'N/A') ON CONFLICT DO NOTHING;
+INSERT INTO public.fees ("id", "roll_no", "student_name", "class", "fees_type", "invoice_no", "payment_due_date", "payment_date", "payment_type", "status", "amount", "late_fee", "discount", "created_at", "updated_at", "notes") VALUES ('011', '11', 'Wesley Casey', '9th Grade', 'annual', 'IN-5645644', '2019-03-01T00:00:00Z', NULL, NULL, 'pending', '340$', '0$', '0$', '2019-02-21T14:22:18Z', '2019-02-21T14:22:18Z', 'N/A') ON CONFLICT DO NOTHING;
+INSERT INTO public.fees ("id", "roll_no", "student_name", "class", "fees_type", "invoice_no", "payment_due_date", "payment_date", "payment_type", "status", "amount", "late_fee", "discount", "created_at", "updated_at", "notes") VALUES ('012', '12', 'Robin Graves', '11th Grade', 'exam', 'IN-5645644', '2019-03-01T00:00:00Z', '2019-02-10T14:22:18Z', 'cheque', 'paid', '340$', '0$', '0$', '2019-02-10T14:22:18Z', '2019-02-10T14:22:18Z', 'N/A') ON CONFLICT DO NOTHING;
+INSERT INTO public.fees ("id", "roll_no", "student_name", "class", "fees_type", "invoice_no", "payment_due_date", "payment_date", "payment_type", "status", "amount", "late_fee", "discount", "created_at", "updated_at", "notes") VALUES ('013', '13', 'Ivan Bell', '6th Grade', 'tuition', 'IN-5645644', '2019-03-01T00:00:00Z', NULL, NULL, 'pending', '170$', '0$', '0$', '2019-02-10T14:22:18Z', '2019-02-10T14:22:18Z', 'N/A') ON CONFLICT DO NOTHING;
+INSERT INTO public.fees ("id", "roll_no", "student_name", "class", "fees_type", "invoice_no", "payment_due_date", "payment_date", "payment_type", "status", "amount", "late_fee", "discount", "created_at", "updated_at", "notes") VALUES ('014', '14', 'Justin Copeland', '8th Grade', 'transport', 'IN-5645644', '2019-03-01T00:00:00Z', NULL, NULL, 'pending', '250$', '0$', '0$', '2019-02-16T14:22:18Z', '2019-02-16T14:22:18Z', 'N/A') ON CONFLICT DO NOTHING;
+INSERT INTO public.fees ("id", "roll_no", "student_name", "class", "fees_type", "invoice_no", "payment_due_date", "payment_date", "payment_type", "status", "amount", "late_fee", "discount", "created_at", "updated_at", "notes") VALUES ('015', '15', 'Kendra King', '9th Grade', 'tuition', 'IN-5645644', '2019-03-01T00:00:00Z', '2019-02-10T14:22:18Z', 'online transfer', 'paid', '340$', '0$', '0$', '2019-02-04T14:22:18Z', '2019-02-04T14:22:18Z', 'N/A') ON CONFLICT DO NOTHING;
+INSERT INTO public.fees ("id", "roll_no", "student_name", "class", "fees_type", "invoice_no", "payment_due_date", "payment_date", "payment_type", "status", "amount", "late_fee", "discount", "created_at", "updated_at", "notes") VALUES ('016', '16', 'Alexandra Clarke', '6th Grade', 'annual', 'IN-5645644', '2019-03-01T00:00:00Z', '2019-02-10T14:22:18Z', 'cash', 'paid', '340$', '0$', '0$', '2019-02-04T14:22:18Z', '2019-02-04T14:22:18Z', 'N/A') ON CONFLICT DO NOTHING;
+
+SET session_replication_role = 'origin';

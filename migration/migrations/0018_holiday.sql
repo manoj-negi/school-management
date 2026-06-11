@@ -1,0 +1,35 @@
+-- Migration for holiday table derived from holiday.json
+SET session_replication_role = 'replica';
+
+CREATE TABLE IF NOT EXISTS public.holiday (
+    "id" TEXT PRIMARY KEY,
+    "title" TEXT,
+    "start_date" TIMESTAMP,
+    "end_date" TIMESTAMP,
+    "type" TEXT,
+    "description" TEXT,
+    "location" TEXT,
+    "created_at" TIMESTAMP,
+    "updated_at" TIMESTAMP,
+    "is_recurring" TEXT,
+    "status" TEXT
+);
+
+INSERT INTO public.holiday ("id", "title", "start_date", "end_date", "type", "description", "location", "created_at", "updated_at", "is_recurring", "status") VALUES ('001', 'New Year''s Day', '2019-02-22T14:22:18Z', '2019-02-25T14:22:18Z', 'Public Holiday', 'A celebration marking the start of the new year.', 'Global', '2018-12-01T10:00:00Z', '2019-01-01T10:00:00Z', 'No', 'Active') ON CONFLICT DO NOTHING;
+INSERT INTO public.holiday ("id", "title", "start_date", "end_date", "type", "description", "location", "created_at", "updated_at", "is_recurring", "status") VALUES ('002', 'Memorial Day', '2019-02-12T14:22:18Z', '2019-02-17T14:22:18Z', 'Public Holiday', 'Lorem Ipsum is simply dummy text of the printing.', 'Global', '2018-12-01T10:00:00Z', '2019-01-01T10:00:00Z', 'Yes', 'Active') ON CONFLICT DO NOTHING;
+INSERT INTO public.holiday ("id", "title", "start_date", "end_date", "type", "description", "location", "created_at", "updated_at", "is_recurring", "status") VALUES ('003', 'Christmas Day', '2019-12-20T14:22:18Z', '2020-01-01T14:22:18Z', 'Public Holiday', 'Lorem Ipsum is simply dummy text of the printing.', 'Global', '2018-12-01T10:00:00Z', '2019-01-01T10:00:00Z', 'No', 'Active') ON CONFLICT DO NOTHING;
+INSERT INTO public.holiday ("id", "title", "start_date", "end_date", "type", "description", "location", "created_at", "updated_at", "is_recurring", "status") VALUES ('004', 'Annual Function', '2019-01-26T14:22:18Z', '2019-02-01T14:22:18Z', 'Holiday By College', 'Lorem Ipsum is simply dummy text of the printing.', 'School', '2018-12-01T10:00:00Z', '2019-01-01T10:00:00Z', 'Yes', 'Active') ON CONFLICT DO NOTHING;
+INSERT INTO public.holiday ("id", "title", "start_date", "end_date", "type", "description", "location", "created_at", "updated_at", "is_recurring", "status") VALUES ('005', 'New Year''s Day', '2019-02-01T14:22:18Z', '2019-02-02T14:22:18Z', 'Public Holiday', 'Lorem Ipsum is simply dummy text of the printing.', 'Global', '2018-12-01T10:00:00Z', '2019-01-01T10:00:00Z', 'No', 'Active') ON CONFLICT DO NOTHING;
+INSERT INTO public.holiday ("id", "title", "start_date", "end_date", "type", "description", "location", "created_at", "updated_at", "is_recurring", "status") VALUES ('006', 'Earth Day', '2019-02-23T14:22:18Z', '2019-02-26T14:22:18Z', 'Public Holiday', 'Lorem Ipsum is simply dummy text of the printing.', 'Global', '2018-12-01T10:00:00Z', '2019-01-01T10:00:00Z', 'No', 'Active') ON CONFLICT DO NOTHING;
+INSERT INTO public.holiday ("id", "title", "start_date", "end_date", "type", "description", "location", "created_at", "updated_at", "is_recurring", "status") VALUES ('007', 'Army Day', '2019-02-20T14:22:18Z', '2019-02-22T14:22:18Z', 'Public Holiday', 'Lorem Ipsum is simply dummy text of the printing.', 'Global', '2018-12-01T10:00:00Z', '2019-01-01T10:00:00Z', 'Yes', 'Active') ON CONFLICT DO NOTHING;
+INSERT INTO public.holiday ("id", "title", "start_date", "end_date", "type", "description", "location", "created_at", "updated_at", "is_recurring", "status") VALUES ('008', 'Freedom Day', '2019-02-17T14:22:18Z', '2019-02-19T14:22:18Z', 'Public Holiday', 'Lorem Ipsum is simply dummy text of the printing.', 'Global', '2018-12-01T10:00:00Z', '2019-01-01T10:00:00Z', 'Yes', 'Active') ON CONFLICT DO NOTHING;
+INSERT INTO public.holiday ("id", "title", "start_date", "end_date", "type", "description", "location", "created_at", "updated_at", "is_recurring", "status") VALUES ('009', 'Annual Function', '2019-02-14T14:22:18Z', '2019-02-15T14:22:18Z', 'Holiday By College', 'Lorem Ipsum is simply dummy text of the printing.', 'School', '2018-12-01T10:00:00Z', '2019-01-01T10:00:00Z', 'Yes', 'Active') ON CONFLICT DO NOTHING;
+INSERT INTO public.holiday ("id", "title", "start_date", "end_date", "type", "description", "location", "created_at", "updated_at", "is_recurring", "status") VALUES ('010', 'Diwali', '2019-02-23T14:22:18Z', '2019-02-27T14:22:18Z', 'Public Holiday', 'Lorem Ipsum is simply dummy text of the printing.', 'Global', '2018-12-01T10:00:00Z', '2019-01-01T10:00:00Z', 'No', 'Active') ON CONFLICT DO NOTHING;
+INSERT INTO public.holiday ("id", "title", "start_date", "end_date", "type", "description", "location", "created_at", "updated_at", "is_recurring", "status") VALUES ('011', 'Holi', '2019-02-12T14:22:18Z', '2019-02-21T14:22:18Z', 'Public Holiday', 'Lorem Ipsum is simply dummy text of the printing.', 'Global', '2018-12-01T10:00:00Z', '2019-01-01T10:00:00Z', 'No', 'Active') ON CONFLICT DO NOTHING;
+INSERT INTO public.holiday ("id", "title", "start_date", "end_date", "type", "description", "location", "created_at", "updated_at", "is_recurring", "status") VALUES ('012', 'Chinese New Year', '2019-02-08T14:22:18Z', '2019-02-10T14:22:18Z', 'Public Holiday', 'Lorem Ipsum is simply dummy text of the printing.', 'Global', '2018-12-01T10:00:00Z', '2019-01-01T10:00:00Z', 'No', 'Active') ON CONFLICT DO NOTHING;
+INSERT INTO public.holiday ("id", "title", "start_date", "end_date", "type", "description", "location", "created_at", "updated_at", "is_recurring", "status") VALUES ('013', 'Rosa Parks Day', '2019-02-10T14:22:18Z', '2019-02-11T14:22:18Z', 'Public Holiday', 'Lorem Ipsum is simply dummy text of the printing.', 'Global', '2018-12-01T10:00:00Z', '2019-01-01T10:00:00Z', 'Yes', 'Active') ON CONFLICT DO NOTHING;
+INSERT INTO public.holiday ("id", "title", "start_date", "end_date", "type", "description", "location", "created_at", "updated_at", "is_recurring", "status") VALUES ('014', 'Super Tuesday', '2019-02-15T14:22:18Z', '2019-02-16T14:22:18Z', 'Public Holiday', 'Lorem Ipsum is simply dummy text of the printing.', 'Global', '2018-12-01T10:00:00Z', '2019-01-01T10:00:00Z', 'Yes', 'Active') ON CONFLICT DO NOTHING;
+INSERT INTO public.holiday ("id", "title", "start_date", "end_date", "type", "description", "location", "created_at", "updated_at", "is_recurring", "status") VALUES ('015', 'Makar Sankranti', '2019-02-11T14:22:18Z', '2019-02-04T14:22:18Z', 'Public Holiday', 'Lorem Ipsum is simply dummy text of the printing.', 'Global', '2018-12-01T10:00:00Z', '2019-01-01T10:00:00Z', 'Yes', 'Active') ON CONFLICT DO NOTHING;
+INSERT INTO public.holiday ("id", "title", "start_date", "end_date", "type", "description", "location", "created_at", "updated_at", "is_recurring", "status") VALUES ('016', 'Rama Navami', '2019-02-12T14:22:18Z', '2019-02-15T14:22:18Z', 'Public Holiday', 'Lorem Ipsum is simply dummy text of the printing.', 'Global', '2018-12-01T10:00:00Z', '2019-01-01T10:00:00Z', 'Yes', 'Active') ON CONFLICT DO NOTHING;
+
+SET session_replication_role = 'origin';
