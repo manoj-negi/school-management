@@ -478,8 +478,8 @@ func (_q *StudentQuery) loadUser(ctx context.Context, query *UserQuery, nodes []
 	return nil
 }
 func (_q *StudentQuery) loadClass(ctx context.Context, query *ClassQuery, nodes []*Student, init func(*Student), assign func(*Student, *Class)) error {
-	ids := make([]int, 0, len(nodes))
-	nodeids := make(map[int][]*Student)
+	ids := make([]uuid.UUID, 0, len(nodes))
+	nodeids := make(map[uuid.UUID][]*Student)
 	for i := range nodes {
 		if nodes[i].ClassID == nil {
 			continue

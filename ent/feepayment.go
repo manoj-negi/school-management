@@ -19,11 +19,11 @@ import (
 type FeePayment struct {
 	config `json:"-"`
 	// ID of the ent.
-	ID int `json:"id,omitempty"`
+	ID uuid.UUID `json:"id,omitempty"`
 	// StudentID holds the value of the "student_id" field.
 	StudentID uuid.UUID `json:"student_id,omitempty"`
 	// FeeStructureID holds the value of the "fee_structure_id" field.
-	FeeStructureID int `json:"fee_structure_id,omitempty"`
+	FeeStructureID uuid.UUID `json:"fee_structure_id,omitempty"`
 	// AmountPaid holds the value of the "amount_paid" field.
 	AmountPaid float64 `json:"amount_paid,omitempty"`
 	// PaymentDate holds the value of the "payment_date" field.
@@ -82,13 +82,11 @@ func (*FeePayment) scanValues(columns []string) ([]any, error) {
 		switch columns[i] {
 		case feepayment.FieldAmountPaid:
 			values[i] = new(sql.NullFloat64)
-		case feepayment.FieldID, feepayment.FieldFeeStructureID:
-			values[i] = new(sql.NullInt64)
 		case feepayment.FieldPaymentStatus, feepayment.FieldPaymentMethod, feepayment.FieldTransactionRef, feepayment.FieldRemarks:
 			values[i] = new(sql.NullString)
 		case feepayment.FieldPaymentDate:
 			values[i] = new(sql.NullTime)
-		case feepayment.FieldStudentID:
+		case feepayment.FieldID, feepayment.FieldStudentID, feepayment.FieldFeeStructureID:
 			values[i] = new(uuid.UUID)
 		default:
 			values[i] = new(sql.UnknownType)
@@ -106,11 +104,11 @@ func (_m *FeePayment) assignValues(columns []string, values []any) error {
 	for i := range columns {
 		switch columns[i] {
 		case feepayment.FieldID:
-			value, ok := values[i].(*sql.NullInt64)
-			if !ok {
-				return fmt.Errorf("unexpected type %T for field id", value)
+			if value, ok := values[i].(*uuid.UUID); !ok {
+				return fmt.Errorf("unexpected type %T for field id", values[i])
+			} else if value != nil {
+				_m.ID = *value
 			}
-			_m.ID = int(value.Int64)
 		case feepayment.FieldStudentID:
 			if value, ok := values[i].(*uuid.UUID); !ok {
 				return fmt.Errorf("unexpected type %T for field student_id", values[i])
@@ -118,10 +116,10 @@ func (_m *FeePayment) assignValues(columns []string, values []any) error {
 				_m.StudentID = *value
 			}
 		case feepayment.FieldFeeStructureID:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
+			if value, ok := values[i].(*uuid.UUID); !ok {
 				return fmt.Errorf("unexpected type %T for field fee_structure_id", values[i])
-			} else if value.Valid {
-				_m.FeeStructureID = int(value.Int64)
+			} else if value != nil {
+				_m.FeeStructureID = *value
 			}
 		case feepayment.FieldAmountPaid:
 			if value, ok := values[i].(*sql.NullFloat64); !ok {

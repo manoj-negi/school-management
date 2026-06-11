@@ -35,7 +35,7 @@ func (Teacher) Fields() []ent.Field {
 		field.String("address").
 			Optional().
 			Nillable(),
-		field.Int("department_id").
+		field.UUID("department_id", uuid.UUID{}).
 			Optional().
 			Nillable(),
 		field.String("qualification").

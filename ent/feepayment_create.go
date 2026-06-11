@@ -11,6 +11,7 @@ import (
 	"go-seed/ent/student"
 	"time"
 
+	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
@@ -32,7 +33,7 @@ func (_c *FeePaymentCreate) SetStudentID(v uuid.UUID) *FeePaymentCreate {
 }
 
 // SetFeeStructureID sets the "fee_structure_id" field.
-func (_c *FeePaymentCreate) SetFeeStructureID(v int) *FeePaymentCreate {
+func (_c *FeePaymentCreate) SetFeeStructureID(v uuid.UUID) *FeePaymentCreate {
 	_c.mutation.SetFeeStructureID(v)
 	return _c
 }
@@ -105,6 +106,20 @@ func (_c *FeePaymentCreate) SetNillableRemarks(v *string) *FeePaymentCreate {
 	return _c
 }
 
+// SetID sets the "id" field.
+func (_c *FeePaymentCreate) SetID(v uuid.UUID) *FeePaymentCreate {
+	_c.mutation.SetID(v)
+	return _c
+}
+
+// SetNillableID sets the "id" field if the given value is not nil.
+func (_c *FeePaymentCreate) SetNillableID(v *uuid.UUID) *FeePaymentCreate {
+	if v != nil {
+		_c.SetID(*v)
+	}
+	return _c
+}
+
 // SetStudent sets the "student" edge to the Student entity.
 func (_c *FeePaymentCreate) SetStudent(v *Student) *FeePaymentCreate {
 	return _c.SetStudentID(v.ID)
@@ -154,6 +169,10 @@ func (_c *FeePaymentCreate) defaults() {
 		v := feepayment.DefaultPaymentStatus
 		_c.mutation.SetPaymentStatus(v)
 	}
+	if _, ok := _c.mutation.ID(); !ok {
+		v := feepayment.DefaultID()
+		_c.mutation.SetID(v)
+	}
 }
 
 // check runs all checks and user-defined validators on the builder.
@@ -198,8 +217,13 @@ func (_c *FeePaymentCreate) sqlSave(ctx context.Context) (*FeePayment, error) {
 		}
 		return nil, err
 	}
-	id := _spec.ID.Value.(int64)
-	_node.ID = int(id)
+	if _spec.ID.Value != nil {
+		if id, ok := _spec.ID.Value.(*uuid.UUID); ok {
+			_node.ID = *id
+		} else if err := _node.ID.Scan(_spec.ID.Value); err != nil {
+			return nil, err
+		}
+	}
 	_c.mutation.id = &_node.ID
 	_c.mutation.done = true
 	return _node, nil
@@ -208,9 +232,13 @@ func (_c *FeePaymentCreate) sqlSave(ctx context.Context) (*FeePayment, error) {
 func (_c *FeePaymentCreate) createSpec() (*FeePayment, *sqlgraph.CreateSpec) {
 	var (
 		_node = &FeePayment{config: _c.config}
-		_spec = sqlgraph.NewCreateSpec(feepayment.Table, sqlgraph.NewFieldSpec(feepayment.FieldID, field.TypeInt))
+		_spec = sqlgraph.NewCreateSpec(feepayment.Table, sqlgraph.NewFieldSpec(feepayment.FieldID, field.TypeUUID))
 	)
 	_spec.OnConflict = _c.conflict
+	if id, ok := _c.mutation.ID(); ok {
+		_node.ID = id
+		_spec.ID.Value = &id
+	}
 	if value, ok := _c.mutation.AmountPaid(); ok {
 		_spec.SetField(feepayment.FieldAmountPaid, field.TypeFloat64, value)
 		_node.AmountPaid = value
@@ -260,7 +288,7 @@ func (_c *FeePaymentCreate) createSpec() (*FeePayment, *sqlgraph.CreateSpec) {
 			Columns: []string{feepayment.FeeStructureColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(feestructure.FieldID, field.TypeInt),
+				IDSpec: sqlgraph.NewFieldSpec(feestructure.FieldID, field.TypeUUID),
 			},
 		}
 		for _, k := range nodes {
@@ -334,7 +362,7 @@ func (u *FeePaymentUpsert) UpdateStudentID() *FeePaymentUpsert {
 }
 
 // SetFeeStructureID sets the "fee_structure_id" field.
-func (u *FeePaymentUpsert) SetFeeStructureID(v int) *FeePaymentUpsert {
+func (u *FeePaymentUpsert) SetFeeStructureID(v uuid.UUID) *FeePaymentUpsert {
 	u.Set(feepayment.FieldFeeStructureID, v)
 	return u
 }
@@ -441,16 +469,24 @@ func (u *FeePaymentUpsert) ClearRemarks() *FeePaymentUpsert {
 	return u
 }
 
-// UpdateNewValues updates the mutable fields using the new values that were set on create.
+// UpdateNewValues updates the mutable fields using the new values that were set on create except the ID field.
 // Using this option is equivalent to using:
 //
 //	client.FeePayment.Create().
 //		OnConflict(
 //			sql.ResolveWithNewValues(),
+//			sql.ResolveWith(func(u *sql.UpdateSet) {
+//				u.SetIgnore(feepayment.FieldID)
+//			}),
 //		).
 //		Exec(ctx)
 func (u *FeePaymentUpsertOne) UpdateNewValues() *FeePaymentUpsertOne {
 	u.create.conflict = append(u.create.conflict, sql.ResolveWithNewValues())
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(s *sql.UpdateSet) {
+		if _, exists := u.create.mutation.ID(); exists {
+			s.SetIgnore(feepayment.FieldID)
+		}
+	}))
 	return u
 }
 
@@ -496,7 +532,7 @@ func (u *FeePaymentUpsertOne) UpdateStudentID() *FeePaymentUpsertOne {
 }
 
 // SetFeeStructureID sets the "fee_structure_id" field.
-func (u *FeePaymentUpsertOne) SetFeeStructureID(v int) *FeePaymentUpsertOne {
+func (u *FeePaymentUpsertOne) SetFeeStructureID(v uuid.UUID) *FeePaymentUpsertOne {
 	return u.Update(func(s *FeePaymentUpsert) {
 		s.SetFeeStructureID(v)
 	})
@@ -637,7 +673,12 @@ func (u *FeePaymentUpsertOne) ExecX(ctx context.Context) {
 }
 
 // Exec executes the UPSERT query and returns the inserted/updated ID.
-func (u *FeePaymentUpsertOne) ID(ctx context.Context) (id int, err error) {
+func (u *FeePaymentUpsertOne) ID(ctx context.Context) (id uuid.UUID, err error) {
+	if u.create.driver.Dialect() == dialect.MySQL {
+		// In case of "ON CONFLICT", there is no way to get back non-numeric ID
+		// fields from the database since MySQL does not support the RETURNING clause.
+		return id, errors.New("ent: FeePaymentUpsertOne.ID is not supported by MySQL driver. Use FeePaymentUpsertOne.Exec instead")
+	}
 	node, err := u.create.Save(ctx)
 	if err != nil {
 		return id, err
@@ -646,7 +687,7 @@ func (u *FeePaymentUpsertOne) ID(ctx context.Context) (id int, err error) {
 }
 
 // IDX is like ID, but panics if an error occurs.
-func (u *FeePaymentUpsertOne) IDX(ctx context.Context) int {
+func (u *FeePaymentUpsertOne) IDX(ctx context.Context) uuid.UUID {
 	id, err := u.ID(ctx)
 	if err != nil {
 		panic(err)
@@ -701,10 +742,6 @@ func (_c *FeePaymentCreateBulk) Save(ctx context.Context) ([]*FeePayment, error)
 					return nil, err
 				}
 				mutation.id = &nodes[i].ID
-				if specs[i].ID.Value != nil {
-					id := specs[i].ID.Value.(int64)
-					nodes[i].ID = int(id)
-				}
 				mutation.done = true
 				return nodes[i], nil
 			})
@@ -791,10 +828,20 @@ type FeePaymentUpsertBulk struct {
 //	client.FeePayment.Create().
 //		OnConflict(
 //			sql.ResolveWithNewValues(),
+//			sql.ResolveWith(func(u *sql.UpdateSet) {
+//				u.SetIgnore(feepayment.FieldID)
+//			}),
 //		).
 //		Exec(ctx)
 func (u *FeePaymentUpsertBulk) UpdateNewValues() *FeePaymentUpsertBulk {
 	u.create.conflict = append(u.create.conflict, sql.ResolveWithNewValues())
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(s *sql.UpdateSet) {
+		for _, b := range u.create.builders {
+			if _, exists := b.mutation.ID(); exists {
+				s.SetIgnore(feepayment.FieldID)
+			}
+		}
+	}))
 	return u
 }
 
@@ -840,7 +887,7 @@ func (u *FeePaymentUpsertBulk) UpdateStudentID() *FeePaymentUpsertBulk {
 }
 
 // SetFeeStructureID sets the "fee_structure_id" field.
-func (u *FeePaymentUpsertBulk) SetFeeStructureID(v int) *FeePaymentUpsertBulk {
+func (u *FeePaymentUpsertBulk) SetFeeStructureID(v uuid.UUID) *FeePaymentUpsertBulk {
 	return u.Update(func(s *FeePaymentUpsert) {
 		s.SetFeeStructureID(v)
 	})

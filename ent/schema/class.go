@@ -5,6 +5,7 @@ import (
 	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
 	"entgo.io/ent/schema/index"
+	"github.com/google/uuid"
 )
 
 // Class holds the schema definition for the Class entity.
@@ -15,9 +16,11 @@ type Class struct {
 // Fields of the Class.
 func (Class) Fields() []ent.Field {
 	return []ent.Field{
+		field.UUID("id", uuid.UUID{}).
+			Default(uuid.New),
 		field.String("name"),
-		field.Int("academic_year_id"),
-		field.Int("department_id").
+		field.UUID("academic_year_id", uuid.UUID{}),
+		field.UUID("department_id", uuid.UUID{}).
 			Optional().
 			Nillable(),
 		field.Int("capacity").

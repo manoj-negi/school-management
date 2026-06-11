@@ -117,7 +117,7 @@ func (_u *AcademicYearUpdate) ExecX(ctx context.Context) {
 }
 
 func (_u *AcademicYearUpdate) sqlSave(ctx context.Context) (_node int, err error) {
-	_spec := sqlgraph.NewUpdateSpec(academicyear.Table, academicyear.Columns, sqlgraph.NewFieldSpec(academicyear.FieldID, field.TypeInt))
+	_spec := sqlgraph.NewUpdateSpec(academicyear.Table, academicyear.Columns, sqlgraph.NewFieldSpec(academicyear.FieldID, field.TypeUUID))
 	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
@@ -259,7 +259,7 @@ func (_u *AcademicYearUpdateOne) ExecX(ctx context.Context) {
 }
 
 func (_u *AcademicYearUpdateOne) sqlSave(ctx context.Context) (_node *AcademicYear, err error) {
-	_spec := sqlgraph.NewUpdateSpec(academicyear.Table, academicyear.Columns, sqlgraph.NewFieldSpec(academicyear.FieldID, field.TypeInt))
+	_spec := sqlgraph.NewUpdateSpec(academicyear.Table, academicyear.Columns, sqlgraph.NewFieldSpec(academicyear.FieldID, field.TypeUUID))
 	id, ok := _u.mutation.ID()
 	if !ok {
 		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "AcademicYear.id" for update`)}

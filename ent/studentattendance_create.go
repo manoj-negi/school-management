@@ -12,6 +12,7 @@ import (
 	"go-seed/ent/subject"
 	"time"
 
+	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
@@ -33,19 +34,19 @@ func (_c *StudentAttendanceCreate) SetStudentID(v uuid.UUID) *StudentAttendanceC
 }
 
 // SetClassID sets the "class_id" field.
-func (_c *StudentAttendanceCreate) SetClassID(v int) *StudentAttendanceCreate {
+func (_c *StudentAttendanceCreate) SetClassID(v uuid.UUID) *StudentAttendanceCreate {
 	_c.mutation.SetClassID(v)
 	return _c
 }
 
 // SetSubjectID sets the "subject_id" field.
-func (_c *StudentAttendanceCreate) SetSubjectID(v int) *StudentAttendanceCreate {
+func (_c *StudentAttendanceCreate) SetSubjectID(v uuid.UUID) *StudentAttendanceCreate {
 	_c.mutation.SetSubjectID(v)
 	return _c
 }
 
 // SetNillableSubjectID sets the "subject_id" field if the given value is not nil.
-func (_c *StudentAttendanceCreate) SetNillableSubjectID(v *int) *StudentAttendanceCreate {
+func (_c *StudentAttendanceCreate) SetNillableSubjectID(v *uuid.UUID) *StudentAttendanceCreate {
 	if v != nil {
 		_c.SetSubjectID(*v)
 	}
@@ -82,6 +83,20 @@ func (_c *StudentAttendanceCreate) SetRemarks(v string) *StudentAttendanceCreate
 func (_c *StudentAttendanceCreate) SetNillableRemarks(v *string) *StudentAttendanceCreate {
 	if v != nil {
 		_c.SetRemarks(*v)
+	}
+	return _c
+}
+
+// SetID sets the "id" field.
+func (_c *StudentAttendanceCreate) SetID(v uuid.UUID) *StudentAttendanceCreate {
+	_c.mutation.SetID(v)
+	return _c
+}
+
+// SetNillableID sets the "id" field if the given value is not nil.
+func (_c *StudentAttendanceCreate) SetNillableID(v *uuid.UUID) *StudentAttendanceCreate {
+	if v != nil {
+		_c.SetID(*v)
 	}
 	return _c
 }
@@ -140,6 +155,10 @@ func (_c *StudentAttendanceCreate) defaults() {
 		v := studentattendance.DefaultStatus
 		_c.mutation.SetStatus(v)
 	}
+	if _, ok := _c.mutation.ID(); !ok {
+		v := studentattendance.DefaultID()
+		_c.mutation.SetID(v)
+	}
 }
 
 // check runs all checks and user-defined validators on the builder.
@@ -181,8 +200,13 @@ func (_c *StudentAttendanceCreate) sqlSave(ctx context.Context) (*StudentAttenda
 		}
 		return nil, err
 	}
-	id := _spec.ID.Value.(int64)
-	_node.ID = int(id)
+	if _spec.ID.Value != nil {
+		if id, ok := _spec.ID.Value.(*uuid.UUID); ok {
+			_node.ID = *id
+		} else if err := _node.ID.Scan(_spec.ID.Value); err != nil {
+			return nil, err
+		}
+	}
 	_c.mutation.id = &_node.ID
 	_c.mutation.done = true
 	return _node, nil
@@ -191,9 +215,13 @@ func (_c *StudentAttendanceCreate) sqlSave(ctx context.Context) (*StudentAttenda
 func (_c *StudentAttendanceCreate) createSpec() (*StudentAttendance, *sqlgraph.CreateSpec) {
 	var (
 		_node = &StudentAttendance{config: _c.config}
-		_spec = sqlgraph.NewCreateSpec(studentattendance.Table, sqlgraph.NewFieldSpec(studentattendance.FieldID, field.TypeInt))
+		_spec = sqlgraph.NewCreateSpec(studentattendance.Table, sqlgraph.NewFieldSpec(studentattendance.FieldID, field.TypeUUID))
 	)
 	_spec.OnConflict = _c.conflict
+	if id, ok := _c.mutation.ID(); ok {
+		_node.ID = id
+		_spec.ID.Value = &id
+	}
 	if value, ok := _c.mutation.Date(); ok {
 		_spec.SetField(studentattendance.FieldDate, field.TypeTime, value)
 		_node.Date = value
@@ -231,7 +259,7 @@ func (_c *StudentAttendanceCreate) createSpec() (*StudentAttendance, *sqlgraph.C
 			Columns: []string{studentattendance.ClassColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(class.FieldID, field.TypeInt),
+				IDSpec: sqlgraph.NewFieldSpec(class.FieldID, field.TypeUUID),
 			},
 		}
 		for _, k := range nodes {
@@ -248,7 +276,7 @@ func (_c *StudentAttendanceCreate) createSpec() (*StudentAttendance, *sqlgraph.C
 			Columns: []string{studentattendance.SubjectColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(subject.FieldID, field.TypeInt),
+				IDSpec: sqlgraph.NewFieldSpec(subject.FieldID, field.TypeUUID),
 			},
 		}
 		for _, k := range nodes {
@@ -322,7 +350,7 @@ func (u *StudentAttendanceUpsert) UpdateStudentID() *StudentAttendanceUpsert {
 }
 
 // SetClassID sets the "class_id" field.
-func (u *StudentAttendanceUpsert) SetClassID(v int) *StudentAttendanceUpsert {
+func (u *StudentAttendanceUpsert) SetClassID(v uuid.UUID) *StudentAttendanceUpsert {
 	u.Set(studentattendance.FieldClassID, v)
 	return u
 }
@@ -334,7 +362,7 @@ func (u *StudentAttendanceUpsert) UpdateClassID() *StudentAttendanceUpsert {
 }
 
 // SetSubjectID sets the "subject_id" field.
-func (u *StudentAttendanceUpsert) SetSubjectID(v int) *StudentAttendanceUpsert {
+func (u *StudentAttendanceUpsert) SetSubjectID(v uuid.UUID) *StudentAttendanceUpsert {
 	u.Set(studentattendance.FieldSubjectID, v)
 	return u
 }
@@ -393,16 +421,24 @@ func (u *StudentAttendanceUpsert) ClearRemarks() *StudentAttendanceUpsert {
 	return u
 }
 
-// UpdateNewValues updates the mutable fields using the new values that were set on create.
+// UpdateNewValues updates the mutable fields using the new values that were set on create except the ID field.
 // Using this option is equivalent to using:
 //
 //	client.StudentAttendance.Create().
 //		OnConflict(
 //			sql.ResolveWithNewValues(),
+//			sql.ResolveWith(func(u *sql.UpdateSet) {
+//				u.SetIgnore(studentattendance.FieldID)
+//			}),
 //		).
 //		Exec(ctx)
 func (u *StudentAttendanceUpsertOne) UpdateNewValues() *StudentAttendanceUpsertOne {
 	u.create.conflict = append(u.create.conflict, sql.ResolveWithNewValues())
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(s *sql.UpdateSet) {
+		if _, exists := u.create.mutation.ID(); exists {
+			s.SetIgnore(studentattendance.FieldID)
+		}
+	}))
 	return u
 }
 
@@ -448,7 +484,7 @@ func (u *StudentAttendanceUpsertOne) UpdateStudentID() *StudentAttendanceUpsertO
 }
 
 // SetClassID sets the "class_id" field.
-func (u *StudentAttendanceUpsertOne) SetClassID(v int) *StudentAttendanceUpsertOne {
+func (u *StudentAttendanceUpsertOne) SetClassID(v uuid.UUID) *StudentAttendanceUpsertOne {
 	return u.Update(func(s *StudentAttendanceUpsert) {
 		s.SetClassID(v)
 	})
@@ -462,7 +498,7 @@ func (u *StudentAttendanceUpsertOne) UpdateClassID() *StudentAttendanceUpsertOne
 }
 
 // SetSubjectID sets the "subject_id" field.
-func (u *StudentAttendanceUpsertOne) SetSubjectID(v int) *StudentAttendanceUpsertOne {
+func (u *StudentAttendanceUpsertOne) SetSubjectID(v uuid.UUID) *StudentAttendanceUpsertOne {
 	return u.Update(func(s *StudentAttendanceUpsert) {
 		s.SetSubjectID(v)
 	})
@@ -547,7 +583,12 @@ func (u *StudentAttendanceUpsertOne) ExecX(ctx context.Context) {
 }
 
 // Exec executes the UPSERT query and returns the inserted/updated ID.
-func (u *StudentAttendanceUpsertOne) ID(ctx context.Context) (id int, err error) {
+func (u *StudentAttendanceUpsertOne) ID(ctx context.Context) (id uuid.UUID, err error) {
+	if u.create.driver.Dialect() == dialect.MySQL {
+		// In case of "ON CONFLICT", there is no way to get back non-numeric ID
+		// fields from the database since MySQL does not support the RETURNING clause.
+		return id, errors.New("ent: StudentAttendanceUpsertOne.ID is not supported by MySQL driver. Use StudentAttendanceUpsertOne.Exec instead")
+	}
 	node, err := u.create.Save(ctx)
 	if err != nil {
 		return id, err
@@ -556,7 +597,7 @@ func (u *StudentAttendanceUpsertOne) ID(ctx context.Context) (id int, err error)
 }
 
 // IDX is like ID, but panics if an error occurs.
-func (u *StudentAttendanceUpsertOne) IDX(ctx context.Context) int {
+func (u *StudentAttendanceUpsertOne) IDX(ctx context.Context) uuid.UUID {
 	id, err := u.ID(ctx)
 	if err != nil {
 		panic(err)
@@ -611,10 +652,6 @@ func (_c *StudentAttendanceCreateBulk) Save(ctx context.Context) ([]*StudentAtte
 					return nil, err
 				}
 				mutation.id = &nodes[i].ID
-				if specs[i].ID.Value != nil {
-					id := specs[i].ID.Value.(int64)
-					nodes[i].ID = int(id)
-				}
 				mutation.done = true
 				return nodes[i], nil
 			})
@@ -701,10 +738,20 @@ type StudentAttendanceUpsertBulk struct {
 //	client.StudentAttendance.Create().
 //		OnConflict(
 //			sql.ResolveWithNewValues(),
+//			sql.ResolveWith(func(u *sql.UpdateSet) {
+//				u.SetIgnore(studentattendance.FieldID)
+//			}),
 //		).
 //		Exec(ctx)
 func (u *StudentAttendanceUpsertBulk) UpdateNewValues() *StudentAttendanceUpsertBulk {
 	u.create.conflict = append(u.create.conflict, sql.ResolveWithNewValues())
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(s *sql.UpdateSet) {
+		for _, b := range u.create.builders {
+			if _, exists := b.mutation.ID(); exists {
+				s.SetIgnore(studentattendance.FieldID)
+			}
+		}
+	}))
 	return u
 }
 
@@ -750,7 +797,7 @@ func (u *StudentAttendanceUpsertBulk) UpdateStudentID() *StudentAttendanceUpsert
 }
 
 // SetClassID sets the "class_id" field.
-func (u *StudentAttendanceUpsertBulk) SetClassID(v int) *StudentAttendanceUpsertBulk {
+func (u *StudentAttendanceUpsertBulk) SetClassID(v uuid.UUID) *StudentAttendanceUpsertBulk {
 	return u.Update(func(s *StudentAttendanceUpsert) {
 		s.SetClassID(v)
 	})
@@ -764,7 +811,7 @@ func (u *StudentAttendanceUpsertBulk) UpdateClassID() *StudentAttendanceUpsertBu
 }
 
 // SetSubjectID sets the "subject_id" field.
-func (u *StudentAttendanceUpsertBulk) SetSubjectID(v int) *StudentAttendanceUpsertBulk {
+func (u *StudentAttendanceUpsertBulk) SetSubjectID(v uuid.UUID) *StudentAttendanceUpsertBulk {
 	return u.Update(func(s *StudentAttendanceUpsert) {
 		s.SetSubjectID(v)
 	})

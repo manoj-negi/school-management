@@ -11,9 +11,11 @@ import (
 	"go-seed/ent/feestructure"
 	"time"
 
+	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/google/uuid"
 )
 
 // FeeStructureCreate is the builder for creating a FeeStructure entity.
@@ -25,13 +27,13 @@ type FeeStructureCreate struct {
 }
 
 // SetClassID sets the "class_id" field.
-func (_c *FeeStructureCreate) SetClassID(v int) *FeeStructureCreate {
+func (_c *FeeStructureCreate) SetClassID(v uuid.UUID) *FeeStructureCreate {
 	_c.mutation.SetClassID(v)
 	return _c
 }
 
 // SetAcademicYearID sets the "academic_year_id" field.
-func (_c *FeeStructureCreate) SetAcademicYearID(v int) *FeeStructureCreate {
+func (_c *FeeStructureCreate) SetAcademicYearID(v uuid.UUID) *FeeStructureCreate {
 	_c.mutation.SetAcademicYearID(v)
 	return _c
 }
@@ -62,6 +64,20 @@ func (_c *FeeStructureCreate) SetNillableDueDate(v *time.Time) *FeeStructureCrea
 	return _c
 }
 
+// SetID sets the "id" field.
+func (_c *FeeStructureCreate) SetID(v uuid.UUID) *FeeStructureCreate {
+	_c.mutation.SetID(v)
+	return _c
+}
+
+// SetNillableID sets the "id" field if the given value is not nil.
+func (_c *FeeStructureCreate) SetNillableID(v *uuid.UUID) *FeeStructureCreate {
+	if v != nil {
+		_c.SetID(*v)
+	}
+	return _c
+}
+
 // SetClass sets the "class" edge to the Class entity.
 func (_c *FeeStructureCreate) SetClass(v *Class) *FeeStructureCreate {
 	return _c.SetClassID(v.ID)
@@ -79,6 +95,7 @@ func (_c *FeeStructureCreate) Mutation() *FeeStructureMutation {
 
 // Save creates the FeeStructure in the database.
 func (_c *FeeStructureCreate) Save(ctx context.Context) (*FeeStructure, error) {
+	_c.defaults()
 	return withHooks(ctx, _c.sqlSave, _c.mutation, _c.hooks)
 }
 
@@ -101,6 +118,14 @@ func (_c *FeeStructureCreate) Exec(ctx context.Context) error {
 func (_c *FeeStructureCreate) ExecX(ctx context.Context) {
 	if err := _c.Exec(ctx); err != nil {
 		panic(err)
+	}
+}
+
+// defaults sets the default values of the builder before save.
+func (_c *FeeStructureCreate) defaults() {
+	if _, ok := _c.mutation.ID(); !ok {
+		v := feestructure.DefaultID()
+		_c.mutation.SetID(v)
 	}
 }
 
@@ -138,8 +163,13 @@ func (_c *FeeStructureCreate) sqlSave(ctx context.Context) (*FeeStructure, error
 		}
 		return nil, err
 	}
-	id := _spec.ID.Value.(int64)
-	_node.ID = int(id)
+	if _spec.ID.Value != nil {
+		if id, ok := _spec.ID.Value.(*uuid.UUID); ok {
+			_node.ID = *id
+		} else if err := _node.ID.Scan(_spec.ID.Value); err != nil {
+			return nil, err
+		}
+	}
 	_c.mutation.id = &_node.ID
 	_c.mutation.done = true
 	return _node, nil
@@ -148,9 +178,13 @@ func (_c *FeeStructureCreate) sqlSave(ctx context.Context) (*FeeStructure, error
 func (_c *FeeStructureCreate) createSpec() (*FeeStructure, *sqlgraph.CreateSpec) {
 	var (
 		_node = &FeeStructure{config: _c.config}
-		_spec = sqlgraph.NewCreateSpec(feestructure.Table, sqlgraph.NewFieldSpec(feestructure.FieldID, field.TypeInt))
+		_spec = sqlgraph.NewCreateSpec(feestructure.Table, sqlgraph.NewFieldSpec(feestructure.FieldID, field.TypeUUID))
 	)
 	_spec.OnConflict = _c.conflict
+	if id, ok := _c.mutation.ID(); ok {
+		_node.ID = id
+		_spec.ID.Value = &id
+	}
 	if value, ok := _c.mutation.FeeLabel(); ok {
 		_spec.SetField(feestructure.FieldFeeLabel, field.TypeString, value)
 		_node.FeeLabel = value
@@ -171,7 +205,7 @@ func (_c *FeeStructureCreate) createSpec() (*FeeStructure, *sqlgraph.CreateSpec)
 			Columns: []string{feestructure.ClassColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(class.FieldID, field.TypeInt),
+				IDSpec: sqlgraph.NewFieldSpec(class.FieldID, field.TypeUUID),
 			},
 		}
 		for _, k := range nodes {
@@ -188,7 +222,7 @@ func (_c *FeeStructureCreate) createSpec() (*FeeStructure, *sqlgraph.CreateSpec)
 			Columns: []string{feestructure.AcademicYearColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(academicyear.FieldID, field.TypeInt),
+				IDSpec: sqlgraph.NewFieldSpec(academicyear.FieldID, field.TypeUUID),
 			},
 		}
 		for _, k := range nodes {
@@ -250,7 +284,7 @@ type (
 )
 
 // SetClassID sets the "class_id" field.
-func (u *FeeStructureUpsert) SetClassID(v int) *FeeStructureUpsert {
+func (u *FeeStructureUpsert) SetClassID(v uuid.UUID) *FeeStructureUpsert {
 	u.Set(feestructure.FieldClassID, v)
 	return u
 }
@@ -262,7 +296,7 @@ func (u *FeeStructureUpsert) UpdateClassID() *FeeStructureUpsert {
 }
 
 // SetAcademicYearID sets the "academic_year_id" field.
-func (u *FeeStructureUpsert) SetAcademicYearID(v int) *FeeStructureUpsert {
+func (u *FeeStructureUpsert) SetAcademicYearID(v uuid.UUID) *FeeStructureUpsert {
 	u.Set(feestructure.FieldAcademicYearID, v)
 	return u
 }
@@ -321,16 +355,24 @@ func (u *FeeStructureUpsert) ClearDueDate() *FeeStructureUpsert {
 	return u
 }
 
-// UpdateNewValues updates the mutable fields using the new values that were set on create.
+// UpdateNewValues updates the mutable fields using the new values that were set on create except the ID field.
 // Using this option is equivalent to using:
 //
 //	client.FeeStructure.Create().
 //		OnConflict(
 //			sql.ResolveWithNewValues(),
+//			sql.ResolveWith(func(u *sql.UpdateSet) {
+//				u.SetIgnore(feestructure.FieldID)
+//			}),
 //		).
 //		Exec(ctx)
 func (u *FeeStructureUpsertOne) UpdateNewValues() *FeeStructureUpsertOne {
 	u.create.conflict = append(u.create.conflict, sql.ResolveWithNewValues())
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(s *sql.UpdateSet) {
+		if _, exists := u.create.mutation.ID(); exists {
+			s.SetIgnore(feestructure.FieldID)
+		}
+	}))
 	return u
 }
 
@@ -362,7 +404,7 @@ func (u *FeeStructureUpsertOne) Update(set func(*FeeStructureUpsert)) *FeeStruct
 }
 
 // SetClassID sets the "class_id" field.
-func (u *FeeStructureUpsertOne) SetClassID(v int) *FeeStructureUpsertOne {
+func (u *FeeStructureUpsertOne) SetClassID(v uuid.UUID) *FeeStructureUpsertOne {
 	return u.Update(func(s *FeeStructureUpsert) {
 		s.SetClassID(v)
 	})
@@ -376,7 +418,7 @@ func (u *FeeStructureUpsertOne) UpdateClassID() *FeeStructureUpsertOne {
 }
 
 // SetAcademicYearID sets the "academic_year_id" field.
-func (u *FeeStructureUpsertOne) SetAcademicYearID(v int) *FeeStructureUpsertOne {
+func (u *FeeStructureUpsertOne) SetAcademicYearID(v uuid.UUID) *FeeStructureUpsertOne {
 	return u.Update(func(s *FeeStructureUpsert) {
 		s.SetAcademicYearID(v)
 	})
@@ -461,7 +503,12 @@ func (u *FeeStructureUpsertOne) ExecX(ctx context.Context) {
 }
 
 // Exec executes the UPSERT query and returns the inserted/updated ID.
-func (u *FeeStructureUpsertOne) ID(ctx context.Context) (id int, err error) {
+func (u *FeeStructureUpsertOne) ID(ctx context.Context) (id uuid.UUID, err error) {
+	if u.create.driver.Dialect() == dialect.MySQL {
+		// In case of "ON CONFLICT", there is no way to get back non-numeric ID
+		// fields from the database since MySQL does not support the RETURNING clause.
+		return id, errors.New("ent: FeeStructureUpsertOne.ID is not supported by MySQL driver. Use FeeStructureUpsertOne.Exec instead")
+	}
 	node, err := u.create.Save(ctx)
 	if err != nil {
 		return id, err
@@ -470,7 +517,7 @@ func (u *FeeStructureUpsertOne) ID(ctx context.Context) (id int, err error) {
 }
 
 // IDX is like ID, but panics if an error occurs.
-func (u *FeeStructureUpsertOne) IDX(ctx context.Context) int {
+func (u *FeeStructureUpsertOne) IDX(ctx context.Context) uuid.UUID {
 	id, err := u.ID(ctx)
 	if err != nil {
 		panic(err)
@@ -497,6 +544,7 @@ func (_c *FeeStructureCreateBulk) Save(ctx context.Context) ([]*FeeStructure, er
 	for i := range _c.builders {
 		func(i int, root context.Context) {
 			builder := _c.builders[i]
+			builder.defaults()
 			var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 				mutation, ok := m.(*FeeStructureMutation)
 				if !ok {
@@ -524,10 +572,6 @@ func (_c *FeeStructureCreateBulk) Save(ctx context.Context) ([]*FeeStructure, er
 					return nil, err
 				}
 				mutation.id = &nodes[i].ID
-				if specs[i].ID.Value != nil {
-					id := specs[i].ID.Value.(int64)
-					nodes[i].ID = int(id)
-				}
 				mutation.done = true
 				return nodes[i], nil
 			})
@@ -614,10 +658,20 @@ type FeeStructureUpsertBulk struct {
 //	client.FeeStructure.Create().
 //		OnConflict(
 //			sql.ResolveWithNewValues(),
+//			sql.ResolveWith(func(u *sql.UpdateSet) {
+//				u.SetIgnore(feestructure.FieldID)
+//			}),
 //		).
 //		Exec(ctx)
 func (u *FeeStructureUpsertBulk) UpdateNewValues() *FeeStructureUpsertBulk {
 	u.create.conflict = append(u.create.conflict, sql.ResolveWithNewValues())
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(s *sql.UpdateSet) {
+		for _, b := range u.create.builders {
+			if _, exists := b.mutation.ID(); exists {
+				s.SetIgnore(feestructure.FieldID)
+			}
+		}
+	}))
 	return u
 }
 
@@ -649,7 +703,7 @@ func (u *FeeStructureUpsertBulk) Update(set func(*FeeStructureUpsert)) *FeeStruc
 }
 
 // SetClassID sets the "class_id" field.
-func (u *FeeStructureUpsertBulk) SetClassID(v int) *FeeStructureUpsertBulk {
+func (u *FeeStructureUpsertBulk) SetClassID(v uuid.UUID) *FeeStructureUpsertBulk {
 	return u.Update(func(s *FeeStructureUpsert) {
 		s.SetClassID(v)
 	})
@@ -663,7 +717,7 @@ func (u *FeeStructureUpsertBulk) UpdateClassID() *FeeStructureUpsertBulk {
 }
 
 // SetAcademicYearID sets the "academic_year_id" field.
-func (u *FeeStructureUpsertBulk) SetAcademicYearID(v int) *FeeStructureUpsertBulk {
+func (u *FeeStructureUpsertBulk) SetAcademicYearID(v uuid.UUID) *FeeStructureUpsertBulk {
 	return u.Update(func(s *FeeStructureUpsert) {
 		s.SetAcademicYearID(v)
 	})

@@ -20,13 +20,13 @@ import (
 type StudentAttendance struct {
 	config `json:"-"`
 	// ID of the ent.
-	ID int `json:"id,omitempty"`
+	ID uuid.UUID `json:"id,omitempty"`
 	// StudentID holds the value of the "student_id" field.
 	StudentID uuid.UUID `json:"student_id,omitempty"`
 	// ClassID holds the value of the "class_id" field.
-	ClassID int `json:"class_id,omitempty"`
+	ClassID uuid.UUID `json:"class_id,omitempty"`
 	// SubjectID holds the value of the "subject_id" field.
-	SubjectID *int `json:"subject_id,omitempty"`
+	SubjectID *uuid.UUID `json:"subject_id,omitempty"`
 	// Date holds the value of the "date" field.
 	Date time.Time `json:"date,omitempty"`
 	// Status holds the value of the "status" field.
@@ -90,13 +90,13 @@ func (*StudentAttendance) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case studentattendance.FieldID, studentattendance.FieldClassID, studentattendance.FieldSubjectID:
-			values[i] = new(sql.NullInt64)
+		case studentattendance.FieldSubjectID:
+			values[i] = &sql.NullScanner{S: new(uuid.UUID)}
 		case studentattendance.FieldStatus, studentattendance.FieldRemarks:
 			values[i] = new(sql.NullString)
 		case studentattendance.FieldDate:
 			values[i] = new(sql.NullTime)
-		case studentattendance.FieldStudentID:
+		case studentattendance.FieldID, studentattendance.FieldStudentID, studentattendance.FieldClassID:
 			values[i] = new(uuid.UUID)
 		default:
 			values[i] = new(sql.UnknownType)
@@ -114,11 +114,11 @@ func (_m *StudentAttendance) assignValues(columns []string, values []any) error 
 	for i := range columns {
 		switch columns[i] {
 		case studentattendance.FieldID:
-			value, ok := values[i].(*sql.NullInt64)
-			if !ok {
-				return fmt.Errorf("unexpected type %T for field id", value)
+			if value, ok := values[i].(*uuid.UUID); !ok {
+				return fmt.Errorf("unexpected type %T for field id", values[i])
+			} else if value != nil {
+				_m.ID = *value
 			}
-			_m.ID = int(value.Int64)
 		case studentattendance.FieldStudentID:
 			if value, ok := values[i].(*uuid.UUID); !ok {
 				return fmt.Errorf("unexpected type %T for field student_id", values[i])
@@ -126,17 +126,17 @@ func (_m *StudentAttendance) assignValues(columns []string, values []any) error 
 				_m.StudentID = *value
 			}
 		case studentattendance.FieldClassID:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
+			if value, ok := values[i].(*uuid.UUID); !ok {
 				return fmt.Errorf("unexpected type %T for field class_id", values[i])
-			} else if value.Valid {
-				_m.ClassID = int(value.Int64)
+			} else if value != nil {
+				_m.ClassID = *value
 			}
 		case studentattendance.FieldSubjectID:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
+			if value, ok := values[i].(*sql.NullScanner); !ok {
 				return fmt.Errorf("unexpected type %T for field subject_id", values[i])
 			} else if value.Valid {
-				_m.SubjectID = new(int)
-				*_m.SubjectID = int(value.Int64)
+				_m.SubjectID = new(uuid.UUID)
+				*_m.SubjectID = *value.S.(*uuid.UUID)
 			}
 		case studentattendance.FieldDate:
 			if value, ok := values[i].(*sql.NullTime); !ok {

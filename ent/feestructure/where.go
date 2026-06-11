@@ -8,60 +8,61 @@ import (
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
+	"github.com/google/uuid"
 )
 
 // ID filters vertices based on their ID field.
-func ID(id int) predicate.FeeStructure {
+func ID(id uuid.UUID) predicate.FeeStructure {
 	return predicate.FeeStructure(sql.FieldEQ(FieldID, id))
 }
 
 // IDEQ applies the EQ predicate on the ID field.
-func IDEQ(id int) predicate.FeeStructure {
+func IDEQ(id uuid.UUID) predicate.FeeStructure {
 	return predicate.FeeStructure(sql.FieldEQ(FieldID, id))
 }
 
 // IDNEQ applies the NEQ predicate on the ID field.
-func IDNEQ(id int) predicate.FeeStructure {
+func IDNEQ(id uuid.UUID) predicate.FeeStructure {
 	return predicate.FeeStructure(sql.FieldNEQ(FieldID, id))
 }
 
 // IDIn applies the In predicate on the ID field.
-func IDIn(ids ...int) predicate.FeeStructure {
+func IDIn(ids ...uuid.UUID) predicate.FeeStructure {
 	return predicate.FeeStructure(sql.FieldIn(FieldID, ids...))
 }
 
 // IDNotIn applies the NotIn predicate on the ID field.
-func IDNotIn(ids ...int) predicate.FeeStructure {
+func IDNotIn(ids ...uuid.UUID) predicate.FeeStructure {
 	return predicate.FeeStructure(sql.FieldNotIn(FieldID, ids...))
 }
 
 // IDGT applies the GT predicate on the ID field.
-func IDGT(id int) predicate.FeeStructure {
+func IDGT(id uuid.UUID) predicate.FeeStructure {
 	return predicate.FeeStructure(sql.FieldGT(FieldID, id))
 }
 
 // IDGTE applies the GTE predicate on the ID field.
-func IDGTE(id int) predicate.FeeStructure {
+func IDGTE(id uuid.UUID) predicate.FeeStructure {
 	return predicate.FeeStructure(sql.FieldGTE(FieldID, id))
 }
 
 // IDLT applies the LT predicate on the ID field.
-func IDLT(id int) predicate.FeeStructure {
+func IDLT(id uuid.UUID) predicate.FeeStructure {
 	return predicate.FeeStructure(sql.FieldLT(FieldID, id))
 }
 
 // IDLTE applies the LTE predicate on the ID field.
-func IDLTE(id int) predicate.FeeStructure {
+func IDLTE(id uuid.UUID) predicate.FeeStructure {
 	return predicate.FeeStructure(sql.FieldLTE(FieldID, id))
 }
 
 // ClassID applies equality check predicate on the "class_id" field. It's identical to ClassIDEQ.
-func ClassID(v int) predicate.FeeStructure {
+func ClassID(v uuid.UUID) predicate.FeeStructure {
 	return predicate.FeeStructure(sql.FieldEQ(FieldClassID, v))
 }
 
 // AcademicYearID applies equality check predicate on the "academic_year_id" field. It's identical to AcademicYearIDEQ.
-func AcademicYearID(v int) predicate.FeeStructure {
+func AcademicYearID(v uuid.UUID) predicate.FeeStructure {
 	return predicate.FeeStructure(sql.FieldEQ(FieldAcademicYearID, v))
 }
 
@@ -81,42 +82,42 @@ func DueDate(v time.Time) predicate.FeeStructure {
 }
 
 // ClassIDEQ applies the EQ predicate on the "class_id" field.
-func ClassIDEQ(v int) predicate.FeeStructure {
+func ClassIDEQ(v uuid.UUID) predicate.FeeStructure {
 	return predicate.FeeStructure(sql.FieldEQ(FieldClassID, v))
 }
 
 // ClassIDNEQ applies the NEQ predicate on the "class_id" field.
-func ClassIDNEQ(v int) predicate.FeeStructure {
+func ClassIDNEQ(v uuid.UUID) predicate.FeeStructure {
 	return predicate.FeeStructure(sql.FieldNEQ(FieldClassID, v))
 }
 
 // ClassIDIn applies the In predicate on the "class_id" field.
-func ClassIDIn(vs ...int) predicate.FeeStructure {
+func ClassIDIn(vs ...uuid.UUID) predicate.FeeStructure {
 	return predicate.FeeStructure(sql.FieldIn(FieldClassID, vs...))
 }
 
 // ClassIDNotIn applies the NotIn predicate on the "class_id" field.
-func ClassIDNotIn(vs ...int) predicate.FeeStructure {
+func ClassIDNotIn(vs ...uuid.UUID) predicate.FeeStructure {
 	return predicate.FeeStructure(sql.FieldNotIn(FieldClassID, vs...))
 }
 
 // AcademicYearIDEQ applies the EQ predicate on the "academic_year_id" field.
-func AcademicYearIDEQ(v int) predicate.FeeStructure {
+func AcademicYearIDEQ(v uuid.UUID) predicate.FeeStructure {
 	return predicate.FeeStructure(sql.FieldEQ(FieldAcademicYearID, v))
 }
 
 // AcademicYearIDNEQ applies the NEQ predicate on the "academic_year_id" field.
-func AcademicYearIDNEQ(v int) predicate.FeeStructure {
+func AcademicYearIDNEQ(v uuid.UUID) predicate.FeeStructure {
 	return predicate.FeeStructure(sql.FieldNEQ(FieldAcademicYearID, v))
 }
 
 // AcademicYearIDIn applies the In predicate on the "academic_year_id" field.
-func AcademicYearIDIn(vs ...int) predicate.FeeStructure {
+func AcademicYearIDIn(vs ...uuid.UUID) predicate.FeeStructure {
 	return predicate.FeeStructure(sql.FieldIn(FieldAcademicYearID, vs...))
 }
 
 // AcademicYearIDNotIn applies the NotIn predicate on the "academic_year_id" field.
-func AcademicYearIDNotIn(vs ...int) predicate.FeeStructure {
+func AcademicYearIDNotIn(vs ...uuid.UUID) predicate.FeeStructure {
 	return predicate.FeeStructure(sql.FieldNotIn(FieldAcademicYearID, vs...))
 }
 

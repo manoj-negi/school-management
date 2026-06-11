@@ -1,13 +1,11 @@
 -- Migration for ngx_data table derived from ngx-data.json
 SET session_replication_role = 'replica';
-
 CREATE TABLE IF NOT EXISTS public.ngx_data (
     "first_name" TEXT,
     "last_name" TEXT,
     "gender" TEXT,
     "address" TEXT
 );
-
 INSERT INTO public.ngx_data ("first_name", "last_name", "gender", "address") VALUES ('Cortez', 'Gaines', 'male', '423 Bay Parkway') ON CONFLICT DO NOTHING;
 INSERT INTO public.ngx_data ("first_name", "last_name", "gender", "address") VALUES ('Reba', 'Bowen', 'female', '663 Hale Avenue') ON CONFLICT DO NOTHING;
 INSERT INTO public.ngx_data ("first_name", "last_name", "gender", "address") VALUES ('Wallace', 'Bush', 'male', '955 Lawn Court') ON CONFLICT DO NOTHING;
@@ -36,5 +34,4 @@ INSERT INTO public.ngx_data ("first_name", "last_name", "gender", "address") VAL
 INSERT INTO public.ngx_data ("first_name", "last_name", "gender", "address") VALUES ('Giles', 'Sullivan', 'male', '741 Underhill Avenue') ON CONFLICT DO NOTHING;
 INSERT INTO public.ngx_data ("first_name", "last_name", "gender", "address") VALUES ('Donovan', 'Boone', 'male', '124 Grattan Street') ON CONFLICT DO NOTHING;
 INSERT INTO public.ngx_data ("first_name", "last_name", "gender", "address") VALUES ('Imelda', 'Baird', 'female', '487 Dahlgreen Place') ON CONFLICT DO NOTHING;
-
 SET session_replication_role = 'origin';

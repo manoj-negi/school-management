@@ -72,7 +72,7 @@ func PasswordHash(v string) predicate.User {
 }
 
 // RoleID applies equality check predicate on the "role_id" field. It's identical to RoleIDEQ.
-func RoleID(v int) predicate.User {
+func RoleID(v uuid.UUID) predicate.User {
 	return predicate.User(sql.FieldEQ(FieldRoleID, v))
 }
 
@@ -312,22 +312,22 @@ func RoleNotIn(vs ...Role) predicate.User {
 }
 
 // RoleIDEQ applies the EQ predicate on the "role_id" field.
-func RoleIDEQ(v int) predicate.User {
+func RoleIDEQ(v uuid.UUID) predicate.User {
 	return predicate.User(sql.FieldEQ(FieldRoleID, v))
 }
 
 // RoleIDNEQ applies the NEQ predicate on the "role_id" field.
-func RoleIDNEQ(v int) predicate.User {
+func RoleIDNEQ(v uuid.UUID) predicate.User {
 	return predicate.User(sql.FieldNEQ(FieldRoleID, v))
 }
 
 // RoleIDIn applies the In predicate on the "role_id" field.
-func RoleIDIn(vs ...int) predicate.User {
+func RoleIDIn(vs ...uuid.UUID) predicate.User {
 	return predicate.User(sql.FieldIn(FieldRoleID, vs...))
 }
 
 // RoleIDNotIn applies the NotIn predicate on the "role_id" field.
-func RoleIDNotIn(vs ...int) predicate.User {
+func RoleIDNotIn(vs ...uuid.UUID) predicate.User {
 	return predicate.User(sql.FieldNotIn(FieldRoleID, vs...))
 }
 

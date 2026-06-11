@@ -46,13 +46,13 @@ func (_u *FeePaymentUpdate) SetNillableStudentID(v *uuid.UUID) *FeePaymentUpdate
 }
 
 // SetFeeStructureID sets the "fee_structure_id" field.
-func (_u *FeePaymentUpdate) SetFeeStructureID(v int) *FeePaymentUpdate {
+func (_u *FeePaymentUpdate) SetFeeStructureID(v uuid.UUID) *FeePaymentUpdate {
 	_u.mutation.SetFeeStructureID(v)
 	return _u
 }
 
 // SetNillableFeeStructureID sets the "fee_structure_id" field if the given value is not nil.
-func (_u *FeePaymentUpdate) SetNillableFeeStructureID(v *int) *FeePaymentUpdate {
+func (_u *FeePaymentUpdate) SetNillableFeeStructureID(v *uuid.UUID) *FeePaymentUpdate {
 	if v != nil {
 		_u.SetFeeStructureID(*v)
 	}
@@ -242,7 +242,7 @@ func (_u *FeePaymentUpdate) sqlSave(ctx context.Context) (_node int, err error) 
 	if err := _u.check(); err != nil {
 		return _node, err
 	}
-	_spec := sqlgraph.NewUpdateSpec(feepayment.Table, feepayment.Columns, sqlgraph.NewFieldSpec(feepayment.FieldID, field.TypeInt))
+	_spec := sqlgraph.NewUpdateSpec(feepayment.Table, feepayment.Columns, sqlgraph.NewFieldSpec(feepayment.FieldID, field.TypeUUID))
 	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
@@ -317,7 +317,7 @@ func (_u *FeePaymentUpdate) sqlSave(ctx context.Context) (_node int, err error) 
 			Columns: []string{feepayment.FeeStructureColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(feestructure.FieldID, field.TypeInt),
+				IDSpec: sqlgraph.NewFieldSpec(feestructure.FieldID, field.TypeUUID),
 			},
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
@@ -330,7 +330,7 @@ func (_u *FeePaymentUpdate) sqlSave(ctx context.Context) (_node int, err error) 
 			Columns: []string{feepayment.FeeStructureColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(feestructure.FieldID, field.TypeInt),
+				IDSpec: sqlgraph.NewFieldSpec(feestructure.FieldID, field.TypeUUID),
 			},
 		}
 		for _, k := range nodes {
@@ -373,13 +373,13 @@ func (_u *FeePaymentUpdateOne) SetNillableStudentID(v *uuid.UUID) *FeePaymentUpd
 }
 
 // SetFeeStructureID sets the "fee_structure_id" field.
-func (_u *FeePaymentUpdateOne) SetFeeStructureID(v int) *FeePaymentUpdateOne {
+func (_u *FeePaymentUpdateOne) SetFeeStructureID(v uuid.UUID) *FeePaymentUpdateOne {
 	_u.mutation.SetFeeStructureID(v)
 	return _u
 }
 
 // SetNillableFeeStructureID sets the "fee_structure_id" field if the given value is not nil.
-func (_u *FeePaymentUpdateOne) SetNillableFeeStructureID(v *int) *FeePaymentUpdateOne {
+func (_u *FeePaymentUpdateOne) SetNillableFeeStructureID(v *uuid.UUID) *FeePaymentUpdateOne {
 	if v != nil {
 		_u.SetFeeStructureID(*v)
 	}
@@ -582,7 +582,7 @@ func (_u *FeePaymentUpdateOne) sqlSave(ctx context.Context) (_node *FeePayment, 
 	if err := _u.check(); err != nil {
 		return _node, err
 	}
-	_spec := sqlgraph.NewUpdateSpec(feepayment.Table, feepayment.Columns, sqlgraph.NewFieldSpec(feepayment.FieldID, field.TypeInt))
+	_spec := sqlgraph.NewUpdateSpec(feepayment.Table, feepayment.Columns, sqlgraph.NewFieldSpec(feepayment.FieldID, field.TypeUUID))
 	id, ok := _u.mutation.ID()
 	if !ok {
 		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "FeePayment.id" for update`)}
@@ -674,7 +674,7 @@ func (_u *FeePaymentUpdateOne) sqlSave(ctx context.Context) (_node *FeePayment, 
 			Columns: []string{feepayment.FeeStructureColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(feestructure.FieldID, field.TypeInt),
+				IDSpec: sqlgraph.NewFieldSpec(feestructure.FieldID, field.TypeUUID),
 			},
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
@@ -687,7 +687,7 @@ func (_u *FeePaymentUpdateOne) sqlSave(ctx context.Context) (_node *FeePayment, 
 			Columns: []string{feepayment.FeeStructureColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(feestructure.FieldID, field.TypeInt),
+				IDSpec: sqlgraph.NewFieldSpec(feestructure.FieldID, field.TypeUUID),
 			},
 		}
 		for _, k := range nodes {

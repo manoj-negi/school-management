@@ -107,8 +107,8 @@ func (_q *TeacherAttendanceQuery) FirstX(ctx context.Context) *TeacherAttendance
 
 // FirstID returns the first TeacherAttendance ID from the query.
 // Returns a *NotFoundError when no TeacherAttendance ID was found.
-func (_q *TeacherAttendanceQuery) FirstID(ctx context.Context) (id int, err error) {
-	var ids []int
+func (_q *TeacherAttendanceQuery) FirstID(ctx context.Context) (id uuid.UUID, err error) {
+	var ids []uuid.UUID
 	if ids, err = _q.Limit(1).IDs(setContextOp(ctx, _q.ctx, ent.OpQueryFirstID)); err != nil {
 		return
 	}
@@ -120,7 +120,7 @@ func (_q *TeacherAttendanceQuery) FirstID(ctx context.Context) (id int, err erro
 }
 
 // FirstIDX is like FirstID, but panics if an error occurs.
-func (_q *TeacherAttendanceQuery) FirstIDX(ctx context.Context) int {
+func (_q *TeacherAttendanceQuery) FirstIDX(ctx context.Context) uuid.UUID {
 	id, err := _q.FirstID(ctx)
 	if err != nil && !IsNotFound(err) {
 		panic(err)
@@ -158,8 +158,8 @@ func (_q *TeacherAttendanceQuery) OnlyX(ctx context.Context) *TeacherAttendance 
 // OnlyID is like Only, but returns the only TeacherAttendance ID in the query.
 // Returns a *NotSingularError when more than one TeacherAttendance ID is found.
 // Returns a *NotFoundError when no entities are found.
-func (_q *TeacherAttendanceQuery) OnlyID(ctx context.Context) (id int, err error) {
-	var ids []int
+func (_q *TeacherAttendanceQuery) OnlyID(ctx context.Context) (id uuid.UUID, err error) {
+	var ids []uuid.UUID
 	if ids, err = _q.Limit(2).IDs(setContextOp(ctx, _q.ctx, ent.OpQueryOnlyID)); err != nil {
 		return
 	}
@@ -175,7 +175,7 @@ func (_q *TeacherAttendanceQuery) OnlyID(ctx context.Context) (id int, err error
 }
 
 // OnlyIDX is like OnlyID, but panics if an error occurs.
-func (_q *TeacherAttendanceQuery) OnlyIDX(ctx context.Context) int {
+func (_q *TeacherAttendanceQuery) OnlyIDX(ctx context.Context) uuid.UUID {
 	id, err := _q.OnlyID(ctx)
 	if err != nil {
 		panic(err)
@@ -203,7 +203,7 @@ func (_q *TeacherAttendanceQuery) AllX(ctx context.Context) []*TeacherAttendance
 }
 
 // IDs executes the query and returns a list of TeacherAttendance IDs.
-func (_q *TeacherAttendanceQuery) IDs(ctx context.Context) (ids []int, err error) {
+func (_q *TeacherAttendanceQuery) IDs(ctx context.Context) (ids []uuid.UUID, err error) {
 	if _q.ctx.Unique == nil && _q.path != nil {
 		_q.Unique(true)
 	}
@@ -215,7 +215,7 @@ func (_q *TeacherAttendanceQuery) IDs(ctx context.Context) (ids []int, err error
 }
 
 // IDsX is like IDs, but panics if an error occurs.
-func (_q *TeacherAttendanceQuery) IDsX(ctx context.Context) []int {
+func (_q *TeacherAttendanceQuery) IDsX(ctx context.Context) []uuid.UUID {
 	ids, err := _q.IDs(ctx)
 	if err != nil {
 		panic(err)
@@ -442,7 +442,7 @@ func (_q *TeacherAttendanceQuery) sqlCount(ctx context.Context) (int, error) {
 }
 
 func (_q *TeacherAttendanceQuery) querySpec() *sqlgraph.QuerySpec {
-	_spec := sqlgraph.NewQuerySpec(teacherattendance.Table, teacherattendance.Columns, sqlgraph.NewFieldSpec(teacherattendance.FieldID, field.TypeInt))
+	_spec := sqlgraph.NewQuerySpec(teacherattendance.Table, teacherattendance.Columns, sqlgraph.NewFieldSpec(teacherattendance.FieldID, field.TypeUUID))
 	_spec.From = _q.sql
 	if unique := _q.ctx.Unique; unique != nil {
 		_spec.Unique = *unique

@@ -18,7 +18,7 @@ import (
 type Task struct {
 	config `json:"-"`
 	// ID of the ent.
-	ID int `json:"id,omitempty"`
+	ID uuid.UUID `json:"id,omitempty"`
 	// Title holds the value of the "title" field.
 	Title string `json:"title,omitempty"`
 	// Details holds the value of the "details" field.
@@ -81,12 +81,14 @@ func (*Task) scanValues(columns []string) ([]any, error) {
 		switch columns[i] {
 		case task.FieldAssignedTo, task.FieldAssignedBy:
 			values[i] = &sql.NullScanner{S: new(uuid.UUID)}
-		case task.FieldID, task.FieldProgressPct:
+		case task.FieldProgressPct:
 			values[i] = new(sql.NullInt64)
 		case task.FieldTitle, task.FieldDetails, task.FieldStatus, task.FieldPriority:
 			values[i] = new(sql.NullString)
 		case task.FieldDueDate:
 			values[i] = new(sql.NullTime)
+		case task.FieldID:
+			values[i] = new(uuid.UUID)
 		default:
 			values[i] = new(sql.UnknownType)
 		}
@@ -103,11 +105,11 @@ func (_m *Task) assignValues(columns []string, values []any) error {
 	for i := range columns {
 		switch columns[i] {
 		case task.FieldID:
-			value, ok := values[i].(*sql.NullInt64)
-			if !ok {
-				return fmt.Errorf("unexpected type %T for field id", value)
+			if value, ok := values[i].(*uuid.UUID); !ok {
+				return fmt.Errorf("unexpected type %T for field id", values[i])
+			} else if value != nil {
+				_m.ID = *value
 			}
-			_m.ID = int(value.Int64)
 		case task.FieldTitle:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field title", values[i])

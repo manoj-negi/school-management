@@ -15,6 +15,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/google/uuid"
 )
 
 // FeeStructureUpdate is the builder for updating FeeStructure entities.
@@ -31,13 +32,13 @@ func (_u *FeeStructureUpdate) Where(ps ...predicate.FeeStructure) *FeeStructureU
 }
 
 // SetClassID sets the "class_id" field.
-func (_u *FeeStructureUpdate) SetClassID(v int) *FeeStructureUpdate {
+func (_u *FeeStructureUpdate) SetClassID(v uuid.UUID) *FeeStructureUpdate {
 	_u.mutation.SetClassID(v)
 	return _u
 }
 
 // SetNillableClassID sets the "class_id" field if the given value is not nil.
-func (_u *FeeStructureUpdate) SetNillableClassID(v *int) *FeeStructureUpdate {
+func (_u *FeeStructureUpdate) SetNillableClassID(v *uuid.UUID) *FeeStructureUpdate {
 	if v != nil {
 		_u.SetClassID(*v)
 	}
@@ -45,13 +46,13 @@ func (_u *FeeStructureUpdate) SetNillableClassID(v *int) *FeeStructureUpdate {
 }
 
 // SetAcademicYearID sets the "academic_year_id" field.
-func (_u *FeeStructureUpdate) SetAcademicYearID(v int) *FeeStructureUpdate {
+func (_u *FeeStructureUpdate) SetAcademicYearID(v uuid.UUID) *FeeStructureUpdate {
 	_u.mutation.SetAcademicYearID(v)
 	return _u
 }
 
 // SetNillableAcademicYearID sets the "academic_year_id" field if the given value is not nil.
-func (_u *FeeStructureUpdate) SetNillableAcademicYearID(v *int) *FeeStructureUpdate {
+func (_u *FeeStructureUpdate) SetNillableAcademicYearID(v *uuid.UUID) *FeeStructureUpdate {
 	if v != nil {
 		_u.SetAcademicYearID(*v)
 	}
@@ -182,7 +183,7 @@ func (_u *FeeStructureUpdate) sqlSave(ctx context.Context) (_node int, err error
 	if err := _u.check(); err != nil {
 		return _node, err
 	}
-	_spec := sqlgraph.NewUpdateSpec(feestructure.Table, feestructure.Columns, sqlgraph.NewFieldSpec(feestructure.FieldID, field.TypeInt))
+	_spec := sqlgraph.NewUpdateSpec(feestructure.Table, feestructure.Columns, sqlgraph.NewFieldSpec(feestructure.FieldID, field.TypeUUID))
 	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
@@ -213,7 +214,7 @@ func (_u *FeeStructureUpdate) sqlSave(ctx context.Context) (_node int, err error
 			Columns: []string{feestructure.ClassColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(class.FieldID, field.TypeInt),
+				IDSpec: sqlgraph.NewFieldSpec(class.FieldID, field.TypeUUID),
 			},
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
@@ -226,7 +227,7 @@ func (_u *FeeStructureUpdate) sqlSave(ctx context.Context) (_node int, err error
 			Columns: []string{feestructure.ClassColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(class.FieldID, field.TypeInt),
+				IDSpec: sqlgraph.NewFieldSpec(class.FieldID, field.TypeUUID),
 			},
 		}
 		for _, k := range nodes {
@@ -242,7 +243,7 @@ func (_u *FeeStructureUpdate) sqlSave(ctx context.Context) (_node int, err error
 			Columns: []string{feestructure.AcademicYearColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(academicyear.FieldID, field.TypeInt),
+				IDSpec: sqlgraph.NewFieldSpec(academicyear.FieldID, field.TypeUUID),
 			},
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
@@ -255,7 +256,7 @@ func (_u *FeeStructureUpdate) sqlSave(ctx context.Context) (_node int, err error
 			Columns: []string{feestructure.AcademicYearColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(academicyear.FieldID, field.TypeInt),
+				IDSpec: sqlgraph.NewFieldSpec(academicyear.FieldID, field.TypeUUID),
 			},
 		}
 		for _, k := range nodes {
@@ -284,13 +285,13 @@ type FeeStructureUpdateOne struct {
 }
 
 // SetClassID sets the "class_id" field.
-func (_u *FeeStructureUpdateOne) SetClassID(v int) *FeeStructureUpdateOne {
+func (_u *FeeStructureUpdateOne) SetClassID(v uuid.UUID) *FeeStructureUpdateOne {
 	_u.mutation.SetClassID(v)
 	return _u
 }
 
 // SetNillableClassID sets the "class_id" field if the given value is not nil.
-func (_u *FeeStructureUpdateOne) SetNillableClassID(v *int) *FeeStructureUpdateOne {
+func (_u *FeeStructureUpdateOne) SetNillableClassID(v *uuid.UUID) *FeeStructureUpdateOne {
 	if v != nil {
 		_u.SetClassID(*v)
 	}
@@ -298,13 +299,13 @@ func (_u *FeeStructureUpdateOne) SetNillableClassID(v *int) *FeeStructureUpdateO
 }
 
 // SetAcademicYearID sets the "academic_year_id" field.
-func (_u *FeeStructureUpdateOne) SetAcademicYearID(v int) *FeeStructureUpdateOne {
+func (_u *FeeStructureUpdateOne) SetAcademicYearID(v uuid.UUID) *FeeStructureUpdateOne {
 	_u.mutation.SetAcademicYearID(v)
 	return _u
 }
 
 // SetNillableAcademicYearID sets the "academic_year_id" field if the given value is not nil.
-func (_u *FeeStructureUpdateOne) SetNillableAcademicYearID(v *int) *FeeStructureUpdateOne {
+func (_u *FeeStructureUpdateOne) SetNillableAcademicYearID(v *uuid.UUID) *FeeStructureUpdateOne {
 	if v != nil {
 		_u.SetAcademicYearID(*v)
 	}
@@ -448,7 +449,7 @@ func (_u *FeeStructureUpdateOne) sqlSave(ctx context.Context) (_node *FeeStructu
 	if err := _u.check(); err != nil {
 		return _node, err
 	}
-	_spec := sqlgraph.NewUpdateSpec(feestructure.Table, feestructure.Columns, sqlgraph.NewFieldSpec(feestructure.FieldID, field.TypeInt))
+	_spec := sqlgraph.NewUpdateSpec(feestructure.Table, feestructure.Columns, sqlgraph.NewFieldSpec(feestructure.FieldID, field.TypeUUID))
 	id, ok := _u.mutation.ID()
 	if !ok {
 		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "FeeStructure.id" for update`)}
@@ -496,7 +497,7 @@ func (_u *FeeStructureUpdateOne) sqlSave(ctx context.Context) (_node *FeeStructu
 			Columns: []string{feestructure.ClassColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(class.FieldID, field.TypeInt),
+				IDSpec: sqlgraph.NewFieldSpec(class.FieldID, field.TypeUUID),
 			},
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
@@ -509,7 +510,7 @@ func (_u *FeeStructureUpdateOne) sqlSave(ctx context.Context) (_node *FeeStructu
 			Columns: []string{feestructure.ClassColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(class.FieldID, field.TypeInt),
+				IDSpec: sqlgraph.NewFieldSpec(class.FieldID, field.TypeUUID),
 			},
 		}
 		for _, k := range nodes {
@@ -525,7 +526,7 @@ func (_u *FeeStructureUpdateOne) sqlSave(ctx context.Context) (_node *FeeStructu
 			Columns: []string{feestructure.AcademicYearColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(academicyear.FieldID, field.TypeInt),
+				IDSpec: sqlgraph.NewFieldSpec(academicyear.FieldID, field.TypeUUID),
 			},
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
@@ -538,7 +539,7 @@ func (_u *FeeStructureUpdateOne) sqlSave(ctx context.Context) (_node *FeeStructu
 			Columns: []string{feestructure.AcademicYearColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(academicyear.FieldID, field.TypeInt),
+				IDSpec: sqlgraph.NewFieldSpec(academicyear.FieldID, field.TypeUUID),
 			},
 		}
 		for _, k := range nodes {

@@ -27,7 +27,7 @@ func (User) Fields() []ent.Field {
 		field.Enum("role").
 			Values("admin", "teacher", "student", "employee", "doctor", "staff").
 			Default("student"),
-		field.Int("role_id").
+		field.UUID("role_id", uuid.UUID{}).
 			Optional().
 			Nillable(),
 		field.String("avatar_url").

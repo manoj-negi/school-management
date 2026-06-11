@@ -12,9 +12,11 @@ import (
 	"go-seed/ent/subject"
 	"time"
 
+	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/google/uuid"
 )
 
 // ExamCreate is the builder for creating a Exam entity.
@@ -32,13 +34,13 @@ func (_c *ExamCreate) SetTitle(v string) *ExamCreate {
 }
 
 // SetClassID sets the "class_id" field.
-func (_c *ExamCreate) SetClassID(v int) *ExamCreate {
+func (_c *ExamCreate) SetClassID(v uuid.UUID) *ExamCreate {
 	_c.mutation.SetClassID(v)
 	return _c
 }
 
 // SetNillableClassID sets the "class_id" field if the given value is not nil.
-func (_c *ExamCreate) SetNillableClassID(v *int) *ExamCreate {
+func (_c *ExamCreate) SetNillableClassID(v *uuid.UUID) *ExamCreate {
 	if v != nil {
 		_c.SetClassID(*v)
 	}
@@ -46,13 +48,13 @@ func (_c *ExamCreate) SetNillableClassID(v *int) *ExamCreate {
 }
 
 // SetSubjectID sets the "subject_id" field.
-func (_c *ExamCreate) SetSubjectID(v int) *ExamCreate {
+func (_c *ExamCreate) SetSubjectID(v uuid.UUID) *ExamCreate {
 	_c.mutation.SetSubjectID(v)
 	return _c
 }
 
 // SetNillableSubjectID sets the "subject_id" field if the given value is not nil.
-func (_c *ExamCreate) SetNillableSubjectID(v *int) *ExamCreate {
+func (_c *ExamCreate) SetNillableSubjectID(v *uuid.UUID) *ExamCreate {
 	if v != nil {
 		_c.SetSubjectID(*v)
 	}
@@ -114,15 +116,29 @@ func (_c *ExamCreate) SetNillablePassMarks(v *float64) *ExamCreate {
 }
 
 // SetAcademicYearID sets the "academic_year_id" field.
-func (_c *ExamCreate) SetAcademicYearID(v int) *ExamCreate {
+func (_c *ExamCreate) SetAcademicYearID(v uuid.UUID) *ExamCreate {
 	_c.mutation.SetAcademicYearID(v)
 	return _c
 }
 
 // SetNillableAcademicYearID sets the "academic_year_id" field if the given value is not nil.
-func (_c *ExamCreate) SetNillableAcademicYearID(v *int) *ExamCreate {
+func (_c *ExamCreate) SetNillableAcademicYearID(v *uuid.UUID) *ExamCreate {
 	if v != nil {
 		_c.SetAcademicYearID(*v)
+	}
+	return _c
+}
+
+// SetID sets the "id" field.
+func (_c *ExamCreate) SetID(v uuid.UUID) *ExamCreate {
+	_c.mutation.SetID(v)
+	return _c
+}
+
+// SetNillableID sets the "id" field if the given value is not nil.
+func (_c *ExamCreate) SetNillableID(v *uuid.UUID) *ExamCreate {
+	if v != nil {
+		_c.SetID(*v)
 	}
 	return _c
 }
@@ -185,6 +201,10 @@ func (_c *ExamCreate) defaults() {
 		v := exam.DefaultPassMarks
 		_c.mutation.SetPassMarks(v)
 	}
+	if _, ok := _c.mutation.ID(); !ok {
+		v := exam.DefaultID()
+		_c.mutation.SetID(v)
+	}
 }
 
 // check runs all checks and user-defined validators on the builder.
@@ -218,8 +238,13 @@ func (_c *ExamCreate) sqlSave(ctx context.Context) (*Exam, error) {
 		}
 		return nil, err
 	}
-	id := _spec.ID.Value.(int64)
-	_node.ID = int(id)
+	if _spec.ID.Value != nil {
+		if id, ok := _spec.ID.Value.(*uuid.UUID); ok {
+			_node.ID = *id
+		} else if err := _node.ID.Scan(_spec.ID.Value); err != nil {
+			return nil, err
+		}
+	}
 	_c.mutation.id = &_node.ID
 	_c.mutation.done = true
 	return _node, nil
@@ -228,9 +253,13 @@ func (_c *ExamCreate) sqlSave(ctx context.Context) (*Exam, error) {
 func (_c *ExamCreate) createSpec() (*Exam, *sqlgraph.CreateSpec) {
 	var (
 		_node = &Exam{config: _c.config}
-		_spec = sqlgraph.NewCreateSpec(exam.Table, sqlgraph.NewFieldSpec(exam.FieldID, field.TypeInt))
+		_spec = sqlgraph.NewCreateSpec(exam.Table, sqlgraph.NewFieldSpec(exam.FieldID, field.TypeUUID))
 	)
 	_spec.OnConflict = _c.conflict
+	if id, ok := _c.mutation.ID(); ok {
+		_node.ID = id
+		_spec.ID.Value = &id
+	}
 	if value, ok := _c.mutation.Title(); ok {
 		_spec.SetField(exam.FieldTitle, field.TypeString, value)
 		_node.Title = value
@@ -263,7 +292,7 @@ func (_c *ExamCreate) createSpec() (*Exam, *sqlgraph.CreateSpec) {
 			Columns: []string{exam.ClassColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(class.FieldID, field.TypeInt),
+				IDSpec: sqlgraph.NewFieldSpec(class.FieldID, field.TypeUUID),
 			},
 		}
 		for _, k := range nodes {
@@ -280,7 +309,7 @@ func (_c *ExamCreate) createSpec() (*Exam, *sqlgraph.CreateSpec) {
 			Columns: []string{exam.SubjectColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(subject.FieldID, field.TypeInt),
+				IDSpec: sqlgraph.NewFieldSpec(subject.FieldID, field.TypeUUID),
 			},
 		}
 		for _, k := range nodes {
@@ -297,7 +326,7 @@ func (_c *ExamCreate) createSpec() (*Exam, *sqlgraph.CreateSpec) {
 			Columns: []string{exam.AcademicYearColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(academicyear.FieldID, field.TypeInt),
+				IDSpec: sqlgraph.NewFieldSpec(academicyear.FieldID, field.TypeUUID),
 			},
 		}
 		for _, k := range nodes {
@@ -371,7 +400,7 @@ func (u *ExamUpsert) UpdateTitle() *ExamUpsert {
 }
 
 // SetClassID sets the "class_id" field.
-func (u *ExamUpsert) SetClassID(v int) *ExamUpsert {
+func (u *ExamUpsert) SetClassID(v uuid.UUID) *ExamUpsert {
 	u.Set(exam.FieldClassID, v)
 	return u
 }
@@ -389,7 +418,7 @@ func (u *ExamUpsert) ClearClassID() *ExamUpsert {
 }
 
 // SetSubjectID sets the "subject_id" field.
-func (u *ExamUpsert) SetSubjectID(v int) *ExamUpsert {
+func (u *ExamUpsert) SetSubjectID(v uuid.UUID) *ExamUpsert {
 	u.Set(exam.FieldSubjectID, v)
 	return u
 }
@@ -485,7 +514,7 @@ func (u *ExamUpsert) AddPassMarks(v float64) *ExamUpsert {
 }
 
 // SetAcademicYearID sets the "academic_year_id" field.
-func (u *ExamUpsert) SetAcademicYearID(v int) *ExamUpsert {
+func (u *ExamUpsert) SetAcademicYearID(v uuid.UUID) *ExamUpsert {
 	u.Set(exam.FieldAcademicYearID, v)
 	return u
 }
@@ -502,16 +531,24 @@ func (u *ExamUpsert) ClearAcademicYearID() *ExamUpsert {
 	return u
 }
 
-// UpdateNewValues updates the mutable fields using the new values that were set on create.
+// UpdateNewValues updates the mutable fields using the new values that were set on create except the ID field.
 // Using this option is equivalent to using:
 //
 //	client.Exam.Create().
 //		OnConflict(
 //			sql.ResolveWithNewValues(),
+//			sql.ResolveWith(func(u *sql.UpdateSet) {
+//				u.SetIgnore(exam.FieldID)
+//			}),
 //		).
 //		Exec(ctx)
 func (u *ExamUpsertOne) UpdateNewValues() *ExamUpsertOne {
 	u.create.conflict = append(u.create.conflict, sql.ResolveWithNewValues())
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(s *sql.UpdateSet) {
+		if _, exists := u.create.mutation.ID(); exists {
+			s.SetIgnore(exam.FieldID)
+		}
+	}))
 	return u
 }
 
@@ -557,7 +594,7 @@ func (u *ExamUpsertOne) UpdateTitle() *ExamUpsertOne {
 }
 
 // SetClassID sets the "class_id" field.
-func (u *ExamUpsertOne) SetClassID(v int) *ExamUpsertOne {
+func (u *ExamUpsertOne) SetClassID(v uuid.UUID) *ExamUpsertOne {
 	return u.Update(func(s *ExamUpsert) {
 		s.SetClassID(v)
 	})
@@ -578,7 +615,7 @@ func (u *ExamUpsertOne) ClearClassID() *ExamUpsertOne {
 }
 
 // SetSubjectID sets the "subject_id" field.
-func (u *ExamUpsertOne) SetSubjectID(v int) *ExamUpsertOne {
+func (u *ExamUpsertOne) SetSubjectID(v uuid.UUID) *ExamUpsertOne {
 	return u.Update(func(s *ExamUpsert) {
 		s.SetSubjectID(v)
 	})
@@ -690,7 +727,7 @@ func (u *ExamUpsertOne) UpdatePassMarks() *ExamUpsertOne {
 }
 
 // SetAcademicYearID sets the "academic_year_id" field.
-func (u *ExamUpsertOne) SetAcademicYearID(v int) *ExamUpsertOne {
+func (u *ExamUpsertOne) SetAcademicYearID(v uuid.UUID) *ExamUpsertOne {
 	return u.Update(func(s *ExamUpsert) {
 		s.SetAcademicYearID(v)
 	})
@@ -726,7 +763,12 @@ func (u *ExamUpsertOne) ExecX(ctx context.Context) {
 }
 
 // Exec executes the UPSERT query and returns the inserted/updated ID.
-func (u *ExamUpsertOne) ID(ctx context.Context) (id int, err error) {
+func (u *ExamUpsertOne) ID(ctx context.Context) (id uuid.UUID, err error) {
+	if u.create.driver.Dialect() == dialect.MySQL {
+		// In case of "ON CONFLICT", there is no way to get back non-numeric ID
+		// fields from the database since MySQL does not support the RETURNING clause.
+		return id, errors.New("ent: ExamUpsertOne.ID is not supported by MySQL driver. Use ExamUpsertOne.Exec instead")
+	}
 	node, err := u.create.Save(ctx)
 	if err != nil {
 		return id, err
@@ -735,7 +777,7 @@ func (u *ExamUpsertOne) ID(ctx context.Context) (id int, err error) {
 }
 
 // IDX is like ID, but panics if an error occurs.
-func (u *ExamUpsertOne) IDX(ctx context.Context) int {
+func (u *ExamUpsertOne) IDX(ctx context.Context) uuid.UUID {
 	id, err := u.ID(ctx)
 	if err != nil {
 		panic(err)
@@ -790,10 +832,6 @@ func (_c *ExamCreateBulk) Save(ctx context.Context) ([]*Exam, error) {
 					return nil, err
 				}
 				mutation.id = &nodes[i].ID
-				if specs[i].ID.Value != nil {
-					id := specs[i].ID.Value.(int64)
-					nodes[i].ID = int(id)
-				}
 				mutation.done = true
 				return nodes[i], nil
 			})
@@ -880,10 +918,20 @@ type ExamUpsertBulk struct {
 //	client.Exam.Create().
 //		OnConflict(
 //			sql.ResolveWithNewValues(),
+//			sql.ResolveWith(func(u *sql.UpdateSet) {
+//				u.SetIgnore(exam.FieldID)
+//			}),
 //		).
 //		Exec(ctx)
 func (u *ExamUpsertBulk) UpdateNewValues() *ExamUpsertBulk {
 	u.create.conflict = append(u.create.conflict, sql.ResolveWithNewValues())
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(s *sql.UpdateSet) {
+		for _, b := range u.create.builders {
+			if _, exists := b.mutation.ID(); exists {
+				s.SetIgnore(exam.FieldID)
+			}
+		}
+	}))
 	return u
 }
 
@@ -929,7 +977,7 @@ func (u *ExamUpsertBulk) UpdateTitle() *ExamUpsertBulk {
 }
 
 // SetClassID sets the "class_id" field.
-func (u *ExamUpsertBulk) SetClassID(v int) *ExamUpsertBulk {
+func (u *ExamUpsertBulk) SetClassID(v uuid.UUID) *ExamUpsertBulk {
 	return u.Update(func(s *ExamUpsert) {
 		s.SetClassID(v)
 	})
@@ -950,7 +998,7 @@ func (u *ExamUpsertBulk) ClearClassID() *ExamUpsertBulk {
 }
 
 // SetSubjectID sets the "subject_id" field.
-func (u *ExamUpsertBulk) SetSubjectID(v int) *ExamUpsertBulk {
+func (u *ExamUpsertBulk) SetSubjectID(v uuid.UUID) *ExamUpsertBulk {
 	return u.Update(func(s *ExamUpsert) {
 		s.SetSubjectID(v)
 	})
@@ -1062,7 +1110,7 @@ func (u *ExamUpsertBulk) UpdatePassMarks() *ExamUpsertBulk {
 }
 
 // SetAcademicYearID sets the "academic_year_id" field.
-func (u *ExamUpsertBulk) SetAcademicYearID(v int) *ExamUpsertBulk {
+func (u *ExamUpsertBulk) SetAcademicYearID(v uuid.UUID) *ExamUpsertBulk {
 	return u.Update(func(s *ExamUpsert) {
 		s.SetAcademicYearID(v)
 	})

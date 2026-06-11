@@ -40,7 +40,7 @@ func (_d *FeeStructureDelete) ExecX(ctx context.Context) int {
 }
 
 func (_d *FeeStructureDelete) sqlExec(ctx context.Context) (int, error) {
-	_spec := sqlgraph.NewDeleteSpec(feestructure.Table, sqlgraph.NewFieldSpec(feestructure.FieldID, field.TypeInt))
+	_spec := sqlgraph.NewDeleteSpec(feestructure.Table, sqlgraph.NewFieldSpec(feestructure.FieldID, field.TypeUUID))
 	if ps := _d.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {

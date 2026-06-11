@@ -65,7 +65,7 @@ type AcademicYearMutation struct {
 	config
 	op            Op
 	typ           string
-	id            *int
+	id            *uuid.UUID
 	label         *string
 	start_date    *time.Time
 	end_date      *time.Time
@@ -96,7 +96,7 @@ func newAcademicYearMutation(c config, op Op, opts ...academicyearOption) *Acade
 }
 
 // withAcademicYearID sets the ID field of the mutation.
-func withAcademicYearID(id int) academicyearOption {
+func withAcademicYearID(id uuid.UUID) academicyearOption {
 	return func(m *AcademicYearMutation) {
 		var (
 			err   error
@@ -146,9 +146,15 @@ func (m AcademicYearMutation) Tx() (*Tx, error) {
 	return tx, nil
 }
 
+// SetID sets the value of the id field. Note that this
+// operation is only accepted on creation of AcademicYear entities.
+func (m *AcademicYearMutation) SetID(id uuid.UUID) {
+	m.id = &id
+}
+
 // ID returns the ID value in the mutation. Note that the ID is only available
 // if it was provided to the builder or after it was returned from the database.
-func (m *AcademicYearMutation) ID() (id int, exists bool) {
+func (m *AcademicYearMutation) ID() (id uuid.UUID, exists bool) {
 	if m.id == nil {
 		return
 	}
@@ -159,12 +165,12 @@ func (m *AcademicYearMutation) ID() (id int, exists bool) {
 // That means, if the mutation is applied within a transaction with an isolation level such
 // as sql.LevelSerializable, the returned ids match the ids of the rows that will be updated
 // or updated by the mutation.
-func (m *AcademicYearMutation) IDs(ctx context.Context) ([]int, error) {
+func (m *AcademicYearMutation) IDs(ctx context.Context) ([]uuid.UUID, error) {
 	switch {
 	case m.op.Is(OpUpdateOne | OpDeleteOne):
 		id, exists := m.ID()
 		if exists {
-			return []int{id}, nil
+			return []uuid.UUID{id}, nil
 		}
 		fallthrough
 	case m.op.Is(OpUpdate | OpDelete):
@@ -553,14 +559,14 @@ type ClassMutation struct {
 	config
 	op                   Op
 	typ                  string
-	id                   *int
+	id                   *uuid.UUID
 	name                 *string
 	capacity             *int
 	addcapacity          *int
 	clearedFields        map[string]struct{}
-	academic_year        *int
+	academic_year        *uuid.UUID
 	clearedacademic_year bool
-	department           *int
+	department           *uuid.UUID
 	cleareddepartment    bool
 	done                 bool
 	oldValue             func(context.Context) (*Class, error)
@@ -587,7 +593,7 @@ func newClassMutation(c config, op Op, opts ...classOption) *ClassMutation {
 }
 
 // withClassID sets the ID field of the mutation.
-func withClassID(id int) classOption {
+func withClassID(id uuid.UUID) classOption {
 	return func(m *ClassMutation) {
 		var (
 			err   error
@@ -637,9 +643,15 @@ func (m ClassMutation) Tx() (*Tx, error) {
 	return tx, nil
 }
 
+// SetID sets the value of the id field. Note that this
+// operation is only accepted on creation of Class entities.
+func (m *ClassMutation) SetID(id uuid.UUID) {
+	m.id = &id
+}
+
 // ID returns the ID value in the mutation. Note that the ID is only available
 // if it was provided to the builder or after it was returned from the database.
-func (m *ClassMutation) ID() (id int, exists bool) {
+func (m *ClassMutation) ID() (id uuid.UUID, exists bool) {
 	if m.id == nil {
 		return
 	}
@@ -650,12 +662,12 @@ func (m *ClassMutation) ID() (id int, exists bool) {
 // That means, if the mutation is applied within a transaction with an isolation level such
 // as sql.LevelSerializable, the returned ids match the ids of the rows that will be updated
 // or updated by the mutation.
-func (m *ClassMutation) IDs(ctx context.Context) ([]int, error) {
+func (m *ClassMutation) IDs(ctx context.Context) ([]uuid.UUID, error) {
 	switch {
 	case m.op.Is(OpUpdateOne | OpDeleteOne):
 		id, exists := m.ID()
 		if exists {
-			return []int{id}, nil
+			return []uuid.UUID{id}, nil
 		}
 		fallthrough
 	case m.op.Is(OpUpdate | OpDelete):
@@ -702,12 +714,12 @@ func (m *ClassMutation) ResetName() {
 }
 
 // SetAcademicYearID sets the "academic_year_id" field.
-func (m *ClassMutation) SetAcademicYearID(i int) {
-	m.academic_year = &i
+func (m *ClassMutation) SetAcademicYearID(u uuid.UUID) {
+	m.academic_year = &u
 }
 
 // AcademicYearID returns the value of the "academic_year_id" field in the mutation.
-func (m *ClassMutation) AcademicYearID() (r int, exists bool) {
+func (m *ClassMutation) AcademicYearID() (r uuid.UUID, exists bool) {
 	v := m.academic_year
 	if v == nil {
 		return
@@ -718,7 +730,7 @@ func (m *ClassMutation) AcademicYearID() (r int, exists bool) {
 // OldAcademicYearID returns the old "academic_year_id" field's value of the Class entity.
 // If the Class object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *ClassMutation) OldAcademicYearID(ctx context.Context) (v int, err error) {
+func (m *ClassMutation) OldAcademicYearID(ctx context.Context) (v uuid.UUID, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldAcademicYearID is only allowed on UpdateOne operations")
 	}
@@ -738,12 +750,12 @@ func (m *ClassMutation) ResetAcademicYearID() {
 }
 
 // SetDepartmentID sets the "department_id" field.
-func (m *ClassMutation) SetDepartmentID(i int) {
-	m.department = &i
+func (m *ClassMutation) SetDepartmentID(u uuid.UUID) {
+	m.department = &u
 }
 
 // DepartmentID returns the value of the "department_id" field in the mutation.
-func (m *ClassMutation) DepartmentID() (r int, exists bool) {
+func (m *ClassMutation) DepartmentID() (r uuid.UUID, exists bool) {
 	v := m.department
 	if v == nil {
 		return
@@ -754,7 +766,7 @@ func (m *ClassMutation) DepartmentID() (r int, exists bool) {
 // OldDepartmentID returns the old "department_id" field's value of the Class entity.
 // If the Class object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *ClassMutation) OldDepartmentID(ctx context.Context) (v *int, err error) {
+func (m *ClassMutation) OldDepartmentID(ctx context.Context) (v *uuid.UUID, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldDepartmentID is only allowed on UpdateOne operations")
 	}
@@ -870,7 +882,7 @@ func (m *ClassMutation) AcademicYearCleared() bool {
 // AcademicYearIDs returns the "academic_year" edge IDs in the mutation.
 // Note that IDs always returns len(IDs) <= 1 for unique edges, and you should use
 // AcademicYearID instead. It exists only for internal usage by the builders.
-func (m *ClassMutation) AcademicYearIDs() (ids []int) {
+func (m *ClassMutation) AcademicYearIDs() (ids []uuid.UUID) {
 	if id := m.academic_year; id != nil {
 		ids = append(ids, *id)
 	}
@@ -897,7 +909,7 @@ func (m *ClassMutation) DepartmentCleared() bool {
 // DepartmentIDs returns the "department" edge IDs in the mutation.
 // Note that IDs always returns len(IDs) <= 1 for unique edges, and you should use
 // DepartmentID instead. It exists only for internal usage by the builders.
-func (m *ClassMutation) DepartmentIDs() (ids []int) {
+func (m *ClassMutation) DepartmentIDs() (ids []uuid.UUID) {
 	if id := m.department; id != nil {
 		ids = append(ids, *id)
 	}
@@ -1007,14 +1019,14 @@ func (m *ClassMutation) SetField(name string, value ent.Value) error {
 		m.SetName(v)
 		return nil
 	case class.FieldAcademicYearID:
-		v, ok := value.(int)
+		v, ok := value.(uuid.UUID)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetAcademicYearID(v)
 		return nil
 	case class.FieldDepartmentID:
-		v, ok := value.(int)
+		v, ok := value.(uuid.UUID)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
@@ -1219,7 +1231,7 @@ type DepartmentMutation struct {
 	config
 	op            Op
 	typ           string
-	id            *int
+	id            *uuid.UUID
 	name          *string
 	code          *string
 	description   *string
@@ -1249,7 +1261,7 @@ func newDepartmentMutation(c config, op Op, opts ...departmentOption) *Departmen
 }
 
 // withDepartmentID sets the ID field of the mutation.
-func withDepartmentID(id int) departmentOption {
+func withDepartmentID(id uuid.UUID) departmentOption {
 	return func(m *DepartmentMutation) {
 		var (
 			err   error
@@ -1299,9 +1311,15 @@ func (m DepartmentMutation) Tx() (*Tx, error) {
 	return tx, nil
 }
 
+// SetID sets the value of the id field. Note that this
+// operation is only accepted on creation of Department entities.
+func (m *DepartmentMutation) SetID(id uuid.UUID) {
+	m.id = &id
+}
+
 // ID returns the ID value in the mutation. Note that the ID is only available
 // if it was provided to the builder or after it was returned from the database.
-func (m *DepartmentMutation) ID() (id int, exists bool) {
+func (m *DepartmentMutation) ID() (id uuid.UUID, exists bool) {
 	if m.id == nil {
 		return
 	}
@@ -1312,12 +1330,12 @@ func (m *DepartmentMutation) ID() (id int, exists bool) {
 // That means, if the mutation is applied within a transaction with an isolation level such
 // as sql.LevelSerializable, the returned ids match the ids of the rows that will be updated
 // or updated by the mutation.
-func (m *DepartmentMutation) IDs(ctx context.Context) ([]int, error) {
+func (m *DepartmentMutation) IDs(ctx context.Context) ([]uuid.UUID, error) {
 	switch {
 	case m.op.Is(OpUpdateOne | OpDeleteOne):
 		id, exists := m.ID()
 		if exists {
-			return []int{id}, nil
+			return []uuid.UUID{id}, nil
 		}
 		fallthrough
 	case m.op.Is(OpUpdate | OpDelete):
@@ -1710,7 +1728,7 @@ type EmployeeMutation struct {
 	clearedFields     map[string]struct{}
 	user              *uuid.UUID
 	cleareduser       bool
-	department        *int
+	department        *uuid.UUID
 	cleareddepartment bool
 	done              bool
 	oldValue          func(context.Context) (*Employee, error)
@@ -2126,12 +2144,12 @@ func (m *EmployeeMutation) ResetAddress() {
 }
 
 // SetDepartmentID sets the "department_id" field.
-func (m *EmployeeMutation) SetDepartmentID(i int) {
-	m.department = &i
+func (m *EmployeeMutation) SetDepartmentID(u uuid.UUID) {
+	m.department = &u
 }
 
 // DepartmentID returns the value of the "department_id" field in the mutation.
-func (m *EmployeeMutation) DepartmentID() (r int, exists bool) {
+func (m *EmployeeMutation) DepartmentID() (r uuid.UUID, exists bool) {
 	v := m.department
 	if v == nil {
 		return
@@ -2142,7 +2160,7 @@ func (m *EmployeeMutation) DepartmentID() (r int, exists bool) {
 // OldDepartmentID returns the old "department_id" field's value of the Employee entity.
 // If the Employee object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *EmployeeMutation) OldDepartmentID(ctx context.Context) (v *int, err error) {
+func (m *EmployeeMutation) OldDepartmentID(ctx context.Context) (v *uuid.UUID, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldDepartmentID is only allowed on UpdateOne operations")
 	}
@@ -2468,7 +2486,7 @@ func (m *EmployeeMutation) DepartmentCleared() bool {
 // DepartmentIDs returns the "department" edge IDs in the mutation.
 // Note that IDs always returns len(IDs) <= 1 for unique edges, and you should use
 // DepartmentID instead. It exists only for internal usage by the builders.
-func (m *EmployeeMutation) DepartmentIDs() (ids []int) {
+func (m *EmployeeMutation) DepartmentIDs() (ids []uuid.UUID) {
 	if id := m.department; id != nil {
 		ids = append(ids, *id)
 	}
@@ -2683,7 +2701,7 @@ func (m *EmployeeMutation) SetField(name string, value ent.Value) error {
 		m.SetAddress(v)
 		return nil
 	case employee.FieldDepartmentID:
-		v, ok := value.(int)
+		v, ok := value.(uuid.UUID)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
@@ -2985,7 +3003,7 @@ type EventMutation struct {
 	config
 	op            Op
 	typ           string
-	id            *int
+	id            *uuid.UUID
 	title         *string
 	event_type    *event.EventType
 	description   *string
@@ -3018,7 +3036,7 @@ func newEventMutation(c config, op Op, opts ...eventOption) *EventMutation {
 }
 
 // withEventID sets the ID field of the mutation.
-func withEventID(id int) eventOption {
+func withEventID(id uuid.UUID) eventOption {
 	return func(m *EventMutation) {
 		var (
 			err   error
@@ -3068,9 +3086,15 @@ func (m EventMutation) Tx() (*Tx, error) {
 	return tx, nil
 }
 
+// SetID sets the value of the id field. Note that this
+// operation is only accepted on creation of Event entities.
+func (m *EventMutation) SetID(id uuid.UUID) {
+	m.id = &id
+}
+
 // ID returns the ID value in the mutation. Note that the ID is only available
 // if it was provided to the builder or after it was returned from the database.
-func (m *EventMutation) ID() (id int, exists bool) {
+func (m *EventMutation) ID() (id uuid.UUID, exists bool) {
 	if m.id == nil {
 		return
 	}
@@ -3081,12 +3105,12 @@ func (m *EventMutation) ID() (id int, exists bool) {
 // That means, if the mutation is applied within a transaction with an isolation level such
 // as sql.LevelSerializable, the returned ids match the ids of the rows that will be updated
 // or updated by the mutation.
-func (m *EventMutation) IDs(ctx context.Context) ([]int, error) {
+func (m *EventMutation) IDs(ctx context.Context) ([]uuid.UUID, error) {
 	switch {
 	case m.op.Is(OpUpdateOne | OpDeleteOne):
 		id, exists := m.ID()
 		if exists {
-			return []int{id}, nil
+			return []uuid.UUID{id}, nil
 		}
 		fallthrough
 	case m.op.Is(OpUpdate | OpDelete):
@@ -3603,7 +3627,7 @@ type ExamMutation struct {
 	config
 	op                   Op
 	typ                  string
-	id                   *int
+	id                   *uuid.UUID
 	title                *string
 	exam_type            *string
 	start_date           *time.Time
@@ -3613,11 +3637,11 @@ type ExamMutation struct {
 	pass_marks           *float64
 	addpass_marks        *float64
 	clearedFields        map[string]struct{}
-	class                *int
+	class                *uuid.UUID
 	clearedclass         bool
-	subject              *int
+	subject              *uuid.UUID
 	clearedsubject       bool
-	academic_year        *int
+	academic_year        *uuid.UUID
 	clearedacademic_year bool
 	done                 bool
 	oldValue             func(context.Context) (*Exam, error)
@@ -3644,7 +3668,7 @@ func newExamMutation(c config, op Op, opts ...examOption) *ExamMutation {
 }
 
 // withExamID sets the ID field of the mutation.
-func withExamID(id int) examOption {
+func withExamID(id uuid.UUID) examOption {
 	return func(m *ExamMutation) {
 		var (
 			err   error
@@ -3694,9 +3718,15 @@ func (m ExamMutation) Tx() (*Tx, error) {
 	return tx, nil
 }
 
+// SetID sets the value of the id field. Note that this
+// operation is only accepted on creation of Exam entities.
+func (m *ExamMutation) SetID(id uuid.UUID) {
+	m.id = &id
+}
+
 // ID returns the ID value in the mutation. Note that the ID is only available
 // if it was provided to the builder or after it was returned from the database.
-func (m *ExamMutation) ID() (id int, exists bool) {
+func (m *ExamMutation) ID() (id uuid.UUID, exists bool) {
 	if m.id == nil {
 		return
 	}
@@ -3707,12 +3737,12 @@ func (m *ExamMutation) ID() (id int, exists bool) {
 // That means, if the mutation is applied within a transaction with an isolation level such
 // as sql.LevelSerializable, the returned ids match the ids of the rows that will be updated
 // or updated by the mutation.
-func (m *ExamMutation) IDs(ctx context.Context) ([]int, error) {
+func (m *ExamMutation) IDs(ctx context.Context) ([]uuid.UUID, error) {
 	switch {
 	case m.op.Is(OpUpdateOne | OpDeleteOne):
 		id, exists := m.ID()
 		if exists {
-			return []int{id}, nil
+			return []uuid.UUID{id}, nil
 		}
 		fallthrough
 	case m.op.Is(OpUpdate | OpDelete):
@@ -3759,12 +3789,12 @@ func (m *ExamMutation) ResetTitle() {
 }
 
 // SetClassID sets the "class_id" field.
-func (m *ExamMutation) SetClassID(i int) {
-	m.class = &i
+func (m *ExamMutation) SetClassID(u uuid.UUID) {
+	m.class = &u
 }
 
 // ClassID returns the value of the "class_id" field in the mutation.
-func (m *ExamMutation) ClassID() (r int, exists bool) {
+func (m *ExamMutation) ClassID() (r uuid.UUID, exists bool) {
 	v := m.class
 	if v == nil {
 		return
@@ -3775,7 +3805,7 @@ func (m *ExamMutation) ClassID() (r int, exists bool) {
 // OldClassID returns the old "class_id" field's value of the Exam entity.
 // If the Exam object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *ExamMutation) OldClassID(ctx context.Context) (v *int, err error) {
+func (m *ExamMutation) OldClassID(ctx context.Context) (v *uuid.UUID, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldClassID is only allowed on UpdateOne operations")
 	}
@@ -3808,12 +3838,12 @@ func (m *ExamMutation) ResetClassID() {
 }
 
 // SetSubjectID sets the "subject_id" field.
-func (m *ExamMutation) SetSubjectID(i int) {
-	m.subject = &i
+func (m *ExamMutation) SetSubjectID(u uuid.UUID) {
+	m.subject = &u
 }
 
 // SubjectID returns the value of the "subject_id" field in the mutation.
-func (m *ExamMutation) SubjectID() (r int, exists bool) {
+func (m *ExamMutation) SubjectID() (r uuid.UUID, exists bool) {
 	v := m.subject
 	if v == nil {
 		return
@@ -3824,7 +3854,7 @@ func (m *ExamMutation) SubjectID() (r int, exists bool) {
 // OldSubjectID returns the old "subject_id" field's value of the Exam entity.
 // If the Exam object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *ExamMutation) OldSubjectID(ctx context.Context) (v *int, err error) {
+func (m *ExamMutation) OldSubjectID(ctx context.Context) (v *uuid.UUID, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldSubjectID is only allowed on UpdateOne operations")
 	}
@@ -4090,12 +4120,12 @@ func (m *ExamMutation) ResetPassMarks() {
 }
 
 // SetAcademicYearID sets the "academic_year_id" field.
-func (m *ExamMutation) SetAcademicYearID(i int) {
-	m.academic_year = &i
+func (m *ExamMutation) SetAcademicYearID(u uuid.UUID) {
+	m.academic_year = &u
 }
 
 // AcademicYearID returns the value of the "academic_year_id" field in the mutation.
-func (m *ExamMutation) AcademicYearID() (r int, exists bool) {
+func (m *ExamMutation) AcademicYearID() (r uuid.UUID, exists bool) {
 	v := m.academic_year
 	if v == nil {
 		return
@@ -4106,7 +4136,7 @@ func (m *ExamMutation) AcademicYearID() (r int, exists bool) {
 // OldAcademicYearID returns the old "academic_year_id" field's value of the Exam entity.
 // If the Exam object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *ExamMutation) OldAcademicYearID(ctx context.Context) (v *int, err error) {
+func (m *ExamMutation) OldAcademicYearID(ctx context.Context) (v *uuid.UUID, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldAcademicYearID is only allowed on UpdateOne operations")
 	}
@@ -4152,7 +4182,7 @@ func (m *ExamMutation) ClassCleared() bool {
 // ClassIDs returns the "class" edge IDs in the mutation.
 // Note that IDs always returns len(IDs) <= 1 for unique edges, and you should use
 // ClassID instead. It exists only for internal usage by the builders.
-func (m *ExamMutation) ClassIDs() (ids []int) {
+func (m *ExamMutation) ClassIDs() (ids []uuid.UUID) {
 	if id := m.class; id != nil {
 		ids = append(ids, *id)
 	}
@@ -4179,7 +4209,7 @@ func (m *ExamMutation) SubjectCleared() bool {
 // SubjectIDs returns the "subject" edge IDs in the mutation.
 // Note that IDs always returns len(IDs) <= 1 for unique edges, and you should use
 // SubjectID instead. It exists only for internal usage by the builders.
-func (m *ExamMutation) SubjectIDs() (ids []int) {
+func (m *ExamMutation) SubjectIDs() (ids []uuid.UUID) {
 	if id := m.subject; id != nil {
 		ids = append(ids, *id)
 	}
@@ -4206,7 +4236,7 @@ func (m *ExamMutation) AcademicYearCleared() bool {
 // AcademicYearIDs returns the "academic_year" edge IDs in the mutation.
 // Note that IDs always returns len(IDs) <= 1 for unique edges, and you should use
 // AcademicYearID instead. It exists only for internal usage by the builders.
-func (m *ExamMutation) AcademicYearIDs() (ids []int) {
+func (m *ExamMutation) AcademicYearIDs() (ids []uuid.UUID) {
 	if id := m.academic_year; id != nil {
 		ids = append(ids, *id)
 	}
@@ -4351,14 +4381,14 @@ func (m *ExamMutation) SetField(name string, value ent.Value) error {
 		m.SetTitle(v)
 		return nil
 	case exam.FieldClassID:
-		v, ok := value.(int)
+		v, ok := value.(uuid.UUID)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetClassID(v)
 		return nil
 	case exam.FieldSubjectID:
-		v, ok := value.(int)
+		v, ok := value.(uuid.UUID)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
@@ -4400,7 +4430,7 @@ func (m *ExamMutation) SetField(name string, value ent.Value) error {
 		m.SetPassMarks(v)
 		return nil
 	case exam.FieldAcademicYearID:
-		v, ok := value.(int)
+		v, ok := value.(uuid.UUID)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
@@ -4655,7 +4685,7 @@ type FeePaymentMutation struct {
 	config
 	op                   Op
 	typ                  string
-	id                   *int
+	id                   *uuid.UUID
 	amount_paid          *float64
 	addamount_paid       *float64
 	payment_date         *time.Time
@@ -4666,7 +4696,7 @@ type FeePaymentMutation struct {
 	clearedFields        map[string]struct{}
 	student              *uuid.UUID
 	clearedstudent       bool
-	fee_structure        *int
+	fee_structure        *uuid.UUID
 	clearedfee_structure bool
 	done                 bool
 	oldValue             func(context.Context) (*FeePayment, error)
@@ -4693,7 +4723,7 @@ func newFeePaymentMutation(c config, op Op, opts ...feepaymentOption) *FeePaymen
 }
 
 // withFeePaymentID sets the ID field of the mutation.
-func withFeePaymentID(id int) feepaymentOption {
+func withFeePaymentID(id uuid.UUID) feepaymentOption {
 	return func(m *FeePaymentMutation) {
 		var (
 			err   error
@@ -4743,9 +4773,15 @@ func (m FeePaymentMutation) Tx() (*Tx, error) {
 	return tx, nil
 }
 
+// SetID sets the value of the id field. Note that this
+// operation is only accepted on creation of FeePayment entities.
+func (m *FeePaymentMutation) SetID(id uuid.UUID) {
+	m.id = &id
+}
+
 // ID returns the ID value in the mutation. Note that the ID is only available
 // if it was provided to the builder or after it was returned from the database.
-func (m *FeePaymentMutation) ID() (id int, exists bool) {
+func (m *FeePaymentMutation) ID() (id uuid.UUID, exists bool) {
 	if m.id == nil {
 		return
 	}
@@ -4756,12 +4792,12 @@ func (m *FeePaymentMutation) ID() (id int, exists bool) {
 // That means, if the mutation is applied within a transaction with an isolation level such
 // as sql.LevelSerializable, the returned ids match the ids of the rows that will be updated
 // or updated by the mutation.
-func (m *FeePaymentMutation) IDs(ctx context.Context) ([]int, error) {
+func (m *FeePaymentMutation) IDs(ctx context.Context) ([]uuid.UUID, error) {
 	switch {
 	case m.op.Is(OpUpdateOne | OpDeleteOne):
 		id, exists := m.ID()
 		if exists {
-			return []int{id}, nil
+			return []uuid.UUID{id}, nil
 		}
 		fallthrough
 	case m.op.Is(OpUpdate | OpDelete):
@@ -4808,12 +4844,12 @@ func (m *FeePaymentMutation) ResetStudentID() {
 }
 
 // SetFeeStructureID sets the "fee_structure_id" field.
-func (m *FeePaymentMutation) SetFeeStructureID(i int) {
-	m.fee_structure = &i
+func (m *FeePaymentMutation) SetFeeStructureID(u uuid.UUID) {
+	m.fee_structure = &u
 }
 
 // FeeStructureID returns the value of the "fee_structure_id" field in the mutation.
-func (m *FeePaymentMutation) FeeStructureID() (r int, exists bool) {
+func (m *FeePaymentMutation) FeeStructureID() (r uuid.UUID, exists bool) {
 	v := m.fee_structure
 	if v == nil {
 		return
@@ -4824,7 +4860,7 @@ func (m *FeePaymentMutation) FeeStructureID() (r int, exists bool) {
 // OldFeeStructureID returns the old "fee_structure_id" field's value of the FeePayment entity.
 // If the FeePayment object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *FeePaymentMutation) OldFeeStructureID(ctx context.Context) (v int, err error) {
+func (m *FeePaymentMutation) OldFeeStructureID(ctx context.Context) (v uuid.UUID, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldFeeStructureID is only allowed on UpdateOne operations")
 	}
@@ -5159,7 +5195,7 @@ func (m *FeePaymentMutation) FeeStructureCleared() bool {
 // FeeStructureIDs returns the "fee_structure" edge IDs in the mutation.
 // Note that IDs always returns len(IDs) <= 1 for unique edges, and you should use
 // FeeStructureID instead. It exists only for internal usage by the builders.
-func (m *FeePaymentMutation) FeeStructureIDs() (ids []int) {
+func (m *FeePaymentMutation) FeeStructureIDs() (ids []uuid.UUID) {
 	if id := m.fee_structure; id != nil {
 		ids = append(ids, *id)
 	}
@@ -5297,7 +5333,7 @@ func (m *FeePaymentMutation) SetField(name string, value ent.Value) error {
 		m.SetStudentID(v)
 		return nil
 	case feepayment.FieldFeeStructureID:
-		v, ok := value.(int)
+		v, ok := value.(uuid.UUID)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
@@ -5555,15 +5591,15 @@ type FeeStructureMutation struct {
 	config
 	op                   Op
 	typ                  string
-	id                   *int
+	id                   *uuid.UUID
 	fee_label            *string
 	amount               *float64
 	addamount            *float64
 	due_date             *time.Time
 	clearedFields        map[string]struct{}
-	class                *int
+	class                *uuid.UUID
 	clearedclass         bool
-	academic_year        *int
+	academic_year        *uuid.UUID
 	clearedacademic_year bool
 	done                 bool
 	oldValue             func(context.Context) (*FeeStructure, error)
@@ -5590,7 +5626,7 @@ func newFeeStructureMutation(c config, op Op, opts ...feestructureOption) *FeeSt
 }
 
 // withFeeStructureID sets the ID field of the mutation.
-func withFeeStructureID(id int) feestructureOption {
+func withFeeStructureID(id uuid.UUID) feestructureOption {
 	return func(m *FeeStructureMutation) {
 		var (
 			err   error
@@ -5640,9 +5676,15 @@ func (m FeeStructureMutation) Tx() (*Tx, error) {
 	return tx, nil
 }
 
+// SetID sets the value of the id field. Note that this
+// operation is only accepted on creation of FeeStructure entities.
+func (m *FeeStructureMutation) SetID(id uuid.UUID) {
+	m.id = &id
+}
+
 // ID returns the ID value in the mutation. Note that the ID is only available
 // if it was provided to the builder or after it was returned from the database.
-func (m *FeeStructureMutation) ID() (id int, exists bool) {
+func (m *FeeStructureMutation) ID() (id uuid.UUID, exists bool) {
 	if m.id == nil {
 		return
 	}
@@ -5653,12 +5695,12 @@ func (m *FeeStructureMutation) ID() (id int, exists bool) {
 // That means, if the mutation is applied within a transaction with an isolation level such
 // as sql.LevelSerializable, the returned ids match the ids of the rows that will be updated
 // or updated by the mutation.
-func (m *FeeStructureMutation) IDs(ctx context.Context) ([]int, error) {
+func (m *FeeStructureMutation) IDs(ctx context.Context) ([]uuid.UUID, error) {
 	switch {
 	case m.op.Is(OpUpdateOne | OpDeleteOne):
 		id, exists := m.ID()
 		if exists {
-			return []int{id}, nil
+			return []uuid.UUID{id}, nil
 		}
 		fallthrough
 	case m.op.Is(OpUpdate | OpDelete):
@@ -5669,12 +5711,12 @@ func (m *FeeStructureMutation) IDs(ctx context.Context) ([]int, error) {
 }
 
 // SetClassID sets the "class_id" field.
-func (m *FeeStructureMutation) SetClassID(i int) {
-	m.class = &i
+func (m *FeeStructureMutation) SetClassID(u uuid.UUID) {
+	m.class = &u
 }
 
 // ClassID returns the value of the "class_id" field in the mutation.
-func (m *FeeStructureMutation) ClassID() (r int, exists bool) {
+func (m *FeeStructureMutation) ClassID() (r uuid.UUID, exists bool) {
 	v := m.class
 	if v == nil {
 		return
@@ -5685,7 +5727,7 @@ func (m *FeeStructureMutation) ClassID() (r int, exists bool) {
 // OldClassID returns the old "class_id" field's value of the FeeStructure entity.
 // If the FeeStructure object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *FeeStructureMutation) OldClassID(ctx context.Context) (v int, err error) {
+func (m *FeeStructureMutation) OldClassID(ctx context.Context) (v uuid.UUID, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldClassID is only allowed on UpdateOne operations")
 	}
@@ -5705,12 +5747,12 @@ func (m *FeeStructureMutation) ResetClassID() {
 }
 
 // SetAcademicYearID sets the "academic_year_id" field.
-func (m *FeeStructureMutation) SetAcademicYearID(i int) {
-	m.academic_year = &i
+func (m *FeeStructureMutation) SetAcademicYearID(u uuid.UUID) {
+	m.academic_year = &u
 }
 
 // AcademicYearID returns the value of the "academic_year_id" field in the mutation.
-func (m *FeeStructureMutation) AcademicYearID() (r int, exists bool) {
+func (m *FeeStructureMutation) AcademicYearID() (r uuid.UUID, exists bool) {
 	v := m.academic_year
 	if v == nil {
 		return
@@ -5721,7 +5763,7 @@ func (m *FeeStructureMutation) AcademicYearID() (r int, exists bool) {
 // OldAcademicYearID returns the old "academic_year_id" field's value of the FeeStructure entity.
 // If the FeeStructure object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *FeeStructureMutation) OldAcademicYearID(ctx context.Context) (v int, err error) {
+func (m *FeeStructureMutation) OldAcademicYearID(ctx context.Context) (v uuid.UUID, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldAcademicYearID is only allowed on UpdateOne operations")
 	}
@@ -5895,7 +5937,7 @@ func (m *FeeStructureMutation) ClassCleared() bool {
 // ClassIDs returns the "class" edge IDs in the mutation.
 // Note that IDs always returns len(IDs) <= 1 for unique edges, and you should use
 // ClassID instead. It exists only for internal usage by the builders.
-func (m *FeeStructureMutation) ClassIDs() (ids []int) {
+func (m *FeeStructureMutation) ClassIDs() (ids []uuid.UUID) {
 	if id := m.class; id != nil {
 		ids = append(ids, *id)
 	}
@@ -5922,7 +5964,7 @@ func (m *FeeStructureMutation) AcademicYearCleared() bool {
 // AcademicYearIDs returns the "academic_year" edge IDs in the mutation.
 // Note that IDs always returns len(IDs) <= 1 for unique edges, and you should use
 // AcademicYearID instead. It exists only for internal usage by the builders.
-func (m *FeeStructureMutation) AcademicYearIDs() (ids []int) {
+func (m *FeeStructureMutation) AcademicYearIDs() (ids []uuid.UUID) {
 	if id := m.academic_year; id != nil {
 		ids = append(ids, *id)
 	}
@@ -6032,14 +6074,14 @@ func (m *FeeStructureMutation) OldField(ctx context.Context, name string) (ent.V
 func (m *FeeStructureMutation) SetField(name string, value ent.Value) error {
 	switch name {
 	case feestructure.FieldClassID:
-		v, ok := value.(int)
+		v, ok := value.(uuid.UUID)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetClassID(v)
 		return nil
 	case feestructure.FieldAcademicYearID:
-		v, ok := value.(int)
+		v, ok := value.(uuid.UUID)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
@@ -6255,12 +6297,12 @@ type PermissionMutation struct {
 	config
 	op            Op
 	typ           string
-	id            *int
+	id            *uuid.UUID
 	name          *string
 	description   *string
 	clearedFields map[string]struct{}
-	roles         map[int]struct{}
-	removedroles  map[int]struct{}
+	roles         map[uuid.UUID]struct{}
+	removedroles  map[uuid.UUID]struct{}
 	clearedroles  bool
 	done          bool
 	oldValue      func(context.Context) (*Permission, error)
@@ -6287,7 +6329,7 @@ func newPermissionMutation(c config, op Op, opts ...permissionOption) *Permissio
 }
 
 // withPermissionID sets the ID field of the mutation.
-func withPermissionID(id int) permissionOption {
+func withPermissionID(id uuid.UUID) permissionOption {
 	return func(m *PermissionMutation) {
 		var (
 			err   error
@@ -6337,9 +6379,15 @@ func (m PermissionMutation) Tx() (*Tx, error) {
 	return tx, nil
 }
 
+// SetID sets the value of the id field. Note that this
+// operation is only accepted on creation of Permission entities.
+func (m *PermissionMutation) SetID(id uuid.UUID) {
+	m.id = &id
+}
+
 // ID returns the ID value in the mutation. Note that the ID is only available
 // if it was provided to the builder or after it was returned from the database.
-func (m *PermissionMutation) ID() (id int, exists bool) {
+func (m *PermissionMutation) ID() (id uuid.UUID, exists bool) {
 	if m.id == nil {
 		return
 	}
@@ -6350,12 +6398,12 @@ func (m *PermissionMutation) ID() (id int, exists bool) {
 // That means, if the mutation is applied within a transaction with an isolation level such
 // as sql.LevelSerializable, the returned ids match the ids of the rows that will be updated
 // or updated by the mutation.
-func (m *PermissionMutation) IDs(ctx context.Context) ([]int, error) {
+func (m *PermissionMutation) IDs(ctx context.Context) ([]uuid.UUID, error) {
 	switch {
 	case m.op.Is(OpUpdateOne | OpDeleteOne):
 		id, exists := m.ID()
 		if exists {
-			return []int{id}, nil
+			return []uuid.UUID{id}, nil
 		}
 		fallthrough
 	case m.op.Is(OpUpdate | OpDelete):
@@ -6451,9 +6499,9 @@ func (m *PermissionMutation) ResetDescription() {
 }
 
 // AddRoleIDs adds the "roles" edge to the Role entity by ids.
-func (m *PermissionMutation) AddRoleIDs(ids ...int) {
+func (m *PermissionMutation) AddRoleIDs(ids ...uuid.UUID) {
 	if m.roles == nil {
-		m.roles = make(map[int]struct{})
+		m.roles = make(map[uuid.UUID]struct{})
 	}
 	for i := range ids {
 		m.roles[ids[i]] = struct{}{}
@@ -6471,9 +6519,9 @@ func (m *PermissionMutation) RolesCleared() bool {
 }
 
 // RemoveRoleIDs removes the "roles" edge to the Role entity by IDs.
-func (m *PermissionMutation) RemoveRoleIDs(ids ...int) {
+func (m *PermissionMutation) RemoveRoleIDs(ids ...uuid.UUID) {
 	if m.removedroles == nil {
-		m.removedroles = make(map[int]struct{})
+		m.removedroles = make(map[uuid.UUID]struct{})
 	}
 	for i := range ids {
 		delete(m.roles, ids[i])
@@ -6482,7 +6530,7 @@ func (m *PermissionMutation) RemoveRoleIDs(ids ...int) {
 }
 
 // RemovedRoles returns the removed IDs of the "roles" edge to the Role entity.
-func (m *PermissionMutation) RemovedRolesIDs() (ids []int) {
+func (m *PermissionMutation) RemovedRolesIDs() (ids []uuid.UUID) {
 	for id := range m.removedroles {
 		ids = append(ids, id)
 	}
@@ -6490,7 +6538,7 @@ func (m *PermissionMutation) RemovedRolesIDs() (ids []int) {
 }
 
 // RolesIDs returns the "roles" edge IDs in the mutation.
-func (m *PermissionMutation) RolesIDs() (ids []int) {
+func (m *PermissionMutation) RolesIDs() (ids []uuid.UUID) {
 	for id := range m.roles {
 		ids = append(ids, id)
 	}
@@ -6750,12 +6798,12 @@ type RoleMutation struct {
 	config
 	op                 Op
 	typ                string
-	id                 *int
+	id                 *uuid.UUID
 	name               *string
 	description        *string
 	clearedFields      map[string]struct{}
-	permissions        map[int]struct{}
-	removedpermissions map[int]struct{}
+	permissions        map[uuid.UUID]struct{}
+	removedpermissions map[uuid.UUID]struct{}
 	clearedpermissions bool
 	users              map[uuid.UUID]struct{}
 	removedusers       map[uuid.UUID]struct{}
@@ -6785,7 +6833,7 @@ func newRoleMutation(c config, op Op, opts ...roleOption) *RoleMutation {
 }
 
 // withRoleID sets the ID field of the mutation.
-func withRoleID(id int) roleOption {
+func withRoleID(id uuid.UUID) roleOption {
 	return func(m *RoleMutation) {
 		var (
 			err   error
@@ -6835,9 +6883,15 @@ func (m RoleMutation) Tx() (*Tx, error) {
 	return tx, nil
 }
 
+// SetID sets the value of the id field. Note that this
+// operation is only accepted on creation of Role entities.
+func (m *RoleMutation) SetID(id uuid.UUID) {
+	m.id = &id
+}
+
 // ID returns the ID value in the mutation. Note that the ID is only available
 // if it was provided to the builder or after it was returned from the database.
-func (m *RoleMutation) ID() (id int, exists bool) {
+func (m *RoleMutation) ID() (id uuid.UUID, exists bool) {
 	if m.id == nil {
 		return
 	}
@@ -6848,12 +6902,12 @@ func (m *RoleMutation) ID() (id int, exists bool) {
 // That means, if the mutation is applied within a transaction with an isolation level such
 // as sql.LevelSerializable, the returned ids match the ids of the rows that will be updated
 // or updated by the mutation.
-func (m *RoleMutation) IDs(ctx context.Context) ([]int, error) {
+func (m *RoleMutation) IDs(ctx context.Context) ([]uuid.UUID, error) {
 	switch {
 	case m.op.Is(OpUpdateOne | OpDeleteOne):
 		id, exists := m.ID()
 		if exists {
-			return []int{id}, nil
+			return []uuid.UUID{id}, nil
 		}
 		fallthrough
 	case m.op.Is(OpUpdate | OpDelete):
@@ -6949,9 +7003,9 @@ func (m *RoleMutation) ResetDescription() {
 }
 
 // AddPermissionIDs adds the "permissions" edge to the Permission entity by ids.
-func (m *RoleMutation) AddPermissionIDs(ids ...int) {
+func (m *RoleMutation) AddPermissionIDs(ids ...uuid.UUID) {
 	if m.permissions == nil {
-		m.permissions = make(map[int]struct{})
+		m.permissions = make(map[uuid.UUID]struct{})
 	}
 	for i := range ids {
 		m.permissions[ids[i]] = struct{}{}
@@ -6969,9 +7023,9 @@ func (m *RoleMutation) PermissionsCleared() bool {
 }
 
 // RemovePermissionIDs removes the "permissions" edge to the Permission entity by IDs.
-func (m *RoleMutation) RemovePermissionIDs(ids ...int) {
+func (m *RoleMutation) RemovePermissionIDs(ids ...uuid.UUID) {
 	if m.removedpermissions == nil {
-		m.removedpermissions = make(map[int]struct{})
+		m.removedpermissions = make(map[uuid.UUID]struct{})
 	}
 	for i := range ids {
 		delete(m.permissions, ids[i])
@@ -6980,7 +7034,7 @@ func (m *RoleMutation) RemovePermissionIDs(ids ...int) {
 }
 
 // RemovedPermissions returns the removed IDs of the "permissions" edge to the Permission entity.
-func (m *RoleMutation) RemovedPermissionsIDs() (ids []int) {
+func (m *RoleMutation) RemovedPermissionsIDs() (ids []uuid.UUID) {
 	for id := range m.removedpermissions {
 		ids = append(ids, id)
 	}
@@ -6988,7 +7042,7 @@ func (m *RoleMutation) RemovedPermissionsIDs() (ids []int) {
 }
 
 // PermissionsIDs returns the "permissions" edge IDs in the mutation.
-func (m *RoleMutation) PermissionsIDs() (ids []int) {
+func (m *RoleMutation) PermissionsIDs() (ids []uuid.UUID) {
 	for id := range m.permissions {
 		ids = append(ids, id)
 	}
@@ -7342,7 +7396,7 @@ type StudentMutation struct {
 	clearedFields map[string]struct{}
 	user          *uuid.UUID
 	cleareduser   bool
-	class         *int
+	class         *uuid.UUID
 	clearedclass  bool
 	done          bool
 	oldValue      func(context.Context) (*Student, error)
@@ -7856,12 +7910,12 @@ func (m *StudentMutation) ResetAddress() {
 }
 
 // SetClassID sets the "class_id" field.
-func (m *StudentMutation) SetClassID(i int) {
-	m.class = &i
+func (m *StudentMutation) SetClassID(u uuid.UUID) {
+	m.class = &u
 }
 
 // ClassID returns the value of the "class_id" field in the mutation.
-func (m *StudentMutation) ClassID() (r int, exists bool) {
+func (m *StudentMutation) ClassID() (r uuid.UUID, exists bool) {
 	v := m.class
 	if v == nil {
 		return
@@ -7872,7 +7926,7 @@ func (m *StudentMutation) ClassID() (r int, exists bool) {
 // OldClassID returns the old "class_id" field's value of the Student entity.
 // If the Student object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *StudentMutation) OldClassID(ctx context.Context) (v *int, err error) {
+func (m *StudentMutation) OldClassID(ctx context.Context) (v *uuid.UUID, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldClassID is only allowed on UpdateOne operations")
 	}
@@ -8030,7 +8084,7 @@ func (m *StudentMutation) ClassCleared() bool {
 // ClassIDs returns the "class" edge IDs in the mutation.
 // Note that IDs always returns len(IDs) <= 1 for unique edges, and you should use
 // ClassID instead. It exists only for internal usage by the builders.
-func (m *StudentMutation) ClassIDs() (ids []int) {
+func (m *StudentMutation) ClassIDs() (ids []uuid.UUID) {
 	if id := m.class; id != nil {
 		ids = append(ids, *id)
 	}
@@ -8252,7 +8306,7 @@ func (m *StudentMutation) SetField(name string, value ent.Value) error {
 		m.SetAddress(v)
 		return nil
 	case student.FieldClassID:
-		v, ok := value.(int)
+		v, ok := value.(uuid.UUID)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
@@ -8279,16 +8333,13 @@ func (m *StudentMutation) SetField(name string, value ent.Value) error {
 // AddedFields returns all numeric fields that were incremented/decremented during
 // this mutation.
 func (m *StudentMutation) AddedFields() []string {
-	var fields []string
-	return fields
+	return nil
 }
 
 // AddedField returns the numeric value that was incremented/decremented on a field
 // with the given name. The second boolean return value indicates that this field
 // was not set, or was not defined in the schema.
 func (m *StudentMutation) AddedField(name string) (ent.Value, bool) {
-	switch name {
-	}
 	return nil, false
 }
 
@@ -8512,16 +8563,16 @@ type StudentAttendanceMutation struct {
 	config
 	op             Op
 	typ            string
-	id             *int
+	id             *uuid.UUID
 	date           *time.Time
 	status         *studentattendance.Status
 	remarks        *string
 	clearedFields  map[string]struct{}
 	student        *uuid.UUID
 	clearedstudent bool
-	class          *int
+	class          *uuid.UUID
 	clearedclass   bool
-	subject        *int
+	subject        *uuid.UUID
 	clearedsubject bool
 	done           bool
 	oldValue       func(context.Context) (*StudentAttendance, error)
@@ -8548,7 +8599,7 @@ func newStudentAttendanceMutation(c config, op Op, opts ...studentattendanceOpti
 }
 
 // withStudentAttendanceID sets the ID field of the mutation.
-func withStudentAttendanceID(id int) studentattendanceOption {
+func withStudentAttendanceID(id uuid.UUID) studentattendanceOption {
 	return func(m *StudentAttendanceMutation) {
 		var (
 			err   error
@@ -8598,9 +8649,15 @@ func (m StudentAttendanceMutation) Tx() (*Tx, error) {
 	return tx, nil
 }
 
+// SetID sets the value of the id field. Note that this
+// operation is only accepted on creation of StudentAttendance entities.
+func (m *StudentAttendanceMutation) SetID(id uuid.UUID) {
+	m.id = &id
+}
+
 // ID returns the ID value in the mutation. Note that the ID is only available
 // if it was provided to the builder or after it was returned from the database.
-func (m *StudentAttendanceMutation) ID() (id int, exists bool) {
+func (m *StudentAttendanceMutation) ID() (id uuid.UUID, exists bool) {
 	if m.id == nil {
 		return
 	}
@@ -8611,12 +8668,12 @@ func (m *StudentAttendanceMutation) ID() (id int, exists bool) {
 // That means, if the mutation is applied within a transaction with an isolation level such
 // as sql.LevelSerializable, the returned ids match the ids of the rows that will be updated
 // or updated by the mutation.
-func (m *StudentAttendanceMutation) IDs(ctx context.Context) ([]int, error) {
+func (m *StudentAttendanceMutation) IDs(ctx context.Context) ([]uuid.UUID, error) {
 	switch {
 	case m.op.Is(OpUpdateOne | OpDeleteOne):
 		id, exists := m.ID()
 		if exists {
-			return []int{id}, nil
+			return []uuid.UUID{id}, nil
 		}
 		fallthrough
 	case m.op.Is(OpUpdate | OpDelete):
@@ -8663,12 +8720,12 @@ func (m *StudentAttendanceMutation) ResetStudentID() {
 }
 
 // SetClassID sets the "class_id" field.
-func (m *StudentAttendanceMutation) SetClassID(i int) {
-	m.class = &i
+func (m *StudentAttendanceMutation) SetClassID(u uuid.UUID) {
+	m.class = &u
 }
 
 // ClassID returns the value of the "class_id" field in the mutation.
-func (m *StudentAttendanceMutation) ClassID() (r int, exists bool) {
+func (m *StudentAttendanceMutation) ClassID() (r uuid.UUID, exists bool) {
 	v := m.class
 	if v == nil {
 		return
@@ -8679,7 +8736,7 @@ func (m *StudentAttendanceMutation) ClassID() (r int, exists bool) {
 // OldClassID returns the old "class_id" field's value of the StudentAttendance entity.
 // If the StudentAttendance object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *StudentAttendanceMutation) OldClassID(ctx context.Context) (v int, err error) {
+func (m *StudentAttendanceMutation) OldClassID(ctx context.Context) (v uuid.UUID, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldClassID is only allowed on UpdateOne operations")
 	}
@@ -8699,12 +8756,12 @@ func (m *StudentAttendanceMutation) ResetClassID() {
 }
 
 // SetSubjectID sets the "subject_id" field.
-func (m *StudentAttendanceMutation) SetSubjectID(i int) {
-	m.subject = &i
+func (m *StudentAttendanceMutation) SetSubjectID(u uuid.UUID) {
+	m.subject = &u
 }
 
 // SubjectID returns the value of the "subject_id" field in the mutation.
-func (m *StudentAttendanceMutation) SubjectID() (r int, exists bool) {
+func (m *StudentAttendanceMutation) SubjectID() (r uuid.UUID, exists bool) {
 	v := m.subject
 	if v == nil {
 		return
@@ -8715,7 +8772,7 @@ func (m *StudentAttendanceMutation) SubjectID() (r int, exists bool) {
 // OldSubjectID returns the old "subject_id" field's value of the StudentAttendance entity.
 // If the StudentAttendance object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *StudentAttendanceMutation) OldSubjectID(ctx context.Context) (v *int, err error) {
+func (m *StudentAttendanceMutation) OldSubjectID(ctx context.Context) (v *uuid.UUID, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldSubjectID is only allowed on UpdateOne operations")
 	}
@@ -8909,7 +8966,7 @@ func (m *StudentAttendanceMutation) ClassCleared() bool {
 // ClassIDs returns the "class" edge IDs in the mutation.
 // Note that IDs always returns len(IDs) <= 1 for unique edges, and you should use
 // ClassID instead. It exists only for internal usage by the builders.
-func (m *StudentAttendanceMutation) ClassIDs() (ids []int) {
+func (m *StudentAttendanceMutation) ClassIDs() (ids []uuid.UUID) {
 	if id := m.class; id != nil {
 		ids = append(ids, *id)
 	}
@@ -8936,7 +8993,7 @@ func (m *StudentAttendanceMutation) SubjectCleared() bool {
 // SubjectIDs returns the "subject" edge IDs in the mutation.
 // Note that IDs always returns len(IDs) <= 1 for unique edges, and you should use
 // SubjectID instead. It exists only for internal usage by the builders.
-func (m *StudentAttendanceMutation) SubjectIDs() (ids []int) {
+func (m *StudentAttendanceMutation) SubjectIDs() (ids []uuid.UUID) {
 	if id := m.subject; id != nil {
 		ids = append(ids, *id)
 	}
@@ -9060,14 +9117,14 @@ func (m *StudentAttendanceMutation) SetField(name string, value ent.Value) error
 		m.SetStudentID(v)
 		return nil
 	case studentattendance.FieldClassID:
-		v, ok := value.(int)
+		v, ok := value.(uuid.UUID)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetClassID(v)
 		return nil
 	case studentattendance.FieldSubjectID:
-		v, ok := value.(int)
+		v, ok := value.(uuid.UUID)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
@@ -9101,16 +9158,13 @@ func (m *StudentAttendanceMutation) SetField(name string, value ent.Value) error
 // AddedFields returns all numeric fields that were incremented/decremented during
 // this mutation.
 func (m *StudentAttendanceMutation) AddedFields() []string {
-	var fields []string
-	return fields
+	return nil
 }
 
 // AddedField returns the numeric value that was incremented/decremented on a field
 // with the given name. The second boolean return value indicates that this field
 // was not set, or was not defined in the schema.
 func (m *StudentAttendanceMutation) AddedField(name string) (ent.Value, bool) {
-	switch name {
-	}
 	return nil, false
 }
 
@@ -9298,7 +9352,7 @@ type SubjectMutation struct {
 	config
 	op              Op
 	typ             string
-	id              *int
+	id              *uuid.UUID
 	name            *string
 	code            *string
 	description     *string
@@ -9331,7 +9385,7 @@ func newSubjectMutation(c config, op Op, opts ...subjectOption) *SubjectMutation
 }
 
 // withSubjectID sets the ID field of the mutation.
-func withSubjectID(id int) subjectOption {
+func withSubjectID(id uuid.UUID) subjectOption {
 	return func(m *SubjectMutation) {
 		var (
 			err   error
@@ -9381,9 +9435,15 @@ func (m SubjectMutation) Tx() (*Tx, error) {
 	return tx, nil
 }
 
+// SetID sets the value of the id field. Note that this
+// operation is only accepted on creation of Subject entities.
+func (m *SubjectMutation) SetID(id uuid.UUID) {
+	m.id = &id
+}
+
 // ID returns the ID value in the mutation. Note that the ID is only available
 // if it was provided to the builder or after it was returned from the database.
-func (m *SubjectMutation) ID() (id int, exists bool) {
+func (m *SubjectMutation) ID() (id uuid.UUID, exists bool) {
 	if m.id == nil {
 		return
 	}
@@ -9394,12 +9454,12 @@ func (m *SubjectMutation) ID() (id int, exists bool) {
 // That means, if the mutation is applied within a transaction with an isolation level such
 // as sql.LevelSerializable, the returned ids match the ids of the rows that will be updated
 // or updated by the mutation.
-func (m *SubjectMutation) IDs(ctx context.Context) ([]int, error) {
+func (m *SubjectMutation) IDs(ctx context.Context) ([]uuid.UUID, error) {
 	switch {
 	case m.op.Is(OpUpdateOne | OpDeleteOne):
 		id, exists := m.ID()
 		if exists {
-			return []int{id}, nil
+			return []uuid.UUID{id}, nil
 		}
 		fallthrough
 	case m.op.Is(OpUpdate | OpDelete):
@@ -9866,7 +9926,7 @@ type TaskMutation struct {
 	config
 	op              Op
 	typ             string
-	id              *int
+	id              *uuid.UUID
 	title           *string
 	details         *string
 	status          *task.Status
@@ -9904,7 +9964,7 @@ func newTaskMutation(c config, op Op, opts ...taskOption) *TaskMutation {
 }
 
 // withTaskID sets the ID field of the mutation.
-func withTaskID(id int) taskOption {
+func withTaskID(id uuid.UUID) taskOption {
 	return func(m *TaskMutation) {
 		var (
 			err   error
@@ -9954,9 +10014,15 @@ func (m TaskMutation) Tx() (*Tx, error) {
 	return tx, nil
 }
 
+// SetID sets the value of the id field. Note that this
+// operation is only accepted on creation of Task entities.
+func (m *TaskMutation) SetID(id uuid.UUID) {
+	m.id = &id
+}
+
 // ID returns the ID value in the mutation. Note that the ID is only available
 // if it was provided to the builder or after it was returned from the database.
-func (m *TaskMutation) ID() (id int, exists bool) {
+func (m *TaskMutation) ID() (id uuid.UUID, exists bool) {
 	if m.id == nil {
 		return
 	}
@@ -9967,12 +10033,12 @@ func (m *TaskMutation) ID() (id int, exists bool) {
 // That means, if the mutation is applied within a transaction with an isolation level such
 // as sql.LevelSerializable, the returned ids match the ids of the rows that will be updated
 // or updated by the mutation.
-func (m *TaskMutation) IDs(ctx context.Context) ([]int, error) {
+func (m *TaskMutation) IDs(ctx context.Context) ([]uuid.UUID, error) {
 	switch {
 	case m.op.Is(OpUpdateOne | OpDeleteOne):
 		id, exists := m.ID()
 		if exists {
-			return []int{id}, nil
+			return []uuid.UUID{id}, nil
 		}
 		fallthrough
 	case m.op.Is(OpUpdate | OpDelete):
@@ -10824,10 +10890,10 @@ type TeacherMutation struct {
 	clearedFields     map[string]struct{}
 	user              *uuid.UUID
 	cleareduser       bool
-	department        *int
+	department        *uuid.UUID
 	cleareddepartment bool
-	subjects          map[int]struct{}
-	removedsubjects   map[int]struct{}
+	subjects          map[uuid.UUID]struct{}
+	removedsubjects   map[uuid.UUID]struct{}
 	clearedsubjects   bool
 	done              bool
 	oldValue          func(context.Context) (*Teacher, error)
@@ -11243,12 +11309,12 @@ func (m *TeacherMutation) ResetAddress() {
 }
 
 // SetDepartmentID sets the "department_id" field.
-func (m *TeacherMutation) SetDepartmentID(i int) {
-	m.department = &i
+func (m *TeacherMutation) SetDepartmentID(u uuid.UUID) {
+	m.department = &u
 }
 
 // DepartmentID returns the value of the "department_id" field in the mutation.
-func (m *TeacherMutation) DepartmentID() (r int, exists bool) {
+func (m *TeacherMutation) DepartmentID() (r uuid.UUID, exists bool) {
 	v := m.department
 	if v == nil {
 		return
@@ -11259,7 +11325,7 @@ func (m *TeacherMutation) DepartmentID() (r int, exists bool) {
 // OldDepartmentID returns the old "department_id" field's value of the Teacher entity.
 // If the Teacher object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *TeacherMutation) OldDepartmentID(ctx context.Context) (v *int, err error) {
+func (m *TeacherMutation) OldDepartmentID(ctx context.Context) (v *uuid.UUID, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldDepartmentID is only allowed on UpdateOne operations")
 	}
@@ -11479,7 +11545,7 @@ func (m *TeacherMutation) DepartmentCleared() bool {
 // DepartmentIDs returns the "department" edge IDs in the mutation.
 // Note that IDs always returns len(IDs) <= 1 for unique edges, and you should use
 // DepartmentID instead. It exists only for internal usage by the builders.
-func (m *TeacherMutation) DepartmentIDs() (ids []int) {
+func (m *TeacherMutation) DepartmentIDs() (ids []uuid.UUID) {
 	if id := m.department; id != nil {
 		ids = append(ids, *id)
 	}
@@ -11493,9 +11559,9 @@ func (m *TeacherMutation) ResetDepartment() {
 }
 
 // AddSubjectIDs adds the "subjects" edge to the Subject entity by ids.
-func (m *TeacherMutation) AddSubjectIDs(ids ...int) {
+func (m *TeacherMutation) AddSubjectIDs(ids ...uuid.UUID) {
 	if m.subjects == nil {
-		m.subjects = make(map[int]struct{})
+		m.subjects = make(map[uuid.UUID]struct{})
 	}
 	for i := range ids {
 		m.subjects[ids[i]] = struct{}{}
@@ -11513,9 +11579,9 @@ func (m *TeacherMutation) SubjectsCleared() bool {
 }
 
 // RemoveSubjectIDs removes the "subjects" edge to the Subject entity by IDs.
-func (m *TeacherMutation) RemoveSubjectIDs(ids ...int) {
+func (m *TeacherMutation) RemoveSubjectIDs(ids ...uuid.UUID) {
 	if m.removedsubjects == nil {
-		m.removedsubjects = make(map[int]struct{})
+		m.removedsubjects = make(map[uuid.UUID]struct{})
 	}
 	for i := range ids {
 		delete(m.subjects, ids[i])
@@ -11524,7 +11590,7 @@ func (m *TeacherMutation) RemoveSubjectIDs(ids ...int) {
 }
 
 // RemovedSubjects returns the removed IDs of the "subjects" edge to the Subject entity.
-func (m *TeacherMutation) RemovedSubjectsIDs() (ids []int) {
+func (m *TeacherMutation) RemovedSubjectsIDs() (ids []uuid.UUID) {
 	for id := range m.removedsubjects {
 		ids = append(ids, id)
 	}
@@ -11532,7 +11598,7 @@ func (m *TeacherMutation) RemovedSubjectsIDs() (ids []int) {
 }
 
 // SubjectsIDs returns the "subjects" edge IDs in the mutation.
-func (m *TeacherMutation) SubjectsIDs() (ids []int) {
+func (m *TeacherMutation) SubjectsIDs() (ids []uuid.UUID) {
 	for id := range m.subjects {
 		ids = append(ids, id)
 	}
@@ -11734,7 +11800,7 @@ func (m *TeacherMutation) SetField(name string, value ent.Value) error {
 		m.SetAddress(v)
 		return nil
 	case teacher.FieldDepartmentID:
-		v, ok := value.(int)
+		v, ok := value.(uuid.UUID)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
@@ -11768,16 +11834,13 @@ func (m *TeacherMutation) SetField(name string, value ent.Value) error {
 // AddedFields returns all numeric fields that were incremented/decremented during
 // this mutation.
 func (m *TeacherMutation) AddedFields() []string {
-	var fields []string
-	return fields
+	return nil
 }
 
 // AddedField returns the numeric value that was incremented/decremented on a field
 // with the given name. The second boolean return value indicates that this field
 // was not set, or was not defined in the schema.
 func (m *TeacherMutation) AddedField(name string) (ent.Value, bool) {
-	switch name {
-	}
 	return nil, false
 }
 
@@ -12026,7 +12089,7 @@ type TeacherAttendanceMutation struct {
 	config
 	op             Op
 	typ            string
-	id             *int
+	id             *uuid.UUID
 	date           *time.Time
 	status         *teacherattendance.Status
 	remarks        *string
@@ -12058,7 +12121,7 @@ func newTeacherAttendanceMutation(c config, op Op, opts ...teacherattendanceOpti
 }
 
 // withTeacherAttendanceID sets the ID field of the mutation.
-func withTeacherAttendanceID(id int) teacherattendanceOption {
+func withTeacherAttendanceID(id uuid.UUID) teacherattendanceOption {
 	return func(m *TeacherAttendanceMutation) {
 		var (
 			err   error
@@ -12108,9 +12171,15 @@ func (m TeacherAttendanceMutation) Tx() (*Tx, error) {
 	return tx, nil
 }
 
+// SetID sets the value of the id field. Note that this
+// operation is only accepted on creation of TeacherAttendance entities.
+func (m *TeacherAttendanceMutation) SetID(id uuid.UUID) {
+	m.id = &id
+}
+
 // ID returns the ID value in the mutation. Note that the ID is only available
 // if it was provided to the builder or after it was returned from the database.
-func (m *TeacherAttendanceMutation) ID() (id int, exists bool) {
+func (m *TeacherAttendanceMutation) ID() (id uuid.UUID, exists bool) {
 	if m.id == nil {
 		return
 	}
@@ -12121,12 +12190,12 @@ func (m *TeacherAttendanceMutation) ID() (id int, exists bool) {
 // That means, if the mutation is applied within a transaction with an isolation level such
 // as sql.LevelSerializable, the returned ids match the ids of the rows that will be updated
 // or updated by the mutation.
-func (m *TeacherAttendanceMutation) IDs(ctx context.Context) ([]int, error) {
+func (m *TeacherAttendanceMutation) IDs(ctx context.Context) ([]uuid.UUID, error) {
 	switch {
 	case m.op.Is(OpUpdateOne | OpDeleteOne):
 		id, exists := m.ID()
 		if exists {
-			return []int{id}, nil
+			return []uuid.UUID{id}, nil
 		}
 		fallthrough
 	case m.op.Is(OpUpdate | OpDelete):
@@ -12600,7 +12669,7 @@ type UserMutation struct {
 	created_at      *time.Time
 	updated_at      *time.Time
 	clearedFields   map[string]struct{}
-	role_ref        *int
+	role_ref        *uuid.UUID
 	clearedrole_ref bool
 	done            bool
 	oldValue        func(context.Context) (*User, error)
@@ -12856,12 +12925,12 @@ func (m *UserMutation) ResetRole() {
 }
 
 // SetRoleID sets the "role_id" field.
-func (m *UserMutation) SetRoleID(i int) {
-	m.role_ref = &i
+func (m *UserMutation) SetRoleID(u uuid.UUID) {
+	m.role_ref = &u
 }
 
 // RoleID returns the value of the "role_id" field in the mutation.
-func (m *UserMutation) RoleID() (r int, exists bool) {
+func (m *UserMutation) RoleID() (r uuid.UUID, exists bool) {
 	v := m.role_ref
 	if v == nil {
 		return
@@ -12872,7 +12941,7 @@ func (m *UserMutation) RoleID() (r int, exists bool) {
 // OldRoleID returns the old "role_id" field's value of the User entity.
 // If the User object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *UserMutation) OldRoleID(ctx context.Context) (v *int, err error) {
+func (m *UserMutation) OldRoleID(ctx context.Context) (v *uuid.UUID, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldRoleID is only allowed on UpdateOne operations")
 	}
@@ -13062,7 +13131,7 @@ func (m *UserMutation) ResetUpdatedAt() {
 }
 
 // SetRoleRefID sets the "role_ref" edge to the Role entity by id.
-func (m *UserMutation) SetRoleRefID(id int) {
+func (m *UserMutation) SetRoleRefID(id uuid.UUID) {
 	m.role_ref = &id
 }
 
@@ -13078,7 +13147,7 @@ func (m *UserMutation) RoleRefCleared() bool {
 }
 
 // RoleRefID returns the "role_ref" edge ID in the mutation.
-func (m *UserMutation) RoleRefID() (id int, exists bool) {
+func (m *UserMutation) RoleRefID() (id uuid.UUID, exists bool) {
 	if m.role_ref != nil {
 		return *m.role_ref, true
 	}
@@ -13088,7 +13157,7 @@ func (m *UserMutation) RoleRefID() (id int, exists bool) {
 // RoleRefIDs returns the "role_ref" edge IDs in the mutation.
 // Note that IDs always returns len(IDs) <= 1 for unique edges, and you should use
 // RoleRefID instead. It exists only for internal usage by the builders.
-func (m *UserMutation) RoleRefIDs() (ids []int) {
+func (m *UserMutation) RoleRefIDs() (ids []uuid.UUID) {
 	if id := m.role_ref; id != nil {
 		ids = append(ids, *id)
 	}
@@ -13254,7 +13323,7 @@ func (m *UserMutation) SetField(name string, value ent.Value) error {
 		m.SetRole(v)
 		return nil
 	case user.FieldRoleID:
-		v, ok := value.(int)
+		v, ok := value.(uuid.UUID)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
@@ -13295,16 +13364,13 @@ func (m *UserMutation) SetField(name string, value ent.Value) error {
 // AddedFields returns all numeric fields that were incremented/decremented during
 // this mutation.
 func (m *UserMutation) AddedFields() []string {
-	var fields []string
-	return fields
+	return nil
 }
 
 // AddedField returns the numeric value that was incremented/decremented on a field
 // with the given name. The second boolean return value indicates that this field
 // was not set, or was not defined in the schema.
 func (m *UserMutation) AddedField(name string) (ent.Value, bool) {
-	switch name {
-	}
 	return nil, false
 }
 

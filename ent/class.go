@@ -11,19 +11,20 @@ import (
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
+	"github.com/google/uuid"
 )
 
 // Class is the model entity for the Class schema.
 type Class struct {
 	config `json:"-"`
 	// ID of the ent.
-	ID int `json:"id,omitempty"`
+	ID uuid.UUID `json:"id,omitempty"`
 	// Name holds the value of the "name" field.
 	Name string `json:"name,omitempty"`
 	// AcademicYearID holds the value of the "academic_year_id" field.
-	AcademicYearID int `json:"academic_year_id,omitempty"`
+	AcademicYearID uuid.UUID `json:"academic_year_id,omitempty"`
 	// DepartmentID holds the value of the "department_id" field.
-	DepartmentID *int `json:"department_id,omitempty"`
+	DepartmentID *uuid.UUID `json:"department_id,omitempty"`
 	// Capacity holds the value of the "capacity" field.
 	Capacity *int `json:"capacity,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
@@ -70,10 +71,14 @@ func (*Class) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case class.FieldID, class.FieldAcademicYearID, class.FieldDepartmentID, class.FieldCapacity:
+		case class.FieldDepartmentID:
+			values[i] = &sql.NullScanner{S: new(uuid.UUID)}
+		case class.FieldCapacity:
 			values[i] = new(sql.NullInt64)
 		case class.FieldName:
 			values[i] = new(sql.NullString)
+		case class.FieldID, class.FieldAcademicYearID:
+			values[i] = new(uuid.UUID)
 		default:
 			values[i] = new(sql.UnknownType)
 		}
@@ -90,11 +95,11 @@ func (_m *Class) assignValues(columns []string, values []any) error {
 	for i := range columns {
 		switch columns[i] {
 		case class.FieldID:
-			value, ok := values[i].(*sql.NullInt64)
-			if !ok {
-				return fmt.Errorf("unexpected type %T for field id", value)
+			if value, ok := values[i].(*uuid.UUID); !ok {
+				return fmt.Errorf("unexpected type %T for field id", values[i])
+			} else if value != nil {
+				_m.ID = *value
 			}
-			_m.ID = int(value.Int64)
 		case class.FieldName:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field name", values[i])
@@ -102,17 +107,17 @@ func (_m *Class) assignValues(columns []string, values []any) error {
 				_m.Name = value.String
 			}
 		case class.FieldAcademicYearID:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
+			if value, ok := values[i].(*uuid.UUID); !ok {
 				return fmt.Errorf("unexpected type %T for field academic_year_id", values[i])
-			} else if value.Valid {
-				_m.AcademicYearID = int(value.Int64)
+			} else if value != nil {
+				_m.AcademicYearID = *value
 			}
 		case class.FieldDepartmentID:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
+			if value, ok := values[i].(*sql.NullScanner); !ok {
 				return fmt.Errorf("unexpected type %T for field department_id", values[i])
 			} else if value.Valid {
-				_m.DepartmentID = new(int)
-				*_m.DepartmentID = int(value.Int64)
+				_m.DepartmentID = new(uuid.UUID)
+				*_m.DepartmentID = *value.S.(*uuid.UUID)
 			}
 		case class.FieldCapacity:
 			if value, ok := values[i].(*sql.NullInt64); !ok {

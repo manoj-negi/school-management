@@ -58,13 +58,13 @@ func (_c *UserCreate) SetNillableRole(v *user.Role) *UserCreate {
 }
 
 // SetRoleID sets the "role_id" field.
-func (_c *UserCreate) SetRoleID(v int) *UserCreate {
+func (_c *UserCreate) SetRoleID(v uuid.UUID) *UserCreate {
 	_c.mutation.SetRoleID(v)
 	return _c
 }
 
 // SetNillableRoleID sets the "role_id" field if the given value is not nil.
-func (_c *UserCreate) SetNillableRoleID(v *int) *UserCreate {
+func (_c *UserCreate) SetNillableRoleID(v *uuid.UUID) *UserCreate {
 	if v != nil {
 		_c.SetRoleID(*v)
 	}
@@ -142,13 +142,13 @@ func (_c *UserCreate) SetNillableID(v *uuid.UUID) *UserCreate {
 }
 
 // SetRoleRefID sets the "role_ref" edge to the Role entity by ID.
-func (_c *UserCreate) SetRoleRefID(id int) *UserCreate {
+func (_c *UserCreate) SetRoleRefID(id uuid.UUID) *UserCreate {
 	_c.mutation.SetRoleRefID(id)
 	return _c
 }
 
 // SetNillableRoleRefID sets the "role_ref" edge to the Role entity by ID if the given value is not nil.
-func (_c *UserCreate) SetNillableRoleRefID(id *int) *UserCreate {
+func (_c *UserCreate) SetNillableRoleRefID(id *uuid.UUID) *UserCreate {
 	if id != nil {
 		_c = _c.SetRoleRefID(*id)
 	}
@@ -321,7 +321,7 @@ func (_c *UserCreate) createSpec() (*User, *sqlgraph.CreateSpec) {
 			Columns: []string{user.RoleRefColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(role.FieldID, field.TypeInt),
+				IDSpec: sqlgraph.NewFieldSpec(role.FieldID, field.TypeUUID),
 			},
 		}
 		for _, k := range nodes {
@@ -431,7 +431,7 @@ func (u *UserUpsert) UpdateRole() *UserUpsert {
 }
 
 // SetRoleID sets the "role_id" field.
-func (u *UserUpsert) SetRoleID(v int) *UserUpsert {
+func (u *UserUpsert) SetRoleID(v uuid.UUID) *UserUpsert {
 	u.Set(user.FieldRoleID, v)
 	return u
 }
@@ -607,7 +607,7 @@ func (u *UserUpsertOne) UpdateRole() *UserUpsertOne {
 }
 
 // SetRoleID sets the "role_id" field.
-func (u *UserUpsertOne) SetRoleID(v int) *UserUpsertOne {
+func (u *UserUpsertOne) SetRoleID(v uuid.UUID) *UserUpsertOne {
 	return u.Update(func(s *UserUpsert) {
 		s.SetRoleID(v)
 	})
@@ -962,7 +962,7 @@ func (u *UserUpsertBulk) UpdateRole() *UserUpsertBulk {
 }
 
 // SetRoleID sets the "role_id" field.
-func (u *UserUpsertBulk) SetRoleID(v int) *UserUpsertBulk {
+func (u *UserUpsertBulk) SetRoleID(v uuid.UUID) *UserUpsertBulk {
 	return u.Update(func(s *UserUpsert) {
 		s.SetRoleID(v)
 	})

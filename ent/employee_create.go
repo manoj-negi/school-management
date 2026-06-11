@@ -101,13 +101,13 @@ func (_c *EmployeeCreate) SetNillableAddress(v *string) *EmployeeCreate {
 }
 
 // SetDepartmentID sets the "department_id" field.
-func (_c *EmployeeCreate) SetDepartmentID(v int) *EmployeeCreate {
+func (_c *EmployeeCreate) SetDepartmentID(v uuid.UUID) *EmployeeCreate {
 	_c.mutation.SetDepartmentID(v)
 	return _c
 }
 
 // SetNillableDepartmentID sets the "department_id" field if the given value is not nil.
-func (_c *EmployeeCreate) SetNillableDepartmentID(v *int) *EmployeeCreate {
+func (_c *EmployeeCreate) SetNillableDepartmentID(v *uuid.UUID) *EmployeeCreate {
 	if v != nil {
 		_c.SetDepartmentID(*v)
 	}
@@ -380,7 +380,7 @@ func (_c *EmployeeCreate) createSpec() (*Employee, *sqlgraph.CreateSpec) {
 			Columns: []string{employee.DepartmentColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(department.FieldID, field.TypeInt),
+				IDSpec: sqlgraph.NewFieldSpec(department.FieldID, field.TypeUUID),
 			},
 		}
 		for _, k := range nodes {
@@ -550,7 +550,7 @@ func (u *EmployeeUpsert) ClearAddress() *EmployeeUpsert {
 }
 
 // SetDepartmentID sets the "department_id" field.
-func (u *EmployeeUpsert) SetDepartmentID(v int) *EmployeeUpsert {
+func (u *EmployeeUpsert) SetDepartmentID(v uuid.UUID) *EmployeeUpsert {
 	u.Set(employee.FieldDepartmentID, v)
 	return u
 }
@@ -832,7 +832,7 @@ func (u *EmployeeUpsertOne) ClearAddress() *EmployeeUpsertOne {
 }
 
 // SetDepartmentID sets the "department_id" field.
-func (u *EmployeeUpsertOne) SetDepartmentID(v int) *EmployeeUpsertOne {
+func (u *EmployeeUpsertOne) SetDepartmentID(v uuid.UUID) *EmployeeUpsertOne {
 	return u.Update(func(s *EmployeeUpsert) {
 		s.SetDepartmentID(v)
 	})
@@ -1299,7 +1299,7 @@ func (u *EmployeeUpsertBulk) ClearAddress() *EmployeeUpsertBulk {
 }
 
 // SetDepartmentID sets the "department_id" field.
-func (u *EmployeeUpsertBulk) SetDepartmentID(v int) *EmployeeUpsertBulk {
+func (u *EmployeeUpsertBulk) SetDepartmentID(v uuid.UUID) *EmployeeUpsertBulk {
 	return u.Update(func(s *EmployeeUpsert) {
 		s.SetDepartmentID(v)
 	})

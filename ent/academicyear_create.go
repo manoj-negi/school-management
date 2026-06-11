@@ -9,9 +9,11 @@ import (
 	"go-seed/ent/academicyear"
 	"time"
 
+	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/google/uuid"
 )
 
 // AcademicYearCreate is the builder for creating a AcademicYear entity.
@@ -50,6 +52,20 @@ func (_c *AcademicYearCreate) SetIsCurrent(v bool) *AcademicYearCreate {
 func (_c *AcademicYearCreate) SetNillableIsCurrent(v *bool) *AcademicYearCreate {
 	if v != nil {
 		_c.SetIsCurrent(*v)
+	}
+	return _c
+}
+
+// SetID sets the "id" field.
+func (_c *AcademicYearCreate) SetID(v uuid.UUID) *AcademicYearCreate {
+	_c.mutation.SetID(v)
+	return _c
+}
+
+// SetNillableID sets the "id" field if the given value is not nil.
+func (_c *AcademicYearCreate) SetNillableID(v *uuid.UUID) *AcademicYearCreate {
+	if v != nil {
+		_c.SetID(*v)
 	}
 	return _c
 }
@@ -93,6 +109,10 @@ func (_c *AcademicYearCreate) defaults() {
 		v := academicyear.DefaultIsCurrent
 		_c.mutation.SetIsCurrent(v)
 	}
+	if _, ok := _c.mutation.ID(); !ok {
+		v := academicyear.DefaultID()
+		_c.mutation.SetID(v)
+	}
 }
 
 // check runs all checks and user-defined validators on the builder.
@@ -123,8 +143,13 @@ func (_c *AcademicYearCreate) sqlSave(ctx context.Context) (*AcademicYear, error
 		}
 		return nil, err
 	}
-	id := _spec.ID.Value.(int64)
-	_node.ID = int(id)
+	if _spec.ID.Value != nil {
+		if id, ok := _spec.ID.Value.(*uuid.UUID); ok {
+			_node.ID = *id
+		} else if err := _node.ID.Scan(_spec.ID.Value); err != nil {
+			return nil, err
+		}
+	}
 	_c.mutation.id = &_node.ID
 	_c.mutation.done = true
 	return _node, nil
@@ -133,9 +158,13 @@ func (_c *AcademicYearCreate) sqlSave(ctx context.Context) (*AcademicYear, error
 func (_c *AcademicYearCreate) createSpec() (*AcademicYear, *sqlgraph.CreateSpec) {
 	var (
 		_node = &AcademicYear{config: _c.config}
-		_spec = sqlgraph.NewCreateSpec(academicyear.Table, sqlgraph.NewFieldSpec(academicyear.FieldID, field.TypeInt))
+		_spec = sqlgraph.NewCreateSpec(academicyear.Table, sqlgraph.NewFieldSpec(academicyear.FieldID, field.TypeUUID))
 	)
 	_spec.OnConflict = _c.conflict
+	if id, ok := _c.mutation.ID(); ok {
+		_node.ID = id
+		_spec.ID.Value = &id
+	}
 	if value, ok := _c.mutation.Label(); ok {
 		_spec.SetField(academicyear.FieldLabel, field.TypeString, value)
 		_node.Label = value
@@ -252,16 +281,24 @@ func (u *AcademicYearUpsert) UpdateIsCurrent() *AcademicYearUpsert {
 	return u
 }
 
-// UpdateNewValues updates the mutable fields using the new values that were set on create.
+// UpdateNewValues updates the mutable fields using the new values that were set on create except the ID field.
 // Using this option is equivalent to using:
 //
 //	client.AcademicYear.Create().
 //		OnConflict(
 //			sql.ResolveWithNewValues(),
+//			sql.ResolveWith(func(u *sql.UpdateSet) {
+//				u.SetIgnore(academicyear.FieldID)
+//			}),
 //		).
 //		Exec(ctx)
 func (u *AcademicYearUpsertOne) UpdateNewValues() *AcademicYearUpsertOne {
 	u.create.conflict = append(u.create.conflict, sql.ResolveWithNewValues())
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(s *sql.UpdateSet) {
+		if _, exists := u.create.mutation.ID(); exists {
+			s.SetIgnore(academicyear.FieldID)
+		}
+	}))
 	return u
 }
 
@@ -364,7 +401,12 @@ func (u *AcademicYearUpsertOne) ExecX(ctx context.Context) {
 }
 
 // Exec executes the UPSERT query and returns the inserted/updated ID.
-func (u *AcademicYearUpsertOne) ID(ctx context.Context) (id int, err error) {
+func (u *AcademicYearUpsertOne) ID(ctx context.Context) (id uuid.UUID, err error) {
+	if u.create.driver.Dialect() == dialect.MySQL {
+		// In case of "ON CONFLICT", there is no way to get back non-numeric ID
+		// fields from the database since MySQL does not support the RETURNING clause.
+		return id, errors.New("ent: AcademicYearUpsertOne.ID is not supported by MySQL driver. Use AcademicYearUpsertOne.Exec instead")
+	}
 	node, err := u.create.Save(ctx)
 	if err != nil {
 		return id, err
@@ -373,7 +415,7 @@ func (u *AcademicYearUpsertOne) ID(ctx context.Context) (id int, err error) {
 }
 
 // IDX is like ID, but panics if an error occurs.
-func (u *AcademicYearUpsertOne) IDX(ctx context.Context) int {
+func (u *AcademicYearUpsertOne) IDX(ctx context.Context) uuid.UUID {
 	id, err := u.ID(ctx)
 	if err != nil {
 		panic(err)
@@ -428,10 +470,6 @@ func (_c *AcademicYearCreateBulk) Save(ctx context.Context) ([]*AcademicYear, er
 					return nil, err
 				}
 				mutation.id = &nodes[i].ID
-				if specs[i].ID.Value != nil {
-					id := specs[i].ID.Value.(int64)
-					nodes[i].ID = int(id)
-				}
 				mutation.done = true
 				return nodes[i], nil
 			})
@@ -518,10 +556,20 @@ type AcademicYearUpsertBulk struct {
 //	client.AcademicYear.Create().
 //		OnConflict(
 //			sql.ResolveWithNewValues(),
+//			sql.ResolveWith(func(u *sql.UpdateSet) {
+//				u.SetIgnore(academicyear.FieldID)
+//			}),
 //		).
 //		Exec(ctx)
 func (u *AcademicYearUpsertBulk) UpdateNewValues() *AcademicYearUpsertBulk {
 	u.create.conflict = append(u.create.conflict, sql.ResolveWithNewValues())
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(s *sql.UpdateSet) {
+		for _, b := range u.create.builders {
+			if _, exists := b.mutation.ID(); exists {
+				s.SetIgnore(academicyear.FieldID)
+			}
+		}
+	}))
 	return u
 }
 

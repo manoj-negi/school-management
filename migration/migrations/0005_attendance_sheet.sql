@@ -1,6 +1,5 @@
 -- Migration for attendance_sheet table derived from attendance-sheet.json
 SET session_replication_role = 'replica';
-
 CREATE TABLE IF NOT EXISTS public.attendance_sheet (
     "name" TEXT,
     "avatar" TEXT,
@@ -8,7 +7,6 @@ CREATE TABLE IF NOT EXISTS public.attendance_sheet (
     "month" TEXT,
     "attendance_status" JSONB
 );
-
 INSERT INTO public.attendance_sheet ("name", "avatar", "year", "month", "attendance_status") VALUES ('Jacob Ryan', 'assets/images/user/user1.jpg', 2024, 'November', '["present", "present", "weekend", "holiday", "present", "present", "weekend", "present", "leave", "present", "present", "weekend", "weekend", "present", "present", "present", "leave", "weekend", "weekend", "present", "present", "present", "holiday", "present", "weekend", "weekend", "present", "present", "leave", "present", "present"]'::jsonb) ON CONFLICT DO NOTHING;
 INSERT INTO public.attendance_sheet ("name", "avatar", "year", "month", "attendance_status") VALUES ('Angelica Ramos', 'assets/images/user/user2.jpg', 2024, 'November', '["present", "present", "weekend", "present", "leave", "present", "weekend", "present", "present", "holiday", "present", "weekend", "weekend", "present", "present", "present", "present", "weekend", "weekend", "present", "leave", "present", "present", "present", "weekend", "weekend", "holiday", "present", "present", "present", "present"]'::jsonb) ON CONFLICT DO NOTHING;
 INSERT INTO public.attendance_sheet ("name", "avatar", "year", "month", "attendance_status") VALUES ('Jens Brincker', 'assets/images/user/user3.jpg', 2024, 'November', '["present", "leave", "weekend", "present", "present", "present", "weekend", "holiday", "present", "present", "leave", "weekend", "weekend", "present", "present", "present", "present", "weekend", "weekend", "holiday", "present", "present", "present", "leave", "weekend", "weekend", "present", "present", "present", "holiday", "present"]'::jsonb) ON CONFLICT DO NOTHING;
@@ -19,5 +17,4 @@ INSERT INTO public.attendance_sheet ("name", "avatar", "year", "month", "attenda
 INSERT INTO public.attendance_sheet ("name", "avatar", "year", "month", "attendance_status") VALUES ('Sarah Parker', 'assets/images/user/user8.jpg', 2024, 'November', '["present", "present", "weekend", "leave", "present", "holiday", "weekend", "present", "present", "present", "leave", "weekend", "weekend", "present", "present", "holiday", "present", "weekend", "weekend", "present", "leave", "present", "present", "holiday", "weekend", "weekend", "present", "present", "leave", "present", "present"]'::jsonb) ON CONFLICT DO NOTHING;
 INSERT INTO public.attendance_sheet ("name", "avatar", "year", "month", "attendance_status") VALUES ('Airi Satou', 'assets/images/user/user9.jpg', 2024, 'November', '["holiday", "present", "weekend", "present", "present", "leave", "weekend", "present", "holiday", "present", "present", "weekend", "weekend", "leave", "present", "present", "holiday", "weekend", "weekend", "present", "present", "leave", "present", "present", "weekend", "weekend", "holiday", "present", "present", "leave", "present"]'::jsonb) ON CONFLICT DO NOTHING;
 INSERT INTO public.attendance_sheet ("name", "avatar", "year", "month", "attendance_status") VALUES ('Michael Chen', 'assets/images/user/user10.jpg', 2024, 'November', '["present", "leave", "weekend", "holiday", "present", "present", "weekend", "present", "present", "leave", "holiday", "weekend", "weekend", "present", "leave", "present", "present", "weekend", "weekend", "holiday", "present", "present", "leave", "present", "weekend", "weekend", "present", "holiday", "present", "present", "leave"]'::jsonb) ON CONFLICT DO NOTHING;
-
 SET session_replication_role = 'origin';

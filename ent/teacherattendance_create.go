@@ -10,6 +10,7 @@ import (
 	"go-seed/ent/teacherattendance"
 	"time"
 
+	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
@@ -64,6 +65,20 @@ func (_c *TeacherAttendanceCreate) SetNillableRemarks(v *string) *TeacherAttenda
 	return _c
 }
 
+// SetID sets the "id" field.
+func (_c *TeacherAttendanceCreate) SetID(v uuid.UUID) *TeacherAttendanceCreate {
+	_c.mutation.SetID(v)
+	return _c
+}
+
+// SetNillableID sets the "id" field if the given value is not nil.
+func (_c *TeacherAttendanceCreate) SetNillableID(v *uuid.UUID) *TeacherAttendanceCreate {
+	if v != nil {
+		_c.SetID(*v)
+	}
+	return _c
+}
+
 // SetTeacher sets the "teacher" edge to the Teacher entity.
 func (_c *TeacherAttendanceCreate) SetTeacher(v *Teacher) *TeacherAttendanceCreate {
 	return _c.SetTeacherID(v.ID)
@@ -108,6 +123,10 @@ func (_c *TeacherAttendanceCreate) defaults() {
 		v := teacherattendance.DefaultStatus
 		_c.mutation.SetStatus(v)
 	}
+	if _, ok := _c.mutation.ID(); !ok {
+		v := teacherattendance.DefaultID()
+		_c.mutation.SetID(v)
+	}
 }
 
 // check runs all checks and user-defined validators on the builder.
@@ -143,8 +162,13 @@ func (_c *TeacherAttendanceCreate) sqlSave(ctx context.Context) (*TeacherAttenda
 		}
 		return nil, err
 	}
-	id := _spec.ID.Value.(int64)
-	_node.ID = int(id)
+	if _spec.ID.Value != nil {
+		if id, ok := _spec.ID.Value.(*uuid.UUID); ok {
+			_node.ID = *id
+		} else if err := _node.ID.Scan(_spec.ID.Value); err != nil {
+			return nil, err
+		}
+	}
 	_c.mutation.id = &_node.ID
 	_c.mutation.done = true
 	return _node, nil
@@ -153,9 +177,13 @@ func (_c *TeacherAttendanceCreate) sqlSave(ctx context.Context) (*TeacherAttenda
 func (_c *TeacherAttendanceCreate) createSpec() (*TeacherAttendance, *sqlgraph.CreateSpec) {
 	var (
 		_node = &TeacherAttendance{config: _c.config}
-		_spec = sqlgraph.NewCreateSpec(teacherattendance.Table, sqlgraph.NewFieldSpec(teacherattendance.FieldID, field.TypeInt))
+		_spec = sqlgraph.NewCreateSpec(teacherattendance.Table, sqlgraph.NewFieldSpec(teacherattendance.FieldID, field.TypeUUID))
 	)
 	_spec.OnConflict = _c.conflict
+	if id, ok := _c.mutation.ID(); ok {
+		_node.ID = id
+		_spec.ID.Value = &id
+	}
 	if value, ok := _c.mutation.Date(); ok {
 		_spec.SetField(teacherattendance.FieldDate, field.TypeTime, value)
 		_node.Date = value
@@ -291,16 +319,24 @@ func (u *TeacherAttendanceUpsert) ClearRemarks() *TeacherAttendanceUpsert {
 	return u
 }
 
-// UpdateNewValues updates the mutable fields using the new values that were set on create.
+// UpdateNewValues updates the mutable fields using the new values that were set on create except the ID field.
 // Using this option is equivalent to using:
 //
 //	client.TeacherAttendance.Create().
 //		OnConflict(
 //			sql.ResolveWithNewValues(),
+//			sql.ResolveWith(func(u *sql.UpdateSet) {
+//				u.SetIgnore(teacherattendance.FieldID)
+//			}),
 //		).
 //		Exec(ctx)
 func (u *TeacherAttendanceUpsertOne) UpdateNewValues() *TeacherAttendanceUpsertOne {
 	u.create.conflict = append(u.create.conflict, sql.ResolveWithNewValues())
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(s *sql.UpdateSet) {
+		if _, exists := u.create.mutation.ID(); exists {
+			s.SetIgnore(teacherattendance.FieldID)
+		}
+	}))
 	return u
 }
 
@@ -410,7 +446,12 @@ func (u *TeacherAttendanceUpsertOne) ExecX(ctx context.Context) {
 }
 
 // Exec executes the UPSERT query and returns the inserted/updated ID.
-func (u *TeacherAttendanceUpsertOne) ID(ctx context.Context) (id int, err error) {
+func (u *TeacherAttendanceUpsertOne) ID(ctx context.Context) (id uuid.UUID, err error) {
+	if u.create.driver.Dialect() == dialect.MySQL {
+		// In case of "ON CONFLICT", there is no way to get back non-numeric ID
+		// fields from the database since MySQL does not support the RETURNING clause.
+		return id, errors.New("ent: TeacherAttendanceUpsertOne.ID is not supported by MySQL driver. Use TeacherAttendanceUpsertOne.Exec instead")
+	}
 	node, err := u.create.Save(ctx)
 	if err != nil {
 		return id, err
@@ -419,7 +460,7 @@ func (u *TeacherAttendanceUpsertOne) ID(ctx context.Context) (id int, err error)
 }
 
 // IDX is like ID, but panics if an error occurs.
-func (u *TeacherAttendanceUpsertOne) IDX(ctx context.Context) int {
+func (u *TeacherAttendanceUpsertOne) IDX(ctx context.Context) uuid.UUID {
 	id, err := u.ID(ctx)
 	if err != nil {
 		panic(err)
@@ -474,10 +515,6 @@ func (_c *TeacherAttendanceCreateBulk) Save(ctx context.Context) ([]*TeacherAtte
 					return nil, err
 				}
 				mutation.id = &nodes[i].ID
-				if specs[i].ID.Value != nil {
-					id := specs[i].ID.Value.(int64)
-					nodes[i].ID = int(id)
-				}
 				mutation.done = true
 				return nodes[i], nil
 			})
@@ -564,10 +601,20 @@ type TeacherAttendanceUpsertBulk struct {
 //	client.TeacherAttendance.Create().
 //		OnConflict(
 //			sql.ResolveWithNewValues(),
+//			sql.ResolveWith(func(u *sql.UpdateSet) {
+//				u.SetIgnore(teacherattendance.FieldID)
+//			}),
 //		).
 //		Exec(ctx)
 func (u *TeacherAttendanceUpsertBulk) UpdateNewValues() *TeacherAttendanceUpsertBulk {
 	u.create.conflict = append(u.create.conflict, sql.ResolveWithNewValues())
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(s *sql.UpdateSet) {
+		for _, b := range u.create.builders {
+			if _, exists := b.mutation.ID(); exists {
+				s.SetIgnore(teacherattendance.FieldID)
+			}
+		}
+	}))
 	return u
 }
 

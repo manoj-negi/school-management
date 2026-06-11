@@ -155,13 +155,13 @@ func (_u *TeacherUpdate) ClearAddress() *TeacherUpdate {
 }
 
 // SetDepartmentID sets the "department_id" field.
-func (_u *TeacherUpdate) SetDepartmentID(v int) *TeacherUpdate {
+func (_u *TeacherUpdate) SetDepartmentID(v uuid.UUID) *TeacherUpdate {
 	_u.mutation.SetDepartmentID(v)
 	return _u
 }
 
 // SetNillableDepartmentID sets the "department_id" field if the given value is not nil.
-func (_u *TeacherUpdate) SetNillableDepartmentID(v *int) *TeacherUpdate {
+func (_u *TeacherUpdate) SetNillableDepartmentID(v *uuid.UUID) *TeacherUpdate {
 	if v != nil {
 		_u.SetDepartmentID(*v)
 	}
@@ -245,14 +245,14 @@ func (_u *TeacherUpdate) SetDepartment(v *Department) *TeacherUpdate {
 }
 
 // AddSubjectIDs adds the "subjects" edge to the Subject entity by IDs.
-func (_u *TeacherUpdate) AddSubjectIDs(ids ...int) *TeacherUpdate {
+func (_u *TeacherUpdate) AddSubjectIDs(ids ...uuid.UUID) *TeacherUpdate {
 	_u.mutation.AddSubjectIDs(ids...)
 	return _u
 }
 
 // AddSubjects adds the "subjects" edges to the Subject entity.
 func (_u *TeacherUpdate) AddSubjects(v ...*Subject) *TeacherUpdate {
-	ids := make([]int, len(v))
+	ids := make([]uuid.UUID, len(v))
 	for i := range v {
 		ids[i] = v[i].ID
 	}
@@ -283,14 +283,14 @@ func (_u *TeacherUpdate) ClearSubjects() *TeacherUpdate {
 }
 
 // RemoveSubjectIDs removes the "subjects" edge to Subject entities by IDs.
-func (_u *TeacherUpdate) RemoveSubjectIDs(ids ...int) *TeacherUpdate {
+func (_u *TeacherUpdate) RemoveSubjectIDs(ids ...uuid.UUID) *TeacherUpdate {
 	_u.mutation.RemoveSubjectIDs(ids...)
 	return _u
 }
 
 // RemoveSubjects removes "subjects" edges to Subject entities.
 func (_u *TeacherUpdate) RemoveSubjects(v ...*Subject) *TeacherUpdate {
-	ids := make([]int, len(v))
+	ids := make([]uuid.UUID, len(v))
 	for i := range v {
 		ids[i] = v[i].ID
 	}
@@ -434,7 +434,7 @@ func (_u *TeacherUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 			Columns: []string{teacher.DepartmentColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(department.FieldID, field.TypeInt),
+				IDSpec: sqlgraph.NewFieldSpec(department.FieldID, field.TypeUUID),
 			},
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
@@ -447,7 +447,7 @@ func (_u *TeacherUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 			Columns: []string{teacher.DepartmentColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(department.FieldID, field.TypeInt),
+				IDSpec: sqlgraph.NewFieldSpec(department.FieldID, field.TypeUUID),
 			},
 		}
 		for _, k := range nodes {
@@ -463,7 +463,7 @@ func (_u *TeacherUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 			Columns: teacher.SubjectsPrimaryKey,
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(subject.FieldID, field.TypeInt),
+				IDSpec: sqlgraph.NewFieldSpec(subject.FieldID, field.TypeUUID),
 			},
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
@@ -476,7 +476,7 @@ func (_u *TeacherUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 			Columns: teacher.SubjectsPrimaryKey,
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(subject.FieldID, field.TypeInt),
+				IDSpec: sqlgraph.NewFieldSpec(subject.FieldID, field.TypeUUID),
 			},
 		}
 		for _, k := range nodes {
@@ -492,7 +492,7 @@ func (_u *TeacherUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 			Columns: teacher.SubjectsPrimaryKey,
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(subject.FieldID, field.TypeInt),
+				IDSpec: sqlgraph.NewFieldSpec(subject.FieldID, field.TypeUUID),
 			},
 		}
 		for _, k := range nodes {
@@ -643,13 +643,13 @@ func (_u *TeacherUpdateOne) ClearAddress() *TeacherUpdateOne {
 }
 
 // SetDepartmentID sets the "department_id" field.
-func (_u *TeacherUpdateOne) SetDepartmentID(v int) *TeacherUpdateOne {
+func (_u *TeacherUpdateOne) SetDepartmentID(v uuid.UUID) *TeacherUpdateOne {
 	_u.mutation.SetDepartmentID(v)
 	return _u
 }
 
 // SetNillableDepartmentID sets the "department_id" field if the given value is not nil.
-func (_u *TeacherUpdateOne) SetNillableDepartmentID(v *int) *TeacherUpdateOne {
+func (_u *TeacherUpdateOne) SetNillableDepartmentID(v *uuid.UUID) *TeacherUpdateOne {
 	if v != nil {
 		_u.SetDepartmentID(*v)
 	}
@@ -733,14 +733,14 @@ func (_u *TeacherUpdateOne) SetDepartment(v *Department) *TeacherUpdateOne {
 }
 
 // AddSubjectIDs adds the "subjects" edge to the Subject entity by IDs.
-func (_u *TeacherUpdateOne) AddSubjectIDs(ids ...int) *TeacherUpdateOne {
+func (_u *TeacherUpdateOne) AddSubjectIDs(ids ...uuid.UUID) *TeacherUpdateOne {
 	_u.mutation.AddSubjectIDs(ids...)
 	return _u
 }
 
 // AddSubjects adds the "subjects" edges to the Subject entity.
 func (_u *TeacherUpdateOne) AddSubjects(v ...*Subject) *TeacherUpdateOne {
-	ids := make([]int, len(v))
+	ids := make([]uuid.UUID, len(v))
 	for i := range v {
 		ids[i] = v[i].ID
 	}
@@ -771,14 +771,14 @@ func (_u *TeacherUpdateOne) ClearSubjects() *TeacherUpdateOne {
 }
 
 // RemoveSubjectIDs removes the "subjects" edge to Subject entities by IDs.
-func (_u *TeacherUpdateOne) RemoveSubjectIDs(ids ...int) *TeacherUpdateOne {
+func (_u *TeacherUpdateOne) RemoveSubjectIDs(ids ...uuid.UUID) *TeacherUpdateOne {
 	_u.mutation.RemoveSubjectIDs(ids...)
 	return _u
 }
 
 // RemoveSubjects removes "subjects" edges to Subject entities.
 func (_u *TeacherUpdateOne) RemoveSubjects(v ...*Subject) *TeacherUpdateOne {
-	ids := make([]int, len(v))
+	ids := make([]uuid.UUID, len(v))
 	for i := range v {
 		ids[i] = v[i].ID
 	}
@@ -952,7 +952,7 @@ func (_u *TeacherUpdateOne) sqlSave(ctx context.Context) (_node *Teacher, err er
 			Columns: []string{teacher.DepartmentColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(department.FieldID, field.TypeInt),
+				IDSpec: sqlgraph.NewFieldSpec(department.FieldID, field.TypeUUID),
 			},
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
@@ -965,7 +965,7 @@ func (_u *TeacherUpdateOne) sqlSave(ctx context.Context) (_node *Teacher, err er
 			Columns: []string{teacher.DepartmentColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(department.FieldID, field.TypeInt),
+				IDSpec: sqlgraph.NewFieldSpec(department.FieldID, field.TypeUUID),
 			},
 		}
 		for _, k := range nodes {
@@ -981,7 +981,7 @@ func (_u *TeacherUpdateOne) sqlSave(ctx context.Context) (_node *Teacher, err er
 			Columns: teacher.SubjectsPrimaryKey,
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(subject.FieldID, field.TypeInt),
+				IDSpec: sqlgraph.NewFieldSpec(subject.FieldID, field.TypeUUID),
 			},
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
@@ -994,7 +994,7 @@ func (_u *TeacherUpdateOne) sqlSave(ctx context.Context) (_node *Teacher, err er
 			Columns: teacher.SubjectsPrimaryKey,
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(subject.FieldID, field.TypeInt),
+				IDSpec: sqlgraph.NewFieldSpec(subject.FieldID, field.TypeUUID),
 			},
 		}
 		for _, k := range nodes {
@@ -1010,7 +1010,7 @@ func (_u *TeacherUpdateOne) sqlSave(ctx context.Context) (_node *Teacher, err er
 			Columns: teacher.SubjectsPrimaryKey,
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(subject.FieldID, field.TypeInt),
+				IDSpec: sqlgraph.NewFieldSpec(subject.FieldID, field.TypeUUID),
 			},
 		}
 		for _, k := range nodes {

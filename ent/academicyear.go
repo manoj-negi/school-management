@@ -10,13 +10,14 @@ import (
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
+	"github.com/google/uuid"
 )
 
 // AcademicYear is the model entity for the AcademicYear schema.
 type AcademicYear struct {
 	config `json:"-"`
 	// ID of the ent.
-	ID int `json:"id,omitempty"`
+	ID uuid.UUID `json:"id,omitempty"`
 	// Label holds the value of the "label" field.
 	Label string `json:"label,omitempty"`
 	// StartDate holds the value of the "start_date" field.
@@ -35,12 +36,12 @@ func (*AcademicYear) scanValues(columns []string) ([]any, error) {
 		switch columns[i] {
 		case academicyear.FieldIsCurrent:
 			values[i] = new(sql.NullBool)
-		case academicyear.FieldID:
-			values[i] = new(sql.NullInt64)
 		case academicyear.FieldLabel:
 			values[i] = new(sql.NullString)
 		case academicyear.FieldStartDate, academicyear.FieldEndDate:
 			values[i] = new(sql.NullTime)
+		case academicyear.FieldID:
+			values[i] = new(uuid.UUID)
 		default:
 			values[i] = new(sql.UnknownType)
 		}
@@ -57,11 +58,11 @@ func (_m *AcademicYear) assignValues(columns []string, values []any) error {
 	for i := range columns {
 		switch columns[i] {
 		case academicyear.FieldID:
-			value, ok := values[i].(*sql.NullInt64)
-			if !ok {
-				return fmt.Errorf("unexpected type %T for field id", value)
+			if value, ok := values[i].(*uuid.UUID); !ok {
+				return fmt.Errorf("unexpected type %T for field id", values[i])
+			} else if value != nil {
+				_m.ID = *value
 			}
-			_m.ID = int(value.Int64)
 		case academicyear.FieldLabel:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field label", values[i])

@@ -16,6 +16,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/google/uuid"
 )
 
 // ExamQuery is the builder for querying Exam entities.
@@ -154,8 +155,8 @@ func (_q *ExamQuery) FirstX(ctx context.Context) *Exam {
 
 // FirstID returns the first Exam ID from the query.
 // Returns a *NotFoundError when no Exam ID was found.
-func (_q *ExamQuery) FirstID(ctx context.Context) (id int, err error) {
-	var ids []int
+func (_q *ExamQuery) FirstID(ctx context.Context) (id uuid.UUID, err error) {
+	var ids []uuid.UUID
 	if ids, err = _q.Limit(1).IDs(setContextOp(ctx, _q.ctx, ent.OpQueryFirstID)); err != nil {
 		return
 	}
@@ -167,7 +168,7 @@ func (_q *ExamQuery) FirstID(ctx context.Context) (id int, err error) {
 }
 
 // FirstIDX is like FirstID, but panics if an error occurs.
-func (_q *ExamQuery) FirstIDX(ctx context.Context) int {
+func (_q *ExamQuery) FirstIDX(ctx context.Context) uuid.UUID {
 	id, err := _q.FirstID(ctx)
 	if err != nil && !IsNotFound(err) {
 		panic(err)
@@ -205,8 +206,8 @@ func (_q *ExamQuery) OnlyX(ctx context.Context) *Exam {
 // OnlyID is like Only, but returns the only Exam ID in the query.
 // Returns a *NotSingularError when more than one Exam ID is found.
 // Returns a *NotFoundError when no entities are found.
-func (_q *ExamQuery) OnlyID(ctx context.Context) (id int, err error) {
-	var ids []int
+func (_q *ExamQuery) OnlyID(ctx context.Context) (id uuid.UUID, err error) {
+	var ids []uuid.UUID
 	if ids, err = _q.Limit(2).IDs(setContextOp(ctx, _q.ctx, ent.OpQueryOnlyID)); err != nil {
 		return
 	}
@@ -222,7 +223,7 @@ func (_q *ExamQuery) OnlyID(ctx context.Context) (id int, err error) {
 }
 
 // OnlyIDX is like OnlyID, but panics if an error occurs.
-func (_q *ExamQuery) OnlyIDX(ctx context.Context) int {
+func (_q *ExamQuery) OnlyIDX(ctx context.Context) uuid.UUID {
 	id, err := _q.OnlyID(ctx)
 	if err != nil {
 		panic(err)
@@ -250,7 +251,7 @@ func (_q *ExamQuery) AllX(ctx context.Context) []*Exam {
 }
 
 // IDs executes the query and returns a list of Exam IDs.
-func (_q *ExamQuery) IDs(ctx context.Context) (ids []int, err error) {
+func (_q *ExamQuery) IDs(ctx context.Context) (ids []uuid.UUID, err error) {
 	if _q.ctx.Unique == nil && _q.path != nil {
 		_q.Unique(true)
 	}
@@ -262,7 +263,7 @@ func (_q *ExamQuery) IDs(ctx context.Context) (ids []int, err error) {
 }
 
 // IDsX is like IDs, but panics if an error occurs.
-func (_q *ExamQuery) IDsX(ctx context.Context) []int {
+func (_q *ExamQuery) IDsX(ctx context.Context) []uuid.UUID {
 	ids, err := _q.IDs(ctx)
 	if err != nil {
 		panic(err)
@@ -488,8 +489,8 @@ func (_q *ExamQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Exam, e
 }
 
 func (_q *ExamQuery) loadClass(ctx context.Context, query *ClassQuery, nodes []*Exam, init func(*Exam), assign func(*Exam, *Class)) error {
-	ids := make([]int, 0, len(nodes))
-	nodeids := make(map[int][]*Exam)
+	ids := make([]uuid.UUID, 0, len(nodes))
+	nodeids := make(map[uuid.UUID][]*Exam)
 	for i := range nodes {
 		if nodes[i].ClassID == nil {
 			continue
@@ -520,8 +521,8 @@ func (_q *ExamQuery) loadClass(ctx context.Context, query *ClassQuery, nodes []*
 	return nil
 }
 func (_q *ExamQuery) loadSubject(ctx context.Context, query *SubjectQuery, nodes []*Exam, init func(*Exam), assign func(*Exam, *Subject)) error {
-	ids := make([]int, 0, len(nodes))
-	nodeids := make(map[int][]*Exam)
+	ids := make([]uuid.UUID, 0, len(nodes))
+	nodeids := make(map[uuid.UUID][]*Exam)
 	for i := range nodes {
 		if nodes[i].SubjectID == nil {
 			continue
@@ -552,8 +553,8 @@ func (_q *ExamQuery) loadSubject(ctx context.Context, query *SubjectQuery, nodes
 	return nil
 }
 func (_q *ExamQuery) loadAcademicYear(ctx context.Context, query *AcademicYearQuery, nodes []*Exam, init func(*Exam), assign func(*Exam, *AcademicYear)) error {
-	ids := make([]int, 0, len(nodes))
-	nodeids := make(map[int][]*Exam)
+	ids := make([]uuid.UUID, 0, len(nodes))
+	nodeids := make(map[uuid.UUID][]*Exam)
 	for i := range nodes {
 		if nodes[i].AcademicYearID == nil {
 			continue
@@ -594,7 +595,7 @@ func (_q *ExamQuery) sqlCount(ctx context.Context) (int, error) {
 }
 
 func (_q *ExamQuery) querySpec() *sqlgraph.QuerySpec {
-	_spec := sqlgraph.NewQuerySpec(exam.Table, exam.Columns, sqlgraph.NewFieldSpec(exam.FieldID, field.TypeInt))
+	_spec := sqlgraph.NewQuerySpec(exam.Table, exam.Columns, sqlgraph.NewFieldSpec(exam.FieldID, field.TypeUUID))
 	_spec.From = _q.sql
 	if unique := _q.ctx.Unique; unique != nil {
 		_spec.Unique = *unique

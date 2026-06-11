@@ -475,8 +475,8 @@ func (_q *EmployeeQuery) loadUser(ctx context.Context, query *UserQuery, nodes [
 	return nil
 }
 func (_q *EmployeeQuery) loadDepartment(ctx context.Context, query *DepartmentQuery, nodes []*Employee, init func(*Employee), assign func(*Employee, *Department)) error {
-	ids := make([]int, 0, len(nodes))
-	nodeids := make(map[int][]*Employee)
+	ids := make([]uuid.UUID, 0, len(nodes))
+	nodeids := make(map[uuid.UUID][]*Employee)
 	for i := range nodes {
 		if nodes[i].DepartmentID == nil {
 			continue

@@ -129,13 +129,13 @@ func (_c *StudentCreate) SetNillableAddress(v *string) *StudentCreate {
 }
 
 // SetClassID sets the "class_id" field.
-func (_c *StudentCreate) SetClassID(v int) *StudentCreate {
+func (_c *StudentCreate) SetClassID(v uuid.UUID) *StudentCreate {
 	_c.mutation.SetClassID(v)
 	return _c
 }
 
 // SetNillableClassID sets the "class_id" field if the given value is not nil.
-func (_c *StudentCreate) SetNillableClassID(v *int) *StudentCreate {
+func (_c *StudentCreate) SetNillableClassID(v *uuid.UUID) *StudentCreate {
 	if v != nil {
 		_c.SetClassID(*v)
 	}
@@ -359,7 +359,7 @@ func (_c *StudentCreate) createSpec() (*Student, *sqlgraph.CreateSpec) {
 			Columns: []string{student.ClassColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(class.FieldID, field.TypeInt),
+				IDSpec: sqlgraph.NewFieldSpec(class.FieldID, field.TypeUUID),
 			},
 		}
 		for _, k := range nodes {
@@ -565,7 +565,7 @@ func (u *StudentUpsert) ClearAddress() *StudentUpsert {
 }
 
 // SetClassID sets the "class_id" field.
-func (u *StudentUpsert) SetClassID(v int) *StudentUpsert {
+func (u *StudentUpsert) SetClassID(v uuid.UUID) *StudentUpsert {
 	u.Set(student.FieldClassID, v)
 	return u
 }
@@ -829,7 +829,7 @@ func (u *StudentUpsertOne) ClearAddress() *StudentUpsertOne {
 }
 
 // SetClassID sets the "class_id" field.
-func (u *StudentUpsertOne) SetClassID(v int) *StudentUpsertOne {
+func (u *StudentUpsertOne) SetClassID(v uuid.UUID) *StudentUpsertOne {
 	return u.Update(func(s *StudentUpsert) {
 		s.SetClassID(v)
 	})
@@ -1268,7 +1268,7 @@ func (u *StudentUpsertBulk) ClearAddress() *StudentUpsertBulk {
 }
 
 // SetClassID sets the "class_id" field.
-func (u *StudentUpsertBulk) SetClassID(v int) *StudentUpsertBulk {
+func (u *StudentUpsertBulk) SetClassID(v uuid.UUID) *StudentUpsertBulk {
 	return u.Update(func(s *StudentUpsert) {
 		s.SetClassID(v)
 	})

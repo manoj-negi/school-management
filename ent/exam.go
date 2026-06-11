@@ -13,19 +13,20 @@ import (
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
+	"github.com/google/uuid"
 )
 
 // Exam is the model entity for the Exam schema.
 type Exam struct {
 	config `json:"-"`
 	// ID of the ent.
-	ID int `json:"id,omitempty"`
+	ID uuid.UUID `json:"id,omitempty"`
 	// Title holds the value of the "title" field.
 	Title string `json:"title,omitempty"`
 	// ClassID holds the value of the "class_id" field.
-	ClassID *int `json:"class_id,omitempty"`
+	ClassID *uuid.UUID `json:"class_id,omitempty"`
 	// SubjectID holds the value of the "subject_id" field.
-	SubjectID *int `json:"subject_id,omitempty"`
+	SubjectID *uuid.UUID `json:"subject_id,omitempty"`
 	// ExamType holds the value of the "exam_type" field.
 	ExamType *string `json:"exam_type,omitempty"`
 	// StartDate holds the value of the "start_date" field.
@@ -37,7 +38,7 @@ type Exam struct {
 	// PassMarks holds the value of the "pass_marks" field.
 	PassMarks float64 `json:"pass_marks,omitempty"`
 	// AcademicYearID holds the value of the "academic_year_id" field.
-	AcademicYearID *int `json:"academic_year_id,omitempty"`
+	AcademicYearID *uuid.UUID `json:"academic_year_id,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the ExamQuery when eager-loading is set.
 	Edges        ExamEdges `json:"edges"`
@@ -95,14 +96,16 @@ func (*Exam) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
+		case exam.FieldClassID, exam.FieldSubjectID, exam.FieldAcademicYearID:
+			values[i] = &sql.NullScanner{S: new(uuid.UUID)}
 		case exam.FieldMaxMarks, exam.FieldPassMarks:
 			values[i] = new(sql.NullFloat64)
-		case exam.FieldID, exam.FieldClassID, exam.FieldSubjectID, exam.FieldAcademicYearID:
-			values[i] = new(sql.NullInt64)
 		case exam.FieldTitle, exam.FieldExamType:
 			values[i] = new(sql.NullString)
 		case exam.FieldStartDate, exam.FieldEndDate:
 			values[i] = new(sql.NullTime)
+		case exam.FieldID:
+			values[i] = new(uuid.UUID)
 		default:
 			values[i] = new(sql.UnknownType)
 		}
@@ -119,11 +122,11 @@ func (_m *Exam) assignValues(columns []string, values []any) error {
 	for i := range columns {
 		switch columns[i] {
 		case exam.FieldID:
-			value, ok := values[i].(*sql.NullInt64)
-			if !ok {
-				return fmt.Errorf("unexpected type %T for field id", value)
+			if value, ok := values[i].(*uuid.UUID); !ok {
+				return fmt.Errorf("unexpected type %T for field id", values[i])
+			} else if value != nil {
+				_m.ID = *value
 			}
-			_m.ID = int(value.Int64)
 		case exam.FieldTitle:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field title", values[i])
@@ -131,18 +134,18 @@ func (_m *Exam) assignValues(columns []string, values []any) error {
 				_m.Title = value.String
 			}
 		case exam.FieldClassID:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
+			if value, ok := values[i].(*sql.NullScanner); !ok {
 				return fmt.Errorf("unexpected type %T for field class_id", values[i])
 			} else if value.Valid {
-				_m.ClassID = new(int)
-				*_m.ClassID = int(value.Int64)
+				_m.ClassID = new(uuid.UUID)
+				*_m.ClassID = *value.S.(*uuid.UUID)
 			}
 		case exam.FieldSubjectID:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
+			if value, ok := values[i].(*sql.NullScanner); !ok {
 				return fmt.Errorf("unexpected type %T for field subject_id", values[i])
 			} else if value.Valid {
-				_m.SubjectID = new(int)
-				*_m.SubjectID = int(value.Int64)
+				_m.SubjectID = new(uuid.UUID)
+				*_m.SubjectID = *value.S.(*uuid.UUID)
 			}
 		case exam.FieldExamType:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -176,11 +179,11 @@ func (_m *Exam) assignValues(columns []string, values []any) error {
 				_m.PassMarks = value.Float64
 			}
 		case exam.FieldAcademicYearID:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
+			if value, ok := values[i].(*sql.NullScanner); !ok {
 				return fmt.Errorf("unexpected type %T for field academic_year_id", values[i])
 			} else if value.Valid {
-				_m.AcademicYearID = new(int)
-				*_m.AcademicYearID = int(value.Int64)
+				_m.AcademicYearID = new(uuid.UUID)
+				*_m.AcademicYearID = *value.S.(*uuid.UUID)
 			}
 		default:
 			_m.selectValues.Set(columns[i], values[i])

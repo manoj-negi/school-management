@@ -108,8 +108,8 @@ func (_q *SubjectQuery) FirstX(ctx context.Context) *Subject {
 
 // FirstID returns the first Subject ID from the query.
 // Returns a *NotFoundError when no Subject ID was found.
-func (_q *SubjectQuery) FirstID(ctx context.Context) (id int, err error) {
-	var ids []int
+func (_q *SubjectQuery) FirstID(ctx context.Context) (id uuid.UUID, err error) {
+	var ids []uuid.UUID
 	if ids, err = _q.Limit(1).IDs(setContextOp(ctx, _q.ctx, ent.OpQueryFirstID)); err != nil {
 		return
 	}
@@ -121,7 +121,7 @@ func (_q *SubjectQuery) FirstID(ctx context.Context) (id int, err error) {
 }
 
 // FirstIDX is like FirstID, but panics if an error occurs.
-func (_q *SubjectQuery) FirstIDX(ctx context.Context) int {
+func (_q *SubjectQuery) FirstIDX(ctx context.Context) uuid.UUID {
 	id, err := _q.FirstID(ctx)
 	if err != nil && !IsNotFound(err) {
 		panic(err)
@@ -159,8 +159,8 @@ func (_q *SubjectQuery) OnlyX(ctx context.Context) *Subject {
 // OnlyID is like Only, but returns the only Subject ID in the query.
 // Returns a *NotSingularError when more than one Subject ID is found.
 // Returns a *NotFoundError when no entities are found.
-func (_q *SubjectQuery) OnlyID(ctx context.Context) (id int, err error) {
-	var ids []int
+func (_q *SubjectQuery) OnlyID(ctx context.Context) (id uuid.UUID, err error) {
+	var ids []uuid.UUID
 	if ids, err = _q.Limit(2).IDs(setContextOp(ctx, _q.ctx, ent.OpQueryOnlyID)); err != nil {
 		return
 	}
@@ -176,7 +176,7 @@ func (_q *SubjectQuery) OnlyID(ctx context.Context) (id int, err error) {
 }
 
 // OnlyIDX is like OnlyID, but panics if an error occurs.
-func (_q *SubjectQuery) OnlyIDX(ctx context.Context) int {
+func (_q *SubjectQuery) OnlyIDX(ctx context.Context) uuid.UUID {
 	id, err := _q.OnlyID(ctx)
 	if err != nil {
 		panic(err)
@@ -204,7 +204,7 @@ func (_q *SubjectQuery) AllX(ctx context.Context) []*Subject {
 }
 
 // IDs executes the query and returns a list of Subject IDs.
-func (_q *SubjectQuery) IDs(ctx context.Context) (ids []int, err error) {
+func (_q *SubjectQuery) IDs(ctx context.Context) (ids []uuid.UUID, err error) {
 	if _q.ctx.Unique == nil && _q.path != nil {
 		_q.Unique(true)
 	}
@@ -216,7 +216,7 @@ func (_q *SubjectQuery) IDs(ctx context.Context) (ids []int, err error) {
 }
 
 // IDsX is like IDs, but panics if an error occurs.
-func (_q *SubjectQuery) IDsX(ctx context.Context) []int {
+func (_q *SubjectQuery) IDsX(ctx context.Context) []uuid.UUID {
 	ids, err := _q.IDs(ctx)
 	if err != nil {
 		panic(err)
@@ -406,7 +406,7 @@ func (_q *SubjectQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Subj
 
 func (_q *SubjectQuery) loadTeachers(ctx context.Context, query *TeacherQuery, nodes []*Subject, init func(*Subject), assign func(*Subject, *Teacher)) error {
 	edgeIDs := make([]driver.Value, len(nodes))
-	byID := make(map[int]*Subject)
+	byID := make(map[uuid.UUID]*Subject)
 	nids := make(map[uuid.UUID]map[*Subject]struct{})
 	for i, node := range nodes {
 		edgeIDs[i] = node.ID
@@ -436,10 +436,10 @@ func (_q *SubjectQuery) loadTeachers(ctx context.Context, query *TeacherQuery, n
 				if err != nil {
 					return nil, err
 				}
-				return append([]any{new(sql.NullInt64)}, values...), nil
+				return append([]any{new(uuid.UUID)}, values...), nil
 			}
 			spec.Assign = func(columns []string, values []any) error {
-				outValue := int(values[0].(*sql.NullInt64).Int64)
+				outValue := *values[0].(*uuid.UUID)
 				inValue := *values[1].(*uuid.UUID)
 				if nids[inValue] == nil {
 					nids[inValue] = map[*Subject]struct{}{byID[outValue]: {}}
@@ -476,7 +476,7 @@ func (_q *SubjectQuery) sqlCount(ctx context.Context) (int, error) {
 }
 
 func (_q *SubjectQuery) querySpec() *sqlgraph.QuerySpec {
-	_spec := sqlgraph.NewQuerySpec(subject.Table, subject.Columns, sqlgraph.NewFieldSpec(subject.FieldID, field.TypeInt))
+	_spec := sqlgraph.NewQuerySpec(subject.Table, subject.Columns, sqlgraph.NewFieldSpec(subject.FieldID, field.TypeUUID))
 	_spec.From = _q.sql
 	if unique := _q.ctx.Unique; unique != nil {
 		_spec.Unique = *unique

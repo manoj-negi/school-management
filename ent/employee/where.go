@@ -87,7 +87,7 @@ func Address(v string) predicate.Employee {
 }
 
 // DepartmentID applies equality check predicate on the "department_id" field. It's identical to DepartmentIDEQ.
-func DepartmentID(v int) predicate.Employee {
+func DepartmentID(v uuid.UUID) predicate.Employee {
 	return predicate.Employee(sql.FieldEQ(FieldDepartmentID, v))
 }
 
@@ -497,22 +497,22 @@ func AddressContainsFold(v string) predicate.Employee {
 }
 
 // DepartmentIDEQ applies the EQ predicate on the "department_id" field.
-func DepartmentIDEQ(v int) predicate.Employee {
+func DepartmentIDEQ(v uuid.UUID) predicate.Employee {
 	return predicate.Employee(sql.FieldEQ(FieldDepartmentID, v))
 }
 
 // DepartmentIDNEQ applies the NEQ predicate on the "department_id" field.
-func DepartmentIDNEQ(v int) predicate.Employee {
+func DepartmentIDNEQ(v uuid.UUID) predicate.Employee {
 	return predicate.Employee(sql.FieldNEQ(FieldDepartmentID, v))
 }
 
 // DepartmentIDIn applies the In predicate on the "department_id" field.
-func DepartmentIDIn(vs ...int) predicate.Employee {
+func DepartmentIDIn(vs ...uuid.UUID) predicate.Employee {
 	return predicate.Employee(sql.FieldIn(FieldDepartmentID, vs...))
 }
 
 // DepartmentIDNotIn applies the NotIn predicate on the "department_id" field.
-func DepartmentIDNotIn(vs ...int) predicate.Employee {
+func DepartmentIDNotIn(vs ...uuid.UUID) predicate.Employee {
 	return predicate.Employee(sql.FieldNotIn(FieldDepartmentID, vs...))
 }
 

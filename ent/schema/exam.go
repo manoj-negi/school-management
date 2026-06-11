@@ -4,6 +4,7 @@ import (
 	"entgo.io/ent"
 	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
+	"github.com/google/uuid"
 )
 
 // Exam holds the schema definition for the Exam entity.
@@ -14,11 +15,13 @@ type Exam struct {
 // Fields of the Exam.
 func (Exam) Fields() []ent.Field {
 	return []ent.Field{
+		field.UUID("id", uuid.UUID{}).
+			Default(uuid.New),
 		field.String("title"),
-		field.Int("class_id").
+		field.UUID("class_id", uuid.UUID{}).
 			Optional().
 			Nillable(),
-		field.Int("subject_id").
+		field.UUID("subject_id", uuid.UUID{}).
 			Optional().
 			Nillable(),
 		field.String("exam_type").
@@ -30,7 +33,7 @@ func (Exam) Fields() []ent.Field {
 			Default(100.0),
 		field.Float("pass_marks").
 			Default(35.0),
-		field.Int("academic_year_id").
+		field.UUID("academic_year_id", uuid.UUID{}).
 			Optional().
 			Nillable(),
 	}

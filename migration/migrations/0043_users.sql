@@ -1,7 +1,6 @@
 -- Migration to create roles, permissions, roles_and_permissions, and update users table
 
 SET session_replication_role = 'replica';
-
 -- 0. Create users table if not exists
 CREATE TABLE IF NOT EXISTS public.users (
     id UUID PRIMARY KEY,
@@ -14,8 +13,6 @@ CREATE TABLE IF NOT EXISTS public.users (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
-
 ALTER TABLE public.users 
-ADD COLUMN IF NOT EXISTS role_id INTEGER REFERENCES public.roles(id) ON DELETE SET NULL;
-
+ADD COLUMN IF NOT EXISTS role_id UUID REFERENCES public.roles(id) ON DELETE SET NULL;
 SET session_replication_role = 'origin';

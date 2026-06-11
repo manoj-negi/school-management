@@ -35,7 +35,7 @@ type Teacher struct {
 	// Address holds the value of the "address" field.
 	Address *string `json:"address,omitempty"`
 	// DepartmentID holds the value of the "department_id" field.
-	DepartmentID *int `json:"department_id,omitempty"`
+	DepartmentID *uuid.UUID `json:"department_id,omitempty"`
 	// Qualification holds the value of the "qualification" field.
 	Qualification *string `json:"qualification,omitempty"`
 	// JoiningDate holds the value of the "joining_date" field.
@@ -98,7 +98,7 @@ func (*Teacher) scanValues(columns []string) ([]any, error) {
 	for i := range columns {
 		switch columns[i] {
 		case teacher.FieldDepartmentID:
-			values[i] = new(sql.NullInt64)
+			values[i] = &sql.NullScanner{S: new(uuid.UUID)}
 		case teacher.FieldFirstName, teacher.FieldLastName, teacher.FieldGender, teacher.FieldPhone, teacher.FieldAddress, teacher.FieldQualification, teacher.FieldAvatarURL:
 			values[i] = new(sql.NullString)
 		case teacher.FieldDateOfBirth, teacher.FieldJoiningDate:
@@ -173,11 +173,11 @@ func (_m *Teacher) assignValues(columns []string, values []any) error {
 				*_m.Address = value.String
 			}
 		case teacher.FieldDepartmentID:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
+			if value, ok := values[i].(*sql.NullScanner); !ok {
 				return fmt.Errorf("unexpected type %T for field department_id", values[i])
 			} else if value.Valid {
-				_m.DepartmentID = new(int)
-				*_m.DepartmentID = int(value.Int64)
+				_m.DepartmentID = new(uuid.UUID)
+				*_m.DepartmentID = *value.S.(*uuid.UUID)
 			}
 		case teacher.FieldQualification:
 			if value, ok := values[i].(*sql.NullString); !ok {

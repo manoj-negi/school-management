@@ -15,6 +15,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/google/uuid"
 )
 
 // FeeStructureQuery is the builder for querying FeeStructure entities.
@@ -130,8 +131,8 @@ func (_q *FeeStructureQuery) FirstX(ctx context.Context) *FeeStructure {
 
 // FirstID returns the first FeeStructure ID from the query.
 // Returns a *NotFoundError when no FeeStructure ID was found.
-func (_q *FeeStructureQuery) FirstID(ctx context.Context) (id int, err error) {
-	var ids []int
+func (_q *FeeStructureQuery) FirstID(ctx context.Context) (id uuid.UUID, err error) {
+	var ids []uuid.UUID
 	if ids, err = _q.Limit(1).IDs(setContextOp(ctx, _q.ctx, ent.OpQueryFirstID)); err != nil {
 		return
 	}
@@ -143,7 +144,7 @@ func (_q *FeeStructureQuery) FirstID(ctx context.Context) (id int, err error) {
 }
 
 // FirstIDX is like FirstID, but panics if an error occurs.
-func (_q *FeeStructureQuery) FirstIDX(ctx context.Context) int {
+func (_q *FeeStructureQuery) FirstIDX(ctx context.Context) uuid.UUID {
 	id, err := _q.FirstID(ctx)
 	if err != nil && !IsNotFound(err) {
 		panic(err)
@@ -181,8 +182,8 @@ func (_q *FeeStructureQuery) OnlyX(ctx context.Context) *FeeStructure {
 // OnlyID is like Only, but returns the only FeeStructure ID in the query.
 // Returns a *NotSingularError when more than one FeeStructure ID is found.
 // Returns a *NotFoundError when no entities are found.
-func (_q *FeeStructureQuery) OnlyID(ctx context.Context) (id int, err error) {
-	var ids []int
+func (_q *FeeStructureQuery) OnlyID(ctx context.Context) (id uuid.UUID, err error) {
+	var ids []uuid.UUID
 	if ids, err = _q.Limit(2).IDs(setContextOp(ctx, _q.ctx, ent.OpQueryOnlyID)); err != nil {
 		return
 	}
@@ -198,7 +199,7 @@ func (_q *FeeStructureQuery) OnlyID(ctx context.Context) (id int, err error) {
 }
 
 // OnlyIDX is like OnlyID, but panics if an error occurs.
-func (_q *FeeStructureQuery) OnlyIDX(ctx context.Context) int {
+func (_q *FeeStructureQuery) OnlyIDX(ctx context.Context) uuid.UUID {
 	id, err := _q.OnlyID(ctx)
 	if err != nil {
 		panic(err)
@@ -226,7 +227,7 @@ func (_q *FeeStructureQuery) AllX(ctx context.Context) []*FeeStructure {
 }
 
 // IDs executes the query and returns a list of FeeStructure IDs.
-func (_q *FeeStructureQuery) IDs(ctx context.Context) (ids []int, err error) {
+func (_q *FeeStructureQuery) IDs(ctx context.Context) (ids []uuid.UUID, err error) {
 	if _q.ctx.Unique == nil && _q.path != nil {
 		_q.Unique(true)
 	}
@@ -238,7 +239,7 @@ func (_q *FeeStructureQuery) IDs(ctx context.Context) (ids []int, err error) {
 }
 
 // IDsX is like IDs, but panics if an error occurs.
-func (_q *FeeStructureQuery) IDsX(ctx context.Context) []int {
+func (_q *FeeStructureQuery) IDsX(ctx context.Context) []uuid.UUID {
 	ids, err := _q.IDs(ctx)
 	if err != nil {
 		panic(err)
@@ -334,7 +335,7 @@ func (_q *FeeStructureQuery) WithAcademicYear(opts ...func(*AcademicYearQuery)) 
 // Example:
 //
 //	var v []struct {
-//		ClassID int `json:"class_id,omitempty"`
+//		ClassID uuid.UUID `json:"class_id,omitempty"`
 //		Count int `json:"count,omitempty"`
 //	}
 //
@@ -357,7 +358,7 @@ func (_q *FeeStructureQuery) GroupBy(field string, fields ...string) *FeeStructu
 // Example:
 //
 //	var v []struct {
-//		ClassID int `json:"class_id,omitempty"`
+//		ClassID uuid.UUID `json:"class_id,omitempty"`
 //	}
 //
 //	client.FeeStructure.Query().
@@ -445,8 +446,8 @@ func (_q *FeeStructureQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]
 }
 
 func (_q *FeeStructureQuery) loadClass(ctx context.Context, query *ClassQuery, nodes []*FeeStructure, init func(*FeeStructure), assign func(*FeeStructure, *Class)) error {
-	ids := make([]int, 0, len(nodes))
-	nodeids := make(map[int][]*FeeStructure)
+	ids := make([]uuid.UUID, 0, len(nodes))
+	nodeids := make(map[uuid.UUID][]*FeeStructure)
 	for i := range nodes {
 		fk := nodes[i].ClassID
 		if _, ok := nodeids[fk]; !ok {
@@ -474,8 +475,8 @@ func (_q *FeeStructureQuery) loadClass(ctx context.Context, query *ClassQuery, n
 	return nil
 }
 func (_q *FeeStructureQuery) loadAcademicYear(ctx context.Context, query *AcademicYearQuery, nodes []*FeeStructure, init func(*FeeStructure), assign func(*FeeStructure, *AcademicYear)) error {
-	ids := make([]int, 0, len(nodes))
-	nodeids := make(map[int][]*FeeStructure)
+	ids := make([]uuid.UUID, 0, len(nodes))
+	nodeids := make(map[uuid.UUID][]*FeeStructure)
 	for i := range nodes {
 		fk := nodes[i].AcademicYearID
 		if _, ok := nodeids[fk]; !ok {
@@ -513,7 +514,7 @@ func (_q *FeeStructureQuery) sqlCount(ctx context.Context) (int, error) {
 }
 
 func (_q *FeeStructureQuery) querySpec() *sqlgraph.QuerySpec {
-	_spec := sqlgraph.NewQuerySpec(feestructure.Table, feestructure.Columns, sqlgraph.NewFieldSpec(feestructure.FieldID, field.TypeInt))
+	_spec := sqlgraph.NewQuerySpec(feestructure.Table, feestructure.Columns, sqlgraph.NewFieldSpec(feestructure.FieldID, field.TypeUUID))
 	_spec.From = _q.sql
 	if unique := _q.ctx.Unique; unique != nil {
 		_spec.Unique = *unique

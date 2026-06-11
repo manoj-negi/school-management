@@ -14,6 +14,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/google/uuid"
 )
 
 // ClassUpdate is the builder for updating Class entities.
@@ -44,13 +45,13 @@ func (_u *ClassUpdate) SetNillableName(v *string) *ClassUpdate {
 }
 
 // SetAcademicYearID sets the "academic_year_id" field.
-func (_u *ClassUpdate) SetAcademicYearID(v int) *ClassUpdate {
+func (_u *ClassUpdate) SetAcademicYearID(v uuid.UUID) *ClassUpdate {
 	_u.mutation.SetAcademicYearID(v)
 	return _u
 }
 
 // SetNillableAcademicYearID sets the "academic_year_id" field if the given value is not nil.
-func (_u *ClassUpdate) SetNillableAcademicYearID(v *int) *ClassUpdate {
+func (_u *ClassUpdate) SetNillableAcademicYearID(v *uuid.UUID) *ClassUpdate {
 	if v != nil {
 		_u.SetAcademicYearID(*v)
 	}
@@ -58,13 +59,13 @@ func (_u *ClassUpdate) SetNillableAcademicYearID(v *int) *ClassUpdate {
 }
 
 // SetDepartmentID sets the "department_id" field.
-func (_u *ClassUpdate) SetDepartmentID(v int) *ClassUpdate {
+func (_u *ClassUpdate) SetDepartmentID(v uuid.UUID) *ClassUpdate {
 	_u.mutation.SetDepartmentID(v)
 	return _u
 }
 
 // SetNillableDepartmentID sets the "department_id" field if the given value is not nil.
-func (_u *ClassUpdate) SetNillableDepartmentID(v *int) *ClassUpdate {
+func (_u *ClassUpdate) SetNillableDepartmentID(v *uuid.UUID) *ClassUpdate {
 	if v != nil {
 		_u.SetDepartmentID(*v)
 	}
@@ -170,7 +171,7 @@ func (_u *ClassUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	if err := _u.check(); err != nil {
 		return _node, err
 	}
-	_spec := sqlgraph.NewUpdateSpec(class.Table, class.Columns, sqlgraph.NewFieldSpec(class.FieldID, field.TypeInt))
+	_spec := sqlgraph.NewUpdateSpec(class.Table, class.Columns, sqlgraph.NewFieldSpec(class.FieldID, field.TypeUUID))
 	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
@@ -198,7 +199,7 @@ func (_u *ClassUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 			Columns: []string{class.AcademicYearColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(academicyear.FieldID, field.TypeInt),
+				IDSpec: sqlgraph.NewFieldSpec(academicyear.FieldID, field.TypeUUID),
 			},
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
@@ -211,7 +212,7 @@ func (_u *ClassUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 			Columns: []string{class.AcademicYearColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(academicyear.FieldID, field.TypeInt),
+				IDSpec: sqlgraph.NewFieldSpec(academicyear.FieldID, field.TypeUUID),
 			},
 		}
 		for _, k := range nodes {
@@ -227,7 +228,7 @@ func (_u *ClassUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 			Columns: []string{class.DepartmentColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(department.FieldID, field.TypeInt),
+				IDSpec: sqlgraph.NewFieldSpec(department.FieldID, field.TypeUUID),
 			},
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
@@ -240,7 +241,7 @@ func (_u *ClassUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 			Columns: []string{class.DepartmentColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(department.FieldID, field.TypeInt),
+				IDSpec: sqlgraph.NewFieldSpec(department.FieldID, field.TypeUUID),
 			},
 		}
 		for _, k := range nodes {
@@ -283,13 +284,13 @@ func (_u *ClassUpdateOne) SetNillableName(v *string) *ClassUpdateOne {
 }
 
 // SetAcademicYearID sets the "academic_year_id" field.
-func (_u *ClassUpdateOne) SetAcademicYearID(v int) *ClassUpdateOne {
+func (_u *ClassUpdateOne) SetAcademicYearID(v uuid.UUID) *ClassUpdateOne {
 	_u.mutation.SetAcademicYearID(v)
 	return _u
 }
 
 // SetNillableAcademicYearID sets the "academic_year_id" field if the given value is not nil.
-func (_u *ClassUpdateOne) SetNillableAcademicYearID(v *int) *ClassUpdateOne {
+func (_u *ClassUpdateOne) SetNillableAcademicYearID(v *uuid.UUID) *ClassUpdateOne {
 	if v != nil {
 		_u.SetAcademicYearID(*v)
 	}
@@ -297,13 +298,13 @@ func (_u *ClassUpdateOne) SetNillableAcademicYearID(v *int) *ClassUpdateOne {
 }
 
 // SetDepartmentID sets the "department_id" field.
-func (_u *ClassUpdateOne) SetDepartmentID(v int) *ClassUpdateOne {
+func (_u *ClassUpdateOne) SetDepartmentID(v uuid.UUID) *ClassUpdateOne {
 	_u.mutation.SetDepartmentID(v)
 	return _u
 }
 
 // SetNillableDepartmentID sets the "department_id" field if the given value is not nil.
-func (_u *ClassUpdateOne) SetNillableDepartmentID(v *int) *ClassUpdateOne {
+func (_u *ClassUpdateOne) SetNillableDepartmentID(v *uuid.UUID) *ClassUpdateOne {
 	if v != nil {
 		_u.SetDepartmentID(*v)
 	}
@@ -422,7 +423,7 @@ func (_u *ClassUpdateOne) sqlSave(ctx context.Context) (_node *Class, err error)
 	if err := _u.check(); err != nil {
 		return _node, err
 	}
-	_spec := sqlgraph.NewUpdateSpec(class.Table, class.Columns, sqlgraph.NewFieldSpec(class.FieldID, field.TypeInt))
+	_spec := sqlgraph.NewUpdateSpec(class.Table, class.Columns, sqlgraph.NewFieldSpec(class.FieldID, field.TypeUUID))
 	id, ok := _u.mutation.ID()
 	if !ok {
 		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "Class.id" for update`)}
@@ -467,7 +468,7 @@ func (_u *ClassUpdateOne) sqlSave(ctx context.Context) (_node *Class, err error)
 			Columns: []string{class.AcademicYearColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(academicyear.FieldID, field.TypeInt),
+				IDSpec: sqlgraph.NewFieldSpec(academicyear.FieldID, field.TypeUUID),
 			},
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
@@ -480,7 +481,7 @@ func (_u *ClassUpdateOne) sqlSave(ctx context.Context) (_node *Class, err error)
 			Columns: []string{class.AcademicYearColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(academicyear.FieldID, field.TypeInt),
+				IDSpec: sqlgraph.NewFieldSpec(academicyear.FieldID, field.TypeUUID),
 			},
 		}
 		for _, k := range nodes {
@@ -496,7 +497,7 @@ func (_u *ClassUpdateOne) sqlSave(ctx context.Context) (_node *Class, err error)
 			Columns: []string{class.DepartmentColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(department.FieldID, field.TypeInt),
+				IDSpec: sqlgraph.NewFieldSpec(department.FieldID, field.TypeUUID),
 			},
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
@@ -509,7 +510,7 @@ func (_u *ClassUpdateOne) sqlSave(ctx context.Context) (_node *Class, err error)
 			Columns: []string{class.DepartmentColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(department.FieldID, field.TypeInt),
+				IDSpec: sqlgraph.NewFieldSpec(department.FieldID, field.TypeUUID),
 			},
 		}
 		for _, k := range nodes {

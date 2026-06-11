@@ -10,9 +10,11 @@ import (
 	"go-seed/ent/class"
 	"go-seed/ent/department"
 
+	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/google/uuid"
 )
 
 // ClassCreate is the builder for creating a Class entity.
@@ -30,19 +32,19 @@ func (_c *ClassCreate) SetName(v string) *ClassCreate {
 }
 
 // SetAcademicYearID sets the "academic_year_id" field.
-func (_c *ClassCreate) SetAcademicYearID(v int) *ClassCreate {
+func (_c *ClassCreate) SetAcademicYearID(v uuid.UUID) *ClassCreate {
 	_c.mutation.SetAcademicYearID(v)
 	return _c
 }
 
 // SetDepartmentID sets the "department_id" field.
-func (_c *ClassCreate) SetDepartmentID(v int) *ClassCreate {
+func (_c *ClassCreate) SetDepartmentID(v uuid.UUID) *ClassCreate {
 	_c.mutation.SetDepartmentID(v)
 	return _c
 }
 
 // SetNillableDepartmentID sets the "department_id" field if the given value is not nil.
-func (_c *ClassCreate) SetNillableDepartmentID(v *int) *ClassCreate {
+func (_c *ClassCreate) SetNillableDepartmentID(v *uuid.UUID) *ClassCreate {
 	if v != nil {
 		_c.SetDepartmentID(*v)
 	}
@@ -59,6 +61,20 @@ func (_c *ClassCreate) SetCapacity(v int) *ClassCreate {
 func (_c *ClassCreate) SetNillableCapacity(v *int) *ClassCreate {
 	if v != nil {
 		_c.SetCapacity(*v)
+	}
+	return _c
+}
+
+// SetID sets the "id" field.
+func (_c *ClassCreate) SetID(v uuid.UUID) *ClassCreate {
+	_c.mutation.SetID(v)
+	return _c
+}
+
+// SetNillableID sets the "id" field if the given value is not nil.
+func (_c *ClassCreate) SetNillableID(v *uuid.UUID) *ClassCreate {
+	if v != nil {
+		_c.SetID(*v)
 	}
 	return _c
 }
@@ -80,6 +96,7 @@ func (_c *ClassCreate) Mutation() *ClassMutation {
 
 // Save creates the Class in the database.
 func (_c *ClassCreate) Save(ctx context.Context) (*Class, error) {
+	_c.defaults()
 	return withHooks(ctx, _c.sqlSave, _c.mutation, _c.hooks)
 }
 
@@ -102,6 +119,14 @@ func (_c *ClassCreate) Exec(ctx context.Context) error {
 func (_c *ClassCreate) ExecX(ctx context.Context) {
 	if err := _c.Exec(ctx); err != nil {
 		panic(err)
+	}
+}
+
+// defaults sets the default values of the builder before save.
+func (_c *ClassCreate) defaults() {
+	if _, ok := _c.mutation.ID(); !ok {
+		v := class.DefaultID()
+		_c.mutation.SetID(v)
 	}
 }
 
@@ -130,8 +155,13 @@ func (_c *ClassCreate) sqlSave(ctx context.Context) (*Class, error) {
 		}
 		return nil, err
 	}
-	id := _spec.ID.Value.(int64)
-	_node.ID = int(id)
+	if _spec.ID.Value != nil {
+		if id, ok := _spec.ID.Value.(*uuid.UUID); ok {
+			_node.ID = *id
+		} else if err := _node.ID.Scan(_spec.ID.Value); err != nil {
+			return nil, err
+		}
+	}
 	_c.mutation.id = &_node.ID
 	_c.mutation.done = true
 	return _node, nil
@@ -140,9 +170,13 @@ func (_c *ClassCreate) sqlSave(ctx context.Context) (*Class, error) {
 func (_c *ClassCreate) createSpec() (*Class, *sqlgraph.CreateSpec) {
 	var (
 		_node = &Class{config: _c.config}
-		_spec = sqlgraph.NewCreateSpec(class.Table, sqlgraph.NewFieldSpec(class.FieldID, field.TypeInt))
+		_spec = sqlgraph.NewCreateSpec(class.Table, sqlgraph.NewFieldSpec(class.FieldID, field.TypeUUID))
 	)
 	_spec.OnConflict = _c.conflict
+	if id, ok := _c.mutation.ID(); ok {
+		_node.ID = id
+		_spec.ID.Value = &id
+	}
 	if value, ok := _c.mutation.Name(); ok {
 		_spec.SetField(class.FieldName, field.TypeString, value)
 		_node.Name = value
@@ -159,7 +193,7 @@ func (_c *ClassCreate) createSpec() (*Class, *sqlgraph.CreateSpec) {
 			Columns: []string{class.AcademicYearColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(academicyear.FieldID, field.TypeInt),
+				IDSpec: sqlgraph.NewFieldSpec(academicyear.FieldID, field.TypeUUID),
 			},
 		}
 		for _, k := range nodes {
@@ -176,7 +210,7 @@ func (_c *ClassCreate) createSpec() (*Class, *sqlgraph.CreateSpec) {
 			Columns: []string{class.DepartmentColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(department.FieldID, field.TypeInt),
+				IDSpec: sqlgraph.NewFieldSpec(department.FieldID, field.TypeUUID),
 			},
 		}
 		for _, k := range nodes {
@@ -250,7 +284,7 @@ func (u *ClassUpsert) UpdateName() *ClassUpsert {
 }
 
 // SetAcademicYearID sets the "academic_year_id" field.
-func (u *ClassUpsert) SetAcademicYearID(v int) *ClassUpsert {
+func (u *ClassUpsert) SetAcademicYearID(v uuid.UUID) *ClassUpsert {
 	u.Set(class.FieldAcademicYearID, v)
 	return u
 }
@@ -262,7 +296,7 @@ func (u *ClassUpsert) UpdateAcademicYearID() *ClassUpsert {
 }
 
 // SetDepartmentID sets the "department_id" field.
-func (u *ClassUpsert) SetDepartmentID(v int) *ClassUpsert {
+func (u *ClassUpsert) SetDepartmentID(v uuid.UUID) *ClassUpsert {
 	u.Set(class.FieldDepartmentID, v)
 	return u
 }
@@ -303,16 +337,24 @@ func (u *ClassUpsert) ClearCapacity() *ClassUpsert {
 	return u
 }
 
-// UpdateNewValues updates the mutable fields using the new values that were set on create.
+// UpdateNewValues updates the mutable fields using the new values that were set on create except the ID field.
 // Using this option is equivalent to using:
 //
 //	client.Class.Create().
 //		OnConflict(
 //			sql.ResolveWithNewValues(),
+//			sql.ResolveWith(func(u *sql.UpdateSet) {
+//				u.SetIgnore(class.FieldID)
+//			}),
 //		).
 //		Exec(ctx)
 func (u *ClassUpsertOne) UpdateNewValues() *ClassUpsertOne {
 	u.create.conflict = append(u.create.conflict, sql.ResolveWithNewValues())
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(s *sql.UpdateSet) {
+		if _, exists := u.create.mutation.ID(); exists {
+			s.SetIgnore(class.FieldID)
+		}
+	}))
 	return u
 }
 
@@ -358,7 +400,7 @@ func (u *ClassUpsertOne) UpdateName() *ClassUpsertOne {
 }
 
 // SetAcademicYearID sets the "academic_year_id" field.
-func (u *ClassUpsertOne) SetAcademicYearID(v int) *ClassUpsertOne {
+func (u *ClassUpsertOne) SetAcademicYearID(v uuid.UUID) *ClassUpsertOne {
 	return u.Update(func(s *ClassUpsert) {
 		s.SetAcademicYearID(v)
 	})
@@ -372,7 +414,7 @@ func (u *ClassUpsertOne) UpdateAcademicYearID() *ClassUpsertOne {
 }
 
 // SetDepartmentID sets the "department_id" field.
-func (u *ClassUpsertOne) SetDepartmentID(v int) *ClassUpsertOne {
+func (u *ClassUpsertOne) SetDepartmentID(v uuid.UUID) *ClassUpsertOne {
 	return u.Update(func(s *ClassUpsert) {
 		s.SetDepartmentID(v)
 	})
@@ -436,7 +478,12 @@ func (u *ClassUpsertOne) ExecX(ctx context.Context) {
 }
 
 // Exec executes the UPSERT query and returns the inserted/updated ID.
-func (u *ClassUpsertOne) ID(ctx context.Context) (id int, err error) {
+func (u *ClassUpsertOne) ID(ctx context.Context) (id uuid.UUID, err error) {
+	if u.create.driver.Dialect() == dialect.MySQL {
+		// In case of "ON CONFLICT", there is no way to get back non-numeric ID
+		// fields from the database since MySQL does not support the RETURNING clause.
+		return id, errors.New("ent: ClassUpsertOne.ID is not supported by MySQL driver. Use ClassUpsertOne.Exec instead")
+	}
 	node, err := u.create.Save(ctx)
 	if err != nil {
 		return id, err
@@ -445,7 +492,7 @@ func (u *ClassUpsertOne) ID(ctx context.Context) (id int, err error) {
 }
 
 // IDX is like ID, but panics if an error occurs.
-func (u *ClassUpsertOne) IDX(ctx context.Context) int {
+func (u *ClassUpsertOne) IDX(ctx context.Context) uuid.UUID {
 	id, err := u.ID(ctx)
 	if err != nil {
 		panic(err)
@@ -472,6 +519,7 @@ func (_c *ClassCreateBulk) Save(ctx context.Context) ([]*Class, error) {
 	for i := range _c.builders {
 		func(i int, root context.Context) {
 			builder := _c.builders[i]
+			builder.defaults()
 			var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 				mutation, ok := m.(*ClassMutation)
 				if !ok {
@@ -499,10 +547,6 @@ func (_c *ClassCreateBulk) Save(ctx context.Context) ([]*Class, error) {
 					return nil, err
 				}
 				mutation.id = &nodes[i].ID
-				if specs[i].ID.Value != nil {
-					id := specs[i].ID.Value.(int64)
-					nodes[i].ID = int(id)
-				}
 				mutation.done = true
 				return nodes[i], nil
 			})
@@ -589,10 +633,20 @@ type ClassUpsertBulk struct {
 //	client.Class.Create().
 //		OnConflict(
 //			sql.ResolveWithNewValues(),
+//			sql.ResolveWith(func(u *sql.UpdateSet) {
+//				u.SetIgnore(class.FieldID)
+//			}),
 //		).
 //		Exec(ctx)
 func (u *ClassUpsertBulk) UpdateNewValues() *ClassUpsertBulk {
 	u.create.conflict = append(u.create.conflict, sql.ResolveWithNewValues())
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(s *sql.UpdateSet) {
+		for _, b := range u.create.builders {
+			if _, exists := b.mutation.ID(); exists {
+				s.SetIgnore(class.FieldID)
+			}
+		}
+	}))
 	return u
 }
 
@@ -638,7 +692,7 @@ func (u *ClassUpsertBulk) UpdateName() *ClassUpsertBulk {
 }
 
 // SetAcademicYearID sets the "academic_year_id" field.
-func (u *ClassUpsertBulk) SetAcademicYearID(v int) *ClassUpsertBulk {
+func (u *ClassUpsertBulk) SetAcademicYearID(v uuid.UUID) *ClassUpsertBulk {
 	return u.Update(func(s *ClassUpsert) {
 		s.SetAcademicYearID(v)
 	})
@@ -652,7 +706,7 @@ func (u *ClassUpsertBulk) UpdateAcademicYearID() *ClassUpsertBulk {
 }
 
 // SetDepartmentID sets the "department_id" field.
-func (u *ClassUpsertBulk) SetDepartmentID(v int) *ClassUpsertBulk {
+func (u *ClassUpsertBulk) SetDepartmentID(v uuid.UUID) *ClassUpsertBulk {
 	return u.Update(func(s *ClassUpsert) {
 		s.SetDepartmentID(v)
 	})

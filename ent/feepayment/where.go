@@ -12,47 +12,47 @@ import (
 )
 
 // ID filters vertices based on their ID field.
-func ID(id int) predicate.FeePayment {
+func ID(id uuid.UUID) predicate.FeePayment {
 	return predicate.FeePayment(sql.FieldEQ(FieldID, id))
 }
 
 // IDEQ applies the EQ predicate on the ID field.
-func IDEQ(id int) predicate.FeePayment {
+func IDEQ(id uuid.UUID) predicate.FeePayment {
 	return predicate.FeePayment(sql.FieldEQ(FieldID, id))
 }
 
 // IDNEQ applies the NEQ predicate on the ID field.
-func IDNEQ(id int) predicate.FeePayment {
+func IDNEQ(id uuid.UUID) predicate.FeePayment {
 	return predicate.FeePayment(sql.FieldNEQ(FieldID, id))
 }
 
 // IDIn applies the In predicate on the ID field.
-func IDIn(ids ...int) predicate.FeePayment {
+func IDIn(ids ...uuid.UUID) predicate.FeePayment {
 	return predicate.FeePayment(sql.FieldIn(FieldID, ids...))
 }
 
 // IDNotIn applies the NotIn predicate on the ID field.
-func IDNotIn(ids ...int) predicate.FeePayment {
+func IDNotIn(ids ...uuid.UUID) predicate.FeePayment {
 	return predicate.FeePayment(sql.FieldNotIn(FieldID, ids...))
 }
 
 // IDGT applies the GT predicate on the ID field.
-func IDGT(id int) predicate.FeePayment {
+func IDGT(id uuid.UUID) predicate.FeePayment {
 	return predicate.FeePayment(sql.FieldGT(FieldID, id))
 }
 
 // IDGTE applies the GTE predicate on the ID field.
-func IDGTE(id int) predicate.FeePayment {
+func IDGTE(id uuid.UUID) predicate.FeePayment {
 	return predicate.FeePayment(sql.FieldGTE(FieldID, id))
 }
 
 // IDLT applies the LT predicate on the ID field.
-func IDLT(id int) predicate.FeePayment {
+func IDLT(id uuid.UUID) predicate.FeePayment {
 	return predicate.FeePayment(sql.FieldLT(FieldID, id))
 }
 
 // IDLTE applies the LTE predicate on the ID field.
-func IDLTE(id int) predicate.FeePayment {
+func IDLTE(id uuid.UUID) predicate.FeePayment {
 	return predicate.FeePayment(sql.FieldLTE(FieldID, id))
 }
 
@@ -62,7 +62,7 @@ func StudentID(v uuid.UUID) predicate.FeePayment {
 }
 
 // FeeStructureID applies equality check predicate on the "fee_structure_id" field. It's identical to FeeStructureIDEQ.
-func FeeStructureID(v int) predicate.FeePayment {
+func FeeStructureID(v uuid.UUID) predicate.FeePayment {
 	return predicate.FeePayment(sql.FieldEQ(FieldFeeStructureID, v))
 }
 
@@ -112,22 +112,22 @@ func StudentIDNotIn(vs ...uuid.UUID) predicate.FeePayment {
 }
 
 // FeeStructureIDEQ applies the EQ predicate on the "fee_structure_id" field.
-func FeeStructureIDEQ(v int) predicate.FeePayment {
+func FeeStructureIDEQ(v uuid.UUID) predicate.FeePayment {
 	return predicate.FeePayment(sql.FieldEQ(FieldFeeStructureID, v))
 }
 
 // FeeStructureIDNEQ applies the NEQ predicate on the "fee_structure_id" field.
-func FeeStructureIDNEQ(v int) predicate.FeePayment {
+func FeeStructureIDNEQ(v uuid.UUID) predicate.FeePayment {
 	return predicate.FeePayment(sql.FieldNEQ(FieldFeeStructureID, v))
 }
 
 // FeeStructureIDIn applies the In predicate on the "fee_structure_id" field.
-func FeeStructureIDIn(vs ...int) predicate.FeePayment {
+func FeeStructureIDIn(vs ...uuid.UUID) predicate.FeePayment {
 	return predicate.FeePayment(sql.FieldIn(FieldFeeStructureID, vs...))
 }
 
 // FeeStructureIDNotIn applies the NotIn predicate on the "fee_structure_id" field.
-func FeeStructureIDNotIn(vs ...int) predicate.FeePayment {
+func FeeStructureIDNotIn(vs ...uuid.UUID) predicate.FeePayment {
 	return predicate.FeePayment(sql.FieldNotIn(FieldFeeStructureID, vs...))
 }
 

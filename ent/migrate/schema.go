@@ -10,7 +10,7 @@ import (
 var (
 	// AcademicYearsColumns holds the columns for the "academic_years" table.
 	AcademicYearsColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeInt, Increment: true},
+		{Name: "id", Type: field.TypeUUID},
 		{Name: "label", Type: field.TypeString, Unique: true},
 		{Name: "start_date", Type: field.TypeTime},
 		{Name: "end_date", Type: field.TypeTime},
@@ -24,11 +24,11 @@ var (
 	}
 	// ClassesColumns holds the columns for the "classes" table.
 	ClassesColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeInt, Increment: true},
+		{Name: "id", Type: field.TypeUUID},
 		{Name: "name", Type: field.TypeString},
 		{Name: "capacity", Type: field.TypeInt, Nullable: true},
-		{Name: "academic_year_id", Type: field.TypeInt},
-		{Name: "department_id", Type: field.TypeInt, Nullable: true},
+		{Name: "academic_year_id", Type: field.TypeUUID},
+		{Name: "department_id", Type: field.TypeUUID, Nullable: true},
 	}
 	// ClassesTable holds the schema information for the "classes" table.
 	ClassesTable = &schema.Table{
@@ -59,7 +59,7 @@ var (
 	}
 	// DepartmentsColumns holds the columns for the "departments" table.
 	DepartmentsColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeInt, Increment: true},
+		{Name: "id", Type: field.TypeUUID},
 		{Name: "name", Type: field.TypeString, Unique: true},
 		{Name: "code", Type: field.TypeString, Nullable: true},
 		{Name: "description", Type: field.TypeString, Nullable: true},
@@ -85,7 +85,7 @@ var (
 		{Name: "avatar_url", Type: field.TypeString, Nullable: true},
 		{Name: "is_active", Type: field.TypeBool, Default: true},
 		{Name: "user_id", Type: field.TypeUUID},
-		{Name: "department_id", Type: field.TypeInt, Nullable: true},
+		{Name: "department_id", Type: field.TypeUUID, Nullable: true},
 	}
 	// EmployeesTable holds the schema information for the "employees" table.
 	EmployeesTable = &schema.Table{
@@ -116,7 +116,7 @@ var (
 	}
 	// EventsColumns holds the columns for the "events" table.
 	EventsColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeInt, Increment: true},
+		{Name: "id", Type: field.TypeUUID},
 		{Name: "title", Type: field.TypeString},
 		{Name: "event_type", Type: field.TypeEnum, Enums: []string{"exam", "holiday", "meeting", "activity", "other"}, Default: "other"},
 		{Name: "description", Type: field.TypeString, Nullable: true},
@@ -132,16 +132,16 @@ var (
 	}
 	// ExamsColumns holds the columns for the "exams" table.
 	ExamsColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeInt, Increment: true},
+		{Name: "id", Type: field.TypeUUID},
 		{Name: "title", Type: field.TypeString},
 		{Name: "exam_type", Type: field.TypeString, Nullable: true},
 		{Name: "start_date", Type: field.TypeTime},
 		{Name: "end_date", Type: field.TypeTime},
 		{Name: "max_marks", Type: field.TypeFloat64, Default: 100},
 		{Name: "pass_marks", Type: field.TypeFloat64, Default: 35},
-		{Name: "class_id", Type: field.TypeInt, Nullable: true},
-		{Name: "subject_id", Type: field.TypeInt, Nullable: true},
-		{Name: "academic_year_id", Type: field.TypeInt, Nullable: true},
+		{Name: "class_id", Type: field.TypeUUID, Nullable: true},
+		{Name: "subject_id", Type: field.TypeUUID, Nullable: true},
+		{Name: "academic_year_id", Type: field.TypeUUID, Nullable: true},
 	}
 	// ExamsTable holds the schema information for the "exams" table.
 	ExamsTable = &schema.Table{
@@ -171,7 +171,7 @@ var (
 	}
 	// FeePaymentsColumns holds the columns for the "fee_payments" table.
 	FeePaymentsColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeInt, Increment: true},
+		{Name: "id", Type: field.TypeUUID},
 		{Name: "amount_paid", Type: field.TypeFloat64},
 		{Name: "payment_date", Type: field.TypeTime},
 		{Name: "payment_status", Type: field.TypeEnum, Enums: []string{"unpaid", "partial", "paid", "overdue"}, Default: "unpaid"},
@@ -179,7 +179,7 @@ var (
 		{Name: "transaction_ref", Type: field.TypeString, Nullable: true},
 		{Name: "remarks", Type: field.TypeString, Nullable: true},
 		{Name: "student_id", Type: field.TypeUUID},
-		{Name: "fee_structure_id", Type: field.TypeInt},
+		{Name: "fee_structure_id", Type: field.TypeUUID},
 	}
 	// FeePaymentsTable holds the schema information for the "fee_payments" table.
 	FeePaymentsTable = &schema.Table{
@@ -203,12 +203,12 @@ var (
 	}
 	// FeeStructuresColumns holds the columns for the "fee_structures" table.
 	FeeStructuresColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeInt, Increment: true},
+		{Name: "id", Type: field.TypeUUID},
 		{Name: "fee_label", Type: field.TypeString},
 		{Name: "amount", Type: field.TypeFloat64},
 		{Name: "due_date", Type: field.TypeTime, Nullable: true},
-		{Name: "class_id", Type: field.TypeInt},
-		{Name: "academic_year_id", Type: field.TypeInt},
+		{Name: "class_id", Type: field.TypeUUID},
+		{Name: "academic_year_id", Type: field.TypeUUID},
 	}
 	// FeeStructuresTable holds the schema information for the "fee_structures" table.
 	FeeStructuresTable = &schema.Table{
@@ -239,7 +239,7 @@ var (
 	}
 	// PermissionsColumns holds the columns for the "permissions" table.
 	PermissionsColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeInt, Increment: true},
+		{Name: "id", Type: field.TypeUUID},
 		{Name: "name", Type: field.TypeString, Unique: true},
 		{Name: "description", Type: field.TypeString, Nullable: true},
 	}
@@ -251,7 +251,7 @@ var (
 	}
 	// RolesColumns holds the columns for the "roles" table.
 	RolesColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeInt, Increment: true},
+		{Name: "id", Type: field.TypeUUID},
 		{Name: "name", Type: field.TypeString, Unique: true},
 		{Name: "description", Type: field.TypeString, Nullable: true},
 	}
@@ -275,7 +275,7 @@ var (
 		{Name: "joining_date", Type: field.TypeTime},
 		{Name: "avatar_url", Type: field.TypeString, Nullable: true},
 		{Name: "user_id", Type: field.TypeUUID, Nullable: true},
-		{Name: "class_id", Type: field.TypeInt, Nullable: true},
+		{Name: "class_id", Type: field.TypeUUID, Nullable: true},
 	}
 	// StudentsTable holds the schema information for the "students" table.
 	StudentsTable = &schema.Table{
@@ -299,13 +299,13 @@ var (
 	}
 	// StudentAttendancesColumns holds the columns for the "student_attendances" table.
 	StudentAttendancesColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeInt, Increment: true},
+		{Name: "id", Type: field.TypeUUID},
 		{Name: "date", Type: field.TypeTime},
 		{Name: "status", Type: field.TypeEnum, Enums: []string{"present", "absent", "late", "excused"}, Default: "present"},
 		{Name: "remarks", Type: field.TypeString, Nullable: true},
 		{Name: "student_id", Type: field.TypeUUID},
-		{Name: "class_id", Type: field.TypeInt},
-		{Name: "subject_id", Type: field.TypeInt, Nullable: true},
+		{Name: "class_id", Type: field.TypeUUID},
+		{Name: "subject_id", Type: field.TypeUUID, Nullable: true},
 	}
 	// StudentAttendancesTable holds the schema information for the "student_attendances" table.
 	StudentAttendancesTable = &schema.Table{
@@ -342,7 +342,7 @@ var (
 	}
 	// SubjectsColumns holds the columns for the "subjects" table.
 	SubjectsColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeInt, Increment: true},
+		{Name: "id", Type: field.TypeUUID},
 		{Name: "name", Type: field.TypeString},
 		{Name: "code", Type: field.TypeString, Unique: true, Nullable: true},
 		{Name: "description", Type: field.TypeString, Nullable: true},
@@ -355,7 +355,7 @@ var (
 	}
 	// TasksColumns holds the columns for the "tasks" table.
 	TasksColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeInt, Increment: true},
+		{Name: "id", Type: field.TypeUUID},
 		{Name: "title", Type: field.TypeString},
 		{Name: "details", Type: field.TypeString, Nullable: true},
 		{Name: "status", Type: field.TypeEnum, Enums: []string{"Pending", "In_Progress", "Completed", "Cancelled"}, Default: "Pending"},
@@ -398,7 +398,7 @@ var (
 		{Name: "joining_date", Type: field.TypeTime, Nullable: true},
 		{Name: "avatar_url", Type: field.TypeString, Nullable: true},
 		{Name: "user_id", Type: field.TypeUUID},
-		{Name: "department_id", Type: field.TypeInt, Nullable: true},
+		{Name: "department_id", Type: field.TypeUUID, Nullable: true},
 	}
 	// TeachersTable holds the schema information for the "teachers" table.
 	TeachersTable = &schema.Table{
@@ -429,7 +429,7 @@ var (
 	}
 	// TeacherAttendancesColumns holds the columns for the "teacher_attendances" table.
 	TeacherAttendancesColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeInt, Increment: true},
+		{Name: "id", Type: field.TypeUUID},
 		{Name: "date", Type: field.TypeTime},
 		{Name: "status", Type: field.TypeEnum, Enums: []string{"present", "absent", "late", "excused"}, Default: "present"},
 		{Name: "remarks", Type: field.TypeString, Nullable: true},
@@ -467,7 +467,7 @@ var (
 		{Name: "is_active", Type: field.TypeBool, Default: true},
 		{Name: "created_at", Type: field.TypeTime},
 		{Name: "updated_at", Type: field.TypeTime},
-		{Name: "role_id", Type: field.TypeInt, Nullable: true},
+		{Name: "role_id", Type: field.TypeUUID, Nullable: true},
 	}
 	// UsersTable holds the schema information for the "users" table.
 	UsersTable = &schema.Table{
@@ -485,8 +485,8 @@ var (
 	}
 	// RolesAndPermissionsColumns holds the columns for the "roles_and_permissions" table.
 	RolesAndPermissionsColumns = []*schema.Column{
-		{Name: "role_id", Type: field.TypeInt},
-		{Name: "permission_id", Type: field.TypeInt},
+		{Name: "role_id", Type: field.TypeUUID},
+		{Name: "permission_id", Type: field.TypeUUID},
 	}
 	// RolesAndPermissionsTable holds the schema information for the "roles_and_permissions" table.
 	RolesAndPermissionsTable = &schema.Table{
@@ -511,7 +511,7 @@ var (
 	// TeacherSubjectsColumns holds the columns for the "teacher_subjects" table.
 	TeacherSubjectsColumns = []*schema.Column{
 		{Name: "teacher_id", Type: field.TypeUUID},
-		{Name: "subject_id", Type: field.TypeInt},
+		{Name: "subject_id", Type: field.TypeUUID},
 	}
 	// TeacherSubjectsTable holds the schema information for the "teacher_subjects" table.
 	TeacherSubjectsTable = &schema.Table{

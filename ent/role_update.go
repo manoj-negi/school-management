@@ -65,14 +65,14 @@ func (_u *RoleUpdate) ClearDescription() *RoleUpdate {
 }
 
 // AddPermissionIDs adds the "permissions" edge to the Permission entity by IDs.
-func (_u *RoleUpdate) AddPermissionIDs(ids ...int) *RoleUpdate {
+func (_u *RoleUpdate) AddPermissionIDs(ids ...uuid.UUID) *RoleUpdate {
 	_u.mutation.AddPermissionIDs(ids...)
 	return _u
 }
 
 // AddPermissions adds the "permissions" edges to the Permission entity.
 func (_u *RoleUpdate) AddPermissions(v ...*Permission) *RoleUpdate {
-	ids := make([]int, len(v))
+	ids := make([]uuid.UUID, len(v))
 	for i := range v {
 		ids[i] = v[i].ID
 	}
@@ -106,14 +106,14 @@ func (_u *RoleUpdate) ClearPermissions() *RoleUpdate {
 }
 
 // RemovePermissionIDs removes the "permissions" edge to Permission entities by IDs.
-func (_u *RoleUpdate) RemovePermissionIDs(ids ...int) *RoleUpdate {
+func (_u *RoleUpdate) RemovePermissionIDs(ids ...uuid.UUID) *RoleUpdate {
 	_u.mutation.RemovePermissionIDs(ids...)
 	return _u
 }
 
 // RemovePermissions removes "permissions" edges to Permission entities.
 func (_u *RoleUpdate) RemovePermissions(v ...*Permission) *RoleUpdate {
-	ids := make([]int, len(v))
+	ids := make([]uuid.UUID, len(v))
 	for i := range v {
 		ids[i] = v[i].ID
 	}
@@ -169,7 +169,7 @@ func (_u *RoleUpdate) ExecX(ctx context.Context) {
 }
 
 func (_u *RoleUpdate) sqlSave(ctx context.Context) (_node int, err error) {
-	_spec := sqlgraph.NewUpdateSpec(role.Table, role.Columns, sqlgraph.NewFieldSpec(role.FieldID, field.TypeInt))
+	_spec := sqlgraph.NewUpdateSpec(role.Table, role.Columns, sqlgraph.NewFieldSpec(role.FieldID, field.TypeUUID))
 	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
@@ -194,7 +194,7 @@ func (_u *RoleUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 			Columns: role.PermissionsPrimaryKey,
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(permission.FieldID, field.TypeInt),
+				IDSpec: sqlgraph.NewFieldSpec(permission.FieldID, field.TypeUUID),
 			},
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
@@ -207,7 +207,7 @@ func (_u *RoleUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 			Columns: role.PermissionsPrimaryKey,
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(permission.FieldID, field.TypeInt),
+				IDSpec: sqlgraph.NewFieldSpec(permission.FieldID, field.TypeUUID),
 			},
 		}
 		for _, k := range nodes {
@@ -223,7 +223,7 @@ func (_u *RoleUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 			Columns: role.PermissionsPrimaryKey,
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(permission.FieldID, field.TypeInt),
+				IDSpec: sqlgraph.NewFieldSpec(permission.FieldID, field.TypeUUID),
 			},
 		}
 		for _, k := range nodes {
@@ -331,14 +331,14 @@ func (_u *RoleUpdateOne) ClearDescription() *RoleUpdateOne {
 }
 
 // AddPermissionIDs adds the "permissions" edge to the Permission entity by IDs.
-func (_u *RoleUpdateOne) AddPermissionIDs(ids ...int) *RoleUpdateOne {
+func (_u *RoleUpdateOne) AddPermissionIDs(ids ...uuid.UUID) *RoleUpdateOne {
 	_u.mutation.AddPermissionIDs(ids...)
 	return _u
 }
 
 // AddPermissions adds the "permissions" edges to the Permission entity.
 func (_u *RoleUpdateOne) AddPermissions(v ...*Permission) *RoleUpdateOne {
-	ids := make([]int, len(v))
+	ids := make([]uuid.UUID, len(v))
 	for i := range v {
 		ids[i] = v[i].ID
 	}
@@ -372,14 +372,14 @@ func (_u *RoleUpdateOne) ClearPermissions() *RoleUpdateOne {
 }
 
 // RemovePermissionIDs removes the "permissions" edge to Permission entities by IDs.
-func (_u *RoleUpdateOne) RemovePermissionIDs(ids ...int) *RoleUpdateOne {
+func (_u *RoleUpdateOne) RemovePermissionIDs(ids ...uuid.UUID) *RoleUpdateOne {
 	_u.mutation.RemovePermissionIDs(ids...)
 	return _u
 }
 
 // RemovePermissions removes "permissions" edges to Permission entities.
 func (_u *RoleUpdateOne) RemovePermissions(v ...*Permission) *RoleUpdateOne {
-	ids := make([]int, len(v))
+	ids := make([]uuid.UUID, len(v))
 	for i := range v {
 		ids[i] = v[i].ID
 	}
@@ -448,7 +448,7 @@ func (_u *RoleUpdateOne) ExecX(ctx context.Context) {
 }
 
 func (_u *RoleUpdateOne) sqlSave(ctx context.Context) (_node *Role, err error) {
-	_spec := sqlgraph.NewUpdateSpec(role.Table, role.Columns, sqlgraph.NewFieldSpec(role.FieldID, field.TypeInt))
+	_spec := sqlgraph.NewUpdateSpec(role.Table, role.Columns, sqlgraph.NewFieldSpec(role.FieldID, field.TypeUUID))
 	id, ok := _u.mutation.ID()
 	if !ok {
 		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "Role.id" for update`)}
@@ -490,7 +490,7 @@ func (_u *RoleUpdateOne) sqlSave(ctx context.Context) (_node *Role, err error) {
 			Columns: role.PermissionsPrimaryKey,
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(permission.FieldID, field.TypeInt),
+				IDSpec: sqlgraph.NewFieldSpec(permission.FieldID, field.TypeUUID),
 			},
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
@@ -503,7 +503,7 @@ func (_u *RoleUpdateOne) sqlSave(ctx context.Context) (_node *Role, err error) {
 			Columns: role.PermissionsPrimaryKey,
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(permission.FieldID, field.TypeInt),
+				IDSpec: sqlgraph.NewFieldSpec(permission.FieldID, field.TypeUUID),
 			},
 		}
 		for _, k := range nodes {
@@ -519,7 +519,7 @@ func (_u *RoleUpdateOne) sqlSave(ctx context.Context) (_node *Role, err error) {
 			Columns: role.PermissionsPrimaryKey,
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(permission.FieldID, field.TypeInt),
+				IDSpec: sqlgraph.NewFieldSpec(permission.FieldID, field.TypeUUID),
 			},
 		}
 		for _, k := range nodes {

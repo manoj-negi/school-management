@@ -9,9 +9,11 @@ import (
 	"go-seed/ent/permission"
 	"go-seed/ent/role"
 
+	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/google/uuid"
 )
 
 // PermissionCreate is the builder for creating a Permission entity.
@@ -42,15 +44,29 @@ func (_c *PermissionCreate) SetNillableDescription(v *string) *PermissionCreate 
 	return _c
 }
 
+// SetID sets the "id" field.
+func (_c *PermissionCreate) SetID(v uuid.UUID) *PermissionCreate {
+	_c.mutation.SetID(v)
+	return _c
+}
+
+// SetNillableID sets the "id" field if the given value is not nil.
+func (_c *PermissionCreate) SetNillableID(v *uuid.UUID) *PermissionCreate {
+	if v != nil {
+		_c.SetID(*v)
+	}
+	return _c
+}
+
 // AddRoleIDs adds the "roles" edge to the Role entity by IDs.
-func (_c *PermissionCreate) AddRoleIDs(ids ...int) *PermissionCreate {
+func (_c *PermissionCreate) AddRoleIDs(ids ...uuid.UUID) *PermissionCreate {
 	_c.mutation.AddRoleIDs(ids...)
 	return _c
 }
 
 // AddRoles adds the "roles" edges to the Role entity.
 func (_c *PermissionCreate) AddRoles(v ...*Role) *PermissionCreate {
-	ids := make([]int, len(v))
+	ids := make([]uuid.UUID, len(v))
 	for i := range v {
 		ids[i] = v[i].ID
 	}
@@ -64,6 +80,7 @@ func (_c *PermissionCreate) Mutation() *PermissionMutation {
 
 // Save creates the Permission in the database.
 func (_c *PermissionCreate) Save(ctx context.Context) (*Permission, error) {
+	_c.defaults()
 	return withHooks(ctx, _c.sqlSave, _c.mutation, _c.hooks)
 }
 
@@ -89,6 +106,14 @@ func (_c *PermissionCreate) ExecX(ctx context.Context) {
 	}
 }
 
+// defaults sets the default values of the builder before save.
+func (_c *PermissionCreate) defaults() {
+	if _, ok := _c.mutation.ID(); !ok {
+		v := permission.DefaultID()
+		_c.mutation.SetID(v)
+	}
+}
+
 // check runs all checks and user-defined validators on the builder.
 func (_c *PermissionCreate) check() error {
 	if _, ok := _c.mutation.Name(); !ok {
@@ -108,8 +133,13 @@ func (_c *PermissionCreate) sqlSave(ctx context.Context) (*Permission, error) {
 		}
 		return nil, err
 	}
-	id := _spec.ID.Value.(int64)
-	_node.ID = int(id)
+	if _spec.ID.Value != nil {
+		if id, ok := _spec.ID.Value.(*uuid.UUID); ok {
+			_node.ID = *id
+		} else if err := _node.ID.Scan(_spec.ID.Value); err != nil {
+			return nil, err
+		}
+	}
 	_c.mutation.id = &_node.ID
 	_c.mutation.done = true
 	return _node, nil
@@ -118,9 +148,13 @@ func (_c *PermissionCreate) sqlSave(ctx context.Context) (*Permission, error) {
 func (_c *PermissionCreate) createSpec() (*Permission, *sqlgraph.CreateSpec) {
 	var (
 		_node = &Permission{config: _c.config}
-		_spec = sqlgraph.NewCreateSpec(permission.Table, sqlgraph.NewFieldSpec(permission.FieldID, field.TypeInt))
+		_spec = sqlgraph.NewCreateSpec(permission.Table, sqlgraph.NewFieldSpec(permission.FieldID, field.TypeUUID))
 	)
 	_spec.OnConflict = _c.conflict
+	if id, ok := _c.mutation.ID(); ok {
+		_node.ID = id
+		_spec.ID.Value = &id
+	}
 	if value, ok := _c.mutation.Name(); ok {
 		_spec.SetField(permission.FieldName, field.TypeString, value)
 		_node.Name = value
@@ -137,7 +171,7 @@ func (_c *PermissionCreate) createSpec() (*Permission, *sqlgraph.CreateSpec) {
 			Columns: permission.RolesPrimaryKey,
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(role.FieldID, field.TypeInt),
+				IDSpec: sqlgraph.NewFieldSpec(role.FieldID, field.TypeUUID),
 			},
 		}
 		for _, k := range nodes {
@@ -227,16 +261,24 @@ func (u *PermissionUpsert) ClearDescription() *PermissionUpsert {
 	return u
 }
 
-// UpdateNewValues updates the mutable fields using the new values that were set on create.
+// UpdateNewValues updates the mutable fields using the new values that were set on create except the ID field.
 // Using this option is equivalent to using:
 //
 //	client.Permission.Create().
 //		OnConflict(
 //			sql.ResolveWithNewValues(),
+//			sql.ResolveWith(func(u *sql.UpdateSet) {
+//				u.SetIgnore(permission.FieldID)
+//			}),
 //		).
 //		Exec(ctx)
 func (u *PermissionUpsertOne) UpdateNewValues() *PermissionUpsertOne {
 	u.create.conflict = append(u.create.conflict, sql.ResolveWithNewValues())
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(s *sql.UpdateSet) {
+		if _, exists := u.create.mutation.ID(); exists {
+			s.SetIgnore(permission.FieldID)
+		}
+	}))
 	return u
 }
 
@@ -318,7 +360,12 @@ func (u *PermissionUpsertOne) ExecX(ctx context.Context) {
 }
 
 // Exec executes the UPSERT query and returns the inserted/updated ID.
-func (u *PermissionUpsertOne) ID(ctx context.Context) (id int, err error) {
+func (u *PermissionUpsertOne) ID(ctx context.Context) (id uuid.UUID, err error) {
+	if u.create.driver.Dialect() == dialect.MySQL {
+		// In case of "ON CONFLICT", there is no way to get back non-numeric ID
+		// fields from the database since MySQL does not support the RETURNING clause.
+		return id, errors.New("ent: PermissionUpsertOne.ID is not supported by MySQL driver. Use PermissionUpsertOne.Exec instead")
+	}
 	node, err := u.create.Save(ctx)
 	if err != nil {
 		return id, err
@@ -327,7 +374,7 @@ func (u *PermissionUpsertOne) ID(ctx context.Context) (id int, err error) {
 }
 
 // IDX is like ID, but panics if an error occurs.
-func (u *PermissionUpsertOne) IDX(ctx context.Context) int {
+func (u *PermissionUpsertOne) IDX(ctx context.Context) uuid.UUID {
 	id, err := u.ID(ctx)
 	if err != nil {
 		panic(err)
@@ -354,6 +401,7 @@ func (_c *PermissionCreateBulk) Save(ctx context.Context) ([]*Permission, error)
 	for i := range _c.builders {
 		func(i int, root context.Context) {
 			builder := _c.builders[i]
+			builder.defaults()
 			var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 				mutation, ok := m.(*PermissionMutation)
 				if !ok {
@@ -381,10 +429,6 @@ func (_c *PermissionCreateBulk) Save(ctx context.Context) ([]*Permission, error)
 					return nil, err
 				}
 				mutation.id = &nodes[i].ID
-				if specs[i].ID.Value != nil {
-					id := specs[i].ID.Value.(int64)
-					nodes[i].ID = int(id)
-				}
 				mutation.done = true
 				return nodes[i], nil
 			})
@@ -471,10 +515,20 @@ type PermissionUpsertBulk struct {
 //	client.Permission.Create().
 //		OnConflict(
 //			sql.ResolveWithNewValues(),
+//			sql.ResolveWith(func(u *sql.UpdateSet) {
+//				u.SetIgnore(permission.FieldID)
+//			}),
 //		).
 //		Exec(ctx)
 func (u *PermissionUpsertBulk) UpdateNewValues() *PermissionUpsertBulk {
 	u.create.conflict = append(u.create.conflict, sql.ResolveWithNewValues())
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(s *sql.UpdateSet) {
+		for _, b := range u.create.builders {
+			if _, exists := b.mutation.ID(); exists {
+				s.SetIgnore(permission.FieldID)
+			}
+		}
+	}))
 	return u
 }
 

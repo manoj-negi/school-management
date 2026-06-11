@@ -5,6 +5,7 @@ import (
 	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
 	"entgo.io/ent/schema/index"
+	"github.com/google/uuid"
 )
 
 // FeeStructure holds the schema definition for the FeeStructure entity.
@@ -15,8 +16,10 @@ type FeeStructure struct {
 // Fields of the FeeStructure.
 func (FeeStructure) Fields() []ent.Field {
 	return []ent.Field{
-		field.Int("class_id"),
-		field.Int("academic_year_id"),
+		field.UUID("id", uuid.UUID{}).
+			Default(uuid.New),
+		field.UUID("class_id", uuid.UUID{}),
+		field.UUID("academic_year_id", uuid.UUID{}),
 		field.String("fee_label"),
 		field.Float("amount"),
 		field.Time("due_date").

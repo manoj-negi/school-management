@@ -7,50 +7,51 @@ import (
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
+	"github.com/google/uuid"
 )
 
 // ID filters vertices based on their ID field.
-func ID(id int) predicate.Class {
+func ID(id uuid.UUID) predicate.Class {
 	return predicate.Class(sql.FieldEQ(FieldID, id))
 }
 
 // IDEQ applies the EQ predicate on the ID field.
-func IDEQ(id int) predicate.Class {
+func IDEQ(id uuid.UUID) predicate.Class {
 	return predicate.Class(sql.FieldEQ(FieldID, id))
 }
 
 // IDNEQ applies the NEQ predicate on the ID field.
-func IDNEQ(id int) predicate.Class {
+func IDNEQ(id uuid.UUID) predicate.Class {
 	return predicate.Class(sql.FieldNEQ(FieldID, id))
 }
 
 // IDIn applies the In predicate on the ID field.
-func IDIn(ids ...int) predicate.Class {
+func IDIn(ids ...uuid.UUID) predicate.Class {
 	return predicate.Class(sql.FieldIn(FieldID, ids...))
 }
 
 // IDNotIn applies the NotIn predicate on the ID field.
-func IDNotIn(ids ...int) predicate.Class {
+func IDNotIn(ids ...uuid.UUID) predicate.Class {
 	return predicate.Class(sql.FieldNotIn(FieldID, ids...))
 }
 
 // IDGT applies the GT predicate on the ID field.
-func IDGT(id int) predicate.Class {
+func IDGT(id uuid.UUID) predicate.Class {
 	return predicate.Class(sql.FieldGT(FieldID, id))
 }
 
 // IDGTE applies the GTE predicate on the ID field.
-func IDGTE(id int) predicate.Class {
+func IDGTE(id uuid.UUID) predicate.Class {
 	return predicate.Class(sql.FieldGTE(FieldID, id))
 }
 
 // IDLT applies the LT predicate on the ID field.
-func IDLT(id int) predicate.Class {
+func IDLT(id uuid.UUID) predicate.Class {
 	return predicate.Class(sql.FieldLT(FieldID, id))
 }
 
 // IDLTE applies the LTE predicate on the ID field.
-func IDLTE(id int) predicate.Class {
+func IDLTE(id uuid.UUID) predicate.Class {
 	return predicate.Class(sql.FieldLTE(FieldID, id))
 }
 
@@ -60,12 +61,12 @@ func Name(v string) predicate.Class {
 }
 
 // AcademicYearID applies equality check predicate on the "academic_year_id" field. It's identical to AcademicYearIDEQ.
-func AcademicYearID(v int) predicate.Class {
+func AcademicYearID(v uuid.UUID) predicate.Class {
 	return predicate.Class(sql.FieldEQ(FieldAcademicYearID, v))
 }
 
 // DepartmentID applies equality check predicate on the "department_id" field. It's identical to DepartmentIDEQ.
-func DepartmentID(v int) predicate.Class {
+func DepartmentID(v uuid.UUID) predicate.Class {
 	return predicate.Class(sql.FieldEQ(FieldDepartmentID, v))
 }
 
@@ -140,42 +141,42 @@ func NameContainsFold(v string) predicate.Class {
 }
 
 // AcademicYearIDEQ applies the EQ predicate on the "academic_year_id" field.
-func AcademicYearIDEQ(v int) predicate.Class {
+func AcademicYearIDEQ(v uuid.UUID) predicate.Class {
 	return predicate.Class(sql.FieldEQ(FieldAcademicYearID, v))
 }
 
 // AcademicYearIDNEQ applies the NEQ predicate on the "academic_year_id" field.
-func AcademicYearIDNEQ(v int) predicate.Class {
+func AcademicYearIDNEQ(v uuid.UUID) predicate.Class {
 	return predicate.Class(sql.FieldNEQ(FieldAcademicYearID, v))
 }
 
 // AcademicYearIDIn applies the In predicate on the "academic_year_id" field.
-func AcademicYearIDIn(vs ...int) predicate.Class {
+func AcademicYearIDIn(vs ...uuid.UUID) predicate.Class {
 	return predicate.Class(sql.FieldIn(FieldAcademicYearID, vs...))
 }
 
 // AcademicYearIDNotIn applies the NotIn predicate on the "academic_year_id" field.
-func AcademicYearIDNotIn(vs ...int) predicate.Class {
+func AcademicYearIDNotIn(vs ...uuid.UUID) predicate.Class {
 	return predicate.Class(sql.FieldNotIn(FieldAcademicYearID, vs...))
 }
 
 // DepartmentIDEQ applies the EQ predicate on the "department_id" field.
-func DepartmentIDEQ(v int) predicate.Class {
+func DepartmentIDEQ(v uuid.UUID) predicate.Class {
 	return predicate.Class(sql.FieldEQ(FieldDepartmentID, v))
 }
 
 // DepartmentIDNEQ applies the NEQ predicate on the "department_id" field.
-func DepartmentIDNEQ(v int) predicate.Class {
+func DepartmentIDNEQ(v uuid.UUID) predicate.Class {
 	return predicate.Class(sql.FieldNEQ(FieldDepartmentID, v))
 }
 
 // DepartmentIDIn applies the In predicate on the "department_id" field.
-func DepartmentIDIn(vs ...int) predicate.Class {
+func DepartmentIDIn(vs ...uuid.UUID) predicate.Class {
 	return predicate.Class(sql.FieldIn(FieldDepartmentID, vs...))
 }
 
 // DepartmentIDNotIn applies the NotIn predicate on the "department_id" field.
-func DepartmentIDNotIn(vs ...int) predicate.Class {
+func DepartmentIDNotIn(vs ...uuid.UUID) predicate.Class {
 	return predicate.Class(sql.FieldNotIn(FieldDepartmentID, vs...))
 }
 

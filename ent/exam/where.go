@@ -8,50 +8,51 @@ import (
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
+	"github.com/google/uuid"
 )
 
 // ID filters vertices based on their ID field.
-func ID(id int) predicate.Exam {
+func ID(id uuid.UUID) predicate.Exam {
 	return predicate.Exam(sql.FieldEQ(FieldID, id))
 }
 
 // IDEQ applies the EQ predicate on the ID field.
-func IDEQ(id int) predicate.Exam {
+func IDEQ(id uuid.UUID) predicate.Exam {
 	return predicate.Exam(sql.FieldEQ(FieldID, id))
 }
 
 // IDNEQ applies the NEQ predicate on the ID field.
-func IDNEQ(id int) predicate.Exam {
+func IDNEQ(id uuid.UUID) predicate.Exam {
 	return predicate.Exam(sql.FieldNEQ(FieldID, id))
 }
 
 // IDIn applies the In predicate on the ID field.
-func IDIn(ids ...int) predicate.Exam {
+func IDIn(ids ...uuid.UUID) predicate.Exam {
 	return predicate.Exam(sql.FieldIn(FieldID, ids...))
 }
 
 // IDNotIn applies the NotIn predicate on the ID field.
-func IDNotIn(ids ...int) predicate.Exam {
+func IDNotIn(ids ...uuid.UUID) predicate.Exam {
 	return predicate.Exam(sql.FieldNotIn(FieldID, ids...))
 }
 
 // IDGT applies the GT predicate on the ID field.
-func IDGT(id int) predicate.Exam {
+func IDGT(id uuid.UUID) predicate.Exam {
 	return predicate.Exam(sql.FieldGT(FieldID, id))
 }
 
 // IDGTE applies the GTE predicate on the ID field.
-func IDGTE(id int) predicate.Exam {
+func IDGTE(id uuid.UUID) predicate.Exam {
 	return predicate.Exam(sql.FieldGTE(FieldID, id))
 }
 
 // IDLT applies the LT predicate on the ID field.
-func IDLT(id int) predicate.Exam {
+func IDLT(id uuid.UUID) predicate.Exam {
 	return predicate.Exam(sql.FieldLT(FieldID, id))
 }
 
 // IDLTE applies the LTE predicate on the ID field.
-func IDLTE(id int) predicate.Exam {
+func IDLTE(id uuid.UUID) predicate.Exam {
 	return predicate.Exam(sql.FieldLTE(FieldID, id))
 }
 
@@ -61,12 +62,12 @@ func Title(v string) predicate.Exam {
 }
 
 // ClassID applies equality check predicate on the "class_id" field. It's identical to ClassIDEQ.
-func ClassID(v int) predicate.Exam {
+func ClassID(v uuid.UUID) predicate.Exam {
 	return predicate.Exam(sql.FieldEQ(FieldClassID, v))
 }
 
 // SubjectID applies equality check predicate on the "subject_id" field. It's identical to SubjectIDEQ.
-func SubjectID(v int) predicate.Exam {
+func SubjectID(v uuid.UUID) predicate.Exam {
 	return predicate.Exam(sql.FieldEQ(FieldSubjectID, v))
 }
 
@@ -96,7 +97,7 @@ func PassMarks(v float64) predicate.Exam {
 }
 
 // AcademicYearID applies equality check predicate on the "academic_year_id" field. It's identical to AcademicYearIDEQ.
-func AcademicYearID(v int) predicate.Exam {
+func AcademicYearID(v uuid.UUID) predicate.Exam {
 	return predicate.Exam(sql.FieldEQ(FieldAcademicYearID, v))
 }
 
@@ -166,22 +167,22 @@ func TitleContainsFold(v string) predicate.Exam {
 }
 
 // ClassIDEQ applies the EQ predicate on the "class_id" field.
-func ClassIDEQ(v int) predicate.Exam {
+func ClassIDEQ(v uuid.UUID) predicate.Exam {
 	return predicate.Exam(sql.FieldEQ(FieldClassID, v))
 }
 
 // ClassIDNEQ applies the NEQ predicate on the "class_id" field.
-func ClassIDNEQ(v int) predicate.Exam {
+func ClassIDNEQ(v uuid.UUID) predicate.Exam {
 	return predicate.Exam(sql.FieldNEQ(FieldClassID, v))
 }
 
 // ClassIDIn applies the In predicate on the "class_id" field.
-func ClassIDIn(vs ...int) predicate.Exam {
+func ClassIDIn(vs ...uuid.UUID) predicate.Exam {
 	return predicate.Exam(sql.FieldIn(FieldClassID, vs...))
 }
 
 // ClassIDNotIn applies the NotIn predicate on the "class_id" field.
-func ClassIDNotIn(vs ...int) predicate.Exam {
+func ClassIDNotIn(vs ...uuid.UUID) predicate.Exam {
 	return predicate.Exam(sql.FieldNotIn(FieldClassID, vs...))
 }
 
@@ -196,22 +197,22 @@ func ClassIDNotNil() predicate.Exam {
 }
 
 // SubjectIDEQ applies the EQ predicate on the "subject_id" field.
-func SubjectIDEQ(v int) predicate.Exam {
+func SubjectIDEQ(v uuid.UUID) predicate.Exam {
 	return predicate.Exam(sql.FieldEQ(FieldSubjectID, v))
 }
 
 // SubjectIDNEQ applies the NEQ predicate on the "subject_id" field.
-func SubjectIDNEQ(v int) predicate.Exam {
+func SubjectIDNEQ(v uuid.UUID) predicate.Exam {
 	return predicate.Exam(sql.FieldNEQ(FieldSubjectID, v))
 }
 
 // SubjectIDIn applies the In predicate on the "subject_id" field.
-func SubjectIDIn(vs ...int) predicate.Exam {
+func SubjectIDIn(vs ...uuid.UUID) predicate.Exam {
 	return predicate.Exam(sql.FieldIn(FieldSubjectID, vs...))
 }
 
 // SubjectIDNotIn applies the NotIn predicate on the "subject_id" field.
-func SubjectIDNotIn(vs ...int) predicate.Exam {
+func SubjectIDNotIn(vs ...uuid.UUID) predicate.Exam {
 	return predicate.Exam(sql.FieldNotIn(FieldSubjectID, vs...))
 }
 
@@ -461,22 +462,22 @@ func PassMarksLTE(v float64) predicate.Exam {
 }
 
 // AcademicYearIDEQ applies the EQ predicate on the "academic_year_id" field.
-func AcademicYearIDEQ(v int) predicate.Exam {
+func AcademicYearIDEQ(v uuid.UUID) predicate.Exam {
 	return predicate.Exam(sql.FieldEQ(FieldAcademicYearID, v))
 }
 
 // AcademicYearIDNEQ applies the NEQ predicate on the "academic_year_id" field.
-func AcademicYearIDNEQ(v int) predicate.Exam {
+func AcademicYearIDNEQ(v uuid.UUID) predicate.Exam {
 	return predicate.Exam(sql.FieldNEQ(FieldAcademicYearID, v))
 }
 
 // AcademicYearIDIn applies the In predicate on the "academic_year_id" field.
-func AcademicYearIDIn(vs ...int) predicate.Exam {
+func AcademicYearIDIn(vs ...uuid.UUID) predicate.Exam {
 	return predicate.Exam(sql.FieldIn(FieldAcademicYearID, vs...))
 }
 
 // AcademicYearIDNotIn applies the NotIn predicate on the "academic_year_id" field.
-func AcademicYearIDNotIn(vs ...int) predicate.Exam {
+func AcademicYearIDNotIn(vs ...uuid.UUID) predicate.Exam {
 	return predicate.Exam(sql.FieldNotIn(FieldAcademicYearID, vs...))
 }
 

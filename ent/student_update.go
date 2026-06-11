@@ -194,13 +194,13 @@ func (_u *StudentUpdate) ClearAddress() *StudentUpdate {
 }
 
 // SetClassID sets the "class_id" field.
-func (_u *StudentUpdate) SetClassID(v int) *StudentUpdate {
+func (_u *StudentUpdate) SetClassID(v uuid.UUID) *StudentUpdate {
 	_u.mutation.SetClassID(v)
 	return _u
 }
 
 // SetNillableClassID sets the "class_id" field if the given value is not nil.
-func (_u *StudentUpdate) SetNillableClassID(v *int) *StudentUpdate {
+func (_u *StudentUpdate) SetNillableClassID(v *uuid.UUID) *StudentUpdate {
 	if v != nil {
 		_u.SetClassID(*v)
 	}
@@ -408,7 +408,7 @@ func (_u *StudentUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 			Columns: []string{student.ClassColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(class.FieldID, field.TypeInt),
+				IDSpec: sqlgraph.NewFieldSpec(class.FieldID, field.TypeUUID),
 			},
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
@@ -421,7 +421,7 @@ func (_u *StudentUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 			Columns: []string{student.ClassColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(class.FieldID, field.TypeInt),
+				IDSpec: sqlgraph.NewFieldSpec(class.FieldID, field.TypeUUID),
 			},
 		}
 		for _, k := range nodes {
@@ -612,13 +612,13 @@ func (_u *StudentUpdateOne) ClearAddress() *StudentUpdateOne {
 }
 
 // SetClassID sets the "class_id" field.
-func (_u *StudentUpdateOne) SetClassID(v int) *StudentUpdateOne {
+func (_u *StudentUpdateOne) SetClassID(v uuid.UUID) *StudentUpdateOne {
 	_u.mutation.SetClassID(v)
 	return _u
 }
 
 // SetNillableClassID sets the "class_id" field if the given value is not nil.
-func (_u *StudentUpdateOne) SetNillableClassID(v *int) *StudentUpdateOne {
+func (_u *StudentUpdateOne) SetNillableClassID(v *uuid.UUID) *StudentUpdateOne {
 	if v != nil {
 		_u.SetClassID(*v)
 	}
@@ -856,7 +856,7 @@ func (_u *StudentUpdateOne) sqlSave(ctx context.Context) (_node *Student, err er
 			Columns: []string{student.ClassColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(class.FieldID, field.TypeInt),
+				IDSpec: sqlgraph.NewFieldSpec(class.FieldID, field.TypeUUID),
 			},
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
@@ -869,7 +869,7 @@ func (_u *StudentUpdateOne) sqlSave(ctx context.Context) (_node *Student, err er
 			Columns: []string{student.ClassColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(class.FieldID, field.TypeInt),
+				IDSpec: sqlgraph.NewFieldSpec(class.FieldID, field.TypeUUID),
 			},
 		}
 		for _, k := range nodes {

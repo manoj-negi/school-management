@@ -4,6 +4,7 @@ package academicyear
 
 import (
 	"entgo.io/ent/dialect/sql"
+	"github.com/google/uuid"
 )
 
 const (
@@ -45,6 +46,8 @@ func ValidColumn(column string) bool {
 var (
 	// DefaultIsCurrent holds the default value on creation for the "is_current" field.
 	DefaultIsCurrent bool
+	// DefaultID holds the default value on creation for the "id" field.
+	DefaultID func() uuid.UUID
 )
 
 // OrderOption defines the ordering options for the AcademicYear queries.

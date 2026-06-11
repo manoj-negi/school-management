@@ -43,7 +43,7 @@ func (Student) Fields() []ent.Field {
 		field.String("address").
 			Optional().
 			Nillable(),
-		field.Int("class_id").
+		field.UUID("class_id", uuid.UUID{}).
 			Optional().
 			Nillable(),
 		field.Time("joining_date").

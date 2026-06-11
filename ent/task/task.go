@@ -7,6 +7,7 @@ import (
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
+	"github.com/google/uuid"
 )
 
 const (
@@ -78,6 +79,8 @@ func ValidColumn(column string) bool {
 var (
 	// DefaultProgressPct holds the default value on creation for the "progress_pct" field.
 	DefaultProgressPct int
+	// DefaultID holds the default value on creation for the "id" field.
+	DefaultID func() uuid.UUID
 )
 
 // Status defines the type for the "status" enum field.

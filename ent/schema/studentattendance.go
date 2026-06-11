@@ -16,9 +16,11 @@ type StudentAttendance struct {
 // Fields of the StudentAttendance.
 func (StudentAttendance) Fields() []ent.Field {
 	return []ent.Field{
+		field.UUID("id", uuid.UUID{}).
+			Default(uuid.New),
 		field.UUID("student_id", uuid.UUID{}),
-		field.Int("class_id"),
-		field.Int("subject_id").
+		field.UUID("class_id", uuid.UUID{}),
+		field.UUID("subject_id", uuid.UUID{}).
 			Optional().
 			Nillable(),
 		field.Time("date"),

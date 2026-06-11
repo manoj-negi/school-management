@@ -4,13 +4,22 @@ package ent
 
 import (
 	"go-seed/ent/academicyear"
+	"go-seed/ent/class"
+	"go-seed/ent/department"
 	"go-seed/ent/employee"
 	"go-seed/ent/event"
 	"go-seed/ent/exam"
+	"go-seed/ent/feepayment"
+	"go-seed/ent/feestructure"
+	"go-seed/ent/permission"
+	"go-seed/ent/role"
 	"go-seed/ent/schema"
 	"go-seed/ent/student"
+	"go-seed/ent/studentattendance"
+	"go-seed/ent/subject"
 	"go-seed/ent/task"
 	"go-seed/ent/teacher"
+	"go-seed/ent/teacherattendance"
 	"go-seed/ent/user"
 	"time"
 
@@ -24,9 +33,25 @@ func init() {
 	academicyearFields := schema.AcademicYear{}.Fields()
 	_ = academicyearFields
 	// academicyearDescIsCurrent is the schema descriptor for is_current field.
-	academicyearDescIsCurrent := academicyearFields[3].Descriptor()
+	academicyearDescIsCurrent := academicyearFields[4].Descriptor()
 	// academicyear.DefaultIsCurrent holds the default value on creation for the is_current field.
 	academicyear.DefaultIsCurrent = academicyearDescIsCurrent.Default.(bool)
+	// academicyearDescID is the schema descriptor for id field.
+	academicyearDescID := academicyearFields[0].Descriptor()
+	// academicyear.DefaultID holds the default value on creation for the id field.
+	academicyear.DefaultID = academicyearDescID.Default.(func() uuid.UUID)
+	classFields := schema.Class{}.Fields()
+	_ = classFields
+	// classDescID is the schema descriptor for id field.
+	classDescID := classFields[0].Descriptor()
+	// class.DefaultID holds the default value on creation for the id field.
+	class.DefaultID = classDescID.Default.(func() uuid.UUID)
+	departmentFields := schema.Department{}.Fields()
+	_ = departmentFields
+	// departmentDescID is the schema descriptor for id field.
+	departmentDescID := departmentFields[0].Descriptor()
+	// department.DefaultID holds the default value on creation for the id field.
+	department.DefaultID = departmentDescID.Default.(func() uuid.UUID)
 	employeeFields := schema.Employee{}.Fields()
 	_ = employeeFields
 	// employeeDescIsActive is the schema descriptor for is_active field.
@@ -40,25 +65,55 @@ func init() {
 	eventFields := schema.Event{}.Fields()
 	_ = eventFields
 	// eventDescIsAllDay is the schema descriptor for is_all_day field.
-	eventDescIsAllDay := eventFields[4].Descriptor()
+	eventDescIsAllDay := eventFields[5].Descriptor()
 	// event.DefaultIsAllDay holds the default value on creation for the is_all_day field.
 	event.DefaultIsAllDay = eventDescIsAllDay.Default.(bool)
 	// eventDescStatus is the schema descriptor for status field.
-	eventDescStatus := eventFields[5].Descriptor()
+	eventDescStatus := eventFields[6].Descriptor()
 	// event.DefaultStatus holds the default value on creation for the status field.
 	event.DefaultStatus = eventDescStatus.Default.(string)
+	// eventDescID is the schema descriptor for id field.
+	eventDescID := eventFields[0].Descriptor()
+	// event.DefaultID holds the default value on creation for the id field.
+	event.DefaultID = eventDescID.Default.(func() uuid.UUID)
 	examFields := schema.Exam{}.Fields()
 	_ = examFields
 	// examDescMaxMarks is the schema descriptor for max_marks field.
-	examDescMaxMarks := examFields[6].Descriptor()
+	examDescMaxMarks := examFields[7].Descriptor()
 	// exam.DefaultMaxMarks holds the default value on creation for the max_marks field.
 	exam.DefaultMaxMarks = examDescMaxMarks.Default.(float64)
 	// examDescPassMarks is the schema descriptor for pass_marks field.
-	examDescPassMarks := examFields[7].Descriptor()
+	examDescPassMarks := examFields[8].Descriptor()
 	// exam.DefaultPassMarks holds the default value on creation for the pass_marks field.
 	exam.DefaultPassMarks = examDescPassMarks.Default.(float64)
+	// examDescID is the schema descriptor for id field.
+	examDescID := examFields[0].Descriptor()
+	// exam.DefaultID holds the default value on creation for the id field.
+	exam.DefaultID = examDescID.Default.(func() uuid.UUID)
 	feepaymentFields := schema.FeePayment{}.Fields()
 	_ = feepaymentFields
+	// feepaymentDescID is the schema descriptor for id field.
+	feepaymentDescID := feepaymentFields[0].Descriptor()
+	// feepayment.DefaultID holds the default value on creation for the id field.
+	feepayment.DefaultID = feepaymentDescID.Default.(func() uuid.UUID)
+	feestructureFields := schema.FeeStructure{}.Fields()
+	_ = feestructureFields
+	// feestructureDescID is the schema descriptor for id field.
+	feestructureDescID := feestructureFields[0].Descriptor()
+	// feestructure.DefaultID holds the default value on creation for the id field.
+	feestructure.DefaultID = feestructureDescID.Default.(func() uuid.UUID)
+	permissionFields := schema.Permission{}.Fields()
+	_ = permissionFields
+	// permissionDescID is the schema descriptor for id field.
+	permissionDescID := permissionFields[0].Descriptor()
+	// permission.DefaultID holds the default value on creation for the id field.
+	permission.DefaultID = permissionDescID.Default.(func() uuid.UUID)
+	roleFields := schema.Role{}.Fields()
+	_ = roleFields
+	// roleDescID is the schema descriptor for id field.
+	roleDescID := roleFields[0].Descriptor()
+	// role.DefaultID holds the default value on creation for the id field.
+	role.DefaultID = roleDescID.Default.(func() uuid.UUID)
 	studentFields := schema.Student{}.Fields()
 	_ = studentFields
 	// studentDescJoiningDate is the schema descriptor for joining_date field.
@@ -71,12 +126,26 @@ func init() {
 	student.DefaultID = studentDescID.Default.(func() uuid.UUID)
 	studentattendanceFields := schema.StudentAttendance{}.Fields()
 	_ = studentattendanceFields
+	// studentattendanceDescID is the schema descriptor for id field.
+	studentattendanceDescID := studentattendanceFields[0].Descriptor()
+	// studentattendance.DefaultID holds the default value on creation for the id field.
+	studentattendance.DefaultID = studentattendanceDescID.Default.(func() uuid.UUID)
+	subjectFields := schema.Subject{}.Fields()
+	_ = subjectFields
+	// subjectDescID is the schema descriptor for id field.
+	subjectDescID := subjectFields[0].Descriptor()
+	// subject.DefaultID holds the default value on creation for the id field.
+	subject.DefaultID = subjectDescID.Default.(func() uuid.UUID)
 	taskFields := schema.Task{}.Fields()
 	_ = taskFields
 	// taskDescProgressPct is the schema descriptor for progress_pct field.
-	taskDescProgressPct := taskFields[6].Descriptor()
+	taskDescProgressPct := taskFields[7].Descriptor()
 	// task.DefaultProgressPct holds the default value on creation for the progress_pct field.
 	task.DefaultProgressPct = taskDescProgressPct.Default.(int)
+	// taskDescID is the schema descriptor for id field.
+	taskDescID := taskFields[0].Descriptor()
+	// task.DefaultID holds the default value on creation for the id field.
+	task.DefaultID = taskDescID.Default.(func() uuid.UUID)
 	teacherFields := schema.Teacher{}.Fields()
 	_ = teacherFields
 	// teacherDescID is the schema descriptor for id field.
@@ -85,6 +154,10 @@ func init() {
 	teacher.DefaultID = teacherDescID.Default.(func() uuid.UUID)
 	teacherattendanceFields := schema.TeacherAttendance{}.Fields()
 	_ = teacherattendanceFields
+	// teacherattendanceDescID is the schema descriptor for id field.
+	teacherattendanceDescID := teacherattendanceFields[0].Descriptor()
+	// teacherattendance.DefaultID holds the default value on creation for the id field.
+	teacherattendance.DefaultID = teacherattendanceDescID.Default.(func() uuid.UUID)
 	userFields := schema.User{}.Fields()
 	_ = userFields
 	// userDescIsActive is the schema descriptor for is_active field.

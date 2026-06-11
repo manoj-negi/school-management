@@ -14,6 +14,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/google/uuid"
 )
 
 // UserUpdate is the builder for updating User entities.
@@ -86,13 +87,13 @@ func (_u *UserUpdate) SetNillableRole(v *user.Role) *UserUpdate {
 }
 
 // SetRoleID sets the "role_id" field.
-func (_u *UserUpdate) SetRoleID(v int) *UserUpdate {
+func (_u *UserUpdate) SetRoleID(v uuid.UUID) *UserUpdate {
 	_u.mutation.SetRoleID(v)
 	return _u
 }
 
 // SetNillableRoleID sets the "role_id" field if the given value is not nil.
-func (_u *UserUpdate) SetNillableRoleID(v *int) *UserUpdate {
+func (_u *UserUpdate) SetNillableRoleID(v *uuid.UUID) *UserUpdate {
 	if v != nil {
 		_u.SetRoleID(*v)
 	}
@@ -160,13 +161,13 @@ func (_u *UserUpdate) SetUpdatedAt(v time.Time) *UserUpdate {
 }
 
 // SetRoleRefID sets the "role_ref" edge to the Role entity by ID.
-func (_u *UserUpdate) SetRoleRefID(id int) *UserUpdate {
+func (_u *UserUpdate) SetRoleRefID(id uuid.UUID) *UserUpdate {
 	_u.mutation.SetRoleRefID(id)
 	return _u
 }
 
 // SetNillableRoleRefID sets the "role_ref" edge to the Role entity by ID if the given value is not nil.
-func (_u *UserUpdate) SetNillableRoleRefID(id *int) *UserUpdate {
+func (_u *UserUpdate) SetNillableRoleRefID(id *uuid.UUID) *UserUpdate {
 	if id != nil {
 		_u = _u.SetRoleRefID(*id)
 	}
@@ -282,7 +283,7 @@ func (_u *UserUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 			Columns: []string{user.RoleRefColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(role.FieldID, field.TypeInt),
+				IDSpec: sqlgraph.NewFieldSpec(role.FieldID, field.TypeUUID),
 			},
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
@@ -295,7 +296,7 @@ func (_u *UserUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 			Columns: []string{user.RoleRefColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(role.FieldID, field.TypeInt),
+				IDSpec: sqlgraph.NewFieldSpec(role.FieldID, field.TypeUUID),
 			},
 		}
 		for _, k := range nodes {
@@ -380,13 +381,13 @@ func (_u *UserUpdateOne) SetNillableRole(v *user.Role) *UserUpdateOne {
 }
 
 // SetRoleID sets the "role_id" field.
-func (_u *UserUpdateOne) SetRoleID(v int) *UserUpdateOne {
+func (_u *UserUpdateOne) SetRoleID(v uuid.UUID) *UserUpdateOne {
 	_u.mutation.SetRoleID(v)
 	return _u
 }
 
 // SetNillableRoleID sets the "role_id" field if the given value is not nil.
-func (_u *UserUpdateOne) SetNillableRoleID(v *int) *UserUpdateOne {
+func (_u *UserUpdateOne) SetNillableRoleID(v *uuid.UUID) *UserUpdateOne {
 	if v != nil {
 		_u.SetRoleID(*v)
 	}
@@ -454,13 +455,13 @@ func (_u *UserUpdateOne) SetUpdatedAt(v time.Time) *UserUpdateOne {
 }
 
 // SetRoleRefID sets the "role_ref" edge to the Role entity by ID.
-func (_u *UserUpdateOne) SetRoleRefID(id int) *UserUpdateOne {
+func (_u *UserUpdateOne) SetRoleRefID(id uuid.UUID) *UserUpdateOne {
 	_u.mutation.SetRoleRefID(id)
 	return _u
 }
 
 // SetNillableRoleRefID sets the "role_ref" edge to the Role entity by ID if the given value is not nil.
-func (_u *UserUpdateOne) SetNillableRoleRefID(id *int) *UserUpdateOne {
+func (_u *UserUpdateOne) SetNillableRoleRefID(id *uuid.UUID) *UserUpdateOne {
 	if id != nil {
 		_u = _u.SetRoleRefID(*id)
 	}
@@ -606,7 +607,7 @@ func (_u *UserUpdateOne) sqlSave(ctx context.Context) (_node *User, err error) {
 			Columns: []string{user.RoleRefColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(role.FieldID, field.TypeInt),
+				IDSpec: sqlgraph.NewFieldSpec(role.FieldID, field.TypeUUID),
 			},
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
@@ -619,7 +620,7 @@ func (_u *UserUpdateOne) sqlSave(ctx context.Context) (_node *User, err error) {
 			Columns: []string{user.RoleRefColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(role.FieldID, field.TypeInt),
+				IDSpec: sqlgraph.NewFieldSpec(role.FieldID, field.TypeUUID),
 			},
 		}
 		for _, k := range nodes {

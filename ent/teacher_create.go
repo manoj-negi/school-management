@@ -102,13 +102,13 @@ func (_c *TeacherCreate) SetNillableAddress(v *string) *TeacherCreate {
 }
 
 // SetDepartmentID sets the "department_id" field.
-func (_c *TeacherCreate) SetDepartmentID(v int) *TeacherCreate {
+func (_c *TeacherCreate) SetDepartmentID(v uuid.UUID) *TeacherCreate {
 	_c.mutation.SetDepartmentID(v)
 	return _c
 }
 
 // SetNillableDepartmentID sets the "department_id" field if the given value is not nil.
-func (_c *TeacherCreate) SetNillableDepartmentID(v *int) *TeacherCreate {
+func (_c *TeacherCreate) SetNillableDepartmentID(v *uuid.UUID) *TeacherCreate {
 	if v != nil {
 		_c.SetDepartmentID(*v)
 	}
@@ -182,14 +182,14 @@ func (_c *TeacherCreate) SetDepartment(v *Department) *TeacherCreate {
 }
 
 // AddSubjectIDs adds the "subjects" edge to the Subject entity by IDs.
-func (_c *TeacherCreate) AddSubjectIDs(ids ...int) *TeacherCreate {
+func (_c *TeacherCreate) AddSubjectIDs(ids ...uuid.UUID) *TeacherCreate {
 	_c.mutation.AddSubjectIDs(ids...)
 	return _c
 }
 
 // AddSubjects adds the "subjects" edges to the Subject entity.
 func (_c *TeacherCreate) AddSubjects(v ...*Subject) *TeacherCreate {
-	ids := make([]int, len(v))
+	ids := make([]uuid.UUID, len(v))
 	for i := range v {
 		ids[i] = v[i].ID
 	}
@@ -353,7 +353,7 @@ func (_c *TeacherCreate) createSpec() (*Teacher, *sqlgraph.CreateSpec) {
 			Columns: []string{teacher.DepartmentColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(department.FieldID, field.TypeInt),
+				IDSpec: sqlgraph.NewFieldSpec(department.FieldID, field.TypeUUID),
 			},
 		}
 		for _, k := range nodes {
@@ -370,7 +370,7 @@ func (_c *TeacherCreate) createSpec() (*Teacher, *sqlgraph.CreateSpec) {
 			Columns: teacher.SubjectsPrimaryKey,
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(subject.FieldID, field.TypeInt),
+				IDSpec: sqlgraph.NewFieldSpec(subject.FieldID, field.TypeUUID),
 			},
 		}
 		for _, k := range nodes {
@@ -539,7 +539,7 @@ func (u *TeacherUpsert) ClearAddress() *TeacherUpsert {
 }
 
 // SetDepartmentID sets the "department_id" field.
-func (u *TeacherUpsert) SetDepartmentID(v int) *TeacherUpsert {
+func (u *TeacherUpsert) SetDepartmentID(v uuid.UUID) *TeacherUpsert {
 	u.Set(teacher.FieldDepartmentID, v)
 	return u
 }
@@ -785,7 +785,7 @@ func (u *TeacherUpsertOne) ClearAddress() *TeacherUpsertOne {
 }
 
 // SetDepartmentID sets the "department_id" field.
-func (u *TeacherUpsertOne) SetDepartmentID(v int) *TeacherUpsertOne {
+func (u *TeacherUpsertOne) SetDepartmentID(v uuid.UUID) *TeacherUpsertOne {
 	return u.Update(func(s *TeacherUpsert) {
 		s.SetDepartmentID(v)
 	})
@@ -1210,7 +1210,7 @@ func (u *TeacherUpsertBulk) ClearAddress() *TeacherUpsertBulk {
 }
 
 // SetDepartmentID sets the "department_id" field.
-func (u *TeacherUpsertBulk) SetDepartmentID(v int) *TeacherUpsertBulk {
+func (u *TeacherUpsertBulk) SetDepartmentID(v uuid.UUID) *TeacherUpsertBulk {
 	return u.Update(func(s *TeacherUpsert) {
 		s.SetDepartmentID(v)
 	})

@@ -520,8 +520,8 @@ func (_q *TeacherQuery) loadUser(ctx context.Context, query *UserQuery, nodes []
 	return nil
 }
 func (_q *TeacherQuery) loadDepartment(ctx context.Context, query *DepartmentQuery, nodes []*Teacher, init func(*Teacher), assign func(*Teacher, *Department)) error {
-	ids := make([]int, 0, len(nodes))
-	nodeids := make(map[int][]*Teacher)
+	ids := make([]uuid.UUID, 0, len(nodes))
+	nodeids := make(map[uuid.UUID][]*Teacher)
 	for i := range nodes {
 		if nodes[i].DepartmentID == nil {
 			continue
@@ -554,7 +554,7 @@ func (_q *TeacherQuery) loadDepartment(ctx context.Context, query *DepartmentQue
 func (_q *TeacherQuery) loadSubjects(ctx context.Context, query *SubjectQuery, nodes []*Teacher, init func(*Teacher), assign func(*Teacher, *Subject)) error {
 	edgeIDs := make([]driver.Value, len(nodes))
 	byID := make(map[uuid.UUID]*Teacher)
-	nids := make(map[int]map[*Teacher]struct{})
+	nids := make(map[uuid.UUID]map[*Teacher]struct{})
 	for i, node := range nodes {
 		edgeIDs[i] = node.ID
 		byID[node.ID] = node
@@ -587,7 +587,7 @@ func (_q *TeacherQuery) loadSubjects(ctx context.Context, query *SubjectQuery, n
 			}
 			spec.Assign = func(columns []string, values []any) error {
 				outValue := *values[0].(*uuid.UUID)
-				inValue := int(values[1].(*sql.NullInt64).Int64)
+				inValue := *values[1].(*uuid.UUID)
 				if nids[inValue] == nil {
 					nids[inValue] = map[*Teacher]struct{}{byID[outValue]: {}}
 					return assign(columns[1:], values[1:])

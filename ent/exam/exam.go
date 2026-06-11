@@ -5,6 +5,7 @@ package exam
 import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
+	"github.com/google/uuid"
 )
 
 const (
@@ -90,6 +91,8 @@ var (
 	DefaultMaxMarks float64
 	// DefaultPassMarks holds the default value on creation for the "pass_marks" field.
 	DefaultPassMarks float64
+	// DefaultID holds the default value on creation for the "id" field.
+	DefaultID func() uuid.UUID
 )
 
 // OrderOption defines the ordering options for the Exam queries.

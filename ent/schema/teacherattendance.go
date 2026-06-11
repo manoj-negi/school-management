@@ -16,6 +16,8 @@ type TeacherAttendance struct {
 // Fields of the TeacherAttendance.
 func (TeacherAttendance) Fields() []ent.Field {
 	return []ent.Field{
+		field.UUID("id", uuid.UUID{}).
+			Default(uuid.New),
 		field.UUID("teacher_id", uuid.UUID{}),
 		field.Time("date"),
 		field.Enum("status").

@@ -15,8 +15,10 @@ type FeePayment struct {
 // Fields of the FeePayment.
 func (FeePayment) Fields() []ent.Field {
 	return []ent.Field{
+		field.UUID("id", uuid.UUID{}).
+			Default(uuid.New),
 		field.UUID("student_id", uuid.UUID{}),
-		field.Int("fee_structure_id"),
+		field.UUID("fee_structure_id", uuid.UUID{}),
 		field.Float("amount_paid"),
 		field.Time("payment_date"),
 		field.Enum("payment_status").

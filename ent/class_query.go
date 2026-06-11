@@ -15,6 +15,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/google/uuid"
 )
 
 // ClassQuery is the builder for querying Class entities.
@@ -130,8 +131,8 @@ func (_q *ClassQuery) FirstX(ctx context.Context) *Class {
 
 // FirstID returns the first Class ID from the query.
 // Returns a *NotFoundError when no Class ID was found.
-func (_q *ClassQuery) FirstID(ctx context.Context) (id int, err error) {
-	var ids []int
+func (_q *ClassQuery) FirstID(ctx context.Context) (id uuid.UUID, err error) {
+	var ids []uuid.UUID
 	if ids, err = _q.Limit(1).IDs(setContextOp(ctx, _q.ctx, ent.OpQueryFirstID)); err != nil {
 		return
 	}
@@ -143,7 +144,7 @@ func (_q *ClassQuery) FirstID(ctx context.Context) (id int, err error) {
 }
 
 // FirstIDX is like FirstID, but panics if an error occurs.
-func (_q *ClassQuery) FirstIDX(ctx context.Context) int {
+func (_q *ClassQuery) FirstIDX(ctx context.Context) uuid.UUID {
 	id, err := _q.FirstID(ctx)
 	if err != nil && !IsNotFound(err) {
 		panic(err)
@@ -181,8 +182,8 @@ func (_q *ClassQuery) OnlyX(ctx context.Context) *Class {
 // OnlyID is like Only, but returns the only Class ID in the query.
 // Returns a *NotSingularError when more than one Class ID is found.
 // Returns a *NotFoundError when no entities are found.
-func (_q *ClassQuery) OnlyID(ctx context.Context) (id int, err error) {
-	var ids []int
+func (_q *ClassQuery) OnlyID(ctx context.Context) (id uuid.UUID, err error) {
+	var ids []uuid.UUID
 	if ids, err = _q.Limit(2).IDs(setContextOp(ctx, _q.ctx, ent.OpQueryOnlyID)); err != nil {
 		return
 	}
@@ -198,7 +199,7 @@ func (_q *ClassQuery) OnlyID(ctx context.Context) (id int, err error) {
 }
 
 // OnlyIDX is like OnlyID, but panics if an error occurs.
-func (_q *ClassQuery) OnlyIDX(ctx context.Context) int {
+func (_q *ClassQuery) OnlyIDX(ctx context.Context) uuid.UUID {
 	id, err := _q.OnlyID(ctx)
 	if err != nil {
 		panic(err)
@@ -226,7 +227,7 @@ func (_q *ClassQuery) AllX(ctx context.Context) []*Class {
 }
 
 // IDs executes the query and returns a list of Class IDs.
-func (_q *ClassQuery) IDs(ctx context.Context) (ids []int, err error) {
+func (_q *ClassQuery) IDs(ctx context.Context) (ids []uuid.UUID, err error) {
 	if _q.ctx.Unique == nil && _q.path != nil {
 		_q.Unique(true)
 	}
@@ -238,7 +239,7 @@ func (_q *ClassQuery) IDs(ctx context.Context) (ids []int, err error) {
 }
 
 // IDsX is like IDs, but panics if an error occurs.
-func (_q *ClassQuery) IDsX(ctx context.Context) []int {
+func (_q *ClassQuery) IDsX(ctx context.Context) []uuid.UUID {
 	ids, err := _q.IDs(ctx)
 	if err != nil {
 		panic(err)
@@ -445,8 +446,8 @@ func (_q *ClassQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Class,
 }
 
 func (_q *ClassQuery) loadAcademicYear(ctx context.Context, query *AcademicYearQuery, nodes []*Class, init func(*Class), assign func(*Class, *AcademicYear)) error {
-	ids := make([]int, 0, len(nodes))
-	nodeids := make(map[int][]*Class)
+	ids := make([]uuid.UUID, 0, len(nodes))
+	nodeids := make(map[uuid.UUID][]*Class)
 	for i := range nodes {
 		fk := nodes[i].AcademicYearID
 		if _, ok := nodeids[fk]; !ok {
@@ -474,8 +475,8 @@ func (_q *ClassQuery) loadAcademicYear(ctx context.Context, query *AcademicYearQ
 	return nil
 }
 func (_q *ClassQuery) loadDepartment(ctx context.Context, query *DepartmentQuery, nodes []*Class, init func(*Class), assign func(*Class, *Department)) error {
-	ids := make([]int, 0, len(nodes))
-	nodeids := make(map[int][]*Class)
+	ids := make([]uuid.UUID, 0, len(nodes))
+	nodeids := make(map[uuid.UUID][]*Class)
 	for i := range nodes {
 		if nodes[i].DepartmentID == nil {
 			continue
@@ -516,7 +517,7 @@ func (_q *ClassQuery) sqlCount(ctx context.Context) (int, error) {
 }
 
 func (_q *ClassQuery) querySpec() *sqlgraph.QuerySpec {
-	_spec := sqlgraph.NewQuerySpec(class.Table, class.Columns, sqlgraph.NewFieldSpec(class.FieldID, field.TypeInt))
+	_spec := sqlgraph.NewQuerySpec(class.Table, class.Columns, sqlgraph.NewFieldSpec(class.FieldID, field.TypeUUID))
 	_spec.From = _q.sql
 	if unique := _q.ctx.Unique; unique != nil {
 		_spec.Unique = *unique

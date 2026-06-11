@@ -152,7 +152,7 @@ func (_u *TeacherAttendanceUpdate) sqlSave(ctx context.Context) (_node int, err 
 	if err := _u.check(); err != nil {
 		return _node, err
 	}
-	_spec := sqlgraph.NewUpdateSpec(teacherattendance.Table, teacherattendance.Columns, sqlgraph.NewFieldSpec(teacherattendance.FieldID, field.TypeInt))
+	_spec := sqlgraph.NewUpdateSpec(teacherattendance.Table, teacherattendance.Columns, sqlgraph.NewFieldSpec(teacherattendance.FieldID, field.TypeUUID))
 	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
@@ -356,7 +356,7 @@ func (_u *TeacherAttendanceUpdateOne) sqlSave(ctx context.Context) (_node *Teach
 	if err := _u.check(); err != nil {
 		return _node, err
 	}
-	_spec := sqlgraph.NewUpdateSpec(teacherattendance.Table, teacherattendance.Columns, sqlgraph.NewFieldSpec(teacherattendance.FieldID, field.TypeInt))
+	_spec := sqlgraph.NewUpdateSpec(teacherattendance.Table, teacherattendance.Columns, sqlgraph.NewFieldSpec(teacherattendance.FieldID, field.TypeUUID))
 	id, ok := _u.mutation.ID()
 	if !ok {
 		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "TeacherAttendance.id" for update`)}

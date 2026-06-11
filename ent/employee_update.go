@@ -154,13 +154,13 @@ func (_u *EmployeeUpdate) ClearAddress() *EmployeeUpdate {
 }
 
 // SetDepartmentID sets the "department_id" field.
-func (_u *EmployeeUpdate) SetDepartmentID(v int) *EmployeeUpdate {
+func (_u *EmployeeUpdate) SetDepartmentID(v uuid.UUID) *EmployeeUpdate {
 	_u.mutation.SetDepartmentID(v)
 	return _u
 }
 
 // SetNillableDepartmentID sets the "department_id" field if the given value is not nil.
-func (_u *EmployeeUpdate) SetNillableDepartmentID(v *int) *EmployeeUpdate {
+func (_u *EmployeeUpdate) SetNillableDepartmentID(v *uuid.UUID) *EmployeeUpdate {
 	if v != nil {
 		_u.SetDepartmentID(*v)
 	}
@@ -450,7 +450,7 @@ func (_u *EmployeeUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 			Columns: []string{employee.DepartmentColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(department.FieldID, field.TypeInt),
+				IDSpec: sqlgraph.NewFieldSpec(department.FieldID, field.TypeUUID),
 			},
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
@@ -463,7 +463,7 @@ func (_u *EmployeeUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 			Columns: []string{employee.DepartmentColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(department.FieldID, field.TypeInt),
+				IDSpec: sqlgraph.NewFieldSpec(department.FieldID, field.TypeUUID),
 			},
 		}
 		for _, k := range nodes {
@@ -614,13 +614,13 @@ func (_u *EmployeeUpdateOne) ClearAddress() *EmployeeUpdateOne {
 }
 
 // SetDepartmentID sets the "department_id" field.
-func (_u *EmployeeUpdateOne) SetDepartmentID(v int) *EmployeeUpdateOne {
+func (_u *EmployeeUpdateOne) SetDepartmentID(v uuid.UUID) *EmployeeUpdateOne {
 	_u.mutation.SetDepartmentID(v)
 	return _u
 }
 
 // SetNillableDepartmentID sets the "department_id" field if the given value is not nil.
-func (_u *EmployeeUpdateOne) SetNillableDepartmentID(v *int) *EmployeeUpdateOne {
+func (_u *EmployeeUpdateOne) SetNillableDepartmentID(v *uuid.UUID) *EmployeeUpdateOne {
 	if v != nil {
 		_u.SetDepartmentID(*v)
 	}
@@ -940,7 +940,7 @@ func (_u *EmployeeUpdateOne) sqlSave(ctx context.Context) (_node *Employee, err 
 			Columns: []string{employee.DepartmentColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(department.FieldID, field.TypeInt),
+				IDSpec: sqlgraph.NewFieldSpec(department.FieldID, field.TypeUUID),
 			},
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
@@ -953,7 +953,7 @@ func (_u *EmployeeUpdateOne) sqlSave(ctx context.Context) (_node *Employee, err 
 			Columns: []string{employee.DepartmentColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(department.FieldID, field.TypeInt),
+				IDSpec: sqlgraph.NewFieldSpec(department.FieldID, field.TypeUUID),
 			},
 		}
 		for _, k := range nodes {

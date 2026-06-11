@@ -53,7 +53,7 @@ func nilIfFloatZero(f float64) *float64 {
 
 // ─── 1. DEPARTMENTS ───────────────────────────────────────────────────────────
 
-func seedDepartments(ctx context.Context, client *ent.Client) (map[string]int, error) {
+func seedDepartments(ctx context.Context, client *ent.Client) (map[string]uuid.UUID, error) {
 	fmt.Println("→ Seeding departments…")
 	var raw []JSONDepartment
 	if err := loadJson("department.json", &raw); err != nil {
@@ -61,7 +61,7 @@ func seedDepartments(ctx context.Context, client *ent.Client) (map[string]int, e
 	}
 
 	seen := make(map[string]bool)
-	created := make(map[string]int)
+	created := make(map[string]uuid.UUID)
 
 	for _, d := range raw {
 		name := strings.ToLower(strings.TrimSpace(d.DepartmentName))
@@ -97,7 +97,7 @@ func seedDepartments(ctx context.Context, client *ent.Client) (map[string]int, e
 
 // ─── 2. SUBJECTS ──────────────────────────────────────────────────────────────
 
-func seedSubjects(ctx context.Context, client *ent.Client) (map[string]int, error) {
+func seedSubjects(ctx context.Context, client *ent.Client) (map[string]uuid.UUID, error) {
 	fmt.Println("→ Seeding subjects…")
 	var teachers []JSONTeacher
 	if err := loadJson("teachers.json", &teachers); err != nil {
@@ -105,7 +105,7 @@ func seedSubjects(ctx context.Context, client *ent.Client) (map[string]int, erro
 	}
 
 	seen := make(map[string]bool)
-	created := make(map[string]int)
+	created := make(map[string]uuid.UUID)
 
 	for _, t := range teachers {
 		subjectName := strings.TrimSpace(t.SubjectSpecialization)
@@ -140,7 +140,7 @@ func seedSubjects(ctx context.Context, client *ent.Client) (map[string]int, erro
 
 // ─── 3. ACADEMIC YEARS ────────────────────────────────────────────────────────
 
-func seedAcademicYears(ctx context.Context, client *ent.Client) (map[string]int, error) {
+func seedAcademicYears(ctx context.Context, client *ent.Client) (map[string]uuid.UUID, error) {
 	fmt.Println("→ Seeding academic_years…")
 	var classes []JSONClass
 	if err := loadJson("class-list.json", &classes); err != nil {
@@ -148,7 +148,7 @@ func seedAcademicYears(ctx context.Context, client *ent.Client) (map[string]int,
 	}
 
 	seenSemesters := make(map[string]bool)
-	created := make(map[string]int)
+	created := make(map[string]uuid.UUID)
 
 	for _, c := range classes {
 		sem := strings.TrimSpace(c.Semester)
@@ -190,7 +190,7 @@ func seedAcademicYears(ctx context.Context, client *ent.Client) (map[string]int,
 
 // ─── 4. TEACHERS (users + teachers) ──────────────────────────────────────────
 
-func seedTeachers(ctx context.Context, client *ent.Client, deptMap map[string]int, subjectMap map[string]int) (map[string]uuid.UUID, []uuid.UUID, error) {
+func seedTeachers(ctx context.Context, client *ent.Client, deptMap map[string]uuid.UUID, subjectMap map[string]uuid.UUID) (map[string]uuid.UUID, []uuid.UUID, error) {
 	fmt.Println("→ Seeding teachers (users + teachers)…")
 	var raw []JSONTeacher
 	if err := loadJson("teachers.json", &raw); err != nil {
@@ -237,7 +237,7 @@ func seedTeachers(ctx context.Context, client *ent.Client, deptMap map[string]in
 
 		// 2. Upsert Teacher Profile
 		deptKey := strings.ToLower(strings.TrimSpace(t.Department))
-		var deptIDVal *int
+		var deptIDVal *uuid.UUID
 		if id, exists := deptMap[deptKey]; exists {
 			deptIDVal = &id
 		}
@@ -457,7 +457,7 @@ func seedEmployees(ctx context.Context, client *ent.Client) error {
 
 // ─── 7. CLASSES ───────────────────────────────────────────────────────────────
 
-func seedClasses(ctx context.Context, client *ent.Client, academicYearMap map[string]int) (map[int]int, map[string]int, error) {
+func seedClasses(ctx context.Context, client *ent.Client, academicYearMap map[string]uuid.UUID) (map[int]uuid.UUID, map[string]uuid.UUID, error) {
 	fmt.Println("→ Seeding classes…")
 	var raw []JSONClass
 	if err := loadJson("class-list.json", &raw); err != nil {
@@ -467,8 +467,8 @@ func seedClasses(ctx context.Context, client *ent.Client, academicYearMap map[st
 	nameCounter := make(map[string]int)
 	letters := "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
-	jsonIdToDbId := make(map[int]int)
-	nameToDbId := make(map[string]int)
+	jsonIdToDbId := make(map[int]uuid.UUID)
+	nameToDbId := make(map[string]uuid.UUID)
 
 	for _, c := range raw {
 		baseName := strings.TrimSpace(c.ClassName)
@@ -694,14 +694,14 @@ func seedTeacherAttendance(ctx context.Context, client *ent.Client, teacherUuidM
 
 // ─── 11. STUDENT ATTENDANCE ───────────────────────────────────────────────────
 
-func seedStudentAttendance(ctx context.Context, client *ent.Client, rollToUuid map[string]uuid.UUID, nameToClassId map[string]int, subjectMap map[string]int) error {
+func seedStudentAttendance(ctx context.Context, client *ent.Client, rollToUuid map[string]uuid.UUID, nameToClassId map[string]uuid.UUID, subjectMap map[string]uuid.UUID) error {
 	fmt.Println("→ Seeding student_attendance…")
 	var raw []JSONStudentAttendance
 	if err := loadJson("student-attendance.json", &raw); err != nil {
 		return err
 	}
 
-	var dbClassIDs []int
+	var dbClassIDs []uuid.UUID
 	classesObjs, err := client.Class.Query().Order(ent.Asc(class.FieldID)).Limit(6).All(ctx)
 	if err == nil {
 		for _, cObj := range classesObjs {
@@ -709,7 +709,7 @@ func seedStudentAttendance(ctx context.Context, client *ent.Client, rollToUuid m
 		}
 	}
 
-	classLetterMap := make(map[string]int)
+	classLetterMap := make(map[string]uuid.UUID)
 	classesLetters := []string{"Class A", "Class B", "Class C", "Class D", "Class E", "Class F"}
 	for i, letter := range classesLetters {
 		if i < len(dbClassIDs) {
@@ -748,7 +748,7 @@ func seedStudentAttendance(ctx context.Context, client *ent.Client, rollToUuid m
 		if !classExists && len(dbClassIDs) > 0 {
 			classID = dbClassIDs[0]
 		}
-		if classID == 0 {
+		if classID == uuid.Nil {
 			continue
 		}
 
@@ -776,7 +776,7 @@ func seedStudentAttendance(ctx context.Context, client *ent.Client, rollToUuid m
 			SetStatus(studentattendance.Status(status)).
 			SetNillableRemarks(nilIfEmpty(row.Note))
 
-		if mathSubjectID > 0 {
+		if mathSubjectID != uuid.Nil {
 			builder.SetSubjectID(mathSubjectID)
 		}
 
@@ -796,14 +796,14 @@ func seedStudentAttendance(ctx context.Context, client *ent.Client, rollToUuid m
 
 // ─── 12. FEE STRUCTURES ───────────────────────────────────────────────────────
 
-func seedFeeStructures(ctx context.Context, client *ent.Client, academicYearMap map[string]int) (map[string]int, error) {
+func seedFeeStructures(ctx context.Context, client *ent.Client, academicYearMap map[string]uuid.UUID) (map[string]uuid.UUID, error) {
 	fmt.Println("→ Seeding fee_structures…")
 	var raw []JSONFeesType
 	if err := loadJson("fees-type.json", &raw); err != nil {
 		return nil, err
 	}
 
-	var defaultClassID int
+	var defaultClassID uuid.UUID
 	firstClass, err := client.Class.Query().Order(ent.Asc(class.FieldID)).First(ctx)
 	if err == nil {
 		defaultClassID = firstClass.ID
@@ -811,13 +811,13 @@ func seedFeeStructures(ctx context.Context, client *ent.Client, academicYearMap 
 		return nil, fmt.Errorf("no class ID available for fee structures: %w", err)
 	}
 
-	var academicYearID int
+	var academicYearID uuid.UUID
 	for _, id := range academicYearMap {
 		academicYearID = id
 		break
 	}
 
-	feeLabelToId := make(map[string]int)
+	feeLabelToId := make(map[string]uuid.UUID)
 
 	for _, ft := range raw {
 		label := strings.TrimSpace(ft.FeeTypeName)
@@ -862,7 +862,7 @@ func seedFeeStructures(ctx context.Context, client *ent.Client, academicYearMap 
 
 // ─── 13. FEE PAYMENTS ─────────────────────────────────────────────────────────
 
-func seedFeePayments(ctx context.Context, client *ent.Client, rollToUuid map[string]uuid.UUID, feeLabelToId map[string]int) error {
+func seedFeePayments(ctx context.Context, client *ent.Client, rollToUuid map[string]uuid.UUID, feeLabelToId map[string]uuid.UUID) error {
 	fmt.Println("→ Seeding fee_payments…")
 	var raw []JSONFee
 	if err := loadJson("fees.json", &raw); err != nil {
@@ -907,7 +907,7 @@ func seedFeePayments(ctx context.Context, client *ent.Client, rollToUuid map[str
 				break
 			}
 		}
-		if feeStructureID == 0 {
+		if feeStructureID == uuid.Nil {
 			continue
 		}
 
@@ -947,20 +947,20 @@ func seedFeePayments(ctx context.Context, client *ent.Client, rollToUuid map[str
 
 // ─── 14. EXAMS ────────────────────────────────────────────────────────────────
 
-func seedExams(ctx context.Context, client *ent.Client, subjectMap map[string]int, academicYearMap map[string]int) error {
+func seedExams(ctx context.Context, client *ent.Client, subjectMap map[string]uuid.UUID, academicYearMap map[string]uuid.UUID) error {
 	fmt.Println("→ Seeding exams…")
 	var raw []JSONExamSchedule
 	if err := loadJson("examSchedule.json", &raw); err != nil {
 		return err
 	}
 
-	var academicYearID int
+	var academicYearID uuid.UUID
 	for _, id := range academicYearMap {
 		academicYearID = id
 		break
 	}
 
-	var defaultClassID int
+	var defaultClassID uuid.UUID
 	firstClass, err := client.Class.Query().Order(ent.Asc(class.FieldID)).First(ctx)
 	if err == nil {
 		defaultClassID = firstClass.ID

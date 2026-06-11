@@ -35,7 +35,7 @@ type Employee struct {
 	// Address holds the value of the "address" field.
 	Address *string `json:"address,omitempty"`
 	// DepartmentID holds the value of the "department_id" field.
-	DepartmentID *int `json:"department_id,omitempty"`
+	DepartmentID *uuid.UUID `json:"department_id,omitempty"`
 	// JobTitle holds the value of the "job_title" field.
 	JobTitle *string `json:"job_title,omitempty"`
 	// JoiningDate holds the value of the "joining_date" field.
@@ -90,12 +90,12 @@ func (*Employee) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
+		case employee.FieldDepartmentID:
+			values[i] = &sql.NullScanner{S: new(uuid.UUID)}
 		case employee.FieldIsActive:
 			values[i] = new(sql.NullBool)
 		case employee.FieldSalary:
 			values[i] = new(sql.NullFloat64)
-		case employee.FieldDepartmentID:
-			values[i] = new(sql.NullInt64)
 		case employee.FieldFirstName, employee.FieldLastName, employee.FieldGender, employee.FieldPhone, employee.FieldAddress, employee.FieldJobTitle, employee.FieldAvatarURL:
 			values[i] = new(sql.NullString)
 		case employee.FieldDateOfBirth, employee.FieldJoiningDate:
@@ -170,11 +170,11 @@ func (_m *Employee) assignValues(columns []string, values []any) error {
 				*_m.Address = value.String
 			}
 		case employee.FieldDepartmentID:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
+			if value, ok := values[i].(*sql.NullScanner); !ok {
 				return fmt.Errorf("unexpected type %T for field department_id", values[i])
 			} else if value.Valid {
-				_m.DepartmentID = new(int)
-				*_m.DepartmentID = int(value.Int64)
+				_m.DepartmentID = new(uuid.UUID)
+				*_m.DepartmentID = *value.S.(*uuid.UUID)
 			}
 		case employee.FieldJobTitle:
 			if value, ok := values[i].(*sql.NullString); !ok {

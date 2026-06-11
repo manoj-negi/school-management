@@ -97,7 +97,7 @@ func Address(v string) predicate.Student {
 }
 
 // ClassID applies equality check predicate on the "class_id" field. It's identical to ClassIDEQ.
-func ClassID(v int) predicate.Student {
+func ClassID(v uuid.UUID) predicate.Student {
 	return predicate.Student(sql.FieldEQ(FieldClassID, v))
 }
 
@@ -642,22 +642,22 @@ func AddressContainsFold(v string) predicate.Student {
 }
 
 // ClassIDEQ applies the EQ predicate on the "class_id" field.
-func ClassIDEQ(v int) predicate.Student {
+func ClassIDEQ(v uuid.UUID) predicate.Student {
 	return predicate.Student(sql.FieldEQ(FieldClassID, v))
 }
 
 // ClassIDNEQ applies the NEQ predicate on the "class_id" field.
-func ClassIDNEQ(v int) predicate.Student {
+func ClassIDNEQ(v uuid.UUID) predicate.Student {
 	return predicate.Student(sql.FieldNEQ(FieldClassID, v))
 }
 
 // ClassIDIn applies the In predicate on the "class_id" field.
-func ClassIDIn(vs ...int) predicate.Student {
+func ClassIDIn(vs ...uuid.UUID) predicate.Student {
 	return predicate.Student(sql.FieldIn(FieldClassID, vs...))
 }
 
 // ClassIDNotIn applies the NotIn predicate on the "class_id" field.
-func ClassIDNotIn(vs ...int) predicate.Student {
+func ClassIDNotIn(vs ...uuid.UUID) predicate.Student {
 	return predicate.Student(sql.FieldNotIn(FieldClassID, vs...))
 }
 
