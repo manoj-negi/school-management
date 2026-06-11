@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"go-seed/ent/predicate"
+	"go-seed/ent/role"
 	"go-seed/ent/user"
 	"time"
 
@@ -84,6 +85,26 @@ func (_u *UserUpdate) SetNillableRole(v *user.Role) *UserUpdate {
 	return _u
 }
 
+// SetRoleID sets the "role_id" field.
+func (_u *UserUpdate) SetRoleID(v int) *UserUpdate {
+	_u.mutation.SetRoleID(v)
+	return _u
+}
+
+// SetNillableRoleID sets the "role_id" field if the given value is not nil.
+func (_u *UserUpdate) SetNillableRoleID(v *int) *UserUpdate {
+	if v != nil {
+		_u.SetRoleID(*v)
+	}
+	return _u
+}
+
+// ClearRoleID clears the value of the "role_id" field.
+func (_u *UserUpdate) ClearRoleID() *UserUpdate {
+	_u.mutation.ClearRoleID()
+	return _u
+}
+
 // SetAvatarURL sets the "avatar_url" field.
 func (_u *UserUpdate) SetAvatarURL(v string) *UserUpdate {
 	_u.mutation.SetAvatarURL(v)
@@ -138,9 +159,34 @@ func (_u *UserUpdate) SetUpdatedAt(v time.Time) *UserUpdate {
 	return _u
 }
 
+// SetRoleRefID sets the "role_ref" edge to the Role entity by ID.
+func (_u *UserUpdate) SetRoleRefID(id int) *UserUpdate {
+	_u.mutation.SetRoleRefID(id)
+	return _u
+}
+
+// SetNillableRoleRefID sets the "role_ref" edge to the Role entity by ID if the given value is not nil.
+func (_u *UserUpdate) SetNillableRoleRefID(id *int) *UserUpdate {
+	if id != nil {
+		_u = _u.SetRoleRefID(*id)
+	}
+	return _u
+}
+
+// SetRoleRef sets the "role_ref" edge to the Role entity.
+func (_u *UserUpdate) SetRoleRef(v *Role) *UserUpdate {
+	return _u.SetRoleRefID(v.ID)
+}
+
 // Mutation returns the UserMutation object of the builder.
 func (_u *UserUpdate) Mutation() *UserMutation {
 	return _u.mutation
+}
+
+// ClearRoleRef clears the "role_ref" edge to the Role entity.
+func (_u *UserUpdate) ClearRoleRef() *UserUpdate {
+	_u.mutation.ClearRoleRef()
+	return _u
 }
 
 // Save executes the query and returns the number of nodes affected by the update operation.
@@ -228,6 +274,35 @@ func (_u *UserUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	if value, ok := _u.mutation.UpdatedAt(); ok {
 		_spec.SetField(user.FieldUpdatedAt, field.TypeTime, value)
 	}
+	if _u.mutation.RoleRefCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: false,
+			Table:   user.RoleRefTable,
+			Columns: []string{user.RoleRefColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(role.FieldID, field.TypeInt),
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := _u.mutation.RoleRefIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: false,
+			Table:   user.RoleRefTable,
+			Columns: []string{user.RoleRefColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(role.FieldID, field.TypeInt),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
 	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{user.Label}
@@ -304,6 +379,26 @@ func (_u *UserUpdateOne) SetNillableRole(v *user.Role) *UserUpdateOne {
 	return _u
 }
 
+// SetRoleID sets the "role_id" field.
+func (_u *UserUpdateOne) SetRoleID(v int) *UserUpdateOne {
+	_u.mutation.SetRoleID(v)
+	return _u
+}
+
+// SetNillableRoleID sets the "role_id" field if the given value is not nil.
+func (_u *UserUpdateOne) SetNillableRoleID(v *int) *UserUpdateOne {
+	if v != nil {
+		_u.SetRoleID(*v)
+	}
+	return _u
+}
+
+// ClearRoleID clears the value of the "role_id" field.
+func (_u *UserUpdateOne) ClearRoleID() *UserUpdateOne {
+	_u.mutation.ClearRoleID()
+	return _u
+}
+
 // SetAvatarURL sets the "avatar_url" field.
 func (_u *UserUpdateOne) SetAvatarURL(v string) *UserUpdateOne {
 	_u.mutation.SetAvatarURL(v)
@@ -358,9 +453,34 @@ func (_u *UserUpdateOne) SetUpdatedAt(v time.Time) *UserUpdateOne {
 	return _u
 }
 
+// SetRoleRefID sets the "role_ref" edge to the Role entity by ID.
+func (_u *UserUpdateOne) SetRoleRefID(id int) *UserUpdateOne {
+	_u.mutation.SetRoleRefID(id)
+	return _u
+}
+
+// SetNillableRoleRefID sets the "role_ref" edge to the Role entity by ID if the given value is not nil.
+func (_u *UserUpdateOne) SetNillableRoleRefID(id *int) *UserUpdateOne {
+	if id != nil {
+		_u = _u.SetRoleRefID(*id)
+	}
+	return _u
+}
+
+// SetRoleRef sets the "role_ref" edge to the Role entity.
+func (_u *UserUpdateOne) SetRoleRef(v *Role) *UserUpdateOne {
+	return _u.SetRoleRefID(v.ID)
+}
+
 // Mutation returns the UserMutation object of the builder.
 func (_u *UserUpdateOne) Mutation() *UserMutation {
 	return _u.mutation
+}
+
+// ClearRoleRef clears the "role_ref" edge to the Role entity.
+func (_u *UserUpdateOne) ClearRoleRef() *UserUpdateOne {
+	_u.mutation.ClearRoleRef()
+	return _u
 }
 
 // Where appends a list predicates to the UserUpdate builder.
@@ -477,6 +597,35 @@ func (_u *UserUpdateOne) sqlSave(ctx context.Context) (_node *User, err error) {
 	}
 	if value, ok := _u.mutation.UpdatedAt(); ok {
 		_spec.SetField(user.FieldUpdatedAt, field.TypeTime, value)
+	}
+	if _u.mutation.RoleRefCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: false,
+			Table:   user.RoleRefTable,
+			Columns: []string{user.RoleRefColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(role.FieldID, field.TypeInt),
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := _u.mutation.RoleRefIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: false,
+			Table:   user.RoleRefTable,
+			Columns: []string{user.RoleRefColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(role.FieldID, field.TypeInt),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
 	_node = &User{config: _u.config}
 	_spec.Assign = _node.assignValues

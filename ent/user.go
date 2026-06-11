@@ -4,6 +4,7 @@ package ent
 
 import (
 	"fmt"
+	"go-seed/ent/role"
 	"go-seed/ent/user"
 	"strings"
 	"time"
@@ -26,6 +27,8 @@ type User struct {
 	PasswordHash string `json:"password_hash,omitempty"`
 	// Role holds the value of the "role" field.
 	Role user.Role `json:"role,omitempty"`
+	// RoleID holds the value of the "role_id" field.
+	RoleID *int `json:"role_id,omitempty"`
 	// AvatarURL holds the value of the "avatar_url" field.
 	AvatarURL *string `json:"avatar_url,omitempty"`
 	// IsActive holds the value of the "is_active" field.
@@ -33,8 +36,31 @@ type User struct {
 	// CreatedAt holds the value of the "created_at" field.
 	CreatedAt time.Time `json:"created_at,omitempty"`
 	// UpdatedAt holds the value of the "updated_at" field.
-	UpdatedAt    time.Time `json:"updated_at,omitempty"`
+	UpdatedAt time.Time `json:"updated_at,omitempty"`
+	// Edges holds the relations/edges for other nodes in the graph.
+	// The values are being populated by the UserQuery when eager-loading is set.
+	Edges        UserEdges `json:"edges"`
 	selectValues sql.SelectValues
+}
+
+// UserEdges holds the relations/edges for other nodes in the graph.
+type UserEdges struct {
+	// RoleRef holds the value of the role_ref edge.
+	RoleRef *Role `json:"role_ref,omitempty"`
+	// loadedTypes holds the information for reporting if a
+	// type was loaded (or requested) in eager-loading or not.
+	loadedTypes [1]bool
+}
+
+// RoleRefOrErr returns the RoleRef value or an error if the edge
+// was not loaded in eager-loading, or loaded but was not found.
+func (e UserEdges) RoleRefOrErr() (*Role, error) {
+	if e.RoleRef != nil {
+		return e.RoleRef, nil
+	} else if e.loadedTypes[0] {
+		return nil, &NotFoundError{label: role.Label}
+	}
+	return nil, &NotLoadedError{edge: "role_ref"}
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -44,6 +70,8 @@ func (*User) scanValues(columns []string) ([]any, error) {
 		switch columns[i] {
 		case user.FieldIsActive:
 			values[i] = new(sql.NullBool)
+		case user.FieldRoleID:
+			values[i] = new(sql.NullInt64)
 		case user.FieldUsername, user.FieldEmail, user.FieldPasswordHash, user.FieldRole, user.FieldAvatarURL:
 			values[i] = new(sql.NullString)
 		case user.FieldCreatedAt, user.FieldUpdatedAt:
@@ -95,6 +123,13 @@ func (_m *User) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				_m.Role = user.Role(value.String)
 			}
+		case user.FieldRoleID:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field role_id", values[i])
+			} else if value.Valid {
+				_m.RoleID = new(int)
+				*_m.RoleID = int(value.Int64)
+			}
 		case user.FieldAvatarURL:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field avatar_url", values[i])
@@ -133,6 +168,11 @@ func (_m *User) Value(name string) (ent.Value, error) {
 	return _m.selectValues.Get(name)
 }
 
+// QueryRoleRef queries the "role_ref" edge of the User entity.
+func (_m *User) QueryRoleRef() *RoleQuery {
+	return NewUserClient(_m.config).QueryRoleRef(_m)
+}
+
 // Update returns a builder for updating this User.
 // Note that you need to call User.Unwrap() before calling this method if this User
 // was returned from a transaction, and the transaction was committed or rolled back.
@@ -167,6 +207,11 @@ func (_m *User) String() string {
 	builder.WriteString(", ")
 	builder.WriteString("role=")
 	builder.WriteString(fmt.Sprintf("%v", _m.Role))
+	builder.WriteString(", ")
+	if v := _m.RoleID; v != nil {
+		builder.WriteString("role_id=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
 	builder.WriteString(", ")
 	if v := _m.AvatarURL; v != nil {
 		builder.WriteString("avatar_url=")

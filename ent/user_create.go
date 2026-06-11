@@ -6,6 +6,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"go-seed/ent/role"
 	"go-seed/ent/user"
 	"time"
 
@@ -52,6 +53,20 @@ func (_c *UserCreate) SetRole(v user.Role) *UserCreate {
 func (_c *UserCreate) SetNillableRole(v *user.Role) *UserCreate {
 	if v != nil {
 		_c.SetRole(*v)
+	}
+	return _c
+}
+
+// SetRoleID sets the "role_id" field.
+func (_c *UserCreate) SetRoleID(v int) *UserCreate {
+	_c.mutation.SetRoleID(v)
+	return _c
+}
+
+// SetNillableRoleID sets the "role_id" field if the given value is not nil.
+func (_c *UserCreate) SetNillableRoleID(v *int) *UserCreate {
+	if v != nil {
+		_c.SetRoleID(*v)
 	}
 	return _c
 }
@@ -124,6 +139,25 @@ func (_c *UserCreate) SetNillableID(v *uuid.UUID) *UserCreate {
 		_c.SetID(*v)
 	}
 	return _c
+}
+
+// SetRoleRefID sets the "role_ref" edge to the Role entity by ID.
+func (_c *UserCreate) SetRoleRefID(id int) *UserCreate {
+	_c.mutation.SetRoleRefID(id)
+	return _c
+}
+
+// SetNillableRoleRefID sets the "role_ref" edge to the Role entity by ID if the given value is not nil.
+func (_c *UserCreate) SetNillableRoleRefID(id *int) *UserCreate {
+	if id != nil {
+		_c = _c.SetRoleRefID(*id)
+	}
+	return _c
+}
+
+// SetRoleRef sets the "role_ref" edge to the Role entity.
+func (_c *UserCreate) SetRoleRef(v *Role) *UserCreate {
+	return _c.SetRoleRefID(v.ID)
 }
 
 // Mutation returns the UserMutation object of the builder.
@@ -279,6 +313,23 @@ func (_c *UserCreate) createSpec() (*User, *sqlgraph.CreateSpec) {
 		_spec.SetField(user.FieldUpdatedAt, field.TypeTime, value)
 		_node.UpdatedAt = value
 	}
+	if nodes := _c.mutation.RoleRefIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: false,
+			Table:   user.RoleRefTable,
+			Columns: []string{user.RoleRefColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(role.FieldID, field.TypeInt),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_node.RoleID = &nodes[0]
+		_spec.Edges = append(_spec.Edges, edge)
+	}
 	return _node, _spec
 }
 
@@ -376,6 +427,24 @@ func (u *UserUpsert) SetRole(v user.Role) *UserUpsert {
 // UpdateRole sets the "role" field to the value that was provided on create.
 func (u *UserUpsert) UpdateRole() *UserUpsert {
 	u.SetExcluded(user.FieldRole)
+	return u
+}
+
+// SetRoleID sets the "role_id" field.
+func (u *UserUpsert) SetRoleID(v int) *UserUpsert {
+	u.Set(user.FieldRoleID, v)
+	return u
+}
+
+// UpdateRoleID sets the "role_id" field to the value that was provided on create.
+func (u *UserUpsert) UpdateRoleID() *UserUpsert {
+	u.SetExcluded(user.FieldRoleID)
+	return u
+}
+
+// ClearRoleID clears the value of the "role_id" field.
+func (u *UserUpsert) ClearRoleID() *UserUpsert {
+	u.SetNull(user.FieldRoleID)
 	return u
 }
 
@@ -534,6 +603,27 @@ func (u *UserUpsertOne) SetRole(v user.Role) *UserUpsertOne {
 func (u *UserUpsertOne) UpdateRole() *UserUpsertOne {
 	return u.Update(func(s *UserUpsert) {
 		s.UpdateRole()
+	})
+}
+
+// SetRoleID sets the "role_id" field.
+func (u *UserUpsertOne) SetRoleID(v int) *UserUpsertOne {
+	return u.Update(func(s *UserUpsert) {
+		s.SetRoleID(v)
+	})
+}
+
+// UpdateRoleID sets the "role_id" field to the value that was provided on create.
+func (u *UserUpsertOne) UpdateRoleID() *UserUpsertOne {
+	return u.Update(func(s *UserUpsert) {
+		s.UpdateRoleID()
+	})
+}
+
+// ClearRoleID clears the value of the "role_id" field.
+func (u *UserUpsertOne) ClearRoleID() *UserUpsertOne {
+	return u.Update(func(s *UserUpsert) {
+		s.ClearRoleID()
 	})
 }
 
@@ -868,6 +958,27 @@ func (u *UserUpsertBulk) SetRole(v user.Role) *UserUpsertBulk {
 func (u *UserUpsertBulk) UpdateRole() *UserUpsertBulk {
 	return u.Update(func(s *UserUpsert) {
 		s.UpdateRole()
+	})
+}
+
+// SetRoleID sets the "role_id" field.
+func (u *UserUpsertBulk) SetRoleID(v int) *UserUpsertBulk {
+	return u.Update(func(s *UserUpsert) {
+		s.SetRoleID(v)
+	})
+}
+
+// UpdateRoleID sets the "role_id" field to the value that was provided on create.
+func (u *UserUpsertBulk) UpdateRoleID() *UserUpsertBulk {
+	return u.Update(func(s *UserUpsert) {
+		s.UpdateRoleID()
+	})
+}
+
+// ClearRoleID clears the value of the "role_id" field.
+func (u *UserUpsertBulk) ClearRoleID() *UserUpsertBulk {
+	return u.Update(func(s *UserUpsert) {
+		s.ClearRoleID()
 	})
 }
 

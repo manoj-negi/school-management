@@ -14,6 +14,8 @@ import (
 	"go-seed/ent/exam"
 	"go-seed/ent/feepayment"
 	"go-seed/ent/feestructure"
+	"go-seed/ent/permission"
+	"go-seed/ent/role"
 	"go-seed/ent/student"
 	"go-seed/ent/studentattendance"
 	"go-seed/ent/subject"
@@ -95,6 +97,8 @@ func checkColumn(t, c string) error {
 			exam.Table:              exam.ValidColumn,
 			feepayment.Table:        feepayment.ValidColumn,
 			feestructure.Table:      feestructure.ValidColumn,
+			permission.Table:        permission.ValidColumn,
+			role.Table:              role.ValidColumn,
 			student.Table:           student.ValidColumn,
 			studentattendance.Table: studentattendance.ValidColumn,
 			subject.Table:           subject.ValidColumn,

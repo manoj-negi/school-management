@@ -28,6 +28,10 @@ type Tx struct {
 	FeePayment *FeePaymentClient
 	// FeeStructure is the client for interacting with the FeeStructure builders.
 	FeeStructure *FeeStructureClient
+	// Permission is the client for interacting with the Permission builders.
+	Permission *PermissionClient
+	// Role is the client for interacting with the Role builders.
+	Role *RoleClient
 	// Student is the client for interacting with the Student builders.
 	Student *StudentClient
 	// StudentAttendance is the client for interacting with the StudentAttendance builders.
@@ -181,6 +185,8 @@ func (tx *Tx) init() {
 	tx.Exam = NewExamClient(tx.config)
 	tx.FeePayment = NewFeePaymentClient(tx.config)
 	tx.FeeStructure = NewFeeStructureClient(tx.config)
+	tx.Permission = NewPermissionClient(tx.config)
+	tx.Role = NewRoleClient(tx.config)
 	tx.Student = NewStudentClient(tx.config)
 	tx.StudentAttendance = NewStudentAttendanceClient(tx.config)
 	tx.Subject = NewSubjectClient(tx.config)

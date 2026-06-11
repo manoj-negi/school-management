@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"entgo.io/ent/dialect/sql"
+	"entgo.io/ent/dialect/sql/sqlgraph"
 	"github.com/google/uuid"
 )
 
@@ -23,6 +24,8 @@ const (
 	FieldPasswordHash = "password_hash"
 	// FieldRole holds the string denoting the role field in the database.
 	FieldRole = "role"
+	// FieldRoleID holds the string denoting the role_id field in the database.
+	FieldRoleID = "role_id"
 	// FieldAvatarURL holds the string denoting the avatar_url field in the database.
 	FieldAvatarURL = "avatar_url"
 	// FieldIsActive holds the string denoting the is_active field in the database.
@@ -31,8 +34,17 @@ const (
 	FieldCreatedAt = "created_at"
 	// FieldUpdatedAt holds the string denoting the updated_at field in the database.
 	FieldUpdatedAt = "updated_at"
+	// EdgeRoleRef holds the string denoting the role_ref edge name in mutations.
+	EdgeRoleRef = "role_ref"
 	// Table holds the table name of the user in the database.
 	Table = "users"
+	// RoleRefTable is the table that holds the role_ref relation/edge.
+	RoleRefTable = "users"
+	// RoleRefInverseTable is the table name for the Role entity.
+	// It exists in this package in order to avoid circular dependency with the "role" package.
+	RoleRefInverseTable = "roles"
+	// RoleRefColumn is the table column denoting the role_ref relation/edge.
+	RoleRefColumn = "role_id"
 )
 
 // Columns holds all SQL columns for user fields.
@@ -42,6 +54,7 @@ var Columns = []string{
 	FieldEmail,
 	FieldPasswordHash,
 	FieldRole,
+	FieldRoleID,
 	FieldAvatarURL,
 	FieldIsActive,
 	FieldCreatedAt,
@@ -129,6 +142,11 @@ func ByRole(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldRole, opts...).ToFunc()
 }
 
+// ByRoleID orders the results by the role_id field.
+func ByRoleID(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldRoleID, opts...).ToFunc()
+}
+
 // ByAvatarURL orders the results by the avatar_url field.
 func ByAvatarURL(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldAvatarURL, opts...).ToFunc()
@@ -147,4 +165,18 @@ func ByCreatedAt(opts ...sql.OrderTermOption) OrderOption {
 // ByUpdatedAt orders the results by the updated_at field.
 func ByUpdatedAt(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldUpdatedAt, opts...).ToFunc()
+}
+
+// ByRoleRefField orders the results by role_ref field.
+func ByRoleRefField(field string, opts ...sql.OrderTermOption) OrderOption {
+	return func(s *sql.Selector) {
+		sqlgraph.OrderByNeighborTerms(s, newRoleRefStep(), sql.OrderByField(field, opts...))
+	}
+}
+func newRoleRefStep() *sqlgraph.Step {
+	return sqlgraph.NewStep(
+		sqlgraph.From(Table, FieldID),
+		sqlgraph.To(RoleRefInverseTable, FieldID),
+		sqlgraph.Edge(sqlgraph.M2O, false, RoleRefTable, RoleRefColumn),
+	)
 }

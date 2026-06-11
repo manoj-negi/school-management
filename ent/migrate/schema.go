@@ -237,6 +237,30 @@ var (
 			},
 		},
 	}
+	// PermissionsColumns holds the columns for the "permissions" table.
+	PermissionsColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeInt, Increment: true},
+		{Name: "name", Type: field.TypeString, Unique: true},
+		{Name: "description", Type: field.TypeString, Nullable: true},
+	}
+	// PermissionsTable holds the schema information for the "permissions" table.
+	PermissionsTable = &schema.Table{
+		Name:       "permissions",
+		Columns:    PermissionsColumns,
+		PrimaryKey: []*schema.Column{PermissionsColumns[0]},
+	}
+	// RolesColumns holds the columns for the "roles" table.
+	RolesColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeInt, Increment: true},
+		{Name: "name", Type: field.TypeString, Unique: true},
+		{Name: "description", Type: field.TypeString, Nullable: true},
+	}
+	// RolesTable holds the schema information for the "roles" table.
+	RolesTable = &schema.Table{
+		Name:       "roles",
+		Columns:    RolesColumns,
+		PrimaryKey: []*schema.Column{RolesColumns[0]},
+	}
 	// StudentsColumns holds the columns for the "students" table.
 	StudentsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeUUID},
@@ -443,12 +467,46 @@ var (
 		{Name: "is_active", Type: field.TypeBool, Default: true},
 		{Name: "created_at", Type: field.TypeTime},
 		{Name: "updated_at", Type: field.TypeTime},
+		{Name: "role_id", Type: field.TypeInt, Nullable: true},
 	}
 	// UsersTable holds the schema information for the "users" table.
 	UsersTable = &schema.Table{
 		Name:       "users",
 		Columns:    UsersColumns,
 		PrimaryKey: []*schema.Column{UsersColumns[0]},
+		ForeignKeys: []*schema.ForeignKey{
+			{
+				Symbol:     "users_roles_role_ref",
+				Columns:    []*schema.Column{UsersColumns[9]},
+				RefColumns: []*schema.Column{RolesColumns[0]},
+				OnDelete:   schema.SetNull,
+			},
+		},
+	}
+	// RolesAndPermissionsColumns holds the columns for the "roles_and_permissions" table.
+	RolesAndPermissionsColumns = []*schema.Column{
+		{Name: "role_id", Type: field.TypeInt},
+		{Name: "permission_id", Type: field.TypeInt},
+	}
+	// RolesAndPermissionsTable holds the schema information for the "roles_and_permissions" table.
+	RolesAndPermissionsTable = &schema.Table{
+		Name:       "roles_and_permissions",
+		Columns:    RolesAndPermissionsColumns,
+		PrimaryKey: []*schema.Column{RolesAndPermissionsColumns[0], RolesAndPermissionsColumns[1]},
+		ForeignKeys: []*schema.ForeignKey{
+			{
+				Symbol:     "roles_and_permissions_role_id",
+				Columns:    []*schema.Column{RolesAndPermissionsColumns[0]},
+				RefColumns: []*schema.Column{RolesColumns[0]},
+				OnDelete:   schema.Cascade,
+			},
+			{
+				Symbol:     "roles_and_permissions_permission_id",
+				Columns:    []*schema.Column{RolesAndPermissionsColumns[1]},
+				RefColumns: []*schema.Column{PermissionsColumns[0]},
+				OnDelete:   schema.Cascade,
+			},
+		},
 	}
 	// TeacherSubjectsColumns holds the columns for the "teacher_subjects" table.
 	TeacherSubjectsColumns = []*schema.Column{
@@ -485,6 +543,8 @@ var (
 		ExamsTable,
 		FeePaymentsTable,
 		FeeStructuresTable,
+		PermissionsTable,
+		RolesTable,
 		StudentsTable,
 		StudentAttendancesTable,
 		SubjectsTable,
@@ -492,6 +552,7 @@ var (
 		TeachersTable,
 		TeacherAttendancesTable,
 		UsersTable,
+		RolesAndPermissionsTable,
 		TeacherSubjectsTable,
 	}
 )
@@ -518,6 +579,9 @@ func init() {
 	TeachersTable.ForeignKeys[0].RefTable = UsersTable
 	TeachersTable.ForeignKeys[1].RefTable = DepartmentsTable
 	TeacherAttendancesTable.ForeignKeys[0].RefTable = TeachersTable
+	UsersTable.ForeignKeys[0].RefTable = RolesTable
+	RolesAndPermissionsTable.ForeignKeys[0].RefTable = RolesTable
+	RolesAndPermissionsTable.ForeignKeys[1].RefTable = PermissionsTable
 	TeacherSubjectsTable.ForeignKeys[0].RefTable = TeachersTable
 	TeacherSubjectsTable.ForeignKeys[1].RefTable = SubjectsTable
 }

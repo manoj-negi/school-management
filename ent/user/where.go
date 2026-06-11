@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"entgo.io/ent/dialect/sql"
+	"entgo.io/ent/dialect/sql/sqlgraph"
 	"github.com/google/uuid"
 )
 
@@ -68,6 +69,11 @@ func Email(v string) predicate.User {
 // PasswordHash applies equality check predicate on the "password_hash" field. It's identical to PasswordHashEQ.
 func PasswordHash(v string) predicate.User {
 	return predicate.User(sql.FieldEQ(FieldPasswordHash, v))
+}
+
+// RoleID applies equality check predicate on the "role_id" field. It's identical to RoleIDEQ.
+func RoleID(v int) predicate.User {
+	return predicate.User(sql.FieldEQ(FieldRoleID, v))
 }
 
 // AvatarURL applies equality check predicate on the "avatar_url" field. It's identical to AvatarURLEQ.
@@ -305,6 +311,36 @@ func RoleNotIn(vs ...Role) predicate.User {
 	return predicate.User(sql.FieldNotIn(FieldRole, vs...))
 }
 
+// RoleIDEQ applies the EQ predicate on the "role_id" field.
+func RoleIDEQ(v int) predicate.User {
+	return predicate.User(sql.FieldEQ(FieldRoleID, v))
+}
+
+// RoleIDNEQ applies the NEQ predicate on the "role_id" field.
+func RoleIDNEQ(v int) predicate.User {
+	return predicate.User(sql.FieldNEQ(FieldRoleID, v))
+}
+
+// RoleIDIn applies the In predicate on the "role_id" field.
+func RoleIDIn(vs ...int) predicate.User {
+	return predicate.User(sql.FieldIn(FieldRoleID, vs...))
+}
+
+// RoleIDNotIn applies the NotIn predicate on the "role_id" field.
+func RoleIDNotIn(vs ...int) predicate.User {
+	return predicate.User(sql.FieldNotIn(FieldRoleID, vs...))
+}
+
+// RoleIDIsNil applies the IsNil predicate on the "role_id" field.
+func RoleIDIsNil() predicate.User {
+	return predicate.User(sql.FieldIsNull(FieldRoleID))
+}
+
+// RoleIDNotNil applies the NotNil predicate on the "role_id" field.
+func RoleIDNotNil() predicate.User {
+	return predicate.User(sql.FieldNotNull(FieldRoleID))
+}
+
 // AvatarURLEQ applies the EQ predicate on the "avatar_url" field.
 func AvatarURLEQ(v string) predicate.User {
 	return predicate.User(sql.FieldEQ(FieldAvatarURL, v))
@@ -468,6 +504,29 @@ func UpdatedAtLT(v time.Time) predicate.User {
 // UpdatedAtLTE applies the LTE predicate on the "updated_at" field.
 func UpdatedAtLTE(v time.Time) predicate.User {
 	return predicate.User(sql.FieldLTE(FieldUpdatedAt, v))
+}
+
+// HasRoleRef applies the HasEdge predicate on the "role_ref" edge.
+func HasRoleRef() predicate.User {
+	return predicate.User(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, false, RoleRefTable, RoleRefColumn),
+		)
+		sqlgraph.HasNeighbors(s, step)
+	})
+}
+
+// HasRoleRefWith applies the HasEdge predicate on the "role_ref" edge with a given conditions (other predicates).
+func HasRoleRefWith(preds ...predicate.Role) predicate.User {
+	return predicate.User(func(s *sql.Selector) {
+		step := newRoleRefStep()
+		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
+			for _, p := range preds {
+				p(s)
+			}
+		})
+	})
 }
 
 // And groups predicates with the AND operator between them.

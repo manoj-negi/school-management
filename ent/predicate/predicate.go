@@ -30,6 +30,12 @@ type FeePayment func(*sql.Selector)
 // FeeStructure is the predicate function for feestructure builders.
 type FeeStructure func(*sql.Selector)
 
+// Permission is the predicate function for permission builders.
+type Permission func(*sql.Selector)
+
+// Role is the predicate function for role builders.
+type Role func(*sql.Selector)
+
 // Student is the predicate function for student builders.
 type Student func(*sql.Selector)
 
