@@ -18,6 +18,11 @@ tasks:
     cmds:
       - go run .
 
+  run:
+    desc: Run the backend API web server
+    cmds:
+      - go run . -server
+
   recreate-db:
     desc: Force drop and recreate the database (terminates other active connections)
     cmds:

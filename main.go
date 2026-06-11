@@ -20,13 +20,15 @@ import (
 )
 
 var (
-	dataDir string
-	dbURL   string
+	dataDir    string
+	dbURL      string
+	serverMode bool
 )
 
 func init() {
 	flag.StringVar(&dataDir, "data-dir", "", "Path to the directory containing JSON data files")
 	flag.StringVar(&dbURL, "db-url", "", "PostgreSQL Connection URI (e.g. postgres://user:pass@host:port/db?sslmode=disable)")
+	flag.BoolVar(&serverMode, "server", false, "Start the API web server")
 }
 
 func loadEnv(path string) {
@@ -63,28 +65,6 @@ func main() {
 	loadEnv(".env")
 	loadEnv("../.env")
 
-	// 1. Locate Data Directory
-	if dataDir == "" {
-		// Try to find the data directory automatically
-		pathsToTry := []string{
-			"migration/data",
-			"../migration/data",
-			"prisma/data",
-			"../prisma/data",
-			"./data",
-		}
-		for _, p := range pathsToTry {
-			if info, err := os.Stat(p); err == nil && info.IsDir() {
-				dataDir = p
-				break
-			}
-		}
-	}
-	if dataDir == "" {
-		log.Fatal("❌ Error: Could not locate migration/data or prisma/data directory. Please specify it using the -data-dir flag.")
-	}
-	fmt.Printf("📂 Using data directory: %s\n", dataDir)
-
 	// 2. Resolve Connection URI
 	if dbURL == "" {
 		dbURL = os.Getenv("DATABASE_URL")
@@ -107,6 +87,33 @@ func main() {
 	defer client.Close()
 
 	ctx := context.Background()
+
+	if serverMode {
+		startServer(ctx, client)
+		return
+	}
+
+	// 1. Locate Data Directory
+	if dataDir == "" {
+		// Try to find the data directory automatically
+		pathsToTry := []string{
+			"migration/data",
+			"../migration/data",
+			"prisma/data",
+			"../prisma/data",
+			"./data",
+		}
+		for _, p := range pathsToTry {
+			if info, err := os.Stat(p); err == nil && info.IsDir() {
+				dataDir = p
+				break
+			}
+		}
+	}
+	if dataDir == "" {
+		log.Fatal("❌ Error: Could not locate migration/data or prisma/data directory. Please specify it using the -data-dir flag.")
+	}
+	fmt.Printf("📂 Using data directory: %s\n", dataDir)
 
 	// Run migrations (schema creation)
 	fmt.Println("🏗️ Creating schema resources...")

@@ -1,0 +1,45 @@
+package main
+
+import (
+	"context"
+	"fmt"
+	"log"
+	"net/http"
+	"os"
+
+	"go-seed/ent"
+)
+
+func startServer(ctx context.Context, client *ent.Client) {
+	// Setup mux
+	mux := http.NewServeMux()
+
+	// Login Endpoint
+	mux.HandleFunc("/api/login", client.LoginHandler(ctx))
+
+	// Wrap in CORS middleware
+	handler := corsMiddleware(mux)
+
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+
+	fmt.Printf("🚀 Server starting on http://localhost:%s\n", port)
+	if err := http.ListenAndServe(":"+port, handler); err != nil {
+		log.Fatalf("❌ Server failed to start: %v", err)
+	}
+}
+
+func corsMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+		w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+		w.Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
+		if r.Method == "OPTIONS" {
+			w.WriteHeader(http.StatusOK)
+			return
+		}
+		next.ServeHTTP(w, r)
+	})
+}
