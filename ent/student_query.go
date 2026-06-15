@@ -27,6 +27,8 @@ type StudentQuery struct {
 	predicates []predicate.Student
 	withUser   *UserQuery
 	withClass  *ClassQuery
+	modifiers  []func(*sql.Selector)
+	loadTotal  []func(context.Context, []*Student) error
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -421,6 +423,9 @@ func (_q *StudentQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Stud
 		node.Edges.loadedTypes = loadedTypes
 		return node.assignValues(columns, values)
 	}
+	if len(_q.modifiers) > 0 {
+		_spec.Modifiers = _q.modifiers
+	}
 	for i := range hooks {
 		hooks[i](ctx, _spec)
 	}
@@ -439,6 +444,11 @@ func (_q *StudentQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Stud
 	if query := _q.withClass; query != nil {
 		if err := _q.loadClass(ctx, query, nodes, nil,
 			func(n *Student, e *Class) { n.Edges.Class = e }); err != nil {
+			return nil, err
+		}
+	}
+	for i := range _q.loadTotal {
+		if err := _q.loadTotal[i](ctx, nodes); err != nil {
 			return nil, err
 		}
 	}
@@ -512,6 +522,9 @@ func (_q *StudentQuery) loadClass(ctx context.Context, query *ClassQuery, nodes 
 
 func (_q *StudentQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := _q.querySpec()
+	if len(_q.modifiers) > 0 {
+		_spec.Modifiers = _q.modifiers
+	}
 	_spec.Node.Columns = _q.ctx.Fields
 	if len(_q.ctx.Fields) > 0 {
 		_spec.Unique = _q.ctx.Unique != nil && *_q.ctx.Unique

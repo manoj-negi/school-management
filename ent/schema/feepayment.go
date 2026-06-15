@@ -1,6 +1,8 @@
 package schema
 
 import (
+	"entgo.io/ent/schema"
+	"entgo.io/contrib/entgql"
 	"entgo.io/ent"
 	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
@@ -47,5 +49,13 @@ func (FeePayment) Edges() []ent.Edge {
 			Unique().
 			Field("fee_structure_id").
 			Required(),
+	}
+}
+
+// Annotations of the FeePayment.
+func (FeePayment) Annotations() []schema.Annotation {
+	return []schema.Annotation{
+		entgql.QueryField(),
+		entgql.Mutations(entgql.MutationCreate(), entgql.MutationUpdate()),
 	}
 }

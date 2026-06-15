@@ -4,6 +4,8 @@ package student
 
 import (
 	"fmt"
+	"io"
+	"strconv"
 	"time"
 
 	"entgo.io/ent/dialect/sql"
@@ -214,4 +216,22 @@ func newClassStep() *sqlgraph.Step {
 		sqlgraph.To(ClassInverseTable, FieldID),
 		sqlgraph.Edge(sqlgraph.M2O, false, ClassTable, ClassColumn),
 	)
+}
+
+// MarshalGQL implements graphql.Marshaler interface.
+func (e Gender) MarshalGQL(w io.Writer) {
+	io.WriteString(w, strconv.Quote(e.String()))
+}
+
+// UnmarshalGQL implements graphql.Unmarshaler interface.
+func (e *Gender) UnmarshalGQL(val interface{}) error {
+	str, ok := val.(string)
+	if !ok {
+		return fmt.Errorf("enum %T must be a string", val)
+	}
+	*e = Gender(str)
+	if err := GenderValidator(*e); err != nil {
+		return fmt.Errorf("%s is not a valid Gender", str)
+	}
+	return nil
 }

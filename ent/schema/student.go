@@ -1,6 +1,8 @@
 package schema
 
 import (
+	"entgo.io/ent/schema"
+	"entgo.io/contrib/entgql"
 	"time"
 
 	"entgo.io/ent"
@@ -63,5 +65,13 @@ func (Student) Edges() []ent.Edge {
 		edge.To("class", Class.Type).
 			Unique().
 			Field("class_id"),
+	}
+}
+
+// Annotations of the Student.
+func (Student) Annotations() []schema.Annotation {
+	return []schema.Annotation{
+		entgql.QueryField(),
+		entgql.Mutations(entgql.MutationCreate(), entgql.MutationUpdate()),
 	}
 }

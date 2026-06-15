@@ -4,6 +4,8 @@ package event
 
 import (
 	"fmt"
+	"io"
+	"strconv"
 
 	"entgo.io/ent/dialect/sql"
 	"github.com/google/uuid"
@@ -125,4 +127,22 @@ func ByIsAllDay(opts ...sql.OrderTermOption) OrderOption {
 // ByStatus orders the results by the status field.
 func ByStatus(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldStatus, opts...).ToFunc()
+}
+
+// MarshalGQL implements graphql.Marshaler interface.
+func (e EventType) MarshalGQL(w io.Writer) {
+	io.WriteString(w, strconv.Quote(e.String()))
+}
+
+// UnmarshalGQL implements graphql.Unmarshaler interface.
+func (e *EventType) UnmarshalGQL(val interface{}) error {
+	str, ok := val.(string)
+	if !ok {
+		return fmt.Errorf("enum %T must be a string", val)
+	}
+	*e = EventType(str)
+	if err := EventTypeValidator(*e); err != nil {
+		return fmt.Errorf("%s is not a valid EventType", str)
+	}
+	return nil
 }

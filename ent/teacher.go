@@ -59,6 +59,10 @@ type TeacherEdges struct {
 	// loadedTypes holds the information for reporting if a
 	// type was loaded (or requested) in eager-loading or not.
 	loadedTypes [3]bool
+	// totalCount holds the count of the edges above.
+	totalCount [3]map[string]int
+
+	namedSubjects map[string][]*Subject
 }
 
 // UserOrErr returns the User value or an error if the edge
@@ -301,6 +305,30 @@ func (_m *Teacher) String() string {
 	}
 	builder.WriteByte(')')
 	return builder.String()
+}
+
+// NamedSubjects returns the Subjects named value or an error if the edge was not
+// loaded in eager-loading with this name.
+func (_m *Teacher) NamedSubjects(name string) ([]*Subject, error) {
+	if _m.Edges.namedSubjects == nil {
+		return nil, &NotLoadedError{edge: name}
+	}
+	nodes, ok := _m.Edges.namedSubjects[name]
+	if !ok {
+		return nil, &NotLoadedError{edge: name}
+	}
+	return nodes, nil
+}
+
+func (_m *Teacher) appendNamedSubjects(name string, edges ...*Subject) {
+	if _m.Edges.namedSubjects == nil {
+		_m.Edges.namedSubjects = make(map[string][]*Subject)
+	}
+	if len(edges) == 0 {
+		_m.Edges.namedSubjects[name] = []*Subject{}
+	} else {
+		_m.Edges.namedSubjects[name] = append(_m.Edges.namedSubjects[name], edges...)
+	}
 }
 
 // Teachers is a parsable slice of Teacher.

@@ -1,6 +1,8 @@
 package schema
 
 import (
+	"entgo.io/ent/schema"
+	"entgo.io/contrib/entgql"
 	"entgo.io/ent"
 	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
@@ -46,5 +48,13 @@ func (FeeStructure) Edges() []ent.Edge {
 func (FeeStructure) Indexes() []ent.Index {
 	return []ent.Index{
 		index.Fields("class_id", "academic_year_id", "fee_label").Unique(),
+	}
+}
+
+// Annotations of the FeeStructure.
+func (FeeStructure) Annotations() []schema.Annotation {
+	return []schema.Annotation{
+		entgql.QueryField(),
+		entgql.Mutations(entgql.MutationCreate(), entgql.MutationUpdate()),
 	}
 }

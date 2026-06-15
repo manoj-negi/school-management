@@ -1,6 +1,8 @@
 package schema
 
 import (
+	"entgo.io/ent/schema"
+	"entgo.io/contrib/entgql"
 	"entgo.io/ent"
 	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
@@ -33,5 +35,13 @@ func (Subject) Edges() []ent.Edge {
 	return []ent.Edge{
 		edge.From("teachers", Teacher.Type).
 			Ref("subjects"),
+	}
+}
+
+// Annotations of the Subject.
+func (Subject) Annotations() []schema.Annotation {
+	return []schema.Annotation{
+		entgql.QueryField(),
+		entgql.Mutations(entgql.MutationCreate(), entgql.MutationUpdate()),
 	}
 }

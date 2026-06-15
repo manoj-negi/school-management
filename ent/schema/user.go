@@ -1,6 +1,8 @@
 package schema
 
 import (
+	"entgo.io/ent/schema"
+	"entgo.io/contrib/entgql"
 	"time"
 
 	"entgo.io/ent"
@@ -23,7 +25,10 @@ func (User) Fields() []ent.Field {
 			Unique(),
 		field.String("email").
 			Unique(),
-		field.String("password_hash"),
+		field.String("password_hash").
+			Annotations(
+				entgql.Skip(),
+			),
 		field.Enum("role").
 			Values("admin", "teacher", "student", "employee", "doctor", "staff").
 			Default("student"),
@@ -49,5 +54,13 @@ func (User) Edges() []ent.Edge {
 		edge.To("role_ref", Role.Type).
 			Unique().
 			Field("role_id"),
+	}
+}
+
+// Annotations of the User.
+func (User) Annotations() []schema.Annotation {
+	return []schema.Annotation{
+		entgql.QueryField(),
+		entgql.Mutations(entgql.MutationCreate(), entgql.MutationUpdate()),
 	}
 }

@@ -1,6 +1,8 @@
 package schema
 
 import (
+	"entgo.io/ent/schema"
+	"entgo.io/contrib/entgql"
 	"entgo.io/ent"
 	"entgo.io/ent/schema/field"
 	"github.com/google/uuid"
@@ -28,4 +30,12 @@ func (AcademicYear) Fields() []ent.Field {
 // Edges of the AcademicYear.
 func (AcademicYear) Edges() []ent.Edge {
 	return nil
+}
+
+// Annotations of the AcademicYear.
+func (AcademicYear) Annotations() []schema.Annotation {
+	return []schema.Annotation{
+		entgql.QueryField(),
+		entgql.Mutations(entgql.MutationCreate(), entgql.MutationUpdate()),
+	}
 }

@@ -1,0 +1,18 @@
+# graph/schema.graphqls
+
+# Since ent.graphql will define the base Query and Mutation types,
+# we extend the Mutation type here to add custom operations.
+
+extend type Mutation {
+  login(input: LoginInput!): LoginResponse!
+}
+
+input LoginInput {
+  username: String!
+  password: String!
+}
+
+type LoginResponse {
+  token: String!
+  role: String!
+}

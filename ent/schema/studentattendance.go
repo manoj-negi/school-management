@@ -1,6 +1,8 @@
 package schema
 
 import (
+	"entgo.io/ent/schema"
+	"entgo.io/contrib/entgql"
 	"entgo.io/ent"
 	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
@@ -54,5 +56,13 @@ func (StudentAttendance) Edges() []ent.Edge {
 func (StudentAttendance) Indexes() []ent.Index {
 	return []ent.Index{
 		index.Fields("student_id", "subject_id", "date").Unique(),
+	}
+}
+
+// Annotations of the StudentAttendance.
+func (StudentAttendance) Annotations() []schema.Annotation {
+	return []schema.Annotation{
+		entgql.QueryField(),
+		entgql.Mutations(entgql.MutationCreate(), entgql.MutationUpdate()),
 	}
 }

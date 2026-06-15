@@ -8,6 +8,10 @@ import (
 	"os"
 
 	"go-seed/ent"
+	"go-seed/graph"
+
+	"github.com/99designs/gqlgen/graphql/handler"
+	"github.com/99designs/gqlgen/graphql/playground"
 )
 
 func startServer(ctx context.Context, client *ent.Client) {
@@ -16,6 +20,18 @@ func startServer(ctx context.Context, client *ent.Client) {
 
 	// Login Endpoint
 	mux.HandleFunc("/api/login", client.LoginHandler(ctx))
+
+	// GraphQL Server Setup
+	resolver := &graph.Resolver{
+		Client: client,
+	}
+	srv := handler.NewDefaultServer(graph.NewExecutableSchema(graph.Config{
+		Resolvers: resolver,
+	}))
+
+	// GraphQL Endpoints
+	mux.Handle("/query", srv)
+	mux.Handle("/", playground.Handler("GraphQL Playground", "/query"))
 
 	// Wrap in CORS middleware
 	handler := corsMiddleware(mux)

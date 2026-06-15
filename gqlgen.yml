@@ -1,0 +1,39 @@
+# gqlgen.yml
+schema:
+  - graph/schema.graphqls
+  - graph/ent.graphql
+
+exec:
+  layout: follow-schema
+  dir: graph
+  package: graph
+
+model:
+  filename: graph/model_gen.go
+  package: graph
+
+resolver:
+  layout: follow-schema
+  dir: graph
+  package: graph
+  filename_template: "{name}.resolvers.go"
+
+autobind:
+  - "github.com/99designs/gqlgen/graphql/introspection"
+  - "go-seed/ent"
+
+models:
+  ID:
+    model:
+      - github.com/99designs/gqlgen/graphql.ID
+      - github.com/99designs/gqlgen/graphql.Int
+      - github.com/99designs/gqlgen/graphql.String
+  Node:
+    model:
+      - go-seed/ent.Noder
+  Time:
+    model:
+      - github.com/99designs/gqlgen/graphql.Time
+  Cursor:
+    model:
+      - entgo.io/contrib/entgql.Cursor

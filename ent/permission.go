@@ -34,6 +34,10 @@ type PermissionEdges struct {
 	// loadedTypes holds the information for reporting if a
 	// type was loaded (or requested) in eager-loading or not.
 	loadedTypes [1]bool
+	// totalCount holds the count of the edges above.
+	totalCount [1]map[string]int
+
+	namedRoles map[string][]*Role
 }
 
 // RolesOrErr returns the Roles value or an error if the edge
@@ -138,6 +142,30 @@ func (_m *Permission) String() string {
 	}
 	builder.WriteByte(')')
 	return builder.String()
+}
+
+// NamedRoles returns the Roles named value or an error if the edge was not
+// loaded in eager-loading with this name.
+func (_m *Permission) NamedRoles(name string) ([]*Role, error) {
+	if _m.Edges.namedRoles == nil {
+		return nil, &NotLoadedError{edge: name}
+	}
+	nodes, ok := _m.Edges.namedRoles[name]
+	if !ok {
+		return nil, &NotLoadedError{edge: name}
+	}
+	return nodes, nil
+}
+
+func (_m *Permission) appendNamedRoles(name string, edges ...*Role) {
+	if _m.Edges.namedRoles == nil {
+		_m.Edges.namedRoles = make(map[string][]*Role)
+	}
+	if len(edges) == 0 {
+		_m.Edges.namedRoles[name] = []*Role{}
+	} else {
+		_m.Edges.namedRoles[name] = append(_m.Edges.namedRoles[name], edges...)
+	}
 }
 
 // Permissions is a parsable slice of Permission.

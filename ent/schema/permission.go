@@ -1,6 +1,8 @@
 package schema
 
 import (
+	"entgo.io/ent/schema"
+	"entgo.io/contrib/entgql"
 	"entgo.io/ent"
 	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
@@ -30,5 +32,13 @@ func (Permission) Edges() []ent.Edge {
 	return []ent.Edge{
 		edge.From("roles", Role.Type).
 			Ref("permissions"),
+	}
+}
+
+// Annotations of the Permission.
+func (Permission) Annotations() []schema.Annotation {
+	return []schema.Annotation{
+		entgql.QueryField(),
+		entgql.Mutations(entgql.MutationCreate(), entgql.MutationUpdate()),
 	}
 }

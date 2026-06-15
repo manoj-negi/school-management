@@ -1,6 +1,8 @@
 package schema
 
 import (
+	"entgo.io/ent/schema"
+	"entgo.io/contrib/entgql"
 	"entgo.io/ent"
 	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
@@ -50,5 +52,13 @@ func (Task) Edges() []ent.Edge {
 		edge.To("assigner", User.Type).
 			Unique().
 			Field("assigned_by"),
+	}
+}
+
+// Annotations of the Task.
+func (Task) Annotations() []schema.Annotation {
+	return []schema.Annotation{
+		entgql.QueryField(),
+		entgql.Mutations(entgql.MutationCreate(), entgql.MutationUpdate()),
 	}
 }

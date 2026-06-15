@@ -4,6 +4,8 @@ package task
 
 import (
 	"fmt"
+	"io"
+	"strconv"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -212,4 +214,40 @@ func newAssignerStep() *sqlgraph.Step {
 		sqlgraph.To(AssignerInverseTable, FieldID),
 		sqlgraph.Edge(sqlgraph.M2O, false, AssignerTable, AssignerColumn),
 	)
+}
+
+// MarshalGQL implements graphql.Marshaler interface.
+func (e Status) MarshalGQL(w io.Writer) {
+	io.WriteString(w, strconv.Quote(e.String()))
+}
+
+// UnmarshalGQL implements graphql.Unmarshaler interface.
+func (e *Status) UnmarshalGQL(val interface{}) error {
+	str, ok := val.(string)
+	if !ok {
+		return fmt.Errorf("enum %T must be a string", val)
+	}
+	*e = Status(str)
+	if err := StatusValidator(*e); err != nil {
+		return fmt.Errorf("%s is not a valid Status", str)
+	}
+	return nil
+}
+
+// MarshalGQL implements graphql.Marshaler interface.
+func (e Priority) MarshalGQL(w io.Writer) {
+	io.WriteString(w, strconv.Quote(e.String()))
+}
+
+// UnmarshalGQL implements graphql.Unmarshaler interface.
+func (e *Priority) UnmarshalGQL(val interface{}) error {
+	str, ok := val.(string)
+	if !ok {
+		return fmt.Errorf("enum %T must be a string", val)
+	}
+	*e = Priority(str)
+	if err := PriorityValidator(*e); err != nil {
+		return fmt.Errorf("%s is not a valid Priority", str)
+	}
+	return nil
 }

@@ -1,6 +1,8 @@
 package schema
 
 import (
+	"entgo.io/ent/schema"
+	"entgo.io/contrib/entgql"
 	"entgo.io/ent"
 	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
@@ -68,5 +70,13 @@ func (Teacher) Edges() []ent.Edge {
 func (Teacher) Indexes() []ent.Index {
 	return []ent.Index{
 		index.Fields("user_id").Unique(),
+	}
+}
+
+// Annotations of the Teacher.
+func (Teacher) Annotations() []schema.Annotation {
+	return []schema.Annotation{
+		entgql.QueryField(),
+		entgql.Mutations(entgql.MutationCreate(), entgql.MutationUpdate()),
 	}
 }

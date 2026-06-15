@@ -22,12 +22,16 @@ import (
 // RoleQuery is the builder for querying Role entities.
 type RoleQuery struct {
 	config
-	ctx             *QueryContext
-	order           []role.OrderOption
-	inters          []Interceptor
-	predicates      []predicate.Role
-	withPermissions *PermissionQuery
-	withUsers       *UserQuery
+	ctx                  *QueryContext
+	order                []role.OrderOption
+	inters               []Interceptor
+	predicates           []predicate.Role
+	withPermissions      *PermissionQuery
+	withUsers            *UserQuery
+	modifiers            []func(*sql.Selector)
+	loadTotal            []func(context.Context, []*Role) error
+	withNamedPermissions map[string]*PermissionQuery
+	withNamedUsers       map[string]*UserQuery
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -422,6 +426,9 @@ func (_q *RoleQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Role, e
 		node.Edges.loadedTypes = loadedTypes
 		return node.assignValues(columns, values)
 	}
+	if len(_q.modifiers) > 0 {
+		_spec.Modifiers = _q.modifiers
+	}
 	for i := range hooks {
 		hooks[i](ctx, _spec)
 	}
@@ -442,6 +449,25 @@ func (_q *RoleQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Role, e
 		if err := _q.loadUsers(ctx, query, nodes,
 			func(n *Role) { n.Edges.Users = []*User{} },
 			func(n *Role, e *User) { n.Edges.Users = append(n.Edges.Users, e) }); err != nil {
+			return nil, err
+		}
+	}
+	for name, query := range _q.withNamedPermissions {
+		if err := _q.loadPermissions(ctx, query, nodes,
+			func(n *Role) { n.appendNamedPermissions(name) },
+			func(n *Role, e *Permission) { n.appendNamedPermissions(name, e) }); err != nil {
+			return nil, err
+		}
+	}
+	for name, query := range _q.withNamedUsers {
+		if err := _q.loadUsers(ctx, query, nodes,
+			func(n *Role) { n.appendNamedUsers(name) },
+			func(n *Role, e *User) { n.appendNamedUsers(name, e) }); err != nil {
+			return nil, err
+		}
+	}
+	for i := range _q.loadTotal {
+		if err := _q.loadTotal[i](ctx, nodes); err != nil {
 			return nil, err
 		}
 	}
@@ -545,6 +571,9 @@ func (_q *RoleQuery) loadUsers(ctx context.Context, query *UserQuery, nodes []*R
 
 func (_q *RoleQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := _q.querySpec()
+	if len(_q.modifiers) > 0 {
+		_spec.Modifiers = _q.modifiers
+	}
 	_spec.Node.Columns = _q.ctx.Fields
 	if len(_q.ctx.Fields) > 0 {
 		_spec.Unique = _q.ctx.Unique != nil && *_q.ctx.Unique
@@ -622,6 +651,34 @@ func (_q *RoleQuery) sqlQuery(ctx context.Context) *sql.Selector {
 		selector.Limit(*limit)
 	}
 	return selector
+}
+
+// WithNamedPermissions tells the query-builder to eager-load the nodes that are connected to the "permissions"
+// edge with the given name. The optional arguments are used to configure the query builder of the edge.
+func (_q *RoleQuery) WithNamedPermissions(name string, opts ...func(*PermissionQuery)) *RoleQuery {
+	query := (&PermissionClient{config: _q.config}).Query()
+	for _, opt := range opts {
+		opt(query)
+	}
+	if _q.withNamedPermissions == nil {
+		_q.withNamedPermissions = make(map[string]*PermissionQuery)
+	}
+	_q.withNamedPermissions[name] = query
+	return _q
+}
+
+// WithNamedUsers tells the query-builder to eager-load the nodes that are connected to the "users"
+// edge with the given name. The optional arguments are used to configure the query builder of the edge.
+func (_q *RoleQuery) WithNamedUsers(name string, opts ...func(*UserQuery)) *RoleQuery {
+	query := (&UserClient{config: _q.config}).Query()
+	for _, opt := range opts {
+		opt(query)
+	}
+	if _q.withNamedUsers == nil {
+		_q.withNamedUsers = make(map[string]*UserQuery)
+	}
+	_q.withNamedUsers[name] = query
+	return _q
 }
 
 // RoleGroupBy is the group-by builder for Role entities.

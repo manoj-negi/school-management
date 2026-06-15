@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"database/sql"
 	"encoding/json"
 	"flag"
 	"fmt"
@@ -9,6 +10,7 @@ import (
 	"os"
 	"path/filepath"
 	"regexp"
+	"sort"
 	"strconv"
 	"strings"
 	"time"
@@ -58,6 +60,36 @@ func loadEnv(path string) {
 	}
 }
 
+func runSQLMigrations(dbURL string) error {
+	db, err := sql.Open("postgres", dbURL)
+	if err != nil {
+		return fmt.Errorf("failed to open database connection: %w", err)
+	}
+	defer db.Close()
+
+	files, err := filepath.Glob("migration/migrations/*.sql")
+	if err != nil {
+		return fmt.Errorf("failed to find migration files: %w", err)
+	}
+	if len(files) == 0 {
+		return fmt.Errorf("no migration files found in migration/migrations/")
+	}
+	sort.Strings(files)
+
+	for _, file := range files {
+		fmt.Printf("Applying %s...\n", filepath.Base(file))
+		content, err := os.ReadFile(file)
+		if err != nil {
+			return fmt.Errorf("failed to read file %s: %w", file, err)
+		}
+		_, err = db.Exec(string(content))
+		if err != nil {
+			return fmt.Errorf("failed to execute %s: %w", file, err)
+		}
+	}
+	return nil
+}
+
 func main() {
 	flag.Parse()
 
@@ -93,117 +125,12 @@ func main() {
 		return
 	}
 
-	// 1. Locate Data Directory
-	if dataDir == "" {
-		// Try to find the data directory automatically
-		pathsToTry := []string{
-			"migration/data",
-			"../migration/data",
-			"prisma/data",
-			"../prisma/data",
-			"./data",
-		}
-		for _, p := range pathsToTry {
-			if info, err := os.Stat(p); err == nil && info.IsDir() {
-				dataDir = p
-				break
-			}
-		}
+	// Run SQL migrations and seed tables
+	fmt.Println("🏗️ Applying SQL migrations from migration/migrations...")
+	if err := runSQLMigrations(dbURL); err != nil {
+		log.Fatalf("❌ SQL migrations failed: %v", err)
 	}
-	if dataDir == "" {
-		log.Fatal("❌ Error: Could not locate migration/data or prisma/data directory. Please specify it using the -data-dir flag.")
-	}
-	fmt.Printf("📂 Using data directory: %s\n", dataDir)
-
-	// Run migrations (schema creation)
-	fmt.Println("🏗️ Creating schema resources...")
-	if err := client.Schema.Create(ctx); err != nil {
-		log.Fatalf("❌ Schema creation failed: %v", err)
-	}
-	fmt.Println("✅ Schema resources created")
-
-	// 3. Start Seeding
-	fmt.Println("\n🌱 Starting seed…\n")
-
-	// Wave 1 — no dependencies
-	deptMap, err := seedDepartments(ctx, client)
-	if err != nil {
-		log.Fatalf("❌ Department seed failed: %v", err)
-	}
-
-	subjectMap, err := seedSubjects(ctx, client)
-	if err != nil {
-		log.Fatalf("❌ Subject seed failed: %v", err)
-	}
-
-	academicYearMap, err := seedAcademicYears(ctx, client)
-	if err != nil {
-		log.Fatalf("❌ Academic Year seed failed: %v", err)
-	}
-
-	// Wave 2 — depends on departments / subjects
-	teacherUuidMap, userUuids, err := seedTeachers(ctx, client, deptMap, subjectMap)
-	if err != nil {
-		log.Fatalf("❌ Teacher seed failed: %v", err)
-	}
-
-	rollToUuid, err := seedStudents(ctx, client)
-	if err != nil {
-		log.Fatalf("❌ Student seed failed: %v", err)
-	}
-
-	err = seedEmployees(ctx, client)
-	if err != nil {
-		log.Fatalf("❌ Employee seed failed: %v", err)
-	}
-
-	// Wave 3 — depends on academic_years + departments
-	classIdMap, nameToClassId, err := seedClasses(ctx, client, academicYearMap)
-	if err != nil {
-		log.Fatalf("❌ Class seed failed: %v", err)
-	}
-	_ = classIdMap // reserved for future use
-
-	// Wave 4 — depends on users / classes
-	err = seedTasks(ctx, client, userUuids)
-	if err != nil {
-		log.Fatalf("❌ Task seed failed: %v", err)
-	}
-
-	err = seedEvents(ctx, client)
-	if err != nil {
-		log.Fatalf("❌ Event seed failed: %v", err)
-	}
-
-	err = seedTeacherAttendance(ctx, client, teacherUuidMap)
-	if err != nil {
-		log.Fatalf("❌ Teacher Attendance seed failed: %v", err)
-	}
-
-	err = seedStudentAttendance(ctx, client, rollToUuid, nameToClassId, subjectMap)
-	if err != nil {
-		log.Fatalf("❌ Student Attendance seed failed: %v", err)
-	}
-
-	// Wave 5 — depends on classes + academic_years
-	feeLabelToId, err := seedFeeStructures(ctx, client, academicYearMap)
-	if err != nil {
-		log.Fatalf("❌ Fee Structure seed failed: %v", err)
-	}
-
-	// Wave 6 — depends on students + fee_structures
-	err = seedFeePayments(ctx, client, rollToUuid, feeLabelToId)
-	if err != nil {
-		log.Fatalf("❌ Fee Payment seed failed: %v", err)
-	}
-
-	// Wave 7 — depends on classes + subjects + academic_years
-	err = seedExams(ctx, client, subjectMap, academicYearMap)
-	if err != nil {
-		log.Fatalf("❌ Exam seed failed: %v", err)
-	}
-
-	fmt.Println("\n✅ Seed complete!\n")
+	fmt.Println("✅ SQL migrations applied and database seeded successfully!")
 }
 
 // ─── helpers ──────────────────────────────────────────────────────────────────

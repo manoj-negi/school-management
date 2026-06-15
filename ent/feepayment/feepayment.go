@@ -4,6 +4,8 @@ package feepayment
 
 import (
 	"fmt"
+	"io"
+	"strconv"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -183,4 +185,22 @@ func newFeeStructureStep() *sqlgraph.Step {
 		sqlgraph.To(FeeStructureInverseTable, FieldID),
 		sqlgraph.Edge(sqlgraph.M2O, false, FeeStructureTable, FeeStructureColumn),
 	)
+}
+
+// MarshalGQL implements graphql.Marshaler interface.
+func (e PaymentStatus) MarshalGQL(w io.Writer) {
+	io.WriteString(w, strconv.Quote(e.String()))
+}
+
+// UnmarshalGQL implements graphql.Unmarshaler interface.
+func (e *PaymentStatus) UnmarshalGQL(val interface{}) error {
+	str, ok := val.(string)
+	if !ok {
+		return fmt.Errorf("enum %T must be a string", val)
+	}
+	*e = PaymentStatus(str)
+	if err := PaymentStatusValidator(*e); err != nil {
+		return fmt.Errorf("%s is not a valid PaymentStatus", str)
+	}
+	return nil
 }

@@ -1,6 +1,8 @@
 package schema
 
 import (
+	"entgo.io/ent/schema"
+	"entgo.io/contrib/entgql"
 	"entgo.io/ent"
 	"entgo.io/ent/schema/field"
 	"github.com/google/uuid"
@@ -34,4 +36,12 @@ func (Event) Fields() []ent.Field {
 // Edges of the Event.
 func (Event) Edges() []ent.Edge {
 	return nil
+}
+
+// Annotations of the Event.
+func (Event) Annotations() []schema.Annotation {
+	return []schema.Annotation{
+		entgql.QueryField(),
+		entgql.Mutations(entgql.MutationCreate(), entgql.MutationUpdate()),
+	}
 }

@@ -21,11 +21,14 @@ import (
 // SubjectQuery is the builder for querying Subject entities.
 type SubjectQuery struct {
 	config
-	ctx          *QueryContext
-	order        []subject.OrderOption
-	inters       []Interceptor
-	predicates   []predicate.Subject
-	withTeachers *TeacherQuery
+	ctx               *QueryContext
+	order             []subject.OrderOption
+	inters            []Interceptor
+	predicates        []predicate.Subject
+	withTeachers      *TeacherQuery
+	modifiers         []func(*sql.Selector)
+	loadTotal         []func(context.Context, []*Subject) error
+	withNamedTeachers map[string]*TeacherQuery
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -385,6 +388,9 @@ func (_q *SubjectQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Subj
 		node.Edges.loadedTypes = loadedTypes
 		return node.assignValues(columns, values)
 	}
+	if len(_q.modifiers) > 0 {
+		_spec.Modifiers = _q.modifiers
+	}
 	for i := range hooks {
 		hooks[i](ctx, _spec)
 	}
@@ -398,6 +404,18 @@ func (_q *SubjectQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Subj
 		if err := _q.loadTeachers(ctx, query, nodes,
 			func(n *Subject) { n.Edges.Teachers = []*Teacher{} },
 			func(n *Subject, e *Teacher) { n.Edges.Teachers = append(n.Edges.Teachers, e) }); err != nil {
+			return nil, err
+		}
+	}
+	for name, query := range _q.withNamedTeachers {
+		if err := _q.loadTeachers(ctx, query, nodes,
+			func(n *Subject) { n.appendNamedTeachers(name) },
+			func(n *Subject, e *Teacher) { n.appendNamedTeachers(name, e) }); err != nil {
+			return nil, err
+		}
+	}
+	for i := range _q.loadTotal {
+		if err := _q.loadTotal[i](ctx, nodes); err != nil {
 			return nil, err
 		}
 	}
@@ -468,6 +486,9 @@ func (_q *SubjectQuery) loadTeachers(ctx context.Context, query *TeacherQuery, n
 
 func (_q *SubjectQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := _q.querySpec()
+	if len(_q.modifiers) > 0 {
+		_spec.Modifiers = _q.modifiers
+	}
 	_spec.Node.Columns = _q.ctx.Fields
 	if len(_q.ctx.Fields) > 0 {
 		_spec.Unique = _q.ctx.Unique != nil && *_q.ctx.Unique
@@ -545,6 +566,20 @@ func (_q *SubjectQuery) sqlQuery(ctx context.Context) *sql.Selector {
 		selector.Limit(*limit)
 	}
 	return selector
+}
+
+// WithNamedTeachers tells the query-builder to eager-load the nodes that are connected to the "teachers"
+// edge with the given name. The optional arguments are used to configure the query builder of the edge.
+func (_q *SubjectQuery) WithNamedTeachers(name string, opts ...func(*TeacherQuery)) *SubjectQuery {
+	query := (&TeacherClient{config: _q.config}).Query()
+	for _, opt := range opts {
+		opt(query)
+	}
+	if _q.withNamedTeachers == nil {
+		_q.withNamedTeachers = make(map[string]*TeacherQuery)
+	}
+	_q.withNamedTeachers[name] = query
+	return _q
 }
 
 // SubjectGroupBy is the group-by builder for Subject entities.
