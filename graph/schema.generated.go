@@ -41,6 +41,374 @@ func (ec *executionContext) field_Mutation_login_args(ctx context.Context, rawAr
 
 // region    **************************** field.gotpl *****************************
 
+func (ec *executionContext) _AdmissionInquiry_inquiryId(ctx context.Context, field graphql.CollectedField, obj *AdmissionInquiry) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_AdmissionInquiry_inquiryId(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.InquiryID, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_AdmissionInquiry_inquiryId(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("AdmissionInquiry", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _AdmissionInquiry_studentName(ctx context.Context, field graphql.CollectedField, obj *AdmissionInquiry) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_AdmissionInquiry_studentName(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.StudentName, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_AdmissionInquiry_studentName(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("AdmissionInquiry", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _AdmissionInquiry_guardianName(ctx context.Context, field graphql.CollectedField, obj *AdmissionInquiry) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_AdmissionInquiry_guardianName(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.GuardianName, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_AdmissionInquiry_guardianName(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("AdmissionInquiry", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _AdmissionInquiry_contactNumber(ctx context.Context, field graphql.CollectedField, obj *AdmissionInquiry) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_AdmissionInquiry_contactNumber(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ContactNumber, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_AdmissionInquiry_contactNumber(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("AdmissionInquiry", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _AdmissionInquiry_emailAddress(ctx context.Context, field graphql.CollectedField, obj *AdmissionInquiry) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_AdmissionInquiry_emailAddress(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.EmailAddress, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_AdmissionInquiry_emailAddress(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("AdmissionInquiry", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _AdmissionInquiry_dateOfInquiry(ctx context.Context, field graphql.CollectedField, obj *AdmissionInquiry) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_AdmissionInquiry_dateOfInquiry(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.DateOfInquiry, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_AdmissionInquiry_dateOfInquiry(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("AdmissionInquiry", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _AdmissionInquiry_programOfInterest(ctx context.Context, field graphql.CollectedField, obj *AdmissionInquiry) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_AdmissionInquiry_programOfInterest(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ProgramOfInterest, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_AdmissionInquiry_programOfInterest(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("AdmissionInquiry", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _AdmissionInquiry_preferredStartDate(ctx context.Context, field graphql.CollectedField, obj *AdmissionInquiry) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_AdmissionInquiry_preferredStartDate(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.PreferredStartDate, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_AdmissionInquiry_preferredStartDate(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("AdmissionInquiry", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _AdmissionInquiry_inquirySource(ctx context.Context, field graphql.CollectedField, obj *AdmissionInquiry) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_AdmissionInquiry_inquirySource(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.InquirySource, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_AdmissionInquiry_inquirySource(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("AdmissionInquiry", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _AdmissionInquiry_status(ctx context.Context, field graphql.CollectedField, obj *AdmissionInquiry) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_AdmissionInquiry_status(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.Status, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_AdmissionInquiry_status(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("AdmissionInquiry", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _AdmissionInquiry_notes(ctx context.Context, field graphql.CollectedField, obj *AdmissionInquiry) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_AdmissionInquiry_notes(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.Notes, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_AdmissionInquiry_notes(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("AdmissionInquiry", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _AdmissionInquiry_followUpDate(ctx context.Context, field graphql.CollectedField, obj *AdmissionInquiry) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_AdmissionInquiry_followUpDate(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.FollowUpDate, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_AdmissionInquiry_followUpDate(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("AdmissionInquiry", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _AdmissionInquiry_assignedTo(ctx context.Context, field graphql.CollectedField, obj *AdmissionInquiry) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_AdmissionInquiry_assignedTo(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.AssignedTo, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_AdmissionInquiry_assignedTo(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("AdmissionInquiry", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _AdmissionInquiry_campusLocation(ctx context.Context, field graphql.CollectedField, obj *AdmissionInquiry) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_AdmissionInquiry_campusLocation(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.CampusLocation, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_AdmissionInquiry_campusLocation(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("AdmissionInquiry", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _AdmissionInquiry_previousEducation(ctx context.Context, field graphql.CollectedField, obj *AdmissionInquiry) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_AdmissionInquiry_previousEducation(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.PreviousEducation, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_AdmissionInquiry_previousEducation(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("AdmissionInquiry", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _AdmissionInquiry_img(ctx context.Context, field graphql.CollectedField, obj *AdmissionInquiry) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_AdmissionInquiry_img(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.Img, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_AdmissionInquiry_img(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("AdmissionInquiry", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
 func (ec *executionContext) _LoginResponse_token(ctx context.Context, field graphql.CollectedField, obj *LoginResponse) (ret graphql.Marshaler) {
 	return graphql.ResolveField(
 		ctx,
@@ -180,6 +548,120 @@ func (ec *executionContext) unmarshalInputLoginInput(ctx context.Context, obj an
 
 // region    **************************** object.gotpl ****************************
 
+var admissionInquiryImplementors = []string{"AdmissionInquiry"}
+
+func (ec *executionContext) _AdmissionInquiry(ctx context.Context, sel ast.SelectionSet, obj *AdmissionInquiry) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, admissionInquiryImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("AdmissionInquiry")
+		case "inquiryId":
+			out.Values[i] = ec._AdmissionInquiry_inquiryId(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "studentName":
+			out.Values[i] = ec._AdmissionInquiry_studentName(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "guardianName":
+			out.Values[i] = ec._AdmissionInquiry_guardianName(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "contactNumber":
+			out.Values[i] = ec._AdmissionInquiry_contactNumber(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "emailAddress":
+			out.Values[i] = ec._AdmissionInquiry_emailAddress(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "dateOfInquiry":
+			out.Values[i] = ec._AdmissionInquiry_dateOfInquiry(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "programOfInterest":
+			out.Values[i] = ec._AdmissionInquiry_programOfInterest(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "preferredStartDate":
+			out.Values[i] = ec._AdmissionInquiry_preferredStartDate(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "inquirySource":
+			out.Values[i] = ec._AdmissionInquiry_inquirySource(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "status":
+			out.Values[i] = ec._AdmissionInquiry_status(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "notes":
+			out.Values[i] = ec._AdmissionInquiry_notes(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "followUpDate":
+			out.Values[i] = ec._AdmissionInquiry_followUpDate(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "assignedTo":
+			out.Values[i] = ec._AdmissionInquiry_assignedTo(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "campusLocation":
+			out.Values[i] = ec._AdmissionInquiry_campusLocation(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "previousEducation":
+			out.Values[i] = ec._AdmissionInquiry_previousEducation(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "img":
+			out.Values[i] = ec._AdmissionInquiry_img(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.Deferred, int32(min(len(deferred), math.MaxInt32)))
+
+	for label, dfs := range deferred {
+		ec.ProcessDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
 var loginResponseImplementors = []string{"LoginResponse"}
 
 func (ec *executionContext) _LoginResponse(ctx context.Context, sel ast.SelectionSet, obj *LoginResponse) graphql.Marshaler {
@@ -276,6 +758,32 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 // endregion **************************** object.gotpl ****************************
 
 // region    ***************************** type.gotpl *****************************
+
+func (ec *executionContext) marshalNAdmissionInquiry2ᚕᚖgoᚑseedᚋgraphᚐAdmissionInquiryᚄ(ctx context.Context, sel ast.SelectionSet, v []*AdmissionInquiry) graphql.Marshaler {
+	ret := graphql.MarshalSliceConcurrently(ctx, len(v), 0, false, func(ctx context.Context, i int) graphql.Marshaler {
+		fc := graphql.GetFieldContext(ctx)
+		fc.Result = &v[i]
+		return ec.marshalNAdmissionInquiry2ᚖgoᚑseedᚋgraphᚐAdmissionInquiry(ctx, sel, v[i])
+	})
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
+func (ec *executionContext) marshalNAdmissionInquiry2ᚖgoᚑseedᚋgraphᚐAdmissionInquiry(ctx context.Context, sel ast.SelectionSet, v *AdmissionInquiry) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			graphql.AddErrorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._AdmissionInquiry(ctx, sel, v)
+}
 
 func (ec *executionContext) unmarshalNLoginInput2goᚑseedᚋgraphᚐLoginInput(ctx context.Context, v any) (LoginInput, error) {
 	res, err := ec.unmarshalInputLoginInput(ctx, v)

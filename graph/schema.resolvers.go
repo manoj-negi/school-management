@@ -7,13 +7,15 @@ package graph
 
 import (
 	"context"
+	"database/sql"
 	"errors"
+	"fmt"
+	"go-seed/ent/user"
 	"os"
 	"time"
 
-	"go-seed/ent/user"
-
-	"github.com/golang-jwt/jwt/v5"
+	jwt "github.com/golang-jwt/jwt/v5"
+	_ "github.com/lib/pq"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -61,6 +63,101 @@ func (r *mutationResolver) Login(ctx context.Context, input LoginInput) (*LoginR
 		Token: tokenString,
 		Role:  string(u.Role),
 	}, nil
+}
+
+// AdmissionInquiries is the resolver for the admissionInquiries field.
+func (r *queryResolver) AdmissionInquiries(ctx context.Context) ([]*AdmissionInquiry, error) {
+	dbURL := os.Getenv("DATABASE_URL")
+	if dbURL == "" {
+		host := os.Getenv("DB_HOST")
+		if host == "" {
+			host = "localhost"
+		}
+		port := os.Getenv("DB_PORT")
+		if port == "" {
+			port = "5432"
+		}
+		user := os.Getenv("DB_USER")
+		if user == "" {
+			user = "postgres"
+		}
+		pass := os.Getenv("DB_PASSWORD")
+		if pass == "" {
+			pass = "postgres"
+		}
+		dbname := os.Getenv("DB_NAME")
+		if dbname == "" {
+			dbname = "school"
+		}
+		dbURL = fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable", user, pass, host, port, dbname)
+	}
+
+	db, err := sql.Open("postgres", dbURL)
+	if err != nil {
+		return nil, fmt.Errorf("failed to open database: %w", err)
+	}
+	defer db.Close()
+
+	rows, err := db.QueryContext(ctx, `
+		SELECT 
+			inquiry_id, COALESCE(student_name, ''), COALESCE(guardian_name, ''), 
+			COALESCE(contact_number, ''), COALESCE(email_address, ''), 
+			date_of_inquiry, COALESCE(program_of_interest, ''), preferred_start_date, 
+			COALESCE(inquiry_source, ''), COALESCE(status, ''), COALESCE(notes, ''), 
+			follow_up_date, assigned_to, COALESCE(campus_location, ''), 
+			COALESCE(previous_education, ''), COALESCE(img, '') 
+		FROM admission_inquiries
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("failed to query admission inquiries: %w", err)
+	}
+	defer rows.Close()
+
+	var list []*AdmissionInquiry
+	for rows.Next() {
+		var (
+			id, studentName, guardianName, contactNumber, emailAddress string
+			dateOfInquiry, preferredStartDate, followUpDate sql.NullTime
+			programOfInterest, inquirySource, status, notes, campusLocation, previousEducation, img string
+			assignedTo sql.NullString
+		)
+		err := rows.Scan(
+			&id, &studentName, &guardianName, &contactNumber, &emailAddress,
+			&dateOfInquiry, &programOfInterest, &preferredStartDate, &inquirySource,
+			&status, &notes, &followUpDate, &assignedTo, &campusLocation,
+			&previousEducation, &img,
+		)
+		if err != nil {
+			return nil, fmt.Errorf("failed to scan row: %w", err)
+		}
+
+		list = append(list, &AdmissionInquiry{
+			InquiryID:          id,
+			StudentName:        studentName,
+			GuardianName:       guardianName,
+			ContactNumber:      contactNumber,
+			EmailAddress:       emailAddress,
+			DateOfInquiry:      formatNullTime(dateOfInquiry),
+			ProgramOfInterest:  programOfInterest,
+			PreferredStartDate: formatNullTime(preferredStartDate),
+			InquirySource:      inquirySource,
+			Status:             status,
+			Notes:              notes,
+			FollowUpDate:       formatNullTime(followUpDate),
+			AssignedTo:         assignedTo.String,
+			CampusLocation:     campusLocation,
+			PreviousEducation:  previousEducation,
+			Img:                img,
+		})
+	}
+	return list, nil
+}
+
+func formatNullTime(nt sql.NullTime) string {
+	if !nt.Valid {
+		return ""
+	}
+	return nt.Time.Format("2006-01-02")
 }
 
 // Mutation returns MutationResolver implementation.

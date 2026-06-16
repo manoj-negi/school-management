@@ -140,7 +140,6 @@ func (r *queryResolver) Node(ctx context.Context, id string) (ent.Noder, error) 
 		return nil, err
 	}
 	return r.Client.Noder(ctx, uid)
-
 }
 
 // Nodes is the resolver for the nodes field.
@@ -154,7 +153,6 @@ func (r *queryResolver) Nodes(ctx context.Context, ids []string) ([]ent.Noder, e
 		uids = append(uids, uid)
 	}
 	return r.Client.Noders(ctx, uids)
-
 }
 
 // AcademicYears is the resolver for the academicYears field.

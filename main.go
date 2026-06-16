@@ -110,7 +110,6 @@ func main() {
 
 	// Load local .env files if present
 	loadEnv(".env")
-	loadEnv("../.env")
 
 	// 2. Resolve Connection URI
 	if dbURL == "" {

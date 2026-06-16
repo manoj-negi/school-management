@@ -17,10 +17,6 @@ import (
 func startServer(ctx context.Context, client *ent.Client) {
 	// Setup mux
 	mux := http.NewServeMux()
-
-	// Login Endpoint
-	mux.HandleFunc("/api/login", client.LoginHandler(ctx))
-
 	// GraphQL Server Setup
 	resolver := &graph.Resolver{
 		Client: client,

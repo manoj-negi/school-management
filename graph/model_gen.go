@@ -2,6 +2,25 @@
 
 package graph
 
+type AdmissionInquiry struct {
+	InquiryID          string `json:"inquiryId"`
+	StudentName        string `json:"studentName"`
+	GuardianName       string `json:"guardianName"`
+	ContactNumber      string `json:"contactNumber"`
+	EmailAddress       string `json:"emailAddress"`
+	DateOfInquiry      string `json:"dateOfInquiry"`
+	ProgramOfInterest  string `json:"programOfInterest"`
+	PreferredStartDate string `json:"preferredStartDate"`
+	InquirySource      string `json:"inquirySource"`
+	Status             string `json:"status"`
+	Notes              string `json:"notes"`
+	FollowUpDate       string `json:"followUpDate"`
+	AssignedTo         string `json:"assignedTo"`
+	CampusLocation     string `json:"campusLocation"`
+	PreviousEducation  string `json:"previousEducation"`
+	Img                string `json:"img"`
+}
+
 type LoginInput struct {
 	Username string `json:"username"`
 	Password string `json:"password"`

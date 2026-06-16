@@ -100,6 +100,25 @@ type ComplexityRoot struct {
 		StartDate func(childComplexity int) int
 	}
 
+	AdmissionInquiry struct {
+		AssignedTo         func(childComplexity int) int
+		CampusLocation     func(childComplexity int) int
+		ContactNumber      func(childComplexity int) int
+		DateOfInquiry      func(childComplexity int) int
+		EmailAddress       func(childComplexity int) int
+		FollowUpDate       func(childComplexity int) int
+		GuardianName       func(childComplexity int) int
+		Img                func(childComplexity int) int
+		InquiryID          func(childComplexity int) int
+		InquirySource      func(childComplexity int) int
+		Notes              func(childComplexity int) int
+		PreferredStartDate func(childComplexity int) int
+		PreviousEducation  func(childComplexity int) int
+		ProgramOfInterest  func(childComplexity int) int
+		Status             func(childComplexity int) int
+		StudentName        func(childComplexity int) int
+	}
+
 	Class struct {
 		AcademicYear   func(childComplexity int) int
 		AcademicYearID func(childComplexity int) int
@@ -212,6 +231,7 @@ type ComplexityRoot struct {
 
 	Query struct {
 		AcademicYears      func(childComplexity int) int
+		AdmissionInquiries func(childComplexity int) int
 		Classes            func(childComplexity int) int
 		Departments        func(childComplexity int) int
 		Employees          func(childComplexity int) int
@@ -378,6 +398,103 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.AcademicYear.StartDate(childComplexity), true
+
+	case "AdmissionInquiry.assignedTo":
+		if e.ComplexityRoot.AdmissionInquiry.AssignedTo == nil {
+			break
+		}
+
+		return e.ComplexityRoot.AdmissionInquiry.AssignedTo(childComplexity), true
+	case "AdmissionInquiry.campusLocation":
+		if e.ComplexityRoot.AdmissionInquiry.CampusLocation == nil {
+			break
+		}
+
+		return e.ComplexityRoot.AdmissionInquiry.CampusLocation(childComplexity), true
+	case "AdmissionInquiry.contactNumber":
+		if e.ComplexityRoot.AdmissionInquiry.ContactNumber == nil {
+			break
+		}
+
+		return e.ComplexityRoot.AdmissionInquiry.ContactNumber(childComplexity), true
+	case "AdmissionInquiry.dateOfInquiry":
+		if e.ComplexityRoot.AdmissionInquiry.DateOfInquiry == nil {
+			break
+		}
+
+		return e.ComplexityRoot.AdmissionInquiry.DateOfInquiry(childComplexity), true
+	case "AdmissionInquiry.emailAddress":
+		if e.ComplexityRoot.AdmissionInquiry.EmailAddress == nil {
+			break
+		}
+
+		return e.ComplexityRoot.AdmissionInquiry.EmailAddress(childComplexity), true
+	case "AdmissionInquiry.followUpDate":
+		if e.ComplexityRoot.AdmissionInquiry.FollowUpDate == nil {
+			break
+		}
+
+		return e.ComplexityRoot.AdmissionInquiry.FollowUpDate(childComplexity), true
+	case "AdmissionInquiry.guardianName":
+		if e.ComplexityRoot.AdmissionInquiry.GuardianName == nil {
+			break
+		}
+
+		return e.ComplexityRoot.AdmissionInquiry.GuardianName(childComplexity), true
+	case "AdmissionInquiry.img":
+		if e.ComplexityRoot.AdmissionInquiry.Img == nil {
+			break
+		}
+
+		return e.ComplexityRoot.AdmissionInquiry.Img(childComplexity), true
+	case "AdmissionInquiry.inquiryId":
+		if e.ComplexityRoot.AdmissionInquiry.InquiryID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.AdmissionInquiry.InquiryID(childComplexity), true
+	case "AdmissionInquiry.inquirySource":
+		if e.ComplexityRoot.AdmissionInquiry.InquirySource == nil {
+			break
+		}
+
+		return e.ComplexityRoot.AdmissionInquiry.InquirySource(childComplexity), true
+	case "AdmissionInquiry.notes":
+		if e.ComplexityRoot.AdmissionInquiry.Notes == nil {
+			break
+		}
+
+		return e.ComplexityRoot.AdmissionInquiry.Notes(childComplexity), true
+	case "AdmissionInquiry.preferredStartDate":
+		if e.ComplexityRoot.AdmissionInquiry.PreferredStartDate == nil {
+			break
+		}
+
+		return e.ComplexityRoot.AdmissionInquiry.PreferredStartDate(childComplexity), true
+	case "AdmissionInquiry.previousEducation":
+		if e.ComplexityRoot.AdmissionInquiry.PreviousEducation == nil {
+			break
+		}
+
+		return e.ComplexityRoot.AdmissionInquiry.PreviousEducation(childComplexity), true
+	case "AdmissionInquiry.programOfInterest":
+		if e.ComplexityRoot.AdmissionInquiry.ProgramOfInterest == nil {
+			break
+		}
+
+		return e.ComplexityRoot.AdmissionInquiry.ProgramOfInterest(childComplexity), true
+	case "AdmissionInquiry.status":
+		if e.ComplexityRoot.AdmissionInquiry.Status == nil {
+			break
+		}
+
+		return e.ComplexityRoot.AdmissionInquiry.Status(childComplexity), true
+	case "AdmissionInquiry.studentName":
+		if e.ComplexityRoot.AdmissionInquiry.StudentName == nil {
+			break
+		}
+
+		return e.ComplexityRoot.AdmissionInquiry.StudentName(childComplexity), true
 
 	case "Class.academicYear":
 		if e.ComplexityRoot.Class.AcademicYear == nil {
@@ -863,6 +980,12 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Query.AcademicYears(childComplexity), true
+	case "Query.admissionInquiries":
+		if e.ComplexityRoot.Query.AdmissionInquiries == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Query.AdmissionInquiries(childComplexity), true
 	case "Query.classes":
 		if e.ComplexityRoot.Query.Classes == nil {
 			break
@@ -1622,6 +1745,44 @@ func (ec *executionContext) childFields_AcademicYear(ctx context.Context, field 
 		return ec.fieldContext_AcademicYear_isCurrent(ctx, field)
 	}
 	return nil, fmt.Errorf("no field named %q was found under type AcademicYear", field.Name)
+}
+
+func (ec *executionContext) childFields_AdmissionInquiry(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+	switch field.Name {
+	case "inquiryId":
+		return ec.fieldContext_AdmissionInquiry_inquiryId(ctx, field)
+	case "studentName":
+		return ec.fieldContext_AdmissionInquiry_studentName(ctx, field)
+	case "guardianName":
+		return ec.fieldContext_AdmissionInquiry_guardianName(ctx, field)
+	case "contactNumber":
+		return ec.fieldContext_AdmissionInquiry_contactNumber(ctx, field)
+	case "emailAddress":
+		return ec.fieldContext_AdmissionInquiry_emailAddress(ctx, field)
+	case "dateOfInquiry":
+		return ec.fieldContext_AdmissionInquiry_dateOfInquiry(ctx, field)
+	case "programOfInterest":
+		return ec.fieldContext_AdmissionInquiry_programOfInterest(ctx, field)
+	case "preferredStartDate":
+		return ec.fieldContext_AdmissionInquiry_preferredStartDate(ctx, field)
+	case "inquirySource":
+		return ec.fieldContext_AdmissionInquiry_inquirySource(ctx, field)
+	case "status":
+		return ec.fieldContext_AdmissionInquiry_status(ctx, field)
+	case "notes":
+		return ec.fieldContext_AdmissionInquiry_notes(ctx, field)
+	case "followUpDate":
+		return ec.fieldContext_AdmissionInquiry_followUpDate(ctx, field)
+	case "assignedTo":
+		return ec.fieldContext_AdmissionInquiry_assignedTo(ctx, field)
+	case "campusLocation":
+		return ec.fieldContext_AdmissionInquiry_campusLocation(ctx, field)
+	case "previousEducation":
+		return ec.fieldContext_AdmissionInquiry_previousEducation(ctx, field)
+	case "img":
+		return ec.fieldContext_AdmissionInquiry_img(ctx, field)
+	}
+	return nil, fmt.Errorf("no field named %q was found under type AdmissionInquiry", field.Name)
 }
 
 func (ec *executionContext) childFields_Class(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
