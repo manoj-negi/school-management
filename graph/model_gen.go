@@ -48,3 +48,22 @@ type LoginResponse struct {
 	Token string `json:"token"`
 	Role  string `json:"role"`
 }
+
+type UpdateAdmissionInquiryInput struct {
+	InquiryID          string  `json:"inquiryId"`
+	StudentName        string  `json:"studentName"`
+	GuardianName       string  `json:"guardianName"`
+	ContactNumber      string  `json:"contactNumber"`
+	EmailAddress       string  `json:"emailAddress"`
+	DateOfInquiry      string  `json:"dateOfInquiry"`
+	ProgramOfInterest  string  `json:"programOfInterest"`
+	PreferredStartDate string  `json:"preferredStartDate"`
+	InquirySource      string  `json:"inquirySource"`
+	Status             string  `json:"status"`
+	Notes              *string `json:"notes,omitempty"`
+	FollowUpDate       *string `json:"followUpDate,omitempty"`
+	AssignedTo         *string `json:"assignedTo,omitempty"`
+	CampusLocation     *string `json:"campusLocation,omitempty"`
+	PreviousEducation  *string `json:"previousEducation,omitempty"`
+	Img                *string `json:"img,omitempty"`
+}

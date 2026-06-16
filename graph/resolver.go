@@ -6,7 +6,9 @@ package graph
 // here.
 
 import (
+	"context"
 	"database/sql"
+	"fmt"
 	"strings"
 	"time"
 
@@ -72,4 +74,27 @@ func parseNullString(s *string) sql.NullString {
 		return sql.NullString{}
 	}
 	return sql.NullString{String: *s, Valid: true}
+}
+
+func resolveAssignedTo(ctx context.Context, db *sql.DB, s *string) (sql.NullString, error) {
+	if s == nil || *s == "" {
+		return sql.NullString{}, nil
+	}
+	val := *s
+
+	// First, check if it's a valid UUID
+	_, err := uuid.Parse(val)
+	if err == nil {
+		return sql.NullString{String: val, Valid: true}, nil
+	}
+
+	// If not a valid UUID, search by username in the users table
+	var userID string
+	err = db.QueryRowContext(ctx, "SELECT id FROM users WHERE LOWER(username) = LOWER($1)", val).Scan(&userID)
+	if err == nil {
+		return sql.NullString{String: userID, Valid: true}, nil
+	}
+
+	// Return a clean user-friendly error
+	return sql.NullString{}, fmt.Errorf("assignedTo must be a valid UUID or username: user %q not found", val)
 }

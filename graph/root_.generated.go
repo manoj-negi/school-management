@@ -213,7 +213,9 @@ type ComplexityRoot struct {
 
 	Mutation struct {
 		CreateAdmissionInquiry func(childComplexity int, input CreateAdmissionInquiryInput) int
+		DeleteAdmissionInquiry func(childComplexity int, inquiryID string) int
 		Login                  func(childComplexity int, input LoginInput) int
+		UpdateAdmissionInquiry func(childComplexity int, input UpdateAdmissionInquiryInput) int
 	}
 
 	PageInfo struct {
@@ -924,6 +926,17 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.CreateAdmissionInquiry(childComplexity, args["input"].(CreateAdmissionInquiryInput)), true
+	case "Mutation.deleteAdmissionInquiry":
+		if e.ComplexityRoot.Mutation.DeleteAdmissionInquiry == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_deleteAdmissionInquiry_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.DeleteAdmissionInquiry(childComplexity, args["inquiryId"].(string)), true
 	case "Mutation.login":
 		if e.ComplexityRoot.Mutation.Login == nil {
 			break
@@ -935,6 +948,17 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.Login(childComplexity, args["input"].(LoginInput)), true
+	case "Mutation.updateAdmissionInquiry":
+		if e.ComplexityRoot.Mutation.UpdateAdmissionInquiry == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updateAdmissionInquiry_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.UpdateAdmissionInquiry(childComplexity, args["input"].(UpdateAdmissionInquiryInput)), true
 
 	case "PageInfo.endCursor":
 		if e.ComplexityRoot.PageInfo.EndCursor == nil {
@@ -1632,6 +1656,7 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 		ec.unmarshalInputTeacherAttendanceWhereInput,
 		ec.unmarshalInputTeacherWhereInput,
 		ec.unmarshalInputUpdateAcademicYearInput,
+		ec.unmarshalInputUpdateAdmissionInquiryInput,
 		ec.unmarshalInputUpdateClassInput,
 		ec.unmarshalInputUpdateDepartmentInput,
 		ec.unmarshalInputUpdateEmployeeInput,

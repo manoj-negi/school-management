@@ -14,8 +14,8 @@ import (
 	"os"
 	"time"
 
-	"github.com/google/uuid"
 	jwt "github.com/golang-jwt/jwt/v5"
+	"github.com/google/uuid"
 	_ "github.com/lib/pq"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -108,9 +108,9 @@ func (r *mutationResolver) CreateAdmissionInquiry(ctx context.Context, input Cre
 	followUpDate := parseDateString(input.FollowUpDate)
 
 	// Parse other nullable fields
-	assignedTo, err := parseUUID(input.AssignedTo)
+	assignedTo, err := resolveAssignedTo(ctx, db, input.AssignedTo)
 	if err != nil {
-		return nil, fmt.Errorf("assignedTo must be a valid UUID: %w", err)
+		return nil, err
 	}
 	notes := parseNullString(input.Notes)
 	campusLocation := parseNullString(input.CampusLocation)
@@ -154,6 +154,155 @@ func (r *mutationResolver) CreateAdmissionInquiry(ctx context.Context, input Cre
 		PreviousEducation:  previousEducation.String,
 		Img:                img.String,
 	}, nil
+}
+
+// UpdateAdmissionInquiry is the resolver for the updateAdmissionInquiry field.
+func (r *mutationResolver) UpdateAdmissionInquiry(ctx context.Context, input UpdateAdmissionInquiryInput) (*AdmissionInquiry, error) {
+	dbURL := os.Getenv("DATABASE_URL")
+	if dbURL == "" {
+		host := os.Getenv("DB_HOST")
+		if host == "" {
+			host = "localhost"
+		}
+		port := os.Getenv("DB_PORT")
+		if port == "" {
+			port = "5432"
+		}
+		user := os.Getenv("DB_USER")
+		if user == "" {
+			user = "postgres"
+		}
+		pass := os.Getenv("DB_PASSWORD")
+		if pass == "" {
+			pass = "postgres"
+		}
+		dbname := os.Getenv("DB_NAME")
+		if dbname == "" {
+			dbname = "school"
+		}
+		dbURL = fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable", user, pass, host, port, dbname)
+	}
+
+	db, err := sql.Open("postgres", dbURL)
+	if err != nil {
+		return nil, fmt.Errorf("failed to open database: %w", err)
+	}
+	defer db.Close()
+
+	// Parse timestamps
+	dateOfInquiry := parseRequiredDateString(input.DateOfInquiry)
+	preferredStartDate := parseRequiredDateString(input.PreferredStartDate)
+	followUpDate := parseDateString(input.FollowUpDate)
+
+	// Parse other nullable fields
+	assignedTo, err := resolveAssignedTo(ctx, db, input.AssignedTo)
+	if err != nil {
+		return nil, err
+	}
+	notes := parseNullString(input.Notes)
+	campusLocation := parseNullString(input.CampusLocation)
+	previousEducation := parseNullString(input.PreviousEducation)
+	img := parseNullString(input.Img)
+
+	// Check if record exists
+	var count int
+	err = db.QueryRowContext(ctx, "SELECT count(*) FROM admission_inquiries WHERE inquiry_id = $1", input.InquiryID).Scan(&count)
+	if err != nil {
+		return nil, fmt.Errorf("failed to check admission inquiry existence: %w", err)
+	}
+	if count == 0 {
+		return nil, fmt.Errorf("admission inquiry with ID %s not found", input.InquiryID)
+	}
+
+	// Update database
+	_, err = db.ExecContext(ctx, `
+		UPDATE admission_inquiries SET
+			student_name = $1, guardian_name = $2, contact_number = $3, email_address = $4,
+			date_of_inquiry = $5, program_of_interest = $6, preferred_start_date = $7,
+			inquiry_source = $8, status = $9, notes = $10, follow_up_date = $11, assigned_to = $12,
+			campus_location = $13, previous_education = $14, img = $15
+		WHERE inquiry_id = $16
+	`,
+		input.StudentName, input.GuardianName, input.ContactNumber, input.EmailAddress,
+		dateOfInquiry, input.ProgramOfInterest, preferredStartDate,
+		input.InquirySource, input.Status, notes, followUpDate, assignedTo,
+		campusLocation, previousEducation, img, input.InquiryID,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to update admission inquiry: %w", err)
+	}
+
+	// Format returned times
+	return &AdmissionInquiry{
+		InquiryID:          input.InquiryID,
+		StudentName:        input.StudentName,
+		GuardianName:       input.GuardianName,
+		ContactNumber:      input.ContactNumber,
+		EmailAddress:       input.EmailAddress,
+		DateOfInquiry:      formatNullTime(dateOfInquiry),
+		ProgramOfInterest:  input.ProgramOfInterest,
+		PreferredStartDate: formatNullTime(preferredStartDate),
+		InquirySource:      input.InquirySource,
+		Status:             input.Status,
+		Notes:              notes.String,
+		FollowUpDate:       formatNullTime(followUpDate),
+		AssignedTo:         assignedTo.String,
+		CampusLocation:     campusLocation.String,
+		PreviousEducation:  previousEducation.String,
+		Img:                img.String,
+	}, nil
+}
+
+// DeleteAdmissionInquiry is the resolver for the deleteAdmissionInquiry field.
+func (r *mutationResolver) DeleteAdmissionInquiry(ctx context.Context, inquiryID string) (string, error) {
+	dbURL := os.Getenv("DATABASE_URL")
+	if dbURL == "" {
+		host := os.Getenv("DB_HOST")
+		if host == "" {
+			host = "localhost"
+		}
+		port := os.Getenv("DB_PORT")
+		if port == "" {
+			port = "5432"
+		}
+		user := os.Getenv("DB_USER")
+		if user == "" {
+			user = "postgres"
+		}
+		pass := os.Getenv("DB_PASSWORD")
+		if pass == "" {
+			pass = "postgres"
+		}
+		dbname := os.Getenv("DB_NAME")
+		if dbname == "" {
+			dbname = "school"
+		}
+		dbURL = fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable", user, pass, host, port, dbname)
+	}
+
+	db, err := sql.Open("postgres", dbURL)
+	if err != nil {
+		return "", fmt.Errorf("failed to open database: %w", err)
+	}
+	defer db.Close()
+
+	// Check if record exists
+	var count int
+	err = db.QueryRowContext(ctx, "SELECT count(*) FROM admission_inquiries WHERE inquiry_id = $1", inquiryID).Scan(&count)
+	if err != nil {
+		return "", fmt.Errorf("failed to check admission inquiry existence: %w", err)
+	}
+	if count == 0 {
+		return "", fmt.Errorf("admission inquiry with ID %s not found", inquiryID)
+	}
+
+	// Delete from database
+	_, err = db.ExecContext(ctx, "DELETE FROM admission_inquiries WHERE inquiry_id = $1", inquiryID)
+	if err != nil {
+		return "", fmt.Errorf("failed to delete admission inquiry: %w", err)
+	}
+
+	return inquiryID, nil
 }
 
 // AdmissionInquiries is the resolver for the admissionInquiries field.

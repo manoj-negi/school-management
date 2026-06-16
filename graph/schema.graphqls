@@ -10,6 +10,27 @@ extend type Query {
 extend type Mutation {
   login(input: LoginInput!): LoginResponse!
   createAdmissionInquiry(input: CreateAdmissionInquiryInput!): AdmissionInquiry!
+  updateAdmissionInquiry(input: UpdateAdmissionInquiryInput!): AdmissionInquiry!
+  deleteAdmissionInquiry(inquiryId: String!): String!
+}
+
+input UpdateAdmissionInquiryInput {
+  inquiryId: String!
+  studentName: String!
+  guardianName: String!
+  contactNumber: String!
+  emailAddress: String!
+  dateOfInquiry: String!
+  programOfInterest: String!
+  preferredStartDate: String!
+  inquirySource: String!
+  status: String!
+  notes: String
+  followUpDate: String
+  assignedTo: String
+  campusLocation: String
+  previousEducation: String
+  img: String
 }
 
 input CreateAdmissionInquiryInput {

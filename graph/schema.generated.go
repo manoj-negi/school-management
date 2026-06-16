@@ -18,6 +18,8 @@ import (
 type MutationResolver interface {
 	Login(ctx context.Context, input LoginInput) (*LoginResponse, error)
 	CreateAdmissionInquiry(ctx context.Context, input CreateAdmissionInquiryInput) (*AdmissionInquiry, error)
+	UpdateAdmissionInquiry(ctx context.Context, input UpdateAdmissionInquiryInput) (*AdmissionInquiry, error)
+	DeleteAdmissionInquiry(ctx context.Context, inquiryID string) (string, error)
 }
 
 // endregion ************************** generated!.gotpl **************************
@@ -38,12 +40,40 @@ func (ec *executionContext) field_Mutation_createAdmissionInquiry_args(ctx conte
 	return args, nil
 }
 
+func (ec *executionContext) field_Mutation_deleteAdmissionInquiry_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
+	var err error
+	args := map[string]any{}
+	arg0, err := graphql.ProcessArgField(ctx, rawArgs, "inquiryId",
+		func(ctx context.Context, v any) (string, error) {
+			return ec.unmarshalNString2string(ctx, v)
+		})
+	if err != nil {
+		return nil, err
+	}
+	args["inquiryId"] = arg0
+	return args, nil
+}
+
 func (ec *executionContext) field_Mutation_login_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
 	var err error
 	args := map[string]any{}
 	arg0, err := graphql.ProcessArgField(ctx, rawArgs, "input",
 		func(ctx context.Context, v any) (LoginInput, error) {
 			return ec.unmarshalNLoginInput2goᚑseedᚋgraphᚐLoginInput(ctx, v)
+		})
+	if err != nil {
+		return nil, err
+	}
+	args["input"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Mutation_updateAdmissionInquiry_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
+	var err error
+	args := map[string]any{}
+	arg0, err := graphql.ProcessArgField(ctx, rawArgs, "input",
+		func(ctx context.Context, v any) (UpdateAdmissionInquiryInput, error) {
+			return ec.unmarshalNUpdateAdmissionInquiryInput2goᚑseedᚋgraphᚐUpdateAdmissionInquiryInput(ctx, v)
 		})
 	if err != nil {
 		return nil, err
@@ -558,6 +588,94 @@ func (ec *executionContext) fieldContext_Mutation_createAdmissionInquiry(ctx con
 	return fc, nil
 }
 
+func (ec *executionContext) _Mutation_updateAdmissionInquiry(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Mutation_updateAdmissionInquiry(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			fc := graphql.GetFieldContext(ctx)
+			return ec.Resolvers.Mutation().UpdateAdmissionInquiry(ctx, fc.Args["input"].(UpdateAdmissionInquiryInput))
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *AdmissionInquiry) graphql.Marshaler {
+			return ec.marshalNAdmissionInquiry2ᚖgoᚑseedᚋgraphᚐAdmissionInquiry(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Mutation_updateAdmissionInquiry(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_AdmissionInquiry(ctx, field)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_updateAdmissionInquiry_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_deleteAdmissionInquiry(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Mutation_deleteAdmissionInquiry(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			fc := graphql.GetFieldContext(ctx)
+			return ec.Resolvers.Mutation().DeleteAdmissionInquiry(ctx, fc.Args["inquiryId"].(string))
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Mutation_deleteAdmissionInquiry(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_deleteAdmissionInquiry_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
 // endregion **************************** field.gotpl *****************************
 
 // region    **************************** input.gotpl *****************************
@@ -722,6 +840,141 @@ func (ec *executionContext) unmarshalInputLoginInput(ctx context.Context, obj an
 				return it, err
 			}
 			it.Password = data
+		}
+	}
+	return it, nil
+}
+
+func (ec *executionContext) unmarshalInputUpdateAdmissionInquiryInput(ctx context.Context, obj any) (UpdateAdmissionInquiryInput, error) {
+	var it UpdateAdmissionInquiryInput
+	if obj == nil {
+		return it, nil
+	}
+
+	asMap := map[string]any{}
+	for k, v := range obj.(map[string]any) {
+		asMap[k] = v
+	}
+
+	fieldsInOrder := [...]string{"inquiryId", "studentName", "guardianName", "contactNumber", "emailAddress", "dateOfInquiry", "programOfInterest", "preferredStartDate", "inquirySource", "status", "notes", "followUpDate", "assignedTo", "campusLocation", "previousEducation", "img"}
+	for _, k := range fieldsInOrder {
+		v, ok := asMap[k]
+		if !ok {
+			continue
+		}
+		switch k {
+		case "inquiryId":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("inquiryId"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.InquiryID = data
+		case "studentName":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("studentName"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.StudentName = data
+		case "guardianName":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("guardianName"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.GuardianName = data
+		case "contactNumber":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("contactNumber"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.ContactNumber = data
+		case "emailAddress":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("emailAddress"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.EmailAddress = data
+		case "dateOfInquiry":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("dateOfInquiry"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.DateOfInquiry = data
+		case "programOfInterest":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("programOfInterest"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.ProgramOfInterest = data
+		case "preferredStartDate":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("preferredStartDate"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.PreferredStartDate = data
+		case "inquirySource":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("inquirySource"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.InquirySource = data
+		case "status":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("status"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Status = data
+		case "notes":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("notes"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Notes = data
+		case "followUpDate":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("followUpDate"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.FollowUpDate = data
+		case "assignedTo":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("assignedTo"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.AssignedTo = data
+		case "campusLocation":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("campusLocation"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.CampusLocation = data
+		case "previousEducation":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("previousEducation"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.PreviousEducation = data
+		case "img":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("img"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Img = data
 		}
 	}
 	return it, nil
@@ -926,6 +1179,20 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
+		case "updateAdmissionInquiry":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_updateAdmissionInquiry(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "deleteAdmissionInquiry":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_deleteAdmissionInquiry(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -1005,6 +1272,11 @@ func (ec *executionContext) marshalNLoginResponse2ᚖgoᚑseedᚋgraphᚐLoginRe
 		return graphql.Null
 	}
 	return ec._LoginResponse(ctx, sel, v)
+}
+
+func (ec *executionContext) unmarshalNUpdateAdmissionInquiryInput2goᚑseedᚋgraphᚐUpdateAdmissionInquiryInput(ctx context.Context, v any) (UpdateAdmissionInquiryInput, error) {
+	res, err := ec.unmarshalInputUpdateAdmissionInquiryInput(ctx, v)
+	return res, graphql.ErrorOnPath(ctx, err)
 }
 
 // endregion ***************************** type.gotpl *****************************
