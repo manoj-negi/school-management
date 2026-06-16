@@ -14,6 +14,7 @@ import (
 	"os"
 	"time"
 
+	"github.com/google/uuid"
 	jwt "github.com/golang-jwt/jwt/v5"
 	_ "github.com/lib/pq"
 	"golang.org/x/crypto/bcrypt"
@@ -62,6 +63,96 @@ func (r *mutationResolver) Login(ctx context.Context, input LoginInput) (*LoginR
 	return &LoginResponse{
 		Token: tokenString,
 		Role:  string(u.Role),
+	}, nil
+}
+
+// CreateAdmissionInquiry is the resolver for the createAdmissionInquiry field.
+func (r *mutationResolver) CreateAdmissionInquiry(ctx context.Context, input CreateAdmissionInquiryInput) (*AdmissionInquiry, error) {
+	dbURL := os.Getenv("DATABASE_URL")
+	if dbURL == "" {
+		host := os.Getenv("DB_HOST")
+		if host == "" {
+			host = "localhost"
+		}
+		port := os.Getenv("DB_PORT")
+		if port == "" {
+			port = "5432"
+		}
+		user := os.Getenv("DB_USER")
+		if user == "" {
+			user = "postgres"
+		}
+		pass := os.Getenv("DB_PASSWORD")
+		if pass == "" {
+			pass = "postgres"
+		}
+		dbname := os.Getenv("DB_NAME")
+		if dbname == "" {
+			dbname = "school"
+		}
+		dbURL = fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable", user, pass, host, port, dbname)
+	}
+
+	db, err := sql.Open("postgres", dbURL)
+	if err != nil {
+		return nil, fmt.Errorf("failed to open database: %w", err)
+	}
+	defer db.Close()
+
+	// Generate a new UUID for the inquiry ID
+	id := uuid.New().String()
+
+	// Parse timestamps
+	dateOfInquiry := parseRequiredDateString(input.DateOfInquiry)
+	preferredStartDate := parseRequiredDateString(input.PreferredStartDate)
+	followUpDate := parseDateString(input.FollowUpDate)
+
+	// Parse other nullable fields
+	assignedTo, err := parseUUID(input.AssignedTo)
+	if err != nil {
+		return nil, fmt.Errorf("assignedTo must be a valid UUID: %w", err)
+	}
+	notes := parseNullString(input.Notes)
+	campusLocation := parseNullString(input.CampusLocation)
+	previousEducation := parseNullString(input.PreviousEducation)
+	img := parseNullString(input.Img)
+
+	// Insert into database
+	_, err = db.ExecContext(ctx, `
+		INSERT INTO admission_inquiries (
+			inquiry_id, student_name, guardian_name, contact_number, email_address,
+			date_of_inquiry, program_of_interest, preferred_start_date,
+			inquiry_source, status, notes, follow_up_date, assigned_to,
+			campus_location, previous_education, img
+		) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
+	`,
+		id, input.StudentName, input.GuardianName, input.ContactNumber, input.EmailAddress,
+		dateOfInquiry, input.ProgramOfInterest, preferredStartDate,
+		input.InquirySource, input.Status, notes, followUpDate, assignedTo,
+		campusLocation, previousEducation, img,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to insert admission inquiry: %w", err)
+	}
+
+	// Format returned times
+	return &AdmissionInquiry{
+		InquiryID:          id,
+		StudentName:        input.StudentName,
+		GuardianName:       input.GuardianName,
+		ContactNumber:      input.ContactNumber,
+		EmailAddress:       input.EmailAddress,
+		DateOfInquiry:      formatNullTime(dateOfInquiry),
+		ProgramOfInterest:  input.ProgramOfInterest,
+		PreferredStartDate: formatNullTime(preferredStartDate),
+		InquirySource:      input.InquirySource,
+		Status:             input.Status,
+		Notes:              notes.String,
+		FollowUpDate:       formatNullTime(followUpDate),
+		AssignedTo:         assignedTo.String,
+		CampusLocation:     campusLocation.String,
+		PreviousEducation:  previousEducation.String,
+		Img:                img.String,
 	}, nil
 }
 
@@ -116,10 +207,10 @@ func (r *queryResolver) AdmissionInquiries(ctx context.Context) ([]*AdmissionInq
 	var list []*AdmissionInquiry
 	for rows.Next() {
 		var (
-			id, studentName, guardianName, contactNumber, emailAddress string
-			dateOfInquiry, preferredStartDate, followUpDate sql.NullTime
+			id, studentName, guardianName, contactNumber, emailAddress                              string
+			dateOfInquiry, preferredStartDate, followUpDate                                         sql.NullTime
 			programOfInterest, inquirySource, status, notes, campusLocation, previousEducation, img string
-			assignedTo sql.NullString
+			assignedTo                                                                              sql.NullString
 		)
 		err := rows.Scan(
 			&id, &studentName, &guardianName, &contactNumber, &emailAddress,
@@ -151,13 +242,6 @@ func (r *queryResolver) AdmissionInquiries(ctx context.Context) ([]*AdmissionInq
 		})
 	}
 	return list, nil
-}
-
-func formatNullTime(nt sql.NullTime) string {
-	if !nt.Valid {
-		return ""
-	}
-	return nt.Time.Format("2006-01-02")
 }
 
 // Mutation returns MutationResolver implementation.

@@ -21,6 +21,24 @@ type AdmissionInquiry struct {
 	Img                string `json:"img"`
 }
 
+type CreateAdmissionInquiryInput struct {
+	StudentName        string  `json:"studentName"`
+	GuardianName       string  `json:"guardianName"`
+	ContactNumber      string  `json:"contactNumber"`
+	EmailAddress       string  `json:"emailAddress"`
+	DateOfInquiry      string  `json:"dateOfInquiry"`
+	ProgramOfInterest  string  `json:"programOfInterest"`
+	PreferredStartDate string  `json:"preferredStartDate"`
+	InquirySource      string  `json:"inquirySource"`
+	Status             string  `json:"status"`
+	Notes              *string `json:"notes,omitempty"`
+	FollowUpDate       *string `json:"followUpDate,omitempty"`
+	AssignedTo         *string `json:"assignedTo,omitempty"`
+	CampusLocation     *string `json:"campusLocation,omitempty"`
+	PreviousEducation  *string `json:"previousEducation,omitempty"`
+	Img                *string `json:"img,omitempty"`
+}
+
 type LoginInput struct {
 	Username string `json:"username"`
 	Password string `json:"password"`

@@ -212,7 +212,8 @@ type ComplexityRoot struct {
 	}
 
 	Mutation struct {
-		Login func(childComplexity int, input LoginInput) int
+		CreateAdmissionInquiry func(childComplexity int, input CreateAdmissionInquiryInput) int
+		Login                  func(childComplexity int, input LoginInput) int
 	}
 
 	PageInfo struct {
@@ -912,6 +913,17 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 
 		return e.ComplexityRoot.LoginResponse.Token(childComplexity), true
 
+	case "Mutation.createAdmissionInquiry":
+		if e.ComplexityRoot.Mutation.CreateAdmissionInquiry == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_createAdmissionInquiry_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.CreateAdmissionInquiry(childComplexity, args["input"].(CreateAdmissionInquiryInput)), true
 	case "Mutation.login":
 		if e.ComplexityRoot.Mutation.Login == nil {
 			break
@@ -1587,6 +1599,7 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 		ec.unmarshalInputAcademicYearWhereInput,
 		ec.unmarshalInputClassWhereInput,
 		ec.unmarshalInputCreateAcademicYearInput,
+		ec.unmarshalInputCreateAdmissionInquiryInput,
 		ec.unmarshalInputCreateClassInput,
 		ec.unmarshalInputCreateDepartmentInput,
 		ec.unmarshalInputCreateEmployeeInput,
