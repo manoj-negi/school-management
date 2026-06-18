@@ -76,6 +76,21 @@ type CreateComplaintInput struct {
 	Feedback              *string `json:"feedback,omitempty"`
 }
 
+type CreateVisitorInput struct {
+	VisitorName             string  `json:"visitorName"`
+	VisitDate               string  `json:"visitDate"`
+	VisitTime               string  `json:"visitTime"`
+	PurposeOfVisit          string  `json:"purposeOfVisit"`
+	ContactNumber           string  `json:"contactNumber"`
+	VisitorType             string  `json:"visitorType"`
+	StudentName             *string `json:"studentName,omitempty"`
+	DepartmentPersonVisited string  `json:"departmentPersonVisited"`
+	CheckOutTime            *string `json:"checkOutTime,omitempty"`
+	IDProofType             *string `json:"idProofType,omitempty"`
+	IDProofNumber           *string `json:"idProofNumber,omitempty"`
+	Notes                   *string `json:"notes,omitempty"`
+}
+
 type LoginInput struct {
 	Username string `json:"username"`
 	Password string `json:"password"`
@@ -121,4 +136,38 @@ type UpdateComplaintInput struct {
 	ResolutionDate        *string `json:"resolutionDate,omitempty"`
 	PriorityLevel         string  `json:"priorityLevel"`
 	Feedback              *string `json:"feedback,omitempty"`
+}
+
+type UpdateVisitorInput struct {
+	VisitorID               string  `json:"visitorId"`
+	VisitorName             string  `json:"visitorName"`
+	VisitDate               string  `json:"visitDate"`
+	VisitTime               string  `json:"visitTime"`
+	PurposeOfVisit          string  `json:"purposeOfVisit"`
+	ContactNumber           string  `json:"contactNumber"`
+	VisitorType             string  `json:"visitorType"`
+	StudentName             *string `json:"studentName,omitempty"`
+	DepartmentPersonVisited string  `json:"departmentPersonVisited"`
+	CheckOutTime            *string `json:"checkOutTime,omitempty"`
+	IDProofType             *string `json:"idProofType,omitempty"`
+	IDProofNumber           *string `json:"idProofNumber,omitempty"`
+	Notes                   *string `json:"notes,omitempty"`
+}
+
+type Visitor struct {
+	VisitorID               string  `json:"visitorId"`
+	VisitorName             string  `json:"visitorName"`
+	VisitDate               string  `json:"visitDate"`
+	VisitTime               string  `json:"visitTime"`
+	PurposeOfVisit          string  `json:"purposeOfVisit"`
+	ContactNumber           string  `json:"contactNumber"`
+	VisitorType             string  `json:"visitorType"`
+	StudentName             *string `json:"studentName,omitempty"`
+	DepartmentPersonVisited string  `json:"departmentPersonVisited"`
+	CheckOutTime            *string `json:"checkOutTime,omitempty"`
+	IDProofType             *string `json:"idProofType,omitempty"`
+	IDProofNumber           *string `json:"idProofNumber,omitempty"`
+	Notes                   *string `json:"notes,omitempty"`
+	CreatedAt               string  `json:"createdAt"`
+	UpdatedAt               string  `json:"updatedAt"`
 }

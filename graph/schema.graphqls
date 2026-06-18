@@ -6,6 +6,7 @@
 extend type Query {
   admissionInquiries: [AdmissionInquiry!]!
   complaints: [Complaint!]!
+  visitors: [Visitor!]!
 }
 
 extend type Mutation {
@@ -16,6 +17,9 @@ extend type Mutation {
   createComplaint(input: CreateComplaintInput!): Complaint!
   updateComplaint(input: UpdateComplaintInput!): Complaint!
   deleteComplaint(complaintId: String!): String!
+  createVisitor(input: CreateVisitorInput!): Visitor!
+  updateVisitor(input: UpdateVisitorInput!): Visitor!
+  deleteVisitor(visitorId: String!): String!
 }
 
 input UpdateAdmissionInquiryInput {
@@ -139,3 +143,51 @@ input UpdateComplaintInput {
   feedback: String
 }
 
+type Visitor {
+  visitorId: String!
+  visitorName: String!
+  visitDate: String!
+  visitTime: String!
+  purposeOfVisit: String!
+  contactNumber: String!
+  visitorType: String!
+  studentName: String
+  departmentPersonVisited: String!
+  checkOutTime: String
+  idProofType: String
+  idProofNumber: String
+  notes: String
+  createdAt: String!
+  updatedAt: String!
+}
+
+input CreateVisitorInput {
+  visitorName: String!
+  visitDate: String!
+  visitTime: String!
+  purposeOfVisit: String!
+  contactNumber: String!
+  visitorType: String!
+  studentName: String
+  departmentPersonVisited: String!
+  checkOutTime: String
+  idProofType: String
+  idProofNumber: String
+  notes: String
+}
+
+input UpdateVisitorInput {
+  visitorId: String!
+  visitorName: String!
+  visitDate: String!
+  visitTime: String!
+  purposeOfVisit: String!
+  contactNumber: String!
+  visitorType: String!
+  studentName: String
+  departmentPersonVisited: String!
+  checkOutTime: String
+  idProofType: String
+  idProofNumber: String
+  notes: String
+}

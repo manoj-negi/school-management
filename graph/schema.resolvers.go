@@ -551,6 +551,236 @@ func (r *mutationResolver) DeleteComplaint(ctx context.Context, complaintID stri
 	return complaintID, nil
 }
 
+// CreateVisitor is the resolver for the createVisitor field.
+func (r *mutationResolver) CreateVisitor(ctx context.Context, input CreateVisitorInput) (*Visitor, error) {
+	dbURL := os.Getenv("DATABASE_URL")
+	if dbURL == "" {
+		host := os.Getenv("DB_HOST")
+		if host == "" {
+			host = "localhost"
+		}
+		port := os.Getenv("DB_PORT")
+		if port == "" {
+			port = "5432"
+		}
+		user := os.Getenv("DB_USER")
+		if user == "" {
+			user = "postgres"
+		}
+		pass := os.Getenv("DB_PASSWORD")
+		if pass == "" {
+			pass = "postgres"
+		}
+		dbname := os.Getenv("DB_NAME")
+		if dbname == "" {
+			dbname = "school"
+		}
+		dbURL = fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable", user, pass, host, port, dbname)
+	}
+
+	db, err := sql.Open("postgres", dbURL)
+	if err != nil {
+		return nil, fmt.Errorf("failed to open database: %w", err)
+	}
+	defer db.Close()
+
+	// Generate a new UUID for visitor ID
+	id := uuid.New().String()
+
+	// Parse timestamps
+	visitDate := parseRequiredDateString(input.VisitDate)
+
+	// Parse nullable fields
+	studentName := parseNullString(input.StudentName)
+	checkOutTime := parseNullString(input.CheckOutTime)
+	idProofType := parseNullString(input.IDProofType)
+	idProofNumber := parseNullString(input.IDProofNumber)
+	notes := parseNullString(input.Notes)
+
+	createdAt := sql.NullTime{Time: time.Now(), Valid: true}
+	updatedAt := sql.NullTime{Time: time.Now(), Valid: true}
+
+	// Insert into public.visitors table
+	_, err = db.ExecContext(ctx, `
+		INSERT INTO visitors (
+			visitor_id, visitor_name, visit_date, visit_time, purpose_of_visit,
+			contact_number, visitor_type, student_name, department_person_visited,
+			check_out_time, id_proof_type, id_proof_number, notes,
+			created_at, updated_at
+		) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)
+	`,
+		id, input.VisitorName, visitDate, input.VisitTime, input.PurposeOfVisit,
+		input.ContactNumber, input.VisitorType, studentName, input.DepartmentPersonVisited,
+		checkOutTime, idProofType, idProofNumber, notes,
+		createdAt, updatedAt,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to insert visitor: %w", err)
+	}
+
+	return &Visitor{
+		VisitorID:               id,
+		VisitorName:             input.VisitorName,
+		VisitDate:               formatNullTime(visitDate),
+		VisitTime:               input.VisitTime,
+		PurposeOfVisit:          input.PurposeOfVisit,
+		ContactNumber:           input.ContactNumber,
+		VisitorType:             input.VisitorType,
+		StudentName:             input.StudentName,
+		DepartmentPersonVisited: input.DepartmentPersonVisited,
+		CheckOutTime:            input.CheckOutTime,
+		IDProofType:             input.IDProofType,
+		IDProofNumber:           input.IDProofNumber,
+		Notes:                   input.Notes,
+		CreatedAt:               formatTimestamp(createdAt),
+		UpdatedAt:               formatTimestamp(updatedAt),
+	}, nil
+}
+
+// UpdateVisitor is the resolver for the updateVisitor field.
+func (r *mutationResolver) UpdateVisitor(ctx context.Context, input UpdateVisitorInput) (*Visitor, error) {
+	dbURL := os.Getenv("DATABASE_URL")
+	if dbURL == "" {
+		host := os.Getenv("DB_HOST")
+		if host == "" {
+			host = "localhost"
+		}
+		port := os.Getenv("DB_PORT")
+		if port == "" {
+			port = "5432"
+		}
+		user := os.Getenv("DB_USER")
+		if user == "" {
+			user = "postgres"
+		}
+		pass := os.Getenv("DB_PASSWORD")
+		if pass == "" {
+			pass = "postgres"
+		}
+		dbname := os.Getenv("DB_NAME")
+		if dbname == "" {
+			dbname = "school"
+		}
+		dbURL = fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable", user, pass, host, port, dbname)
+	}
+
+	db, err := sql.Open("postgres", dbURL)
+	if err != nil {
+		return nil, fmt.Errorf("failed to open database: %w", err)
+	}
+	defer db.Close()
+
+	// Parse timestamps
+	visitDate := parseRequiredDateString(input.VisitDate)
+
+	// Parse nullable fields
+	studentName := parseNullString(input.StudentName)
+	checkOutTime := parseNullString(input.CheckOutTime)
+	idProofType := parseNullString(input.IDProofType)
+	idProofNumber := parseNullString(input.IDProofNumber)
+	notes := parseNullString(input.Notes)
+
+	updatedAt := sql.NullTime{Time: time.Now(), Valid: true}
+
+	// Fetch existing created_at
+	var createdAt sql.NullTime
+	err = db.QueryRowContext(ctx, "SELECT created_at FROM visitors WHERE visitor_id = $1", input.VisitorID).Scan(&createdAt)
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return nil, fmt.Errorf("visitor with ID %s not found", input.VisitorID)
+		}
+		return nil, fmt.Errorf("failed to fetch visitor details: %w", err)
+	}
+
+	// Update record
+	_, err = db.ExecContext(ctx, `
+		UPDATE visitors SET
+			visitor_name = $1, visit_date = $2, visit_time = $3, purpose_of_visit = $4,
+			contact_number = $5, visitor_type = $6, student_name = $7,
+			department_person_visited = $8, check_out_time = $9, id_proof_type = $10,
+			id_proof_number = $11, notes = $12, updated_at = $13
+		WHERE visitor_id = $14
+	`,
+		input.VisitorName, visitDate, input.VisitTime, input.PurposeOfVisit,
+		input.ContactNumber, input.VisitorType, studentName,
+		input.DepartmentPersonVisited, checkOutTime, idProofType,
+		idProofNumber, notes, updatedAt, input.VisitorID,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to update visitor: %w", err)
+	}
+
+	return &Visitor{
+		VisitorID:               input.VisitorID,
+		VisitorName:             input.VisitorName,
+		VisitDate:               formatNullTime(visitDate),
+		VisitTime:               input.VisitTime,
+		PurposeOfVisit:          input.PurposeOfVisit,
+		ContactNumber:           input.ContactNumber,
+		VisitorType:             input.VisitorType,
+		StudentName:             input.StudentName,
+		DepartmentPersonVisited: input.DepartmentPersonVisited,
+		CheckOutTime:            input.CheckOutTime,
+		IDProofType:             input.IDProofType,
+		IDProofNumber:           input.IDProofNumber,
+		Notes:                   input.Notes,
+		CreatedAt:               formatTimestamp(createdAt),
+		UpdatedAt:               formatTimestamp(updatedAt),
+	}, nil
+}
+
+// DeleteVisitor is the resolver for the deleteVisitor field.
+func (r *mutationResolver) DeleteVisitor(ctx context.Context, visitorID string) (string, error) {
+	dbURL := os.Getenv("DATABASE_URL")
+	if dbURL == "" {
+		host := os.Getenv("DB_HOST")
+		if host == "" {
+			host = "localhost"
+		}
+		port := os.Getenv("DB_PORT")
+		if port == "" {
+			port = "5432"
+		}
+		user := os.Getenv("DB_USER")
+		if user == "" {
+			user = "postgres"
+		}
+		pass := os.Getenv("DB_PASSWORD")
+		if pass == "" {
+			pass = "postgres"
+		}
+		dbname := os.Getenv("DB_NAME")
+		if dbname == "" {
+			dbname = "school"
+		}
+		dbURL = fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable", user, pass, host, port, dbname)
+	}
+
+	db, err := sql.Open("postgres", dbURL)
+	if err != nil {
+		return "", fmt.Errorf("failed to open database: %w", err)
+	}
+	defer db.Close()
+
+	// Check if record exists
+	var count int
+	err = db.QueryRowContext(ctx, "SELECT count(*) FROM visitors WHERE visitor_id = $1", visitorID).Scan(&count)
+	if err != nil {
+		return "", fmt.Errorf("failed to check visitor existence: %w", err)
+	}
+	if count == 0 {
+		return "", fmt.Errorf("visitor with ID %s not found", visitorID)
+	}
+
+	// Delete from database
+	_, err = db.ExecContext(ctx, "DELETE FROM visitors WHERE visitor_id = $1", visitorID)
+	if err != nil {
+		return "", fmt.Errorf("failed to delete visitor: %w", err)
+	}
+
+	return visitorID, nil
+}
+
 // AdmissionInquiries is the resolver for the admissionInquiries field.
 func (r *queryResolver) AdmissionInquiries(ctx context.Context) ([]*AdmissionInquiry, error) {
 	dbURL := os.Getenv("DATABASE_URL")
@@ -725,6 +955,93 @@ func (r *queryResolver) Complaints(ctx context.Context) ([]*Complaint, error) {
 			UpdatedAt:             formatTimestamp(updatedAt),
 			PriorityLevel:         priorityLevel,
 			Feedback:              feedback,
+		})
+	}
+	return list, nil
+}
+
+// Visitors is the resolver for the visitors field.
+func (r *queryResolver) Visitors(ctx context.Context) ([]*Visitor, error) {
+	dbURL := os.Getenv("DATABASE_URL")
+	if dbURL == "" {
+		host := os.Getenv("DB_HOST")
+		if host == "" {
+			host = "localhost"
+		}
+		port := os.Getenv("DB_PORT")
+		if port == "" {
+			port = "5432"
+		}
+		user := os.Getenv("DB_USER")
+		if user == "" {
+			user = "postgres"
+		}
+		pass := os.Getenv("DB_PASSWORD")
+		if pass == "" {
+			pass = "postgres"
+		}
+		dbname := os.Getenv("DB_NAME")
+		if dbname == "" {
+			dbname = "school"
+		}
+		dbURL = fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable", user, pass, host, port, dbname)
+	}
+
+	db, err := sql.Open("postgres", dbURL)
+	if err != nil {
+		return nil, fmt.Errorf("failed to open database: %w", err)
+	}
+	defer db.Close()
+
+	rows, err := db.QueryContext(ctx, `
+		SELECT 
+			visitor_id, COALESCE(visitor_name, ''), visit_date, COALESCE(visit_time, ''), 
+			COALESCE(purpose_of_visit, ''), COALESCE(contact_number, ''), 
+			COALESCE(visitor_type, ''), COALESCE(student_name, ''), 
+			COALESCE(department_person_visited, ''), COALESCE(check_out_time, ''), 
+			COALESCE(id_proof_type, ''), COALESCE(id_proof_number, ''), 
+			COALESCE(notes, ''), created_at, updated_at
+		FROM visitors
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("failed to query visitors: %w", err)
+	}
+	defer rows.Close()
+
+	var list []*Visitor
+	for rows.Next() {
+		var (
+			visitorID, visitorName, visitTime, purposeOfVisit, contactNumber       string
+			visitorType, studentName, departmentPersonVisited, checkOutTime        string
+			idProofType, idProofNumber, notes                                      string
+			visitDate, createdAt, updatedAt                                        sql.NullTime
+		)
+		err := rows.Scan(
+			&visitorID, &visitorName, &visitDate, &visitTime, &purposeOfVisit,
+			&contactNumber, &visitorType, &studentName, &departmentPersonVisited,
+			&checkOutTime, &idProofType, &idProofNumber, &notes,
+			&createdAt, &updatedAt,
+		)
+		if err != nil {
+			return nil, fmt.Errorf("failed to scan visitor row: %w", err)
+		}
+
+		list = append(list, &Visitor{
+			VisitorID:               visitorID,
+			VisitorName:             visitorName,
+			VisitDate:               formatNullTime(visitDate),
+			VisitTime:               visitTime,
+			PurposeOfVisit:          purposeOfVisit,
+			ContactNumber:           contactNumber,
+			VisitorType:             visitorType,
+			StudentName:             &studentName,
+			DepartmentPersonVisited: departmentPersonVisited,
+			CheckOutTime:            &checkOutTime,
+			IDProofType:             &idProofType,
+			IDProofNumber:           &idProofNumber,
+			Notes:                   &notes,
+			CreatedAt:               formatTimestamp(createdAt),
+			UpdatedAt:               formatTimestamp(updatedAt),
 		})
 	}
 	return list, nil

@@ -23,6 +23,9 @@ type MutationResolver interface {
 	CreateComplaint(ctx context.Context, input CreateComplaintInput) (*Complaint, error)
 	UpdateComplaint(ctx context.Context, input UpdateComplaintInput) (*Complaint, error)
 	DeleteComplaint(ctx context.Context, complaintID string) (string, error)
+	CreateVisitor(ctx context.Context, input CreateVisitorInput) (*Visitor, error)
+	UpdateVisitor(ctx context.Context, input UpdateVisitorInput) (*Visitor, error)
+	DeleteVisitor(ctx context.Context, visitorID string) (string, error)
 }
 
 // endregion ************************** generated!.gotpl **************************
@@ -57,6 +60,20 @@ func (ec *executionContext) field_Mutation_createComplaint_args(ctx context.Cont
 	return args, nil
 }
 
+func (ec *executionContext) field_Mutation_createVisitor_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
+	var err error
+	args := map[string]any{}
+	arg0, err := graphql.ProcessArgField(ctx, rawArgs, "input",
+		func(ctx context.Context, v any) (CreateVisitorInput, error) {
+			return ec.unmarshalNCreateVisitorInput2goᚑseedᚋgraphᚐCreateVisitorInput(ctx, v)
+		})
+	if err != nil {
+		return nil, err
+	}
+	args["input"] = arg0
+	return args, nil
+}
+
 func (ec *executionContext) field_Mutation_deleteAdmissionInquiry_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
 	var err error
 	args := map[string]any{}
@@ -82,6 +99,20 @@ func (ec *executionContext) field_Mutation_deleteComplaint_args(ctx context.Cont
 		return nil, err
 	}
 	args["complaintId"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Mutation_deleteVisitor_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
+	var err error
+	args := map[string]any{}
+	arg0, err := graphql.ProcessArgField(ctx, rawArgs, "visitorId",
+		func(ctx context.Context, v any) (string, error) {
+			return ec.unmarshalNString2string(ctx, v)
+		})
+	if err != nil {
+		return nil, err
+	}
+	args["visitorId"] = arg0
 	return args, nil
 }
 
@@ -119,6 +150,20 @@ func (ec *executionContext) field_Mutation_updateComplaint_args(ctx context.Cont
 	arg0, err := graphql.ProcessArgField(ctx, rawArgs, "input",
 		func(ctx context.Context, v any) (UpdateComplaintInput, error) {
 			return ec.unmarshalNUpdateComplaintInput2goᚑseedᚋgraphᚐUpdateComplaintInput(ctx, v)
+		})
+	if err != nil {
+		return nil, err
+	}
+	args["input"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Mutation_updateVisitor_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
+	var err error
+	args := map[string]any{}
+	arg0, err := graphql.ProcessArgField(ctx, rawArgs, "input",
+		func(ctx context.Context, v any) (UpdateVisitorInput, error) {
+			return ec.unmarshalNUpdateVisitorInput2goᚑseedᚋgraphᚐUpdateVisitorInput(ctx, v)
 		})
 	if err != nil {
 		return nil, err
@@ -1244,6 +1289,483 @@ func (ec *executionContext) fieldContext_Mutation_deleteComplaint(ctx context.Co
 	return fc, nil
 }
 
+func (ec *executionContext) _Mutation_createVisitor(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Mutation_createVisitor(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			fc := graphql.GetFieldContext(ctx)
+			return ec.Resolvers.Mutation().CreateVisitor(ctx, fc.Args["input"].(CreateVisitorInput))
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *Visitor) graphql.Marshaler {
+			return ec.marshalNVisitor2ᚖgoᚑseedᚋgraphᚐVisitor(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Mutation_createVisitor(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_Visitor(ctx, field)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_createVisitor_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_updateVisitor(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Mutation_updateVisitor(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			fc := graphql.GetFieldContext(ctx)
+			return ec.Resolvers.Mutation().UpdateVisitor(ctx, fc.Args["input"].(UpdateVisitorInput))
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *Visitor) graphql.Marshaler {
+			return ec.marshalNVisitor2ᚖgoᚑseedᚋgraphᚐVisitor(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Mutation_updateVisitor(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_Visitor(ctx, field)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_updateVisitor_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_deleteVisitor(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Mutation_deleteVisitor(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			fc := graphql.GetFieldContext(ctx)
+			return ec.Resolvers.Mutation().DeleteVisitor(ctx, fc.Args["visitorId"].(string))
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Mutation_deleteVisitor(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_deleteVisitor_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Visitor_visitorId(ctx context.Context, field graphql.CollectedField, obj *Visitor) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Visitor_visitorId(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.VisitorID, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Visitor_visitorId(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("Visitor", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _Visitor_visitorName(ctx context.Context, field graphql.CollectedField, obj *Visitor) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Visitor_visitorName(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.VisitorName, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Visitor_visitorName(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("Visitor", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _Visitor_visitDate(ctx context.Context, field graphql.CollectedField, obj *Visitor) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Visitor_visitDate(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.VisitDate, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Visitor_visitDate(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("Visitor", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _Visitor_visitTime(ctx context.Context, field graphql.CollectedField, obj *Visitor) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Visitor_visitTime(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.VisitTime, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Visitor_visitTime(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("Visitor", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _Visitor_purposeOfVisit(ctx context.Context, field graphql.CollectedField, obj *Visitor) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Visitor_purposeOfVisit(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.PurposeOfVisit, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Visitor_purposeOfVisit(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("Visitor", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _Visitor_contactNumber(ctx context.Context, field graphql.CollectedField, obj *Visitor) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Visitor_contactNumber(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ContactNumber, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Visitor_contactNumber(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("Visitor", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _Visitor_visitorType(ctx context.Context, field graphql.CollectedField, obj *Visitor) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Visitor_visitorType(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.VisitorType, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Visitor_visitorType(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("Visitor", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _Visitor_studentName(ctx context.Context, field graphql.CollectedField, obj *Visitor) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Visitor_studentName(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.StudentName, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *string) graphql.Marshaler {
+			return ec.marshalOString2ᚖstring(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_Visitor_studentName(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("Visitor", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _Visitor_departmentPersonVisited(ctx context.Context, field graphql.CollectedField, obj *Visitor) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Visitor_departmentPersonVisited(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.DepartmentPersonVisited, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Visitor_departmentPersonVisited(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("Visitor", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _Visitor_checkOutTime(ctx context.Context, field graphql.CollectedField, obj *Visitor) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Visitor_checkOutTime(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.CheckOutTime, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *string) graphql.Marshaler {
+			return ec.marshalOString2ᚖstring(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_Visitor_checkOutTime(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("Visitor", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _Visitor_idProofType(ctx context.Context, field graphql.CollectedField, obj *Visitor) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Visitor_idProofType(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.IDProofType, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *string) graphql.Marshaler {
+			return ec.marshalOString2ᚖstring(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_Visitor_idProofType(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("Visitor", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _Visitor_idProofNumber(ctx context.Context, field graphql.CollectedField, obj *Visitor) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Visitor_idProofNumber(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.IDProofNumber, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *string) graphql.Marshaler {
+			return ec.marshalOString2ᚖstring(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_Visitor_idProofNumber(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("Visitor", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _Visitor_notes(ctx context.Context, field graphql.CollectedField, obj *Visitor) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Visitor_notes(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.Notes, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *string) graphql.Marshaler {
+			return ec.marshalOString2ᚖstring(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_Visitor_notes(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("Visitor", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _Visitor_createdAt(ctx context.Context, field graphql.CollectedField, obj *Visitor) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Visitor_createdAt(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.CreatedAt, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Visitor_createdAt(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("Visitor", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _Visitor_updatedAt(ctx context.Context, field graphql.CollectedField, obj *Visitor) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Visitor_updatedAt(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.UpdatedAt, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Visitor_updatedAt(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("Visitor", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
 // endregion **************************** field.gotpl *****************************
 
 // region    **************************** input.gotpl *****************************
@@ -1492,6 +2014,113 @@ func (ec *executionContext) unmarshalInputCreateComplaintInput(ctx context.Conte
 				return it, err
 			}
 			it.Feedback = data
+		}
+	}
+	return it, nil
+}
+
+func (ec *executionContext) unmarshalInputCreateVisitorInput(ctx context.Context, obj any) (CreateVisitorInput, error) {
+	var it CreateVisitorInput
+	if obj == nil {
+		return it, nil
+	}
+
+	asMap := map[string]any{}
+	for k, v := range obj.(map[string]any) {
+		asMap[k] = v
+	}
+
+	fieldsInOrder := [...]string{"visitorName", "visitDate", "visitTime", "purposeOfVisit", "contactNumber", "visitorType", "studentName", "departmentPersonVisited", "checkOutTime", "idProofType", "idProofNumber", "notes"}
+	for _, k := range fieldsInOrder {
+		v, ok := asMap[k]
+		if !ok {
+			continue
+		}
+		switch k {
+		case "visitorName":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("visitorName"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.VisitorName = data
+		case "visitDate":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("visitDate"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.VisitDate = data
+		case "visitTime":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("visitTime"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.VisitTime = data
+		case "purposeOfVisit":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("purposeOfVisit"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.PurposeOfVisit = data
+		case "contactNumber":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("contactNumber"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.ContactNumber = data
+		case "visitorType":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("visitorType"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.VisitorType = data
+		case "studentName":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("studentName"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.StudentName = data
+		case "departmentPersonVisited":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("departmentPersonVisited"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.DepartmentPersonVisited = data
+		case "checkOutTime":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("checkOutTime"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.CheckOutTime = data
+		case "idProofType":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("idProofType"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.IDProofType = data
+		case "idProofNumber":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("idProofNumber"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.IDProofNumber = data
+		case "notes":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("notes"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Notes = data
 		}
 	}
 	return it, nil
@@ -1792,6 +2421,120 @@ func (ec *executionContext) unmarshalInputUpdateComplaintInput(ctx context.Conte
 				return it, err
 			}
 			it.Feedback = data
+		}
+	}
+	return it, nil
+}
+
+func (ec *executionContext) unmarshalInputUpdateVisitorInput(ctx context.Context, obj any) (UpdateVisitorInput, error) {
+	var it UpdateVisitorInput
+	if obj == nil {
+		return it, nil
+	}
+
+	asMap := map[string]any{}
+	for k, v := range obj.(map[string]any) {
+		asMap[k] = v
+	}
+
+	fieldsInOrder := [...]string{"visitorId", "visitorName", "visitDate", "visitTime", "purposeOfVisit", "contactNumber", "visitorType", "studentName", "departmentPersonVisited", "checkOutTime", "idProofType", "idProofNumber", "notes"}
+	for _, k := range fieldsInOrder {
+		v, ok := asMap[k]
+		if !ok {
+			continue
+		}
+		switch k {
+		case "visitorId":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("visitorId"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.VisitorID = data
+		case "visitorName":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("visitorName"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.VisitorName = data
+		case "visitDate":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("visitDate"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.VisitDate = data
+		case "visitTime":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("visitTime"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.VisitTime = data
+		case "purposeOfVisit":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("purposeOfVisit"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.PurposeOfVisit = data
+		case "contactNumber":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("contactNumber"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.ContactNumber = data
+		case "visitorType":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("visitorType"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.VisitorType = data
+		case "studentName":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("studentName"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.StudentName = data
+		case "departmentPersonVisited":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("departmentPersonVisited"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.DepartmentPersonVisited = data
+		case "checkOutTime":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("checkOutTime"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.CheckOutTime = data
+		case "idProofType":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("idProofType"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.IDProofType = data
+		case "idProofNumber":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("idProofNumber"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.IDProofNumber = data
+		case "notes":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("notes"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Notes = data
 		}
 	}
 	return it, nil
@@ -2150,6 +2893,136 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
+		case "createVisitor":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_createVisitor(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "updateVisitor":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_updateVisitor(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "deleteVisitor":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_deleteVisitor(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.Deferred, int32(min(len(deferred), math.MaxInt32)))
+
+	for label, dfs := range deferred {
+		ec.ProcessDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
+var visitorImplementors = []string{"Visitor"}
+
+func (ec *executionContext) _Visitor(ctx context.Context, sel ast.SelectionSet, obj *Visitor) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, visitorImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("Visitor")
+		case "visitorId":
+			out.Values[i] = ec._Visitor_visitorId(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "visitorName":
+			out.Values[i] = ec._Visitor_visitorName(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "visitDate":
+			out.Values[i] = ec._Visitor_visitDate(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "visitTime":
+			out.Values[i] = ec._Visitor_visitTime(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "purposeOfVisit":
+			out.Values[i] = ec._Visitor_purposeOfVisit(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "contactNumber":
+			out.Values[i] = ec._Visitor_contactNumber(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "visitorType":
+			out.Values[i] = ec._Visitor_visitorType(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "studentName":
+			out.Values[i] = ec._Visitor_studentName(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				out.Invalids++
+			}
+		case "departmentPersonVisited":
+			out.Values[i] = ec._Visitor_departmentPersonVisited(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "checkOutTime":
+			out.Values[i] = ec._Visitor_checkOutTime(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				out.Invalids++
+			}
+		case "idProofType":
+			out.Values[i] = ec._Visitor_idProofType(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				out.Invalids++
+			}
+		case "idProofNumber":
+			out.Values[i] = ec._Visitor_idProofNumber(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				out.Invalids++
+			}
+		case "notes":
+			out.Values[i] = ec._Visitor_notes(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				out.Invalids++
+			}
+		case "createdAt":
+			out.Values[i] = ec._Visitor_createdAt(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "updatedAt":
+			out.Values[i] = ec._Visitor_updatedAt(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -2247,6 +3120,11 @@ func (ec *executionContext) unmarshalNCreateComplaintInput2goᚑseedᚋgraphᚐC
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
+func (ec *executionContext) unmarshalNCreateVisitorInput2goᚑseedᚋgraphᚐCreateVisitorInput(ctx context.Context, v any) (CreateVisitorInput, error) {
+	res, err := ec.unmarshalInputCreateVisitorInput(ctx, v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
 func (ec *executionContext) unmarshalNLoginInput2goᚑseedᚋgraphᚐLoginInput(ctx context.Context, v any) (LoginInput, error) {
 	res, err := ec.unmarshalInputLoginInput(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
@@ -2274,6 +3152,41 @@ func (ec *executionContext) unmarshalNUpdateAdmissionInquiryInput2goᚑseedᚋgr
 func (ec *executionContext) unmarshalNUpdateComplaintInput2goᚑseedᚋgraphᚐUpdateComplaintInput(ctx context.Context, v any) (UpdateComplaintInput, error) {
 	res, err := ec.unmarshalInputUpdateComplaintInput(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) unmarshalNUpdateVisitorInput2goᚑseedᚋgraphᚐUpdateVisitorInput(ctx context.Context, v any) (UpdateVisitorInput, error) {
+	res, err := ec.unmarshalInputUpdateVisitorInput(ctx, v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNVisitor2goᚑseedᚋgraphᚐVisitor(ctx context.Context, sel ast.SelectionSet, v Visitor) graphql.Marshaler {
+	return ec._Visitor(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalNVisitor2ᚕᚖgoᚑseedᚋgraphᚐVisitorᚄ(ctx context.Context, sel ast.SelectionSet, v []*Visitor) graphql.Marshaler {
+	ret := graphql.MarshalSliceConcurrently(ctx, len(v), 0, false, func(ctx context.Context, i int) graphql.Marshaler {
+		fc := graphql.GetFieldContext(ctx)
+		fc.Result = &v[i]
+		return ec.marshalNVisitor2ᚖgoᚑseedᚋgraphᚐVisitor(ctx, sel, v[i])
+	})
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
+func (ec *executionContext) marshalNVisitor2ᚖgoᚑseedᚋgraphᚐVisitor(ctx context.Context, sel ast.SelectionSet, v *Visitor) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			graphql.AddErrorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._Visitor(ctx, sel, v)
 }
 
 // endregion ***************************** type.gotpl *****************************

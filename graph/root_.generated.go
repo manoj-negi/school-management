@@ -234,11 +234,14 @@ type ComplexityRoot struct {
 	Mutation struct {
 		CreateAdmissionInquiry func(childComplexity int, input CreateAdmissionInquiryInput) int
 		CreateComplaint        func(childComplexity int, input CreateComplaintInput) int
+		CreateVisitor          func(childComplexity int, input CreateVisitorInput) int
 		DeleteAdmissionInquiry func(childComplexity int, inquiryID string) int
 		DeleteComplaint        func(childComplexity int, complaintID string) int
+		DeleteVisitor          func(childComplexity int, visitorID string) int
 		Login                  func(childComplexity int, input LoginInput) int
 		UpdateAdmissionInquiry func(childComplexity int, input UpdateAdmissionInquiryInput) int
 		UpdateComplaint        func(childComplexity int, input UpdateComplaintInput) int
+		UpdateVisitor          func(childComplexity int, input UpdateVisitorInput) int
 	}
 
 	PageInfo struct {
@@ -277,6 +280,7 @@ type ComplexityRoot struct {
 		TeacherAttendances func(childComplexity int) int
 		Teachers           func(childComplexity int) int
 		Users              func(childComplexity int) int
+		Visitors           func(childComplexity int) int
 	}
 
 	Role struct {
@@ -378,6 +382,24 @@ type ComplexityRoot struct {
 		RoleRef   func(childComplexity int) int
 		UpdatedAt func(childComplexity int) int
 		Username  func(childComplexity int) int
+	}
+
+	Visitor struct {
+		CheckOutTime            func(childComplexity int) int
+		ContactNumber           func(childComplexity int) int
+		CreatedAt               func(childComplexity int) int
+		DepartmentPersonVisited func(childComplexity int) int
+		IDProofNumber           func(childComplexity int) int
+		IDProofType             func(childComplexity int) int
+		Notes                   func(childComplexity int) int
+		PurposeOfVisit          func(childComplexity int) int
+		StudentName             func(childComplexity int) int
+		UpdatedAt               func(childComplexity int) int
+		VisitDate               func(childComplexity int) int
+		VisitTime               func(childComplexity int) int
+		VisitorID               func(childComplexity int) int
+		VisitorName             func(childComplexity int) int
+		VisitorType             func(childComplexity int) int
 	}
 }
 
@@ -1064,6 +1086,17 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.CreateComplaint(childComplexity, args["input"].(CreateComplaintInput)), true
+	case "Mutation.createVisitor":
+		if e.ComplexityRoot.Mutation.CreateVisitor == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_createVisitor_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.CreateVisitor(childComplexity, args["input"].(CreateVisitorInput)), true
 	case "Mutation.deleteAdmissionInquiry":
 		if e.ComplexityRoot.Mutation.DeleteAdmissionInquiry == nil {
 			break
@@ -1086,6 +1119,17 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.DeleteComplaint(childComplexity, args["complaintId"].(string)), true
+	case "Mutation.deleteVisitor":
+		if e.ComplexityRoot.Mutation.DeleteVisitor == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_deleteVisitor_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.DeleteVisitor(childComplexity, args["visitorId"].(string)), true
 	case "Mutation.login":
 		if e.ComplexityRoot.Mutation.Login == nil {
 			break
@@ -1119,6 +1163,17 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.UpdateComplaint(childComplexity, args["input"].(UpdateComplaintInput)), true
+	case "Mutation.updateVisitor":
+		if e.ComplexityRoot.Mutation.UpdateVisitor == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updateVisitor_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.UpdateVisitor(childComplexity, args["input"].(UpdateVisitorInput)), true
 
 	case "PageInfo.endCursor":
 		if e.ComplexityRoot.PageInfo.EndCursor == nil {
@@ -1307,6 +1362,12 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Query.Users(childComplexity), true
+	case "Query.visitors":
+		if e.ComplexityRoot.Query.Visitors == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Query.Visitors(childComplexity), true
 
 	case "Role.description":
 		if e.ComplexityRoot.Role.Description == nil {
@@ -1778,6 +1839,97 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 
 		return e.ComplexityRoot.User.Username(childComplexity), true
 
+	case "Visitor.checkOutTime":
+		if e.ComplexityRoot.Visitor.CheckOutTime == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Visitor.CheckOutTime(childComplexity), true
+	case "Visitor.contactNumber":
+		if e.ComplexityRoot.Visitor.ContactNumber == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Visitor.ContactNumber(childComplexity), true
+	case "Visitor.createdAt":
+		if e.ComplexityRoot.Visitor.CreatedAt == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Visitor.CreatedAt(childComplexity), true
+	case "Visitor.departmentPersonVisited":
+		if e.ComplexityRoot.Visitor.DepartmentPersonVisited == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Visitor.DepartmentPersonVisited(childComplexity), true
+	case "Visitor.idProofNumber":
+		if e.ComplexityRoot.Visitor.IDProofNumber == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Visitor.IDProofNumber(childComplexity), true
+	case "Visitor.idProofType":
+		if e.ComplexityRoot.Visitor.IDProofType == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Visitor.IDProofType(childComplexity), true
+	case "Visitor.notes":
+		if e.ComplexityRoot.Visitor.Notes == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Visitor.Notes(childComplexity), true
+	case "Visitor.purposeOfVisit":
+		if e.ComplexityRoot.Visitor.PurposeOfVisit == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Visitor.PurposeOfVisit(childComplexity), true
+	case "Visitor.studentName":
+		if e.ComplexityRoot.Visitor.StudentName == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Visitor.StudentName(childComplexity), true
+	case "Visitor.updatedAt":
+		if e.ComplexityRoot.Visitor.UpdatedAt == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Visitor.UpdatedAt(childComplexity), true
+	case "Visitor.visitDate":
+		if e.ComplexityRoot.Visitor.VisitDate == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Visitor.VisitDate(childComplexity), true
+	case "Visitor.visitTime":
+		if e.ComplexityRoot.Visitor.VisitTime == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Visitor.VisitTime(childComplexity), true
+	case "Visitor.visitorId":
+		if e.ComplexityRoot.Visitor.VisitorID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Visitor.VisitorID(childComplexity), true
+	case "Visitor.visitorName":
+		if e.ComplexityRoot.Visitor.VisitorName == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Visitor.VisitorName(childComplexity), true
+	case "Visitor.visitorType":
+		if e.ComplexityRoot.Visitor.VisitorType == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Visitor.VisitorType(childComplexity), true
+
 	}
 	return 0, false
 }
@@ -1807,6 +1959,7 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 		ec.unmarshalInputCreateTeacherAttendanceInput,
 		ec.unmarshalInputCreateTeacherInput,
 		ec.unmarshalInputCreateUserInput,
+		ec.unmarshalInputCreateVisitorInput,
 		ec.unmarshalInputDepartmentWhereInput,
 		ec.unmarshalInputEmployeeWhereInput,
 		ec.unmarshalInputEventWhereInput,
@@ -1841,6 +1994,7 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 		ec.unmarshalInputUpdateTeacherAttendanceInput,
 		ec.unmarshalInputUpdateTeacherInput,
 		ec.unmarshalInputUpdateUserInput,
+		ec.unmarshalInputUpdateVisitorInput,
 		ec.unmarshalInputUserWhereInput,
 	)
 	first := true
@@ -2429,6 +2583,42 @@ func (ec *executionContext) childFields_User(ctx context.Context, field graphql.
 		return ec.fieldContext_User_roleRef(ctx, field)
 	}
 	return nil, fmt.Errorf("no field named %q was found under type User", field.Name)
+}
+
+func (ec *executionContext) childFields_Visitor(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+	switch field.Name {
+	case "visitorId":
+		return ec.fieldContext_Visitor_visitorId(ctx, field)
+	case "visitorName":
+		return ec.fieldContext_Visitor_visitorName(ctx, field)
+	case "visitDate":
+		return ec.fieldContext_Visitor_visitDate(ctx, field)
+	case "visitTime":
+		return ec.fieldContext_Visitor_visitTime(ctx, field)
+	case "purposeOfVisit":
+		return ec.fieldContext_Visitor_purposeOfVisit(ctx, field)
+	case "contactNumber":
+		return ec.fieldContext_Visitor_contactNumber(ctx, field)
+	case "visitorType":
+		return ec.fieldContext_Visitor_visitorType(ctx, field)
+	case "studentName":
+		return ec.fieldContext_Visitor_studentName(ctx, field)
+	case "departmentPersonVisited":
+		return ec.fieldContext_Visitor_departmentPersonVisited(ctx, field)
+	case "checkOutTime":
+		return ec.fieldContext_Visitor_checkOutTime(ctx, field)
+	case "idProofType":
+		return ec.fieldContext_Visitor_idProofType(ctx, field)
+	case "idProofNumber":
+		return ec.fieldContext_Visitor_idProofNumber(ctx, field)
+	case "notes":
+		return ec.fieldContext_Visitor_notes(ctx, field)
+	case "createdAt":
+		return ec.fieldContext_Visitor_createdAt(ctx, field)
+	case "updatedAt":
+		return ec.fieldContext_Visitor_updatedAt(ctx, field)
+	}
+	return nil, fmt.Errorf("no field named %q was found under type Visitor", field.Name)
 }
 
 func (ec *executionContext) childFields___Directive(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
