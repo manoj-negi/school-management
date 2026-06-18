@@ -20,6 +20,9 @@ type MutationResolver interface {
 	CreateAdmissionInquiry(ctx context.Context, input CreateAdmissionInquiryInput) (*AdmissionInquiry, error)
 	UpdateAdmissionInquiry(ctx context.Context, input UpdateAdmissionInquiryInput) (*AdmissionInquiry, error)
 	DeleteAdmissionInquiry(ctx context.Context, inquiryID string) (string, error)
+	CreateComplaint(ctx context.Context, input CreateComplaintInput) (*Complaint, error)
+	UpdateComplaint(ctx context.Context, input UpdateComplaintInput) (*Complaint, error)
+	DeleteComplaint(ctx context.Context, complaintID string) (string, error)
 }
 
 // endregion ************************** generated!.gotpl **************************
@@ -40,6 +43,20 @@ func (ec *executionContext) field_Mutation_createAdmissionInquiry_args(ctx conte
 	return args, nil
 }
 
+func (ec *executionContext) field_Mutation_createComplaint_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
+	var err error
+	args := map[string]any{}
+	arg0, err := graphql.ProcessArgField(ctx, rawArgs, "input",
+		func(ctx context.Context, v any) (CreateComplaintInput, error) {
+			return ec.unmarshalNCreateComplaintInput2goᚑseedᚋgraphᚐCreateComplaintInput(ctx, v)
+		})
+	if err != nil {
+		return nil, err
+	}
+	args["input"] = arg0
+	return args, nil
+}
+
 func (ec *executionContext) field_Mutation_deleteAdmissionInquiry_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
 	var err error
 	args := map[string]any{}
@@ -51,6 +68,20 @@ func (ec *executionContext) field_Mutation_deleteAdmissionInquiry_args(ctx conte
 		return nil, err
 	}
 	args["inquiryId"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Mutation_deleteComplaint_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
+	var err error
+	args := map[string]any{}
+	arg0, err := graphql.ProcessArgField(ctx, rawArgs, "complaintId",
+		func(ctx context.Context, v any) (string, error) {
+			return ec.unmarshalNString2string(ctx, v)
+		})
+	if err != nil {
+		return nil, err
+	}
+	args["complaintId"] = arg0
 	return args, nil
 }
 
@@ -74,6 +105,20 @@ func (ec *executionContext) field_Mutation_updateAdmissionInquiry_args(ctx conte
 	arg0, err := graphql.ProcessArgField(ctx, rawArgs, "input",
 		func(ctx context.Context, v any) (UpdateAdmissionInquiryInput, error) {
 			return ec.unmarshalNUpdateAdmissionInquiryInput2goᚑseedᚋgraphᚐUpdateAdmissionInquiryInput(ctx, v)
+		})
+	if err != nil {
+		return nil, err
+	}
+	args["input"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Mutation_updateComplaint_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
+	var err error
+	args := map[string]any{}
+	arg0, err := graphql.ProcessArgField(ctx, rawArgs, "input",
+		func(ctx context.Context, v any) (UpdateComplaintInput, error) {
+			return ec.unmarshalNUpdateComplaintInput2goᚑseedᚋgraphᚐUpdateComplaintInput(ctx, v)
 		})
 	if err != nil {
 		return nil, err
@@ -454,6 +499,397 @@ func (ec *executionContext) fieldContext_AdmissionInquiry_img(_ context.Context,
 	return graphql.NewScalarFieldContext("AdmissionInquiry", field, false, false, errors.New("field of type String does not have child fields"))
 }
 
+func (ec *executionContext) _Complaint_complaintId(ctx context.Context, field graphql.CollectedField, obj *Complaint) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Complaint_complaintId(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ComplaintID, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Complaint_complaintId(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("Complaint", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _Complaint_complaintDate(ctx context.Context, field graphql.CollectedField, obj *Complaint) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Complaint_complaintDate(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ComplaintDate, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Complaint_complaintDate(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("Complaint", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _Complaint_complaintTime(ctx context.Context, field graphql.CollectedField, obj *Complaint) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Complaint_complaintTime(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ComplaintTime, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Complaint_complaintTime(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("Complaint", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _Complaint_complainantName(ctx context.Context, field graphql.CollectedField, obj *Complaint) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Complaint_complainantName(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ComplainantName, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Complaint_complainantName(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("Complaint", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _Complaint_img(ctx context.Context, field graphql.CollectedField, obj *Complaint) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Complaint_img(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.Img, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Complaint_img(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("Complaint", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _Complaint_complainantType(ctx context.Context, field graphql.CollectedField, obj *Complaint) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Complaint_complainantType(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ComplainantType, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Complaint_complainantType(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("Complaint", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _Complaint_studentName(ctx context.Context, field graphql.CollectedField, obj *Complaint) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Complaint_studentName(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.StudentName, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Complaint_studentName(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("Complaint", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _Complaint_complaintDescription(ctx context.Context, field graphql.CollectedField, obj *Complaint) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Complaint_complaintDescription(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ComplaintDescription, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Complaint_complaintDescription(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("Complaint", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _Complaint_department(ctx context.Context, field graphql.CollectedField, obj *Complaint) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Complaint_department(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.Department, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Complaint_department(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("Complaint", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _Complaint_status(ctx context.Context, field graphql.CollectedField, obj *Complaint) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Complaint_status(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.Status, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Complaint_status(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("Complaint", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _Complaint_assignedTo(ctx context.Context, field graphql.CollectedField, obj *Complaint) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Complaint_assignedTo(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.AssignedTo, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Complaint_assignedTo(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("Complaint", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _Complaint_resolutionDescription(ctx context.Context, field graphql.CollectedField, obj *Complaint) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Complaint_resolutionDescription(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ResolutionDescription, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Complaint_resolutionDescription(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("Complaint", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _Complaint_resolutionDate(ctx context.Context, field graphql.CollectedField, obj *Complaint) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Complaint_resolutionDate(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ResolutionDate, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Complaint_resolutionDate(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("Complaint", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _Complaint_createdAt(ctx context.Context, field graphql.CollectedField, obj *Complaint) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Complaint_createdAt(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.CreatedAt, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Complaint_createdAt(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("Complaint", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _Complaint_updatedAt(ctx context.Context, field graphql.CollectedField, obj *Complaint) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Complaint_updatedAt(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.UpdatedAt, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Complaint_updatedAt(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("Complaint", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _Complaint_priorityLevel(ctx context.Context, field graphql.CollectedField, obj *Complaint) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Complaint_priorityLevel(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.PriorityLevel, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Complaint_priorityLevel(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("Complaint", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _Complaint_feedback(ctx context.Context, field graphql.CollectedField, obj *Complaint) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Complaint_feedback(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.Feedback, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Complaint_feedback(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("Complaint", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
 func (ec *executionContext) _LoginResponse_token(ctx context.Context, field graphql.CollectedField, obj *LoginResponse) (ret graphql.Marshaler) {
 	return graphql.ResolveField(
 		ctx,
@@ -676,6 +1112,138 @@ func (ec *executionContext) fieldContext_Mutation_deleteAdmissionInquiry(ctx con
 	return fc, nil
 }
 
+func (ec *executionContext) _Mutation_createComplaint(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Mutation_createComplaint(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			fc := graphql.GetFieldContext(ctx)
+			return ec.Resolvers.Mutation().CreateComplaint(ctx, fc.Args["input"].(CreateComplaintInput))
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *Complaint) graphql.Marshaler {
+			return ec.marshalNComplaint2ᚖgoᚑseedᚋgraphᚐComplaint(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Mutation_createComplaint(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_Complaint(ctx, field)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_createComplaint_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_updateComplaint(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Mutation_updateComplaint(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			fc := graphql.GetFieldContext(ctx)
+			return ec.Resolvers.Mutation().UpdateComplaint(ctx, fc.Args["input"].(UpdateComplaintInput))
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *Complaint) graphql.Marshaler {
+			return ec.marshalNComplaint2ᚖgoᚑseedᚋgraphᚐComplaint(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Mutation_updateComplaint(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_Complaint(ctx, field)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_updateComplaint_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_deleteComplaint(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Mutation_deleteComplaint(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			fc := graphql.GetFieldContext(ctx)
+			return ec.Resolvers.Mutation().DeleteComplaint(ctx, fc.Args["complaintId"].(string))
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Mutation_deleteComplaint(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_deleteComplaint_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
 // endregion **************************** field.gotpl *****************************
 
 // region    **************************** input.gotpl *****************************
@@ -803,6 +1371,127 @@ func (ec *executionContext) unmarshalInputCreateAdmissionInquiryInput(ctx contex
 				return it, err
 			}
 			it.Img = data
+		}
+	}
+	return it, nil
+}
+
+func (ec *executionContext) unmarshalInputCreateComplaintInput(ctx context.Context, obj any) (CreateComplaintInput, error) {
+	var it CreateComplaintInput
+	if obj == nil {
+		return it, nil
+	}
+
+	asMap := map[string]any{}
+	for k, v := range obj.(map[string]any) {
+		asMap[k] = v
+	}
+
+	fieldsInOrder := [...]string{"complaintDate", "complaintTime", "complainantName", "img", "complainantType", "studentName", "complaintDescription", "department", "status", "assignedTo", "resolutionDescription", "resolutionDate", "priorityLevel", "feedback"}
+	for _, k := range fieldsInOrder {
+		v, ok := asMap[k]
+		if !ok {
+			continue
+		}
+		switch k {
+		case "complaintDate":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("complaintDate"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.ComplaintDate = data
+		case "complaintTime":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("complaintTime"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.ComplaintTime = data
+		case "complainantName":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("complainantName"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.ComplainantName = data
+		case "img":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("img"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Img = data
+		case "complainantType":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("complainantType"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.ComplainantType = data
+		case "studentName":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("studentName"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.StudentName = data
+		case "complaintDescription":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("complaintDescription"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.ComplaintDescription = data
+		case "department":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("department"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Department = data
+		case "status":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("status"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Status = data
+		case "assignedTo":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("assignedTo"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.AssignedTo = data
+		case "resolutionDescription":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("resolutionDescription"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.ResolutionDescription = data
+		case "resolutionDate":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("resolutionDate"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.ResolutionDate = data
+		case "priorityLevel":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("priorityLevel"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.PriorityLevel = data
+		case "feedback":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("feedback"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Feedback = data
 		}
 	}
 	return it, nil
@@ -980,6 +1669,134 @@ func (ec *executionContext) unmarshalInputUpdateAdmissionInquiryInput(ctx contex
 	return it, nil
 }
 
+func (ec *executionContext) unmarshalInputUpdateComplaintInput(ctx context.Context, obj any) (UpdateComplaintInput, error) {
+	var it UpdateComplaintInput
+	if obj == nil {
+		return it, nil
+	}
+
+	asMap := map[string]any{}
+	for k, v := range obj.(map[string]any) {
+		asMap[k] = v
+	}
+
+	fieldsInOrder := [...]string{"complaintId", "complaintDate", "complaintTime", "complainantName", "img", "complainantType", "studentName", "complaintDescription", "department", "status", "assignedTo", "resolutionDescription", "resolutionDate", "priorityLevel", "feedback"}
+	for _, k := range fieldsInOrder {
+		v, ok := asMap[k]
+		if !ok {
+			continue
+		}
+		switch k {
+		case "complaintId":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("complaintId"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.ComplaintID = data
+		case "complaintDate":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("complaintDate"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.ComplaintDate = data
+		case "complaintTime":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("complaintTime"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.ComplaintTime = data
+		case "complainantName":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("complainantName"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.ComplainantName = data
+		case "img":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("img"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Img = data
+		case "complainantType":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("complainantType"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.ComplainantType = data
+		case "studentName":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("studentName"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.StudentName = data
+		case "complaintDescription":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("complaintDescription"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.ComplaintDescription = data
+		case "department":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("department"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Department = data
+		case "status":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("status"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Status = data
+		case "assignedTo":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("assignedTo"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.AssignedTo = data
+		case "resolutionDescription":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("resolutionDescription"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.ResolutionDescription = data
+		case "resolutionDate":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("resolutionDate"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.ResolutionDate = data
+		case "priorityLevel":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("priorityLevel"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.PriorityLevel = data
+		case "feedback":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("feedback"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Feedback = data
+		}
+	}
+	return it, nil
+}
+
 // endregion **************************** input.gotpl *****************************
 
 // region    ************************** interface.gotpl ***************************
@@ -1102,6 +1919,125 @@ func (ec *executionContext) _AdmissionInquiry(ctx context.Context, sel ast.Selec
 	return out
 }
 
+var complaintImplementors = []string{"Complaint"}
+
+func (ec *executionContext) _Complaint(ctx context.Context, sel ast.SelectionSet, obj *Complaint) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, complaintImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("Complaint")
+		case "complaintId":
+			out.Values[i] = ec._Complaint_complaintId(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "complaintDate":
+			out.Values[i] = ec._Complaint_complaintDate(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "complaintTime":
+			out.Values[i] = ec._Complaint_complaintTime(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "complainantName":
+			out.Values[i] = ec._Complaint_complainantName(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "img":
+			out.Values[i] = ec._Complaint_img(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "complainantType":
+			out.Values[i] = ec._Complaint_complainantType(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "studentName":
+			out.Values[i] = ec._Complaint_studentName(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "complaintDescription":
+			out.Values[i] = ec._Complaint_complaintDescription(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "department":
+			out.Values[i] = ec._Complaint_department(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "status":
+			out.Values[i] = ec._Complaint_status(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "assignedTo":
+			out.Values[i] = ec._Complaint_assignedTo(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "resolutionDescription":
+			out.Values[i] = ec._Complaint_resolutionDescription(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "resolutionDate":
+			out.Values[i] = ec._Complaint_resolutionDate(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "createdAt":
+			out.Values[i] = ec._Complaint_createdAt(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "updatedAt":
+			out.Values[i] = ec._Complaint_updatedAt(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "priorityLevel":
+			out.Values[i] = ec._Complaint_priorityLevel(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "feedback":
+			out.Values[i] = ec._Complaint_feedback(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.Deferred, int32(min(len(deferred), math.MaxInt32)))
+
+	for label, dfs := range deferred {
+		ec.ProcessDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
 var loginResponseImplementors = []string{"LoginResponse"}
 
 func (ec *executionContext) _LoginResponse(ctx context.Context, sel ast.SelectionSet, obj *LoginResponse) graphql.Marshaler {
@@ -1193,6 +2129,27 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
+		case "createComplaint":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_createComplaint(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "updateComplaint":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_updateComplaint(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "deleteComplaint":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_deleteComplaint(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -1250,8 +2207,43 @@ func (ec *executionContext) marshalNAdmissionInquiry2ᚖgoᚑseedᚋgraphᚐAdmi
 	return ec._AdmissionInquiry(ctx, sel, v)
 }
 
+func (ec *executionContext) marshalNComplaint2goᚑseedᚋgraphᚐComplaint(ctx context.Context, sel ast.SelectionSet, v Complaint) graphql.Marshaler {
+	return ec._Complaint(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalNComplaint2ᚕᚖgoᚑseedᚋgraphᚐComplaintᚄ(ctx context.Context, sel ast.SelectionSet, v []*Complaint) graphql.Marshaler {
+	ret := graphql.MarshalSliceConcurrently(ctx, len(v), 0, false, func(ctx context.Context, i int) graphql.Marshaler {
+		fc := graphql.GetFieldContext(ctx)
+		fc.Result = &v[i]
+		return ec.marshalNComplaint2ᚖgoᚑseedᚋgraphᚐComplaint(ctx, sel, v[i])
+	})
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
+func (ec *executionContext) marshalNComplaint2ᚖgoᚑseedᚋgraphᚐComplaint(ctx context.Context, sel ast.SelectionSet, v *Complaint) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			graphql.AddErrorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._Complaint(ctx, sel, v)
+}
+
 func (ec *executionContext) unmarshalNCreateAdmissionInquiryInput2goᚑseedᚋgraphᚐCreateAdmissionInquiryInput(ctx context.Context, v any) (CreateAdmissionInquiryInput, error) {
 	res, err := ec.unmarshalInputCreateAdmissionInquiryInput(ctx, v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) unmarshalNCreateComplaintInput2goᚑseedᚋgraphᚐCreateComplaintInput(ctx context.Context, v any) (CreateComplaintInput, error) {
+	res, err := ec.unmarshalInputCreateComplaintInput(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
@@ -1276,6 +2268,11 @@ func (ec *executionContext) marshalNLoginResponse2ᚖgoᚑseedᚋgraphᚐLoginRe
 
 func (ec *executionContext) unmarshalNUpdateAdmissionInquiryInput2goᚑseedᚋgraphᚐUpdateAdmissionInquiryInput(ctx context.Context, v any) (UpdateAdmissionInquiryInput, error) {
 	res, err := ec.unmarshalInputUpdateAdmissionInquiryInput(ctx, v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) unmarshalNUpdateComplaintInput2goᚑseedᚋgraphᚐUpdateComplaintInput(ctx context.Context, v any) (UpdateComplaintInput, error) {
+	res, err := ec.unmarshalInputUpdateComplaintInput(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 

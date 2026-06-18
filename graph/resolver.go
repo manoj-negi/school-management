@@ -27,6 +27,13 @@ func formatNullTime(nt sql.NullTime) string {
 	return nt.Time.Format("2006-01-02")
 }
 
+func formatTimestamp(nt sql.NullTime) string {
+	if !nt.Valid {
+		return ""
+	}
+	return nt.Time.Format("2006-01-02T15:04:05Z")
+}
+
 func parseDateString(s *string) sql.NullTime {
 	if s == nil || *s == "" {
 		return sql.NullTime{}
@@ -97,4 +104,11 @@ func resolveAssignedTo(ctx context.Context, db *sql.DB, s *string) (sql.NullStri
 
 	// Return a clean user-friendly error
 	return sql.NullString{}, fmt.Errorf("assignedTo must be a valid UUID or username: user %q not found", val)
+}
+
+func derefString(s *string) string {
+	if s == nil {
+		return ""
+	}
+	return *s
 }

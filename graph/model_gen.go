@@ -21,6 +21,26 @@ type AdmissionInquiry struct {
 	Img                string `json:"img"`
 }
 
+type Complaint struct {
+	ComplaintID           string `json:"complaintId"`
+	ComplaintDate         string `json:"complaintDate"`
+	ComplaintTime         string `json:"complaintTime"`
+	ComplainantName       string `json:"complainantName"`
+	Img                   string `json:"img"`
+	ComplainantType       string `json:"complainantType"`
+	StudentName           string `json:"studentName"`
+	ComplaintDescription  string `json:"complaintDescription"`
+	Department            string `json:"department"`
+	Status                string `json:"status"`
+	AssignedTo            string `json:"assignedTo"`
+	ResolutionDescription string `json:"resolutionDescription"`
+	ResolutionDate        string `json:"resolutionDate"`
+	CreatedAt             string `json:"createdAt"`
+	UpdatedAt             string `json:"updatedAt"`
+	PriorityLevel         string `json:"priorityLevel"`
+	Feedback              string `json:"feedback"`
+}
+
 type CreateAdmissionInquiryInput struct {
 	StudentName        string  `json:"studentName"`
 	GuardianName       string  `json:"guardianName"`
@@ -37,6 +57,23 @@ type CreateAdmissionInquiryInput struct {
 	CampusLocation     *string `json:"campusLocation,omitempty"`
 	PreviousEducation  *string `json:"previousEducation,omitempty"`
 	Img                *string `json:"img,omitempty"`
+}
+
+type CreateComplaintInput struct {
+	ComplaintDate         string  `json:"complaintDate"`
+	ComplaintTime         string  `json:"complaintTime"`
+	ComplainantName       string  `json:"complainantName"`
+	Img                   *string `json:"img,omitempty"`
+	ComplainantType       string  `json:"complainantType"`
+	StudentName           *string `json:"studentName,omitempty"`
+	ComplaintDescription  string  `json:"complaintDescription"`
+	Department            string  `json:"department"`
+	Status                string  `json:"status"`
+	AssignedTo            *string `json:"assignedTo,omitempty"`
+	ResolutionDescription *string `json:"resolutionDescription,omitempty"`
+	ResolutionDate        *string `json:"resolutionDate,omitempty"`
+	PriorityLevel         string  `json:"priorityLevel"`
+	Feedback              *string `json:"feedback,omitempty"`
 }
 
 type LoginInput struct {
@@ -66,4 +103,22 @@ type UpdateAdmissionInquiryInput struct {
 	CampusLocation     *string `json:"campusLocation,omitempty"`
 	PreviousEducation  *string `json:"previousEducation,omitempty"`
 	Img                *string `json:"img,omitempty"`
+}
+
+type UpdateComplaintInput struct {
+	ComplaintID           string  `json:"complaintId"`
+	ComplaintDate         string  `json:"complaintDate"`
+	ComplaintTime         string  `json:"complaintTime"`
+	ComplainantName       string  `json:"complainantName"`
+	Img                   *string `json:"img,omitempty"`
+	ComplainantType       string  `json:"complainantType"`
+	StudentName           *string `json:"studentName,omitempty"`
+	ComplaintDescription  string  `json:"complaintDescription"`
+	Department            string  `json:"department"`
+	Status                string  `json:"status"`
+	AssignedTo            *string `json:"assignedTo,omitempty"`
+	ResolutionDescription *string `json:"resolutionDescription,omitempty"`
+	ResolutionDate        *string `json:"resolutionDate,omitempty"`
+	PriorityLevel         string  `json:"priorityLevel"`
+	Feedback              *string `json:"feedback,omitempty"`
 }

@@ -5,6 +5,7 @@
 
 extend type Query {
   admissionInquiries: [AdmissionInquiry!]!
+  complaints: [Complaint!]!
 }
 
 extend type Mutation {
@@ -12,6 +13,9 @@ extend type Mutation {
   createAdmissionInquiry(input: CreateAdmissionInquiryInput!): AdmissionInquiry!
   updateAdmissionInquiry(input: UpdateAdmissionInquiryInput!): AdmissionInquiry!
   deleteAdmissionInquiry(inquiryId: String!): String!
+  createComplaint(input: CreateComplaintInput!): Complaint!
+  updateComplaint(input: UpdateComplaintInput!): Complaint!
+  deleteComplaint(complaintId: String!): String!
 }
 
 input UpdateAdmissionInquiryInput {
@@ -78,5 +82,60 @@ type AdmissionInquiry {
   campusLocation: String!
   previousEducation: String!
   img: String!
+}
+
+type Complaint {
+  complaintId: String!
+  complaintDate: String!
+  complaintTime: String!
+  complainantName: String!
+  img: String!
+  complainantType: String!
+  studentName: String!
+  complaintDescription: String!
+  department: String!
+  status: String!
+  assignedTo: String!
+  resolutionDescription: String!
+  resolutionDate: String!
+  createdAt: String!
+  updatedAt: String!
+  priorityLevel: String!
+  feedback: String!
+}
+
+input CreateComplaintInput {
+  complaintDate: String!
+  complaintTime: String!
+  complainantName: String!
+  img: String
+  complainantType: String!
+  studentName: String
+  complaintDescription: String!
+  department: String!
+  status: String!
+  assignedTo: String
+  resolutionDescription: String
+  resolutionDate: String
+  priorityLevel: String!
+  feedback: String
+}
+
+input UpdateComplaintInput {
+  complaintId: String!
+  complaintDate: String!
+  complaintTime: String!
+  complainantName: String!
+  img: String
+  complainantType: String!
+  studentName: String
+  complaintDescription: String!
+  department: String!
+  status: String!
+  assignedTo: String
+  resolutionDescription: String
+  resolutionDate: String
+  priorityLevel: String!
+  feedback: String
 }
 

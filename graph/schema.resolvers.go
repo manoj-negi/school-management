@@ -305,6 +305,252 @@ func (r *mutationResolver) DeleteAdmissionInquiry(ctx context.Context, inquiryID
 	return inquiryID, nil
 }
 
+// CreateComplaint is the resolver for the createComplaint field.
+func (r *mutationResolver) CreateComplaint(ctx context.Context, input CreateComplaintInput) (*Complaint, error) {
+	dbURL := os.Getenv("DATABASE_URL")
+	if dbURL == "" {
+		host := os.Getenv("DB_HOST")
+		if host == "" {
+			host = "localhost"
+		}
+		port := os.Getenv("DB_PORT")
+		if port == "" {
+			port = "5432"
+		}
+		user := os.Getenv("DB_USER")
+		if user == "" {
+			user = "postgres"
+		}
+		pass := os.Getenv("DB_PASSWORD")
+		if pass == "" {
+			pass = "postgres"
+		}
+		dbname := os.Getenv("DB_NAME")
+		if dbname == "" {
+			dbname = "school"
+		}
+		dbURL = fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable", user, pass, host, port, dbname)
+	}
+
+	db, err := sql.Open("postgres", dbURL)
+	if err != nil {
+		return nil, fmt.Errorf("failed to open database: %w", err)
+	}
+	defer db.Close()
+
+	// Generate a new UUID for the complaint ID
+	id := uuid.New().String()
+
+	// Parse timestamps
+	complaintDate := parseRequiredDateString(input.ComplaintDate)
+	resolutionDate := parseDateString(input.ResolutionDate)
+
+	// Resolve assignedTo using the helper
+	assignedTo, err := resolveAssignedTo(ctx, db, input.AssignedTo)
+	if err != nil {
+		return nil, err
+	}
+
+	// Nullable strings
+	img := parseNullString(input.Img)
+	studentName := parseNullString(input.StudentName)
+	resolutionDescription := parseNullString(input.ResolutionDescription)
+	feedback := parseNullString(input.Feedback)
+
+	createdAt := sql.NullTime{Time: time.Now(), Valid: true}
+	updatedAt := sql.NullTime{Time: time.Now(), Valid: true}
+
+	// Insert into database
+	_, err = db.ExecContext(ctx, `
+		INSERT INTO complaint (
+			complaint_id, complaint_date, complaint_time, complainant_name, img,
+			complainant_type, student_name, complaint_description, department,
+			status, assigned_to, resolution_description, resolution_date,
+			created_at, updated_at, priority_level, feedback
+		) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)
+	`,
+		id, complaintDate, input.ComplaintTime, input.ComplainantName, img,
+		input.ComplainantType, studentName, input.ComplaintDescription, input.Department,
+		input.Status, assignedTo, resolutionDescription, resolutionDate,
+		createdAt, updatedAt, input.PriorityLevel, feedback,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to insert complaint: %w", err)
+	}
+
+	return &Complaint{
+		ComplaintID:           id,
+		ComplaintDate:         formatNullTime(complaintDate),
+		ComplaintTime:         input.ComplaintTime,
+		ComplainantName:       input.ComplainantName,
+		Img:                   img.String,
+		ComplainantType:       input.ComplainantType,
+		StudentName:           studentName.String,
+		ComplaintDescription:  input.ComplaintDescription,
+		Department:            input.Department,
+		Status:                input.Status,
+		AssignedTo:            derefString(input.AssignedTo),
+		ResolutionDescription: resolutionDescription.String,
+		ResolutionDate:        formatNullTime(resolutionDate),
+		CreatedAt:             formatTimestamp(createdAt),
+		UpdatedAt:             formatTimestamp(updatedAt),
+		PriorityLevel:         input.PriorityLevel,
+		Feedback:              feedback.String,
+	}, nil
+}
+
+// UpdateComplaint is the resolver for the updateComplaint field.
+func (r *mutationResolver) UpdateComplaint(ctx context.Context, input UpdateComplaintInput) (*Complaint, error) {
+	dbURL := os.Getenv("DATABASE_URL")
+	if dbURL == "" {
+		host := os.Getenv("DB_HOST")
+		if host == "" {
+			host = "localhost"
+		}
+		port := os.Getenv("DB_PORT")
+		if port == "" {
+			port = "5432"
+		}
+		user := os.Getenv("DB_USER")
+		if user == "" {
+			user = "postgres"
+		}
+		pass := os.Getenv("DB_PASSWORD")
+		if pass == "" {
+			pass = "postgres"
+		}
+		dbname := os.Getenv("DB_NAME")
+		if dbname == "" {
+			dbname = "school"
+		}
+		dbURL = fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable", user, pass, host, port, dbname)
+	}
+
+	db, err := sql.Open("postgres", dbURL)
+	if err != nil {
+		return nil, fmt.Errorf("failed to open database: %w", err)
+	}
+	defer db.Close()
+
+	// Parse timestamps
+	complaintDate := parseRequiredDateString(input.ComplaintDate)
+	resolutionDate := parseDateString(input.ResolutionDate)
+
+	// Resolve assignedTo using the helper
+	assignedTo, err := resolveAssignedTo(ctx, db, input.AssignedTo)
+	if err != nil {
+		return nil, err
+	}
+
+	// Nullable strings
+	img := parseNullString(input.Img)
+	studentName := parseNullString(input.StudentName)
+	resolutionDescription := parseNullString(input.ResolutionDescription)
+	feedback := parseNullString(input.Feedback)
+
+	updatedAt := sql.NullTime{Time: time.Now(), Valid: true}
+
+	// Check if record exists and get its created_at timestamp
+	var createdAt sql.NullTime
+	err = db.QueryRowContext(ctx, "SELECT created_at FROM complaint WHERE complaint_id = $1", input.ComplaintID).Scan(&createdAt)
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return nil, fmt.Errorf("complaint with ID %s not found", input.ComplaintID)
+		}
+		return nil, fmt.Errorf("failed to fetch complaint details: %w", err)
+	}
+
+	// Update database
+	_, err = db.ExecContext(ctx, `
+		UPDATE complaint SET
+			complaint_date = $1, complaint_time = $2, complainant_name = $3, img = $4,
+			complainant_type = $5, student_name = $6, complaint_description = $7, department = $8,
+			status = $9, assigned_to = $10, resolution_description = $11, resolution_date = $12,
+			updated_at = $13, priority_level = $14, feedback = $15
+		WHERE complaint_id = $16
+	`,
+		complaintDate, input.ComplaintTime, input.ComplainantName, img,
+		input.ComplainantType, studentName, input.ComplaintDescription, input.Department,
+		input.Status, assignedTo, resolutionDescription, resolutionDate,
+		updatedAt, input.PriorityLevel, feedback, input.ComplaintID,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to update complaint: %w", err)
+	}
+
+	return &Complaint{
+		ComplaintID:           input.ComplaintID,
+		ComplaintDate:         formatNullTime(complaintDate),
+		ComplaintTime:         input.ComplaintTime,
+		ComplainantName:       input.ComplainantName,
+		Img:                   img.String,
+		ComplainantType:       input.ComplainantType,
+		StudentName:           studentName.String,
+		ComplaintDescription:  input.ComplaintDescription,
+		Department:            input.Department,
+		Status:                input.Status,
+		AssignedTo:            derefString(input.AssignedTo),
+		ResolutionDescription: resolutionDescription.String,
+		ResolutionDate:        formatNullTime(resolutionDate),
+		CreatedAt:             formatTimestamp(createdAt),
+		UpdatedAt:             formatTimestamp(updatedAt),
+		PriorityLevel:         input.PriorityLevel,
+		Feedback:              feedback.String,
+	}, nil
+}
+
+// DeleteComplaint is the resolver for the deleteComplaint field.
+func (r *mutationResolver) DeleteComplaint(ctx context.Context, complaintID string) (string, error) {
+	dbURL := os.Getenv("DATABASE_URL")
+	if dbURL == "" {
+		host := os.Getenv("DB_HOST")
+		if host == "" {
+			host = "localhost"
+		}
+		port := os.Getenv("DB_PORT")
+		if port == "" {
+			port = "5432"
+		}
+		user := os.Getenv("DB_USER")
+		if user == "" {
+			user = "postgres"
+		}
+		pass := os.Getenv("DB_PASSWORD")
+		if pass == "" {
+			pass = "postgres"
+		}
+		dbname := os.Getenv("DB_NAME")
+		if dbname == "" {
+			dbname = "school"
+		}
+		dbURL = fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable", user, pass, host, port, dbname)
+	}
+
+	db, err := sql.Open("postgres", dbURL)
+	if err != nil {
+		return "", fmt.Errorf("failed to open database: %w", err)
+	}
+	defer db.Close()
+
+	// Check if record exists
+	var count int
+	err = db.QueryRowContext(ctx, "SELECT count(*) FROM complaint WHERE complaint_id = $1", complaintID).Scan(&count)
+	if err != nil {
+		return "", fmt.Errorf("failed to check complaint existence: %w", err)
+	}
+	if count == 0 {
+		return "", fmt.Errorf("complaint with ID %s not found", complaintID)
+	}
+
+	// Delete from database
+	_, err = db.ExecContext(ctx, "DELETE FROM complaint WHERE complaint_id = $1", complaintID)
+	if err != nil {
+		return "", fmt.Errorf("failed to delete complaint: %w", err)
+	}
+
+	return complaintID, nil
+}
+
 // AdmissionInquiries is the resolver for the admissionInquiries field.
 func (r *queryResolver) AdmissionInquiries(ctx context.Context) ([]*AdmissionInquiry, error) {
 	dbURL := os.Getenv("DATABASE_URL")
@@ -388,6 +634,97 @@ func (r *queryResolver) AdmissionInquiries(ctx context.Context) ([]*AdmissionInq
 			CampusLocation:     campusLocation,
 			PreviousEducation:  previousEducation,
 			Img:                img,
+		})
+	}
+	return list, nil
+}
+
+// Complaints is the resolver for the complaints field.
+func (r *queryResolver) Complaints(ctx context.Context) ([]*Complaint, error) {
+	dbURL := os.Getenv("DATABASE_URL")
+	if dbURL == "" {
+		host := os.Getenv("DB_HOST")
+		if host == "" {
+			host = "localhost"
+		}
+		port := os.Getenv("DB_PORT")
+		if port == "" {
+			port = "5432"
+		}
+		user := os.Getenv("DB_USER")
+		if user == "" {
+			user = "postgres"
+		}
+		pass := os.Getenv("DB_PASSWORD")
+		if pass == "" {
+			pass = "postgres"
+		}
+		dbname := os.Getenv("DB_NAME")
+		if dbname == "" {
+			dbname = "school"
+		}
+		dbURL = fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable", user, pass, host, port, dbname)
+	}
+
+	db, err := sql.Open("postgres", dbURL)
+	if err != nil {
+		return nil, fmt.Errorf("failed to open database: %w", err)
+	}
+	defer db.Close()
+
+	rows, err := db.QueryContext(ctx, `
+		SELECT 
+			c.complaint_id, c.complaint_date, COALESCE(c.complaint_time, ''), 
+			COALESCE(c.complainant_name, ''), COALESCE(c.complainant_type, ''), 
+			COALESCE(c.student_name, ''), COALESCE(c.complaint_description, ''), 
+			COALESCE(c.department, ''), COALESCE(c.status, ''), COALESCE(u.username, ''), 
+			COALESCE(c.resolution_description, ''), c.resolution_date, 
+			c.created_at, c.updated_at, COALESCE(c.priority_level, ''), 
+			COALESCE(c.feedback, ''), COALESCE(c.img, '') 
+		FROM complaint c
+		LEFT JOIN users u ON c.assigned_to = u.id
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("failed to query complaints: %w", err)
+	}
+	defer rows.Close()
+
+	var list []*Complaint
+	for rows.Next() {
+		var (
+			complaintID, complaintTime, complainantName, complainantType, studentName string
+			complaintDescription, department, status, assignedTo                      string
+			resolutionDescription, priorityLevel, feedback, img                       string
+			complaintDate, resolutionDate, createdAt, updatedAt                       sql.NullTime
+		)
+		err := rows.Scan(
+			&complaintID, &complaintDate, &complaintTime, &complainantName, &complainantType,
+			&studentName, &complaintDescription, &department, &status, &assignedTo,
+			&resolutionDescription, &resolutionDate, &createdAt, &updatedAt,
+			&priorityLevel, &feedback, &img,
+		)
+		if err != nil {
+			return nil, fmt.Errorf("failed to scan complaint row: %w", err)
+		}
+
+		list = append(list, &Complaint{
+			ComplaintID:           complaintID,
+			ComplaintDate:         formatNullTime(complaintDate),
+			ComplaintTime:         complaintTime,
+			ComplainantName:       complainantName,
+			Img:                   img,
+			ComplainantType:       complainantType,
+			StudentName:           studentName,
+			ComplaintDescription:  complaintDescription,
+			Department:            department,
+			Status:                status,
+			AssignedTo:            assignedTo,
+			ResolutionDescription: resolutionDescription,
+			ResolutionDate:        formatNullTime(resolutionDate),
+			CreatedAt:             formatTimestamp(createdAt),
+			UpdatedAt:             formatTimestamp(updatedAt),
+			PriorityLevel:         priorityLevel,
+			Feedback:              feedback,
 		})
 	}
 	return list, nil

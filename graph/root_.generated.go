@@ -129,6 +129,26 @@ type ComplexityRoot struct {
 		Name           func(childComplexity int) int
 	}
 
+	Complaint struct {
+		AssignedTo            func(childComplexity int) int
+		ComplainantName       func(childComplexity int) int
+		ComplainantType       func(childComplexity int) int
+		ComplaintDate         func(childComplexity int) int
+		ComplaintDescription  func(childComplexity int) int
+		ComplaintID           func(childComplexity int) int
+		ComplaintTime         func(childComplexity int) int
+		CreatedAt             func(childComplexity int) int
+		Department            func(childComplexity int) int
+		Feedback              func(childComplexity int) int
+		Img                   func(childComplexity int) int
+		PriorityLevel         func(childComplexity int) int
+		ResolutionDate        func(childComplexity int) int
+		ResolutionDescription func(childComplexity int) int
+		Status                func(childComplexity int) int
+		StudentName           func(childComplexity int) int
+		UpdatedAt             func(childComplexity int) int
+	}
+
 	Department struct {
 		Code        func(childComplexity int) int
 		Description func(childComplexity int) int
@@ -213,9 +233,12 @@ type ComplexityRoot struct {
 
 	Mutation struct {
 		CreateAdmissionInquiry func(childComplexity int, input CreateAdmissionInquiryInput) int
+		CreateComplaint        func(childComplexity int, input CreateComplaintInput) int
 		DeleteAdmissionInquiry func(childComplexity int, inquiryID string) int
+		DeleteComplaint        func(childComplexity int, complaintID string) int
 		Login                  func(childComplexity int, input LoginInput) int
 		UpdateAdmissionInquiry func(childComplexity int, input UpdateAdmissionInquiryInput) int
+		UpdateComplaint        func(childComplexity int, input UpdateComplaintInput) int
 	}
 
 	PageInfo struct {
@@ -236,6 +259,7 @@ type ComplexityRoot struct {
 		AcademicYears      func(childComplexity int) int
 		AdmissionInquiries func(childComplexity int) int
 		Classes            func(childComplexity int) int
+		Complaints         func(childComplexity int) int
 		Departments        func(childComplexity int) int
 		Employees          func(childComplexity int) int
 		Events             func(childComplexity int) int
@@ -541,6 +565,109 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Class.Name(childComplexity), true
+
+	case "Complaint.assignedTo":
+		if e.ComplexityRoot.Complaint.AssignedTo == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Complaint.AssignedTo(childComplexity), true
+	case "Complaint.complainantName":
+		if e.ComplexityRoot.Complaint.ComplainantName == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Complaint.ComplainantName(childComplexity), true
+	case "Complaint.complainantType":
+		if e.ComplexityRoot.Complaint.ComplainantType == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Complaint.ComplainantType(childComplexity), true
+	case "Complaint.complaintDate":
+		if e.ComplexityRoot.Complaint.ComplaintDate == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Complaint.ComplaintDate(childComplexity), true
+	case "Complaint.complaintDescription":
+		if e.ComplexityRoot.Complaint.ComplaintDescription == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Complaint.ComplaintDescription(childComplexity), true
+	case "Complaint.complaintId":
+		if e.ComplexityRoot.Complaint.ComplaintID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Complaint.ComplaintID(childComplexity), true
+	case "Complaint.complaintTime":
+		if e.ComplexityRoot.Complaint.ComplaintTime == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Complaint.ComplaintTime(childComplexity), true
+	case "Complaint.createdAt":
+		if e.ComplexityRoot.Complaint.CreatedAt == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Complaint.CreatedAt(childComplexity), true
+	case "Complaint.department":
+		if e.ComplexityRoot.Complaint.Department == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Complaint.Department(childComplexity), true
+	case "Complaint.feedback":
+		if e.ComplexityRoot.Complaint.Feedback == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Complaint.Feedback(childComplexity), true
+	case "Complaint.img":
+		if e.ComplexityRoot.Complaint.Img == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Complaint.Img(childComplexity), true
+	case "Complaint.priorityLevel":
+		if e.ComplexityRoot.Complaint.PriorityLevel == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Complaint.PriorityLevel(childComplexity), true
+	case "Complaint.resolutionDate":
+		if e.ComplexityRoot.Complaint.ResolutionDate == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Complaint.ResolutionDate(childComplexity), true
+	case "Complaint.resolutionDescription":
+		if e.ComplexityRoot.Complaint.ResolutionDescription == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Complaint.ResolutionDescription(childComplexity), true
+	case "Complaint.status":
+		if e.ComplexityRoot.Complaint.Status == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Complaint.Status(childComplexity), true
+	case "Complaint.studentName":
+		if e.ComplexityRoot.Complaint.StudentName == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Complaint.StudentName(childComplexity), true
+	case "Complaint.updatedAt":
+		if e.ComplexityRoot.Complaint.UpdatedAt == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Complaint.UpdatedAt(childComplexity), true
 
 	case "Department.code":
 		if e.ComplexityRoot.Department.Code == nil {
@@ -926,6 +1053,17 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.CreateAdmissionInquiry(childComplexity, args["input"].(CreateAdmissionInquiryInput)), true
+	case "Mutation.createComplaint":
+		if e.ComplexityRoot.Mutation.CreateComplaint == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_createComplaint_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.CreateComplaint(childComplexity, args["input"].(CreateComplaintInput)), true
 	case "Mutation.deleteAdmissionInquiry":
 		if e.ComplexityRoot.Mutation.DeleteAdmissionInquiry == nil {
 			break
@@ -937,6 +1075,17 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.DeleteAdmissionInquiry(childComplexity, args["inquiryId"].(string)), true
+	case "Mutation.deleteComplaint":
+		if e.ComplexityRoot.Mutation.DeleteComplaint == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_deleteComplaint_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.DeleteComplaint(childComplexity, args["complaintId"].(string)), true
 	case "Mutation.login":
 		if e.ComplexityRoot.Mutation.Login == nil {
 			break
@@ -959,6 +1108,17 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.UpdateAdmissionInquiry(childComplexity, args["input"].(UpdateAdmissionInquiryInput)), true
+	case "Mutation.updateComplaint":
+		if e.ComplexityRoot.Mutation.UpdateComplaint == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updateComplaint_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.UpdateComplaint(childComplexity, args["input"].(UpdateComplaintInput)), true
 
 	case "PageInfo.endCursor":
 		if e.ComplexityRoot.PageInfo.EndCursor == nil {
@@ -1028,6 +1188,12 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Query.Classes(childComplexity), true
+	case "Query.complaints":
+		if e.ComplexityRoot.Query.Complaints == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Query.Complaints(childComplexity), true
 	case "Query.departments":
 		if e.ComplexityRoot.Query.Departments == nil {
 			break
@@ -1625,6 +1791,7 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 		ec.unmarshalInputCreateAcademicYearInput,
 		ec.unmarshalInputCreateAdmissionInquiryInput,
 		ec.unmarshalInputCreateClassInput,
+		ec.unmarshalInputCreateComplaintInput,
 		ec.unmarshalInputCreateDepartmentInput,
 		ec.unmarshalInputCreateEmployeeInput,
 		ec.unmarshalInputCreateEventInput,
@@ -1658,6 +1825,7 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 		ec.unmarshalInputUpdateAcademicYearInput,
 		ec.unmarshalInputUpdateAdmissionInquiryInput,
 		ec.unmarshalInputUpdateClassInput,
+		ec.unmarshalInputUpdateComplaintInput,
 		ec.unmarshalInputUpdateDepartmentInput,
 		ec.unmarshalInputUpdateEmployeeInput,
 		ec.unmarshalInputUpdateEventInput,
@@ -1841,6 +2009,46 @@ func (ec *executionContext) childFields_Class(ctx context.Context, field graphql
 		return ec.fieldContext_Class_department(ctx, field)
 	}
 	return nil, fmt.Errorf("no field named %q was found under type Class", field.Name)
+}
+
+func (ec *executionContext) childFields_Complaint(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+	switch field.Name {
+	case "complaintId":
+		return ec.fieldContext_Complaint_complaintId(ctx, field)
+	case "complaintDate":
+		return ec.fieldContext_Complaint_complaintDate(ctx, field)
+	case "complaintTime":
+		return ec.fieldContext_Complaint_complaintTime(ctx, field)
+	case "complainantName":
+		return ec.fieldContext_Complaint_complainantName(ctx, field)
+	case "img":
+		return ec.fieldContext_Complaint_img(ctx, field)
+	case "complainantType":
+		return ec.fieldContext_Complaint_complainantType(ctx, field)
+	case "studentName":
+		return ec.fieldContext_Complaint_studentName(ctx, field)
+	case "complaintDescription":
+		return ec.fieldContext_Complaint_complaintDescription(ctx, field)
+	case "department":
+		return ec.fieldContext_Complaint_department(ctx, field)
+	case "status":
+		return ec.fieldContext_Complaint_status(ctx, field)
+	case "assignedTo":
+		return ec.fieldContext_Complaint_assignedTo(ctx, field)
+	case "resolutionDescription":
+		return ec.fieldContext_Complaint_resolutionDescription(ctx, field)
+	case "resolutionDate":
+		return ec.fieldContext_Complaint_resolutionDate(ctx, field)
+	case "createdAt":
+		return ec.fieldContext_Complaint_createdAt(ctx, field)
+	case "updatedAt":
+		return ec.fieldContext_Complaint_updatedAt(ctx, field)
+	case "priorityLevel":
+		return ec.fieldContext_Complaint_priorityLevel(ctx, field)
+	case "feedback":
+		return ec.fieldContext_Complaint_feedback(ctx, field)
+	}
+	return nil, fmt.Errorf("no field named %q was found under type Complaint", field.Name)
 }
 
 func (ec *executionContext) childFields_Department(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
