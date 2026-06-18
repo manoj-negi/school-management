@@ -7,6 +7,7 @@ extend type Query {
   admissionInquiries: [AdmissionInquiry!]!
   complaints: [Complaint!]!
   visitors: [Visitor!]!
+  teachersList: [TeacherInfo!]!
 }
 
 extend type Mutation {
@@ -20,6 +21,9 @@ extend type Mutation {
   createVisitor(input: CreateVisitorInput!): Visitor!
   updateVisitor(input: UpdateVisitorInput!): Visitor!
   deleteVisitor(visitorId: String!): String!
+  createTeacher(input: CreateTeacherInfoInput!): TeacherInfo!
+  updateTeacher(input: UpdateTeacherInfoInput!): TeacherInfo!
+  deleteTeacher(id: String!): String!
 }
 
 input UpdateAdmissionInquiryInput {
@@ -191,3 +195,60 @@ input UpdateVisitorInput {
   idProofNumber: String
   notes: String
 }
+
+type TeacherInfo {
+  id: String!
+  img: String
+  name: String!
+  gender: String!
+  email: String!
+  department: String!
+  mobile: String!
+  degree: String!
+  address: String!
+  hireDate: String!
+  salary: String!
+  subjectSpecialization: String!
+  experienceYears: Int!
+  status: String!
+  birthdate: String!
+  bio: String
+}
+
+input CreateTeacherInfoInput {
+  img: String
+  name: String!
+  gender: String!
+  email: String!
+  department: String!
+  mobile: String!
+  degree: String!
+  address: String!
+  hireDate: String!
+  salary: String!
+  subjectSpecialization: String!
+  experienceYears: Int!
+  status: String!
+  birthdate: String!
+  bio: String
+}
+
+input UpdateTeacherInfoInput {
+  id: String!
+  img: String
+  name: String!
+  gender: String!
+  email: String!
+  department: String!
+  mobile: String!
+  degree: String!
+  address: String!
+  hireDate: String!
+  salary: String!
+  subjectSpecialization: String!
+  experienceYears: Int!
+  status: String!
+  birthdate: String!
+  bio: String
+}
+

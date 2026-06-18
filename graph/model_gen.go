@@ -76,6 +76,24 @@ type CreateComplaintInput struct {
 	Feedback              *string `json:"feedback,omitempty"`
 }
 
+type CreateTeacherInfoInput struct {
+	Img                   *string `json:"img,omitempty"`
+	Name                  string  `json:"name"`
+	Gender                string  `json:"gender"`
+	Email                 string  `json:"email"`
+	Department            string  `json:"department"`
+	Mobile                string  `json:"mobile"`
+	Degree                string  `json:"degree"`
+	Address               string  `json:"address"`
+	HireDate              string  `json:"hireDate"`
+	Salary                string  `json:"salary"`
+	SubjectSpecialization string  `json:"subjectSpecialization"`
+	ExperienceYears       int     `json:"experienceYears"`
+	Status                string  `json:"status"`
+	Birthdate             string  `json:"birthdate"`
+	Bio                   *string `json:"bio,omitempty"`
+}
+
 type CreateVisitorInput struct {
 	VisitorName             string  `json:"visitorName"`
 	VisitDate               string  `json:"visitDate"`
@@ -99,6 +117,25 @@ type LoginInput struct {
 type LoginResponse struct {
 	Token string `json:"token"`
 	Role  string `json:"role"`
+}
+
+type TeacherInfo struct {
+	ID                    string  `json:"id"`
+	Img                   *string `json:"img,omitempty"`
+	Name                  string  `json:"name"`
+	Gender                string  `json:"gender"`
+	Email                 string  `json:"email"`
+	Department            string  `json:"department"`
+	Mobile                string  `json:"mobile"`
+	Degree                string  `json:"degree"`
+	Address               string  `json:"address"`
+	HireDate              string  `json:"hireDate"`
+	Salary                string  `json:"salary"`
+	SubjectSpecialization string  `json:"subjectSpecialization"`
+	ExperienceYears       int     `json:"experienceYears"`
+	Status                string  `json:"status"`
+	Birthdate             string  `json:"birthdate"`
+	Bio                   *string `json:"bio,omitempty"`
 }
 
 type UpdateAdmissionInquiryInput struct {
@@ -136,6 +173,25 @@ type UpdateComplaintInput struct {
 	ResolutionDate        *string `json:"resolutionDate,omitempty"`
 	PriorityLevel         string  `json:"priorityLevel"`
 	Feedback              *string `json:"feedback,omitempty"`
+}
+
+type UpdateTeacherInfoInput struct {
+	ID                    string  `json:"id"`
+	Img                   *string `json:"img,omitempty"`
+	Name                  string  `json:"name"`
+	Gender                string  `json:"gender"`
+	Email                 string  `json:"email"`
+	Department            string  `json:"department"`
+	Mobile                string  `json:"mobile"`
+	Degree                string  `json:"degree"`
+	Address               string  `json:"address"`
+	HireDate              string  `json:"hireDate"`
+	Salary                string  `json:"salary"`
+	SubjectSpecialization string  `json:"subjectSpecialization"`
+	ExperienceYears       int     `json:"experienceYears"`
+	Status                string  `json:"status"`
+	Birthdate             string  `json:"birthdate"`
+	Bio                   *string `json:"bio,omitempty"`
 }
 
 type UpdateVisitorInput struct {

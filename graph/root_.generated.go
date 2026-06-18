@@ -234,13 +234,16 @@ type ComplexityRoot struct {
 	Mutation struct {
 		CreateAdmissionInquiry func(childComplexity int, input CreateAdmissionInquiryInput) int
 		CreateComplaint        func(childComplexity int, input CreateComplaintInput) int
+		CreateTeacher          func(childComplexity int, input CreateTeacherInfoInput) int
 		CreateVisitor          func(childComplexity int, input CreateVisitorInput) int
 		DeleteAdmissionInquiry func(childComplexity int, inquiryID string) int
 		DeleteComplaint        func(childComplexity int, complaintID string) int
+		DeleteTeacher          func(childComplexity int, id string) int
 		DeleteVisitor          func(childComplexity int, visitorID string) int
 		Login                  func(childComplexity int, input LoginInput) int
 		UpdateAdmissionInquiry func(childComplexity int, input UpdateAdmissionInquiryInput) int
 		UpdateComplaint        func(childComplexity int, input UpdateComplaintInput) int
+		UpdateTeacher          func(childComplexity int, input UpdateTeacherInfoInput) int
 		UpdateVisitor          func(childComplexity int, input UpdateVisitorInput) int
 	}
 
@@ -279,6 +282,7 @@ type ComplexityRoot struct {
 		Tasks              func(childComplexity int) int
 		TeacherAttendances func(childComplexity int) int
 		Teachers           func(childComplexity int) int
+		TeachersList       func(childComplexity int) int
 		Users              func(childComplexity int) int
 		Visitors           func(childComplexity int) int
 	}
@@ -369,6 +373,25 @@ type ComplexityRoot struct {
 		Status    func(childComplexity int) int
 		Teacher   func(childComplexity int) int
 		TeacherID func(childComplexity int) int
+	}
+
+	TeacherInfo struct {
+		Address               func(childComplexity int) int
+		Bio                   func(childComplexity int) int
+		Birthdate             func(childComplexity int) int
+		Degree                func(childComplexity int) int
+		Department            func(childComplexity int) int
+		Email                 func(childComplexity int) int
+		ExperienceYears       func(childComplexity int) int
+		Gender                func(childComplexity int) int
+		HireDate              func(childComplexity int) int
+		ID                    func(childComplexity int) int
+		Img                   func(childComplexity int) int
+		Mobile                func(childComplexity int) int
+		Name                  func(childComplexity int) int
+		Salary                func(childComplexity int) int
+		Status                func(childComplexity int) int
+		SubjectSpecialization func(childComplexity int) int
 	}
 
 	User struct {
@@ -1086,6 +1109,17 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.CreateComplaint(childComplexity, args["input"].(CreateComplaintInput)), true
+	case "Mutation.createTeacher":
+		if e.ComplexityRoot.Mutation.CreateTeacher == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_createTeacher_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.CreateTeacher(childComplexity, args["input"].(CreateTeacherInfoInput)), true
 	case "Mutation.createVisitor":
 		if e.ComplexityRoot.Mutation.CreateVisitor == nil {
 			break
@@ -1119,6 +1153,17 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.DeleteComplaint(childComplexity, args["complaintId"].(string)), true
+	case "Mutation.deleteTeacher":
+		if e.ComplexityRoot.Mutation.DeleteTeacher == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_deleteTeacher_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.DeleteTeacher(childComplexity, args["id"].(string)), true
 	case "Mutation.deleteVisitor":
 		if e.ComplexityRoot.Mutation.DeleteVisitor == nil {
 			break
@@ -1163,6 +1208,17 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.UpdateComplaint(childComplexity, args["input"].(UpdateComplaintInput)), true
+	case "Mutation.updateTeacher":
+		if e.ComplexityRoot.Mutation.UpdateTeacher == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updateTeacher_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.UpdateTeacher(childComplexity, args["input"].(UpdateTeacherInfoInput)), true
 	case "Mutation.updateVisitor":
 		if e.ComplexityRoot.Mutation.UpdateVisitor == nil {
 			break
@@ -1356,6 +1412,12 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Query.Teachers(childComplexity), true
+	case "Query.teachersList":
+		if e.ComplexityRoot.Query.TeachersList == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Query.TeachersList(childComplexity), true
 	case "Query.users":
 		if e.ComplexityRoot.Query.Users == nil {
 			break
@@ -1778,6 +1840,103 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 
 		return e.ComplexityRoot.TeacherAttendance.TeacherID(childComplexity), true
 
+	case "TeacherInfo.address":
+		if e.ComplexityRoot.TeacherInfo.Address == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherInfo.Address(childComplexity), true
+	case "TeacherInfo.bio":
+		if e.ComplexityRoot.TeacherInfo.Bio == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherInfo.Bio(childComplexity), true
+	case "TeacherInfo.birthdate":
+		if e.ComplexityRoot.TeacherInfo.Birthdate == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherInfo.Birthdate(childComplexity), true
+	case "TeacherInfo.degree":
+		if e.ComplexityRoot.TeacherInfo.Degree == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherInfo.Degree(childComplexity), true
+	case "TeacherInfo.department":
+		if e.ComplexityRoot.TeacherInfo.Department == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherInfo.Department(childComplexity), true
+	case "TeacherInfo.email":
+		if e.ComplexityRoot.TeacherInfo.Email == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherInfo.Email(childComplexity), true
+	case "TeacherInfo.experienceYears":
+		if e.ComplexityRoot.TeacherInfo.ExperienceYears == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherInfo.ExperienceYears(childComplexity), true
+	case "TeacherInfo.gender":
+		if e.ComplexityRoot.TeacherInfo.Gender == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherInfo.Gender(childComplexity), true
+	case "TeacherInfo.hireDate":
+		if e.ComplexityRoot.TeacherInfo.HireDate == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherInfo.HireDate(childComplexity), true
+	case "TeacherInfo.id":
+		if e.ComplexityRoot.TeacherInfo.ID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherInfo.ID(childComplexity), true
+	case "TeacherInfo.img":
+		if e.ComplexityRoot.TeacherInfo.Img == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherInfo.Img(childComplexity), true
+	case "TeacherInfo.mobile":
+		if e.ComplexityRoot.TeacherInfo.Mobile == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherInfo.Mobile(childComplexity), true
+	case "TeacherInfo.name":
+		if e.ComplexityRoot.TeacherInfo.Name == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherInfo.Name(childComplexity), true
+	case "TeacherInfo.salary":
+		if e.ComplexityRoot.TeacherInfo.Salary == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherInfo.Salary(childComplexity), true
+	case "TeacherInfo.status":
+		if e.ComplexityRoot.TeacherInfo.Status == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherInfo.Status(childComplexity), true
+	case "TeacherInfo.subjectSpecialization":
+		if e.ComplexityRoot.TeacherInfo.SubjectSpecialization == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherInfo.SubjectSpecialization(childComplexity), true
+
 	case "User.avatarURL":
 		if e.ComplexityRoot.User.AvatarURL == nil {
 			break
@@ -1957,6 +2116,7 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 		ec.unmarshalInputCreateSubjectInput,
 		ec.unmarshalInputCreateTaskInput,
 		ec.unmarshalInputCreateTeacherAttendanceInput,
+		ec.unmarshalInputCreateTeacherInfoInput,
 		ec.unmarshalInputCreateTeacherInput,
 		ec.unmarshalInputCreateUserInput,
 		ec.unmarshalInputCreateVisitorInput,
@@ -1992,6 +2152,7 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 		ec.unmarshalInputUpdateSubjectInput,
 		ec.unmarshalInputUpdateTaskInput,
 		ec.unmarshalInputUpdateTeacherAttendanceInput,
+		ec.unmarshalInputUpdateTeacherInfoInput,
 		ec.unmarshalInputUpdateTeacherInput,
 		ec.unmarshalInputUpdateUserInput,
 		ec.unmarshalInputUpdateVisitorInput,
@@ -2557,6 +2718,44 @@ func (ec *executionContext) childFields_TeacherAttendance(ctx context.Context, f
 		return ec.fieldContext_TeacherAttendance_teacher(ctx, field)
 	}
 	return nil, fmt.Errorf("no field named %q was found under type TeacherAttendance", field.Name)
+}
+
+func (ec *executionContext) childFields_TeacherInfo(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+	switch field.Name {
+	case "id":
+		return ec.fieldContext_TeacherInfo_id(ctx, field)
+	case "img":
+		return ec.fieldContext_TeacherInfo_img(ctx, field)
+	case "name":
+		return ec.fieldContext_TeacherInfo_name(ctx, field)
+	case "gender":
+		return ec.fieldContext_TeacherInfo_gender(ctx, field)
+	case "email":
+		return ec.fieldContext_TeacherInfo_email(ctx, field)
+	case "department":
+		return ec.fieldContext_TeacherInfo_department(ctx, field)
+	case "mobile":
+		return ec.fieldContext_TeacherInfo_mobile(ctx, field)
+	case "degree":
+		return ec.fieldContext_TeacherInfo_degree(ctx, field)
+	case "address":
+		return ec.fieldContext_TeacherInfo_address(ctx, field)
+	case "hireDate":
+		return ec.fieldContext_TeacherInfo_hireDate(ctx, field)
+	case "salary":
+		return ec.fieldContext_TeacherInfo_salary(ctx, field)
+	case "subjectSpecialization":
+		return ec.fieldContext_TeacherInfo_subjectSpecialization(ctx, field)
+	case "experienceYears":
+		return ec.fieldContext_TeacherInfo_experienceYears(ctx, field)
+	case "status":
+		return ec.fieldContext_TeacherInfo_status(ctx, field)
+	case "birthdate":
+		return ec.fieldContext_TeacherInfo_birthdate(ctx, field)
+	case "bio":
+		return ec.fieldContext_TeacherInfo_bio(ctx, field)
+	}
+	return nil, fmt.Errorf("no field named %q was found under type TeacherInfo", field.Name)
 }
 
 func (ec *executionContext) childFields_User(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {

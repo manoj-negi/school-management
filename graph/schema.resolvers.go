@@ -520,6 +520,119 @@ func (r *mutationResolver) DeleteVisitor(ctx context.Context, visitorID string) 
 	return visitorID, nil
 }
 
+// CreateTeacher is the resolver for the createTeacher field.
+func (r *mutationResolver) CreateTeacher(ctx context.Context, input CreateTeacherInfoInput) (*TeacherInfo, error) {
+	db := r.DB
+
+	// Generate a new UUID for teacher ID
+	id := uuid.New().String()
+
+	// Parse timestamps
+	hireDate := parseRequiredDateString(input.HireDate)
+	birthdate := parseRequiredDateString(input.Birthdate)
+
+	// Parse nullable/optional fields
+	img := parseNullString(input.Img)
+	bio := parseNullString(input.Bio)
+
+	// Insert into public.teachers table
+	_, err := db.ExecContext(ctx, `
+		INSERT INTO public.teachers (
+			id, img, name, gender, email, department, mobile, 
+			degree, address, hire_date, salary, subject_specialization, 
+			experience_years, status, birthdate, bio
+		) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
+	`,
+		id, img, input.Name, input.Gender, input.Email, input.Department, input.Mobile,
+		input.Degree, input.Address, hireDate, input.Salary, input.SubjectSpecialization,
+		input.ExperienceYears, input.Status, birthdate, bio,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to insert teacher: %w", err)
+	}
+
+	return &TeacherInfo{
+		ID:                    id,
+		Img:                   input.Img,
+		Name:                  input.Name,
+		Gender:                input.Gender,
+		Email:                 input.Email,
+		Department:            input.Department,
+		Mobile:                input.Mobile,
+		Degree:                input.Degree,
+		Address:               input.Address,
+		HireDate:              formatNullTime(hireDate),
+		Salary:                input.Salary,
+		SubjectSpecialization: input.SubjectSpecialization,
+		ExperienceYears:       input.ExperienceYears,
+		Status:                input.Status,
+		Birthdate:             formatNullTime(birthdate),
+		Bio:                   input.Bio,
+	}, nil
+}
+
+// UpdateTeacher is the resolver for the updateTeacher field.
+func (r *mutationResolver) UpdateTeacher(ctx context.Context, input UpdateTeacherInfoInput) (*TeacherInfo, error) {
+	db := r.DB
+
+	// Parse timestamps
+	hireDate := parseRequiredDateString(input.HireDate)
+	birthdate := parseRequiredDateString(input.Birthdate)
+
+	// Parse nullable/optional fields
+	img := parseNullString(input.Img)
+	bio := parseNullString(input.Bio)
+
+	// Update public.teachers table
+	_, err := db.ExecContext(ctx, `
+		UPDATE public.teachers SET
+			img = $1, name = $2, gender = $3, email = $4, department = $5, 
+			mobile = $6, degree = $7, address = $8, hire_date = $9, salary = $10, 
+			subject_specialization = $11, experience_years = $12, status = $13, 
+			birthdate = $14, bio = $15
+		WHERE id = $16
+	`,
+		img, input.Name, input.Gender, input.Email, input.Department,
+		input.Mobile, input.Degree, input.Address, hireDate, input.Salary,
+		input.SubjectSpecialization, input.ExperienceYears, input.Status,
+		birthdate, bio, input.ID,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to update teacher: %w", err)
+	}
+
+	return &TeacherInfo{
+		ID:                    input.ID,
+		Img:                   input.Img,
+		Name:                  input.Name,
+		Gender:                input.Gender,
+		Email:                 input.Email,
+		Department:            input.Department,
+		Mobile:                input.Mobile,
+		Degree:                input.Degree,
+		Address:               input.Address,
+		HireDate:              formatNullTime(hireDate),
+		Salary:                input.Salary,
+		SubjectSpecialization: input.SubjectSpecialization,
+		ExperienceYears:       input.ExperienceYears,
+		Status:                input.Status,
+		Birthdate:             formatNullTime(birthdate),
+		Bio:                   input.Bio,
+	}, nil
+}
+
+// DeleteTeacher is the resolver for the deleteTeacher field.
+func (r *mutationResolver) DeleteTeacher(ctx context.Context, id string) (string, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, "DELETE FROM public.teachers WHERE id = $1", id)
+	if err != nil {
+		return "", fmt.Errorf("failed to delete teacher: %w", err)
+	}
+
+	return id, nil
+}
+
 // AdmissionInquiries is the resolver for the admissionInquiries field.
 func (r *queryResolver) AdmissionInquiries(ctx context.Context) ([]*AdmissionInquiry, error) {
 	db := r.DB
@@ -663,10 +776,10 @@ func (r *queryResolver) Visitors(ctx context.Context) ([]*Visitor, error) {
 	var list []*Visitor
 	for rows.Next() {
 		var (
-			visitorID, visitorName, visitTime, purposeOfVisit, contactNumber       string
-			visitorType, studentName, departmentPersonVisited, checkOutTime        string
-			idProofType, idProofNumber, notes                                      string
-			visitDate, createdAt, updatedAt                                        sql.NullTime
+			visitorID, visitorName, visitTime, purposeOfVisit, contactNumber string
+			visitorType, studentName, departmentPersonVisited, checkOutTime  string
+			idProofType, idProofNumber, notes                                string
+			visitDate, createdAt, updatedAt                                  sql.NullTime
 		)
 		err := rows.Scan(
 			&visitorID, &visitorName, &visitDate, &visitTime, &purposeOfVisit,
@@ -694,6 +807,71 @@ func (r *queryResolver) Visitors(ctx context.Context) ([]*Visitor, error) {
 			Notes:                   &notes,
 			CreatedAt:               formatTimestamp(createdAt),
 			UpdatedAt:               formatTimestamp(updatedAt),
+		})
+	}
+	return list, nil
+}
+
+// TeachersList is the resolver for the teachersList field.
+func (r *queryResolver) TeachersList(ctx context.Context) ([]*TeacherInfo, error) {
+	db := r.DB
+
+	rows, err := db.QueryContext(ctx, `
+		SELECT 
+			id, COALESCE(img, ''), name, gender, email, department, mobile, 
+			degree, address, hire_date, salary, subject_specialization, 
+			experience_years, status, birthdate, COALESCE(bio, '')
+		FROM public.teachers
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("failed to query teachers: %w", err)
+	}
+	defer rows.Close()
+
+	var list []*TeacherInfo
+	for rows.Next() {
+		var (
+			id, img, name, gender, email, department, mobile string
+			degree, address, salary, subjectSpecialization   string
+			status, bio                                      string
+			experienceYears                                  int
+			hireDate, birthdate                              sql.NullTime
+		)
+		err := rows.Scan(
+			&id, &img, &name, &gender, &email, &department, &mobile,
+			&degree, &address, &hireDate, &salary, &subjectSpecialization,
+			&experienceYears, &status, &birthdate, &bio,
+		)
+		if err != nil {
+			return nil, fmt.Errorf("failed to scan teacher row: %w", err)
+		}
+
+		var imgPtr *string
+		if img != "" {
+			imgPtr = &img
+		}
+		var bioPtr *string
+		if bio != "" {
+			bioPtr = &bio
+		}
+
+		list = append(list, &TeacherInfo{
+			ID:                    id,
+			Img:                   imgPtr,
+			Name:                  name,
+			Gender:                gender,
+			Email:                 email,
+			Department:            department,
+			Mobile:                mobile,
+			Degree:                degree,
+			Address:               address,
+			HireDate:              formatNullTime(hireDate),
+			Salary:                salary,
+			SubjectSpecialization: subjectSpecialization,
+			ExperienceYears:       experienceYears,
+			Status:                status,
+			Birthdate:             formatNullTime(birthdate),
+			Bio:                   bioPtr,
 		})
 	}
 	return list, nil
