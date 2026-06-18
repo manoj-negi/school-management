@@ -68,36 +68,7 @@ func (r *mutationResolver) Login(ctx context.Context, input LoginInput) (*LoginR
 
 // CreateAdmissionInquiry is the resolver for the createAdmissionInquiry field.
 func (r *mutationResolver) CreateAdmissionInquiry(ctx context.Context, input CreateAdmissionInquiryInput) (*AdmissionInquiry, error) {
-	dbURL := os.Getenv("DATABASE_URL")
-	if dbURL == "" {
-		host := os.Getenv("DB_HOST")
-		if host == "" {
-			host = "localhost"
-		}
-		port := os.Getenv("DB_PORT")
-		if port == "" {
-			port = "5432"
-		}
-		user := os.Getenv("DB_USER")
-		if user == "" {
-			user = "postgres"
-		}
-		pass := os.Getenv("DB_PASSWORD")
-		if pass == "" {
-			pass = "postgres"
-		}
-		dbname := os.Getenv("DB_NAME")
-		if dbname == "" {
-			dbname = "school"
-		}
-		dbURL = fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable", user, pass, host, port, dbname)
-	}
-
-	db, err := sql.Open("postgres", dbURL)
-	if err != nil {
-		return nil, fmt.Errorf("failed to open database: %w", err)
-	}
-	defer db.Close()
+	db := r.DB
 
 	// Generate a new UUID for the inquiry ID
 	id := uuid.New().String()
@@ -158,36 +129,7 @@ func (r *mutationResolver) CreateAdmissionInquiry(ctx context.Context, input Cre
 
 // UpdateAdmissionInquiry is the resolver for the updateAdmissionInquiry field.
 func (r *mutationResolver) UpdateAdmissionInquiry(ctx context.Context, input UpdateAdmissionInquiryInput) (*AdmissionInquiry, error) {
-	dbURL := os.Getenv("DATABASE_URL")
-	if dbURL == "" {
-		host := os.Getenv("DB_HOST")
-		if host == "" {
-			host = "localhost"
-		}
-		port := os.Getenv("DB_PORT")
-		if port == "" {
-			port = "5432"
-		}
-		user := os.Getenv("DB_USER")
-		if user == "" {
-			user = "postgres"
-		}
-		pass := os.Getenv("DB_PASSWORD")
-		if pass == "" {
-			pass = "postgres"
-		}
-		dbname := os.Getenv("DB_NAME")
-		if dbname == "" {
-			dbname = "school"
-		}
-		dbURL = fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable", user, pass, host, port, dbname)
-	}
-
-	db, err := sql.Open("postgres", dbURL)
-	if err != nil {
-		return nil, fmt.Errorf("failed to open database: %w", err)
-	}
-	defer db.Close()
+	db := r.DB
 
 	// Parse timestamps
 	dateOfInquiry := parseRequiredDateString(input.DateOfInquiry)
@@ -255,40 +197,11 @@ func (r *mutationResolver) UpdateAdmissionInquiry(ctx context.Context, input Upd
 
 // DeleteAdmissionInquiry is the resolver for the deleteAdmissionInquiry field.
 func (r *mutationResolver) DeleteAdmissionInquiry(ctx context.Context, inquiryID string) (string, error) {
-	dbURL := os.Getenv("DATABASE_URL")
-	if dbURL == "" {
-		host := os.Getenv("DB_HOST")
-		if host == "" {
-			host = "localhost"
-		}
-		port := os.Getenv("DB_PORT")
-		if port == "" {
-			port = "5432"
-		}
-		user := os.Getenv("DB_USER")
-		if user == "" {
-			user = "postgres"
-		}
-		pass := os.Getenv("DB_PASSWORD")
-		if pass == "" {
-			pass = "postgres"
-		}
-		dbname := os.Getenv("DB_NAME")
-		if dbname == "" {
-			dbname = "school"
-		}
-		dbURL = fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable", user, pass, host, port, dbname)
-	}
-
-	db, err := sql.Open("postgres", dbURL)
-	if err != nil {
-		return "", fmt.Errorf("failed to open database: %w", err)
-	}
-	defer db.Close()
+	db := r.DB
 
 	// Check if record exists
 	var count int
-	err = db.QueryRowContext(ctx, "SELECT count(*) FROM admission_inquiries WHERE inquiry_id = $1", inquiryID).Scan(&count)
+	err := db.QueryRowContext(ctx, "SELECT count(*) FROM admission_inquiries WHERE inquiry_id = $1", inquiryID).Scan(&count)
 	if err != nil {
 		return "", fmt.Errorf("failed to check admission inquiry existence: %w", err)
 	}
@@ -307,36 +220,7 @@ func (r *mutationResolver) DeleteAdmissionInquiry(ctx context.Context, inquiryID
 
 // CreateComplaint is the resolver for the createComplaint field.
 func (r *mutationResolver) CreateComplaint(ctx context.Context, input CreateComplaintInput) (*Complaint, error) {
-	dbURL := os.Getenv("DATABASE_URL")
-	if dbURL == "" {
-		host := os.Getenv("DB_HOST")
-		if host == "" {
-			host = "localhost"
-		}
-		port := os.Getenv("DB_PORT")
-		if port == "" {
-			port = "5432"
-		}
-		user := os.Getenv("DB_USER")
-		if user == "" {
-			user = "postgres"
-		}
-		pass := os.Getenv("DB_PASSWORD")
-		if pass == "" {
-			pass = "postgres"
-		}
-		dbname := os.Getenv("DB_NAME")
-		if dbname == "" {
-			dbname = "school"
-		}
-		dbURL = fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable", user, pass, host, port, dbname)
-	}
-
-	db, err := sql.Open("postgres", dbURL)
-	if err != nil {
-		return nil, fmt.Errorf("failed to open database: %w", err)
-	}
-	defer db.Close()
+	db := r.DB
 
 	// Generate a new UUID for the complaint ID
 	id := uuid.New().String()
@@ -401,36 +285,7 @@ func (r *mutationResolver) CreateComplaint(ctx context.Context, input CreateComp
 
 // UpdateComplaint is the resolver for the updateComplaint field.
 func (r *mutationResolver) UpdateComplaint(ctx context.Context, input UpdateComplaintInput) (*Complaint, error) {
-	dbURL := os.Getenv("DATABASE_URL")
-	if dbURL == "" {
-		host := os.Getenv("DB_HOST")
-		if host == "" {
-			host = "localhost"
-		}
-		port := os.Getenv("DB_PORT")
-		if port == "" {
-			port = "5432"
-		}
-		user := os.Getenv("DB_USER")
-		if user == "" {
-			user = "postgres"
-		}
-		pass := os.Getenv("DB_PASSWORD")
-		if pass == "" {
-			pass = "postgres"
-		}
-		dbname := os.Getenv("DB_NAME")
-		if dbname == "" {
-			dbname = "school"
-		}
-		dbURL = fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable", user, pass, host, port, dbname)
-	}
-
-	db, err := sql.Open("postgres", dbURL)
-	if err != nil {
-		return nil, fmt.Errorf("failed to open database: %w", err)
-	}
-	defer db.Close()
+	db := r.DB
 
 	// Parse timestamps
 	complaintDate := parseRequiredDateString(input.ComplaintDate)
@@ -501,40 +356,11 @@ func (r *mutationResolver) UpdateComplaint(ctx context.Context, input UpdateComp
 
 // DeleteComplaint is the resolver for the deleteComplaint field.
 func (r *mutationResolver) DeleteComplaint(ctx context.Context, complaintID string) (string, error) {
-	dbURL := os.Getenv("DATABASE_URL")
-	if dbURL == "" {
-		host := os.Getenv("DB_HOST")
-		if host == "" {
-			host = "localhost"
-		}
-		port := os.Getenv("DB_PORT")
-		if port == "" {
-			port = "5432"
-		}
-		user := os.Getenv("DB_USER")
-		if user == "" {
-			user = "postgres"
-		}
-		pass := os.Getenv("DB_PASSWORD")
-		if pass == "" {
-			pass = "postgres"
-		}
-		dbname := os.Getenv("DB_NAME")
-		if dbname == "" {
-			dbname = "school"
-		}
-		dbURL = fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable", user, pass, host, port, dbname)
-	}
-
-	db, err := sql.Open("postgres", dbURL)
-	if err != nil {
-		return "", fmt.Errorf("failed to open database: %w", err)
-	}
-	defer db.Close()
+	db := r.DB
 
 	// Check if record exists
 	var count int
-	err = db.QueryRowContext(ctx, "SELECT count(*) FROM complaint WHERE complaint_id = $1", complaintID).Scan(&count)
+	err := db.QueryRowContext(ctx, "SELECT count(*) FROM complaint WHERE complaint_id = $1", complaintID).Scan(&count)
 	if err != nil {
 		return "", fmt.Errorf("failed to check complaint existence: %w", err)
 	}
@@ -553,36 +379,7 @@ func (r *mutationResolver) DeleteComplaint(ctx context.Context, complaintID stri
 
 // CreateVisitor is the resolver for the createVisitor field.
 func (r *mutationResolver) CreateVisitor(ctx context.Context, input CreateVisitorInput) (*Visitor, error) {
-	dbURL := os.Getenv("DATABASE_URL")
-	if dbURL == "" {
-		host := os.Getenv("DB_HOST")
-		if host == "" {
-			host = "localhost"
-		}
-		port := os.Getenv("DB_PORT")
-		if port == "" {
-			port = "5432"
-		}
-		user := os.Getenv("DB_USER")
-		if user == "" {
-			user = "postgres"
-		}
-		pass := os.Getenv("DB_PASSWORD")
-		if pass == "" {
-			pass = "postgres"
-		}
-		dbname := os.Getenv("DB_NAME")
-		if dbname == "" {
-			dbname = "school"
-		}
-		dbURL = fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable", user, pass, host, port, dbname)
-	}
-
-	db, err := sql.Open("postgres", dbURL)
-	if err != nil {
-		return nil, fmt.Errorf("failed to open database: %w", err)
-	}
-	defer db.Close()
+	db := r.DB
 
 	// Generate a new UUID for visitor ID
 	id := uuid.New().String()
@@ -601,7 +398,7 @@ func (r *mutationResolver) CreateVisitor(ctx context.Context, input CreateVisito
 	updatedAt := sql.NullTime{Time: time.Now(), Valid: true}
 
 	// Insert into public.visitors table
-	_, err = db.ExecContext(ctx, `
+	_, err := db.ExecContext(ctx, `
 		INSERT INTO visitors (
 			visitor_id, visitor_name, visit_date, visit_time, purpose_of_visit,
 			contact_number, visitor_type, student_name, department_person_visited,
@@ -639,36 +436,7 @@ func (r *mutationResolver) CreateVisitor(ctx context.Context, input CreateVisito
 
 // UpdateVisitor is the resolver for the updateVisitor field.
 func (r *mutationResolver) UpdateVisitor(ctx context.Context, input UpdateVisitorInput) (*Visitor, error) {
-	dbURL := os.Getenv("DATABASE_URL")
-	if dbURL == "" {
-		host := os.Getenv("DB_HOST")
-		if host == "" {
-			host = "localhost"
-		}
-		port := os.Getenv("DB_PORT")
-		if port == "" {
-			port = "5432"
-		}
-		user := os.Getenv("DB_USER")
-		if user == "" {
-			user = "postgres"
-		}
-		pass := os.Getenv("DB_PASSWORD")
-		if pass == "" {
-			pass = "postgres"
-		}
-		dbname := os.Getenv("DB_NAME")
-		if dbname == "" {
-			dbname = "school"
-		}
-		dbURL = fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable", user, pass, host, port, dbname)
-	}
-
-	db, err := sql.Open("postgres", dbURL)
-	if err != nil {
-		return nil, fmt.Errorf("failed to open database: %w", err)
-	}
-	defer db.Close()
+	db := r.DB
 
 	// Parse timestamps
 	visitDate := parseRequiredDateString(input.VisitDate)
@@ -684,7 +452,7 @@ func (r *mutationResolver) UpdateVisitor(ctx context.Context, input UpdateVisito
 
 	// Fetch existing created_at
 	var createdAt sql.NullTime
-	err = db.QueryRowContext(ctx, "SELECT created_at FROM visitors WHERE visitor_id = $1", input.VisitorID).Scan(&createdAt)
+	err := db.QueryRowContext(ctx, "SELECT created_at FROM visitors WHERE visitor_id = $1", input.VisitorID).Scan(&createdAt)
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
 			return nil, fmt.Errorf("visitor with ID %s not found", input.VisitorID)
@@ -731,40 +499,11 @@ func (r *mutationResolver) UpdateVisitor(ctx context.Context, input UpdateVisito
 
 // DeleteVisitor is the resolver for the deleteVisitor field.
 func (r *mutationResolver) DeleteVisitor(ctx context.Context, visitorID string) (string, error) {
-	dbURL := os.Getenv("DATABASE_URL")
-	if dbURL == "" {
-		host := os.Getenv("DB_HOST")
-		if host == "" {
-			host = "localhost"
-		}
-		port := os.Getenv("DB_PORT")
-		if port == "" {
-			port = "5432"
-		}
-		user := os.Getenv("DB_USER")
-		if user == "" {
-			user = "postgres"
-		}
-		pass := os.Getenv("DB_PASSWORD")
-		if pass == "" {
-			pass = "postgres"
-		}
-		dbname := os.Getenv("DB_NAME")
-		if dbname == "" {
-			dbname = "school"
-		}
-		dbURL = fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable", user, pass, host, port, dbname)
-	}
-
-	db, err := sql.Open("postgres", dbURL)
-	if err != nil {
-		return "", fmt.Errorf("failed to open database: %w", err)
-	}
-	defer db.Close()
+	db := r.DB
 
 	// Check if record exists
 	var count int
-	err = db.QueryRowContext(ctx, "SELECT count(*) FROM visitors WHERE visitor_id = $1", visitorID).Scan(&count)
+	err := db.QueryRowContext(ctx, "SELECT count(*) FROM visitors WHERE visitor_id = $1", visitorID).Scan(&count)
 	if err != nil {
 		return "", fmt.Errorf("failed to check visitor existence: %w", err)
 	}
@@ -783,36 +522,7 @@ func (r *mutationResolver) DeleteVisitor(ctx context.Context, visitorID string) 
 
 // AdmissionInquiries is the resolver for the admissionInquiries field.
 func (r *queryResolver) AdmissionInquiries(ctx context.Context) ([]*AdmissionInquiry, error) {
-	dbURL := os.Getenv("DATABASE_URL")
-	if dbURL == "" {
-		host := os.Getenv("DB_HOST")
-		if host == "" {
-			host = "localhost"
-		}
-		port := os.Getenv("DB_PORT")
-		if port == "" {
-			port = "5432"
-		}
-		user := os.Getenv("DB_USER")
-		if user == "" {
-			user = "postgres"
-		}
-		pass := os.Getenv("DB_PASSWORD")
-		if pass == "" {
-			pass = "postgres"
-		}
-		dbname := os.Getenv("DB_NAME")
-		if dbname == "" {
-			dbname = "school"
-		}
-		dbURL = fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable", user, pass, host, port, dbname)
-	}
-
-	db, err := sql.Open("postgres", dbURL)
-	if err != nil {
-		return nil, fmt.Errorf("failed to open database: %w", err)
-	}
-	defer db.Close()
+	db := r.DB
 
 	rows, err := db.QueryContext(ctx, `
 		SELECT 
@@ -871,36 +581,7 @@ func (r *queryResolver) AdmissionInquiries(ctx context.Context) ([]*AdmissionInq
 
 // Complaints is the resolver for the complaints field.
 func (r *queryResolver) Complaints(ctx context.Context) ([]*Complaint, error) {
-	dbURL := os.Getenv("DATABASE_URL")
-	if dbURL == "" {
-		host := os.Getenv("DB_HOST")
-		if host == "" {
-			host = "localhost"
-		}
-		port := os.Getenv("DB_PORT")
-		if port == "" {
-			port = "5432"
-		}
-		user := os.Getenv("DB_USER")
-		if user == "" {
-			user = "postgres"
-		}
-		pass := os.Getenv("DB_PASSWORD")
-		if pass == "" {
-			pass = "postgres"
-		}
-		dbname := os.Getenv("DB_NAME")
-		if dbname == "" {
-			dbname = "school"
-		}
-		dbURL = fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable", user, pass, host, port, dbname)
-	}
-
-	db, err := sql.Open("postgres", dbURL)
-	if err != nil {
-		return nil, fmt.Errorf("failed to open database: %w", err)
-	}
-	defer db.Close()
+	db := r.DB
 
 	rows, err := db.QueryContext(ctx, `
 		SELECT 
@@ -962,36 +643,7 @@ func (r *queryResolver) Complaints(ctx context.Context) ([]*Complaint, error) {
 
 // Visitors is the resolver for the visitors field.
 func (r *queryResolver) Visitors(ctx context.Context) ([]*Visitor, error) {
-	dbURL := os.Getenv("DATABASE_URL")
-	if dbURL == "" {
-		host := os.Getenv("DB_HOST")
-		if host == "" {
-			host = "localhost"
-		}
-		port := os.Getenv("DB_PORT")
-		if port == "" {
-			port = "5432"
-		}
-		user := os.Getenv("DB_USER")
-		if user == "" {
-			user = "postgres"
-		}
-		pass := os.Getenv("DB_PASSWORD")
-		if pass == "" {
-			pass = "postgres"
-		}
-		dbname := os.Getenv("DB_NAME")
-		if dbname == "" {
-			dbname = "school"
-		}
-		dbURL = fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable", user, pass, host, port, dbname)
-	}
-
-	db, err := sql.Open("postgres", dbURL)
-	if err != nil {
-		return nil, fmt.Errorf("failed to open database: %w", err)
-	}
-	defer db.Close()
+	db := r.DB
 
 	rows, err := db.QueryContext(ctx, `
 		SELECT 

@@ -18,6 +18,7 @@ import (
 
 type Resolver struct {
 	Client *ent.Client
+	DB     *sql.DB
 }
 
 func formatNullTime(nt sql.NullTime) string {
