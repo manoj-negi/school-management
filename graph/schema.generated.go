@@ -29,6 +29,9 @@ type MutationResolver interface {
 	CreateTeacher(ctx context.Context, input CreateTeacherInfoInput) (*TeacherInfo, error)
 	UpdateTeacher(ctx context.Context, input UpdateTeacherInfoInput) (*TeacherInfo, error)
 	DeleteTeacher(ctx context.Context, id string) (string, error)
+	CreateAssignClassTeacher(ctx context.Context, input CreateAssignClassTeacherInput) (*AssignClassTeacher, error)
+	UpdateAssignClassTeacher(ctx context.Context, input UpdateAssignClassTeacherInput) (*AssignClassTeacher, error)
+	DeleteAssignClassTeacher(ctx context.Context, id string) (string, error)
 }
 
 // endregion ************************** generated!.gotpl **************************
@@ -41,6 +44,20 @@ func (ec *executionContext) field_Mutation_createAdmissionInquiry_args(ctx conte
 	arg0, err := graphql.ProcessArgField(ctx, rawArgs, "input",
 		func(ctx context.Context, v any) (CreateAdmissionInquiryInput, error) {
 			return ec.unmarshalNCreateAdmissionInquiryInput2goᚑseedᚋgraphᚐCreateAdmissionInquiryInput(ctx, v)
+		})
+	if err != nil {
+		return nil, err
+	}
+	args["input"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Mutation_createAssignClassTeacher_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
+	var err error
+	args := map[string]any{}
+	arg0, err := graphql.ProcessArgField(ctx, rawArgs, "input",
+		func(ctx context.Context, v any) (CreateAssignClassTeacherInput, error) {
+			return ec.unmarshalNCreateAssignClassTeacherInput2goᚑseedᚋgraphᚐCreateAssignClassTeacherInput(ctx, v)
 		})
 	if err != nil {
 		return nil, err
@@ -102,6 +119,20 @@ func (ec *executionContext) field_Mutation_deleteAdmissionInquiry_args(ctx conte
 		return nil, err
 	}
 	args["inquiryId"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Mutation_deleteAssignClassTeacher_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
+	var err error
+	args := map[string]any{}
+	arg0, err := graphql.ProcessArgField(ctx, rawArgs, "id",
+		func(ctx context.Context, v any) (string, error) {
+			return ec.unmarshalNString2string(ctx, v)
+		})
+	if err != nil {
+		return nil, err
+	}
+	args["id"] = arg0
 	return args, nil
 }
 
@@ -167,6 +198,20 @@ func (ec *executionContext) field_Mutation_updateAdmissionInquiry_args(ctx conte
 	arg0, err := graphql.ProcessArgField(ctx, rawArgs, "input",
 		func(ctx context.Context, v any) (UpdateAdmissionInquiryInput, error) {
 			return ec.unmarshalNUpdateAdmissionInquiryInput2goᚑseedᚋgraphᚐUpdateAdmissionInquiryInput(ctx, v)
+		})
+	if err != nil {
+		return nil, err
+	}
+	args["input"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Mutation_updateAssignClassTeacher_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
+	var err error
+	args := map[string]any{}
+	arg0, err := graphql.ProcessArgField(ctx, rawArgs, "input",
+		func(ctx context.Context, v any) (UpdateAssignClassTeacherInput, error) {
+			return ec.unmarshalNUpdateAssignClassTeacherInput2goᚑseedᚋgraphᚐUpdateAssignClassTeacherInput(ctx, v)
 		})
 	if err != nil {
 		return nil, err
@@ -587,6 +632,397 @@ func (ec *executionContext) _AdmissionInquiry_img(ctx context.Context, field gra
 }
 func (ec *executionContext) fieldContext_AdmissionInquiry_img(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	return graphql.NewScalarFieldContext("AdmissionInquiry", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _AssignClassTeacher_id(ctx context.Context, field graphql.CollectedField, obj *AssignClassTeacher) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_AssignClassTeacher_id(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ID, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_AssignClassTeacher_id(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("AssignClassTeacher", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _AssignClassTeacher_teacherId(ctx context.Context, field graphql.CollectedField, obj *AssignClassTeacher) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_AssignClassTeacher_teacherId(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.TeacherID, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_AssignClassTeacher_teacherId(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("AssignClassTeacher", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _AssignClassTeacher_teacherName(ctx context.Context, field graphql.CollectedField, obj *AssignClassTeacher) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_AssignClassTeacher_teacherName(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.TeacherName, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_AssignClassTeacher_teacherName(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("AssignClassTeacher", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _AssignClassTeacher_img(ctx context.Context, field graphql.CollectedField, obj *AssignClassTeacher) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_AssignClassTeacher_img(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.Img, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *string) graphql.Marshaler {
+			return ec.marshalOString2ᚖstring(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_AssignClassTeacher_img(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("AssignClassTeacher", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _AssignClassTeacher_classId(ctx context.Context, field graphql.CollectedField, obj *AssignClassTeacher) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_AssignClassTeacher_classId(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ClassID, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_AssignClassTeacher_classId(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("AssignClassTeacher", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _AssignClassTeacher_className(ctx context.Context, field graphql.CollectedField, obj *AssignClassTeacher) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_AssignClassTeacher_className(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ClassName, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_AssignClassTeacher_className(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("AssignClassTeacher", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _AssignClassTeacher_subject(ctx context.Context, field graphql.CollectedField, obj *AssignClassTeacher) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_AssignClassTeacher_subject(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.Subject, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_AssignClassTeacher_subject(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("AssignClassTeacher", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _AssignClassTeacher_startDate(ctx context.Context, field graphql.CollectedField, obj *AssignClassTeacher) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_AssignClassTeacher_startDate(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.StartDate, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_AssignClassTeacher_startDate(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("AssignClassTeacher", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _AssignClassTeacher_endDate(ctx context.Context, field graphql.CollectedField, obj *AssignClassTeacher) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_AssignClassTeacher_endDate(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.EndDate, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_AssignClassTeacher_endDate(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("AssignClassTeacher", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _AssignClassTeacher_assignedBy(ctx context.Context, field graphql.CollectedField, obj *AssignClassTeacher) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_AssignClassTeacher_assignedBy(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.AssignedBy, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_AssignClassTeacher_assignedBy(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("AssignClassTeacher", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _AssignClassTeacher_assignmentStatus(ctx context.Context, field graphql.CollectedField, obj *AssignClassTeacher) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_AssignClassTeacher_assignmentStatus(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.AssignmentStatus, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_AssignClassTeacher_assignmentStatus(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("AssignClassTeacher", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _AssignClassTeacher_academicYear(ctx context.Context, field graphql.CollectedField, obj *AssignClassTeacher) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_AssignClassTeacher_academicYear(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.AcademicYear, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_AssignClassTeacher_academicYear(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("AssignClassTeacher", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _AssignClassTeacher_classTiming(ctx context.Context, field graphql.CollectedField, obj *AssignClassTeacher) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_AssignClassTeacher_classTiming(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ClassTiming, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_AssignClassTeacher_classTiming(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("AssignClassTeacher", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _AssignClassTeacher_roomNumber(ctx context.Context, field graphql.CollectedField, obj *AssignClassTeacher) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_AssignClassTeacher_roomNumber(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.RoomNumber, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_AssignClassTeacher_roomNumber(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("AssignClassTeacher", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _ClassInfo_classId(ctx context.Context, field graphql.CollectedField, obj *ClassInfo) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_ClassInfo_classId(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ClassID, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_ClassInfo_classId(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("ClassInfo", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _ClassInfo_className(ctx context.Context, field graphql.CollectedField, obj *ClassInfo) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_ClassInfo_className(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ClassName, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_ClassInfo_className(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("ClassInfo", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _ClassInfo_classCode(ctx context.Context, field graphql.CollectedField, obj *ClassInfo) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_ClassInfo_classCode(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ClassCode, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_ClassInfo_classCode(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("ClassInfo", field, false, false, errors.New("field of type String does not have child fields"))
 }
 
 func (ec *executionContext) _Complaint_complaintId(ctx context.Context, field graphql.CollectedField, obj *Complaint) (ret graphql.Marshaler) {
@@ -1598,6 +2034,138 @@ func (ec *executionContext) fieldContext_Mutation_deleteTeacher(ctx context.Cont
 	return fc, nil
 }
 
+func (ec *executionContext) _Mutation_createAssignClassTeacher(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Mutation_createAssignClassTeacher(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			fc := graphql.GetFieldContext(ctx)
+			return ec.Resolvers.Mutation().CreateAssignClassTeacher(ctx, fc.Args["input"].(CreateAssignClassTeacherInput))
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *AssignClassTeacher) graphql.Marshaler {
+			return ec.marshalNAssignClassTeacher2ᚖgoᚑseedᚋgraphᚐAssignClassTeacher(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Mutation_createAssignClassTeacher(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_AssignClassTeacher(ctx, field)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_createAssignClassTeacher_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_updateAssignClassTeacher(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Mutation_updateAssignClassTeacher(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			fc := graphql.GetFieldContext(ctx)
+			return ec.Resolvers.Mutation().UpdateAssignClassTeacher(ctx, fc.Args["input"].(UpdateAssignClassTeacherInput))
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *AssignClassTeacher) graphql.Marshaler {
+			return ec.marshalNAssignClassTeacher2ᚖgoᚑseedᚋgraphᚐAssignClassTeacher(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Mutation_updateAssignClassTeacher(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_AssignClassTeacher(ctx, field)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_updateAssignClassTeacher_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_deleteAssignClassTeacher(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Mutation_deleteAssignClassTeacher(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			fc := graphql.GetFieldContext(ctx)
+			return ec.Resolvers.Mutation().DeleteAssignClassTeacher(ctx, fc.Args["id"].(string))
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Mutation_deleteAssignClassTeacher(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_deleteAssignClassTeacher_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _TeacherInfo_id(ctx context.Context, field graphql.CollectedField, obj *TeacherInfo) (ret graphql.Marshaler) {
 	return graphql.ResolveField(
 		ctx,
@@ -2443,6 +3011,120 @@ func (ec *executionContext) unmarshalInputCreateAdmissionInquiryInput(ctx contex
 	return it, nil
 }
 
+func (ec *executionContext) unmarshalInputCreateAssignClassTeacherInput(ctx context.Context, obj any) (CreateAssignClassTeacherInput, error) {
+	var it CreateAssignClassTeacherInput
+	if obj == nil {
+		return it, nil
+	}
+
+	asMap := map[string]any{}
+	for k, v := range obj.(map[string]any) {
+		asMap[k] = v
+	}
+
+	fieldsInOrder := [...]string{"teacherId", "teacherName", "img", "classId", "className", "subject", "startDate", "endDate", "assignedBy", "assignmentStatus", "academicYear", "classTiming", "roomNumber"}
+	for _, k := range fieldsInOrder {
+		v, ok := asMap[k]
+		if !ok {
+			continue
+		}
+		switch k {
+		case "teacherId":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("teacherId"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.TeacherID = data
+		case "teacherName":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("teacherName"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.TeacherName = data
+		case "img":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("img"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Img = data
+		case "classId":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("classId"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.ClassID = data
+		case "className":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("className"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.ClassName = data
+		case "subject":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("subject"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Subject = data
+		case "startDate":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("startDate"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.StartDate = data
+		case "endDate":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("endDate"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.EndDate = data
+		case "assignedBy":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("assignedBy"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.AssignedBy = data
+		case "assignmentStatus":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("assignmentStatus"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.AssignmentStatus = data
+		case "academicYear":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("academicYear"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.AcademicYear = data
+		case "classTiming":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("classTiming"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.ClassTiming = data
+		case "roomNumber":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("roomNumber"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.RoomNumber = data
+		}
+	}
+	return it, nil
+}
+
 func (ec *executionContext) unmarshalInputCreateComplaintInput(ctx context.Context, obj any) (CreateComplaintInput, error) {
 	var it CreateComplaintInput
 	if obj == nil {
@@ -2971,6 +3653,127 @@ func (ec *executionContext) unmarshalInputUpdateAdmissionInquiryInput(ctx contex
 	return it, nil
 }
 
+func (ec *executionContext) unmarshalInputUpdateAssignClassTeacherInput(ctx context.Context, obj any) (UpdateAssignClassTeacherInput, error) {
+	var it UpdateAssignClassTeacherInput
+	if obj == nil {
+		return it, nil
+	}
+
+	asMap := map[string]any{}
+	for k, v := range obj.(map[string]any) {
+		asMap[k] = v
+	}
+
+	fieldsInOrder := [...]string{"id", "teacherId", "teacherName", "img", "classId", "className", "subject", "startDate", "endDate", "assignedBy", "assignmentStatus", "academicYear", "classTiming", "roomNumber"}
+	for _, k := range fieldsInOrder {
+		v, ok := asMap[k]
+		if !ok {
+			continue
+		}
+		switch k {
+		case "id":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.ID = data
+		case "teacherId":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("teacherId"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.TeacherID = data
+		case "teacherName":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("teacherName"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.TeacherName = data
+		case "img":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("img"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Img = data
+		case "classId":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("classId"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.ClassID = data
+		case "className":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("className"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.ClassName = data
+		case "subject":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("subject"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Subject = data
+		case "startDate":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("startDate"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.StartDate = data
+		case "endDate":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("endDate"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.EndDate = data
+		case "assignedBy":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("assignedBy"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.AssignedBy = data
+		case "assignmentStatus":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("assignmentStatus"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.AssignmentStatus = data
+		case "academicYear":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("academicYear"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.AcademicYear = data
+		case "classTiming":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("classTiming"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.ClassTiming = data
+		case "roomNumber":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("roomNumber"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.RoomNumber = data
+		}
+	}
+	return it, nil
+}
+
 func (ec *executionContext) unmarshalInputUpdateComplaintInput(ctx context.Context, obj any) (UpdateComplaintInput, error) {
 	var it UpdateComplaintInput
 	if obj == nil {
@@ -3470,6 +4273,159 @@ func (ec *executionContext) _AdmissionInquiry(ctx context.Context, sel ast.Selec
 	return out
 }
 
+var assignClassTeacherImplementors = []string{"AssignClassTeacher"}
+
+func (ec *executionContext) _AssignClassTeacher(ctx context.Context, sel ast.SelectionSet, obj *AssignClassTeacher) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, assignClassTeacherImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("AssignClassTeacher")
+		case "id":
+			out.Values[i] = ec._AssignClassTeacher_id(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "teacherId":
+			out.Values[i] = ec._AssignClassTeacher_teacherId(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "teacherName":
+			out.Values[i] = ec._AssignClassTeacher_teacherName(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "img":
+			out.Values[i] = ec._AssignClassTeacher_img(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				out.Invalids++
+			}
+		case "classId":
+			out.Values[i] = ec._AssignClassTeacher_classId(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "className":
+			out.Values[i] = ec._AssignClassTeacher_className(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "subject":
+			out.Values[i] = ec._AssignClassTeacher_subject(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "startDate":
+			out.Values[i] = ec._AssignClassTeacher_startDate(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "endDate":
+			out.Values[i] = ec._AssignClassTeacher_endDate(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "assignedBy":
+			out.Values[i] = ec._AssignClassTeacher_assignedBy(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "assignmentStatus":
+			out.Values[i] = ec._AssignClassTeacher_assignmentStatus(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "academicYear":
+			out.Values[i] = ec._AssignClassTeacher_academicYear(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "classTiming":
+			out.Values[i] = ec._AssignClassTeacher_classTiming(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "roomNumber":
+			out.Values[i] = ec._AssignClassTeacher_roomNumber(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.Deferred, int32(min(len(deferred), math.MaxInt32)))
+
+	for label, dfs := range deferred {
+		ec.ProcessDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
+var classInfoImplementors = []string{"ClassInfo"}
+
+func (ec *executionContext) _ClassInfo(ctx context.Context, sel ast.SelectionSet, obj *ClassInfo) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, classInfoImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("ClassInfo")
+		case "classId":
+			out.Values[i] = ec._ClassInfo_classId(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "className":
+			out.Values[i] = ec._ClassInfo_className(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "classCode":
+			out.Values[i] = ec._ClassInfo_classCode(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.Deferred, int32(min(len(deferred), math.MaxInt32)))
+
+	for label, dfs := range deferred {
+		ec.ProcessDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
 var complaintImplementors = []string{"Complaint"}
 
 func (ec *executionContext) _Complaint(ctx context.Context, sel ast.SelectionSet, obj *Complaint) graphql.Marshaler {
@@ -3739,6 +4695,27 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 		case "deleteTeacher":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_deleteTeacher(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "createAssignClassTeacher":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_createAssignClassTeacher(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "updateAssignClassTeacher":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_updateAssignClassTeacher(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "deleteAssignClassTeacher":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_deleteAssignClassTeacher(ctx, field)
 			})
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
@@ -4023,6 +5000,62 @@ func (ec *executionContext) marshalNAdmissionInquiry2ᚖgoᚑseedᚋgraphᚐAdmi
 	return ec._AdmissionInquiry(ctx, sel, v)
 }
 
+func (ec *executionContext) marshalNAssignClassTeacher2goᚑseedᚋgraphᚐAssignClassTeacher(ctx context.Context, sel ast.SelectionSet, v AssignClassTeacher) graphql.Marshaler {
+	return ec._AssignClassTeacher(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalNAssignClassTeacher2ᚕᚖgoᚑseedᚋgraphᚐAssignClassTeacherᚄ(ctx context.Context, sel ast.SelectionSet, v []*AssignClassTeacher) graphql.Marshaler {
+	ret := graphql.MarshalSliceConcurrently(ctx, len(v), 0, false, func(ctx context.Context, i int) graphql.Marshaler {
+		fc := graphql.GetFieldContext(ctx)
+		fc.Result = &v[i]
+		return ec.marshalNAssignClassTeacher2ᚖgoᚑseedᚋgraphᚐAssignClassTeacher(ctx, sel, v[i])
+	})
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
+func (ec *executionContext) marshalNAssignClassTeacher2ᚖgoᚑseedᚋgraphᚐAssignClassTeacher(ctx context.Context, sel ast.SelectionSet, v *AssignClassTeacher) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			graphql.AddErrorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._AssignClassTeacher(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalNClassInfo2ᚕᚖgoᚑseedᚋgraphᚐClassInfoᚄ(ctx context.Context, sel ast.SelectionSet, v []*ClassInfo) graphql.Marshaler {
+	ret := graphql.MarshalSliceConcurrently(ctx, len(v), 0, false, func(ctx context.Context, i int) graphql.Marshaler {
+		fc := graphql.GetFieldContext(ctx)
+		fc.Result = &v[i]
+		return ec.marshalNClassInfo2ᚖgoᚑseedᚋgraphᚐClassInfo(ctx, sel, v[i])
+	})
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
+func (ec *executionContext) marshalNClassInfo2ᚖgoᚑseedᚋgraphᚐClassInfo(ctx context.Context, sel ast.SelectionSet, v *ClassInfo) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			graphql.AddErrorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._ClassInfo(ctx, sel, v)
+}
+
 func (ec *executionContext) marshalNComplaint2goᚑseedᚋgraphᚐComplaint(ctx context.Context, sel ast.SelectionSet, v Complaint) graphql.Marshaler {
 	return ec._Complaint(ctx, sel, &v)
 }
@@ -4055,6 +5088,11 @@ func (ec *executionContext) marshalNComplaint2ᚖgoᚑseedᚋgraphᚐComplaint(c
 
 func (ec *executionContext) unmarshalNCreateAdmissionInquiryInput2goᚑseedᚋgraphᚐCreateAdmissionInquiryInput(ctx context.Context, v any) (CreateAdmissionInquiryInput, error) {
 	res, err := ec.unmarshalInputCreateAdmissionInquiryInput(ctx, v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) unmarshalNCreateAssignClassTeacherInput2goᚑseedᚋgraphᚐCreateAssignClassTeacherInput(ctx context.Context, v any) (CreateAssignClassTeacherInput, error) {
+	res, err := ec.unmarshalInputCreateAssignClassTeacherInput(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
@@ -4124,6 +5162,11 @@ func (ec *executionContext) marshalNTeacherInfo2ᚖgoᚑseedᚋgraphᚐTeacherIn
 
 func (ec *executionContext) unmarshalNUpdateAdmissionInquiryInput2goᚑseedᚋgraphᚐUpdateAdmissionInquiryInput(ctx context.Context, v any) (UpdateAdmissionInquiryInput, error) {
 	res, err := ec.unmarshalInputUpdateAdmissionInquiryInput(ctx, v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) unmarshalNUpdateAssignClassTeacherInput2goᚑseedᚋgraphᚐUpdateAssignClassTeacherInput(ctx context.Context, v any) (UpdateAssignClassTeacherInput, error) {
+	res, err := ec.unmarshalInputUpdateAssignClassTeacherInput(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 

@@ -119,6 +119,23 @@ type ComplexityRoot struct {
 		StudentName        func(childComplexity int) int
 	}
 
+	AssignClassTeacher struct {
+		AcademicYear     func(childComplexity int) int
+		AssignedBy       func(childComplexity int) int
+		AssignmentStatus func(childComplexity int) int
+		ClassID          func(childComplexity int) int
+		ClassName        func(childComplexity int) int
+		ClassTiming      func(childComplexity int) int
+		EndDate          func(childComplexity int) int
+		ID               func(childComplexity int) int
+		Img              func(childComplexity int) int
+		RoomNumber       func(childComplexity int) int
+		StartDate        func(childComplexity int) int
+		Subject          func(childComplexity int) int
+		TeacherID        func(childComplexity int) int
+		TeacherName      func(childComplexity int) int
+	}
+
 	Class struct {
 		AcademicYear   func(childComplexity int) int
 		AcademicYearID func(childComplexity int) int
@@ -127,6 +144,12 @@ type ComplexityRoot struct {
 		DepartmentID   func(childComplexity int) int
 		ID             func(childComplexity int) int
 		Name           func(childComplexity int) int
+	}
+
+	ClassInfo struct {
+		ClassCode func(childComplexity int) int
+		ClassID   func(childComplexity int) int
+		ClassName func(childComplexity int) int
 	}
 
 	Complaint struct {
@@ -232,19 +255,22 @@ type ComplexityRoot struct {
 	}
 
 	Mutation struct {
-		CreateAdmissionInquiry func(childComplexity int, input CreateAdmissionInquiryInput) int
-		CreateComplaint        func(childComplexity int, input CreateComplaintInput) int
-		CreateTeacher          func(childComplexity int, input CreateTeacherInfoInput) int
-		CreateVisitor          func(childComplexity int, input CreateVisitorInput) int
-		DeleteAdmissionInquiry func(childComplexity int, inquiryID string) int
-		DeleteComplaint        func(childComplexity int, complaintID string) int
-		DeleteTeacher          func(childComplexity int, id string) int
-		DeleteVisitor          func(childComplexity int, visitorID string) int
-		Login                  func(childComplexity int, input LoginInput) int
-		UpdateAdmissionInquiry func(childComplexity int, input UpdateAdmissionInquiryInput) int
-		UpdateComplaint        func(childComplexity int, input UpdateComplaintInput) int
-		UpdateTeacher          func(childComplexity int, input UpdateTeacherInfoInput) int
-		UpdateVisitor          func(childComplexity int, input UpdateVisitorInput) int
+		CreateAdmissionInquiry   func(childComplexity int, input CreateAdmissionInquiryInput) int
+		CreateAssignClassTeacher func(childComplexity int, input CreateAssignClassTeacherInput) int
+		CreateComplaint          func(childComplexity int, input CreateComplaintInput) int
+		CreateTeacher            func(childComplexity int, input CreateTeacherInfoInput) int
+		CreateVisitor            func(childComplexity int, input CreateVisitorInput) int
+		DeleteAdmissionInquiry   func(childComplexity int, inquiryID string) int
+		DeleteAssignClassTeacher func(childComplexity int, id string) int
+		DeleteComplaint          func(childComplexity int, complaintID string) int
+		DeleteTeacher            func(childComplexity int, id string) int
+		DeleteVisitor            func(childComplexity int, visitorID string) int
+		Login                    func(childComplexity int, input LoginInput) int
+		UpdateAdmissionInquiry   func(childComplexity int, input UpdateAdmissionInquiryInput) int
+		UpdateAssignClassTeacher func(childComplexity int, input UpdateAssignClassTeacherInput) int
+		UpdateComplaint          func(childComplexity int, input UpdateComplaintInput) int
+		UpdateTeacher            func(childComplexity int, input UpdateTeacherInfoInput) int
+		UpdateVisitor            func(childComplexity int, input UpdateVisitorInput) int
 	}
 
 	PageInfo struct {
@@ -262,29 +288,31 @@ type ComplexityRoot struct {
 	}
 
 	Query struct {
-		AcademicYears      func(childComplexity int) int
-		AdmissionInquiries func(childComplexity int) int
-		Classes            func(childComplexity int) int
-		Complaints         func(childComplexity int) int
-		Departments        func(childComplexity int) int
-		Employees          func(childComplexity int) int
-		Events             func(childComplexity int) int
-		Exams              func(childComplexity int) int
-		FeePayments        func(childComplexity int) int
-		FeeStructures      func(childComplexity int) int
-		Node               func(childComplexity int, id string) int
-		Nodes              func(childComplexity int, ids []string) int
-		Permissions        func(childComplexity int) int
-		Roles              func(childComplexity int) int
-		StudentAttendances func(childComplexity int) int
-		Students           func(childComplexity int) int
-		Subjects           func(childComplexity int) int
-		Tasks              func(childComplexity int) int
-		TeacherAttendances func(childComplexity int) int
-		Teachers           func(childComplexity int) int
-		TeachersList       func(childComplexity int) int
-		Users              func(childComplexity int) int
-		Visitors           func(childComplexity int) int
+		AcademicYears          func(childComplexity int) int
+		AdmissionInquiries     func(childComplexity int) int
+		AssignClassTeacherList func(childComplexity int) int
+		ClassList              func(childComplexity int) int
+		Classes                func(childComplexity int) int
+		Complaints             func(childComplexity int) int
+		Departments            func(childComplexity int) int
+		Employees              func(childComplexity int) int
+		Events                 func(childComplexity int) int
+		Exams                  func(childComplexity int) int
+		FeePayments            func(childComplexity int) int
+		FeeStructures          func(childComplexity int) int
+		Node                   func(childComplexity int, id string) int
+		Nodes                  func(childComplexity int, ids []string) int
+		Permissions            func(childComplexity int) int
+		Roles                  func(childComplexity int) int
+		StudentAttendances     func(childComplexity int) int
+		Students               func(childComplexity int) int
+		Subjects               func(childComplexity int) int
+		Tasks                  func(childComplexity int) int
+		TeacherAttendances     func(childComplexity int) int
+		Teachers               func(childComplexity int) int
+		TeachersList           func(childComplexity int) int
+		Users                  func(childComplexity int) int
+		Visitors               func(childComplexity int) int
 	}
 
 	Role struct {
@@ -568,6 +596,91 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 
 		return e.ComplexityRoot.AdmissionInquiry.StudentName(childComplexity), true
 
+	case "AssignClassTeacher.academicYear":
+		if e.ComplexityRoot.AssignClassTeacher.AcademicYear == nil {
+			break
+		}
+
+		return e.ComplexityRoot.AssignClassTeacher.AcademicYear(childComplexity), true
+	case "AssignClassTeacher.assignedBy":
+		if e.ComplexityRoot.AssignClassTeacher.AssignedBy == nil {
+			break
+		}
+
+		return e.ComplexityRoot.AssignClassTeacher.AssignedBy(childComplexity), true
+	case "AssignClassTeacher.assignmentStatus":
+		if e.ComplexityRoot.AssignClassTeacher.AssignmentStatus == nil {
+			break
+		}
+
+		return e.ComplexityRoot.AssignClassTeacher.AssignmentStatus(childComplexity), true
+	case "AssignClassTeacher.classId":
+		if e.ComplexityRoot.AssignClassTeacher.ClassID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.AssignClassTeacher.ClassID(childComplexity), true
+	case "AssignClassTeacher.className":
+		if e.ComplexityRoot.AssignClassTeacher.ClassName == nil {
+			break
+		}
+
+		return e.ComplexityRoot.AssignClassTeacher.ClassName(childComplexity), true
+	case "AssignClassTeacher.classTiming":
+		if e.ComplexityRoot.AssignClassTeacher.ClassTiming == nil {
+			break
+		}
+
+		return e.ComplexityRoot.AssignClassTeacher.ClassTiming(childComplexity), true
+	case "AssignClassTeacher.endDate":
+		if e.ComplexityRoot.AssignClassTeacher.EndDate == nil {
+			break
+		}
+
+		return e.ComplexityRoot.AssignClassTeacher.EndDate(childComplexity), true
+	case "AssignClassTeacher.id":
+		if e.ComplexityRoot.AssignClassTeacher.ID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.AssignClassTeacher.ID(childComplexity), true
+	case "AssignClassTeacher.img":
+		if e.ComplexityRoot.AssignClassTeacher.Img == nil {
+			break
+		}
+
+		return e.ComplexityRoot.AssignClassTeacher.Img(childComplexity), true
+	case "AssignClassTeacher.roomNumber":
+		if e.ComplexityRoot.AssignClassTeacher.RoomNumber == nil {
+			break
+		}
+
+		return e.ComplexityRoot.AssignClassTeacher.RoomNumber(childComplexity), true
+	case "AssignClassTeacher.startDate":
+		if e.ComplexityRoot.AssignClassTeacher.StartDate == nil {
+			break
+		}
+
+		return e.ComplexityRoot.AssignClassTeacher.StartDate(childComplexity), true
+	case "AssignClassTeacher.subject":
+		if e.ComplexityRoot.AssignClassTeacher.Subject == nil {
+			break
+		}
+
+		return e.ComplexityRoot.AssignClassTeacher.Subject(childComplexity), true
+	case "AssignClassTeacher.teacherId":
+		if e.ComplexityRoot.AssignClassTeacher.TeacherID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.AssignClassTeacher.TeacherID(childComplexity), true
+	case "AssignClassTeacher.teacherName":
+		if e.ComplexityRoot.AssignClassTeacher.TeacherName == nil {
+			break
+		}
+
+		return e.ComplexityRoot.AssignClassTeacher.TeacherName(childComplexity), true
+
 	case "Class.academicYear":
 		if e.ComplexityRoot.Class.AcademicYear == nil {
 			break
@@ -610,6 +723,25 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Class.Name(childComplexity), true
+
+	case "ClassInfo.classCode":
+		if e.ComplexityRoot.ClassInfo.ClassCode == nil {
+			break
+		}
+
+		return e.ComplexityRoot.ClassInfo.ClassCode(childComplexity), true
+	case "ClassInfo.classId":
+		if e.ComplexityRoot.ClassInfo.ClassID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.ClassInfo.ClassID(childComplexity), true
+	case "ClassInfo.className":
+		if e.ComplexityRoot.ClassInfo.ClassName == nil {
+			break
+		}
+
+		return e.ComplexityRoot.ClassInfo.ClassName(childComplexity), true
 
 	case "Complaint.assignedTo":
 		if e.ComplexityRoot.Complaint.AssignedTo == nil {
@@ -1098,6 +1230,17 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.CreateAdmissionInquiry(childComplexity, args["input"].(CreateAdmissionInquiryInput)), true
+	case "Mutation.createAssignClassTeacher":
+		if e.ComplexityRoot.Mutation.CreateAssignClassTeacher == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_createAssignClassTeacher_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.CreateAssignClassTeacher(childComplexity, args["input"].(CreateAssignClassTeacherInput)), true
 	case "Mutation.createComplaint":
 		if e.ComplexityRoot.Mutation.CreateComplaint == nil {
 			break
@@ -1142,6 +1285,17 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.DeleteAdmissionInquiry(childComplexity, args["inquiryId"].(string)), true
+	case "Mutation.deleteAssignClassTeacher":
+		if e.ComplexityRoot.Mutation.DeleteAssignClassTeacher == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_deleteAssignClassTeacher_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.DeleteAssignClassTeacher(childComplexity, args["id"].(string)), true
 	case "Mutation.deleteComplaint":
 		if e.ComplexityRoot.Mutation.DeleteComplaint == nil {
 			break
@@ -1197,6 +1351,17 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.UpdateAdmissionInquiry(childComplexity, args["input"].(UpdateAdmissionInquiryInput)), true
+	case "Mutation.updateAssignClassTeacher":
+		if e.ComplexityRoot.Mutation.UpdateAssignClassTeacher == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updateAssignClassTeacher_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.UpdateAssignClassTeacher(childComplexity, args["input"].(UpdateAssignClassTeacherInput)), true
 	case "Mutation.updateComplaint":
 		if e.ComplexityRoot.Mutation.UpdateComplaint == nil {
 			break
@@ -1293,6 +1458,18 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Query.AdmissionInquiries(childComplexity), true
+	case "Query.assignClassTeacherList":
+		if e.ComplexityRoot.Query.AssignClassTeacherList == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Query.AssignClassTeacherList(childComplexity), true
+	case "Query.classList":
+		if e.ComplexityRoot.Query.ClassList == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Query.ClassList(childComplexity), true
 	case "Query.classes":
 		if e.ComplexityRoot.Query.Classes == nil {
 			break
@@ -2101,6 +2278,7 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 		ec.unmarshalInputClassWhereInput,
 		ec.unmarshalInputCreateAcademicYearInput,
 		ec.unmarshalInputCreateAdmissionInquiryInput,
+		ec.unmarshalInputCreateAssignClassTeacherInput,
 		ec.unmarshalInputCreateClassInput,
 		ec.unmarshalInputCreateComplaintInput,
 		ec.unmarshalInputCreateDepartmentInput,
@@ -2137,6 +2315,7 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 		ec.unmarshalInputTeacherWhereInput,
 		ec.unmarshalInputUpdateAcademicYearInput,
 		ec.unmarshalInputUpdateAdmissionInquiryInput,
+		ec.unmarshalInputUpdateAssignClassTeacherInput,
 		ec.unmarshalInputUpdateClassInput,
 		ec.unmarshalInputUpdateComplaintInput,
 		ec.unmarshalInputUpdateDepartmentInput,
@@ -2306,6 +2485,40 @@ func (ec *executionContext) childFields_AdmissionInquiry(ctx context.Context, fi
 	return nil, fmt.Errorf("no field named %q was found under type AdmissionInquiry", field.Name)
 }
 
+func (ec *executionContext) childFields_AssignClassTeacher(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+	switch field.Name {
+	case "id":
+		return ec.fieldContext_AssignClassTeacher_id(ctx, field)
+	case "teacherId":
+		return ec.fieldContext_AssignClassTeacher_teacherId(ctx, field)
+	case "teacherName":
+		return ec.fieldContext_AssignClassTeacher_teacherName(ctx, field)
+	case "img":
+		return ec.fieldContext_AssignClassTeacher_img(ctx, field)
+	case "classId":
+		return ec.fieldContext_AssignClassTeacher_classId(ctx, field)
+	case "className":
+		return ec.fieldContext_AssignClassTeacher_className(ctx, field)
+	case "subject":
+		return ec.fieldContext_AssignClassTeacher_subject(ctx, field)
+	case "startDate":
+		return ec.fieldContext_AssignClassTeacher_startDate(ctx, field)
+	case "endDate":
+		return ec.fieldContext_AssignClassTeacher_endDate(ctx, field)
+	case "assignedBy":
+		return ec.fieldContext_AssignClassTeacher_assignedBy(ctx, field)
+	case "assignmentStatus":
+		return ec.fieldContext_AssignClassTeacher_assignmentStatus(ctx, field)
+	case "academicYear":
+		return ec.fieldContext_AssignClassTeacher_academicYear(ctx, field)
+	case "classTiming":
+		return ec.fieldContext_AssignClassTeacher_classTiming(ctx, field)
+	case "roomNumber":
+		return ec.fieldContext_AssignClassTeacher_roomNumber(ctx, field)
+	}
+	return nil, fmt.Errorf("no field named %q was found under type AssignClassTeacher", field.Name)
+}
+
 func (ec *executionContext) childFields_Class(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 	switch field.Name {
 	case "id":
@@ -2324,6 +2537,18 @@ func (ec *executionContext) childFields_Class(ctx context.Context, field graphql
 		return ec.fieldContext_Class_department(ctx, field)
 	}
 	return nil, fmt.Errorf("no field named %q was found under type Class", field.Name)
+}
+
+func (ec *executionContext) childFields_ClassInfo(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+	switch field.Name {
+	case "classId":
+		return ec.fieldContext_ClassInfo_classId(ctx, field)
+	case "className":
+		return ec.fieldContext_ClassInfo_className(ctx, field)
+	case "classCode":
+		return ec.fieldContext_ClassInfo_classCode(ctx, field)
+	}
+	return nil, fmt.Errorf("no field named %q was found under type ClassInfo", field.Name)
 }
 
 func (ec *executionContext) childFields_Complaint(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {

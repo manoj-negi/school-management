@@ -21,6 +21,29 @@ type AdmissionInquiry struct {
 	Img                string `json:"img"`
 }
 
+type AssignClassTeacher struct {
+	ID               string  `json:"id"`
+	TeacherID        string  `json:"teacherId"`
+	TeacherName      string  `json:"teacherName"`
+	Img              *string `json:"img,omitempty"`
+	ClassID          string  `json:"classId"`
+	ClassName        string  `json:"className"`
+	Subject          string  `json:"subject"`
+	StartDate        string  `json:"startDate"`
+	EndDate          string  `json:"endDate"`
+	AssignedBy       string  `json:"assignedBy"`
+	AssignmentStatus string  `json:"assignmentStatus"`
+	AcademicYear     string  `json:"academicYear"`
+	ClassTiming      string  `json:"classTiming"`
+	RoomNumber       string  `json:"roomNumber"`
+}
+
+type ClassInfo struct {
+	ClassID   string `json:"classId"`
+	ClassName string `json:"className"`
+	ClassCode string `json:"classCode"`
+}
+
 type Complaint struct {
 	ComplaintID           string `json:"complaintId"`
 	ComplaintDate         string `json:"complaintDate"`
@@ -57,6 +80,22 @@ type CreateAdmissionInquiryInput struct {
 	CampusLocation     *string `json:"campusLocation,omitempty"`
 	PreviousEducation  *string `json:"previousEducation,omitempty"`
 	Img                *string `json:"img,omitempty"`
+}
+
+type CreateAssignClassTeacherInput struct {
+	TeacherID        string  `json:"teacherId"`
+	TeacherName      string  `json:"teacherName"`
+	Img              *string `json:"img,omitempty"`
+	ClassID          string  `json:"classId"`
+	ClassName        string  `json:"className"`
+	Subject          string  `json:"subject"`
+	StartDate        string  `json:"startDate"`
+	EndDate          string  `json:"endDate"`
+	AssignedBy       string  `json:"assignedBy"`
+	AssignmentStatus string  `json:"assignmentStatus"`
+	AcademicYear     string  `json:"academicYear"`
+	ClassTiming      string  `json:"classTiming"`
+	RoomNumber       string  `json:"roomNumber"`
 }
 
 type CreateComplaintInput struct {
@@ -155,6 +194,23 @@ type UpdateAdmissionInquiryInput struct {
 	CampusLocation     *string `json:"campusLocation,omitempty"`
 	PreviousEducation  *string `json:"previousEducation,omitempty"`
 	Img                *string `json:"img,omitempty"`
+}
+
+type UpdateAssignClassTeacherInput struct {
+	ID               string  `json:"id"`
+	TeacherID        string  `json:"teacherId"`
+	TeacherName      string  `json:"teacherName"`
+	Img              *string `json:"img,omitempty"`
+	ClassID          string  `json:"classId"`
+	ClassName        string  `json:"className"`
+	Subject          string  `json:"subject"`
+	StartDate        string  `json:"startDate"`
+	EndDate          string  `json:"endDate"`
+	AssignedBy       string  `json:"assignedBy"`
+	AssignmentStatus string  `json:"assignmentStatus"`
+	AcademicYear     string  `json:"academicYear"`
+	ClassTiming      string  `json:"classTiming"`
+	RoomNumber       string  `json:"roomNumber"`
 }
 
 type UpdateComplaintInput struct {

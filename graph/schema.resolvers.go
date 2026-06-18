@@ -633,6 +633,128 @@ func (r *mutationResolver) DeleteTeacher(ctx context.Context, id string) (string
 	return id, nil
 }
 
+// CreateAssignClassTeacher is the resolver for the createAssignClassTeacher field.
+func (r *mutationResolver) CreateAssignClassTeacher(ctx context.Context, input CreateAssignClassTeacherInput) (*AssignClassTeacher, error) {
+	db := r.DB
+
+	id := uuid.New().String()
+
+	teacherIDNull, err := parseUUIDString(input.TeacherID)
+	if err != nil {
+		return nil, fmt.Errorf("teacherId: %w", err)
+	}
+	classIDNull, err := parseUUIDString(input.ClassID)
+	if err != nil {
+		return nil, fmt.Errorf("classId: %w", err)
+	}
+	assignedByNull, err := parseUUIDString(input.AssignedBy)
+	if err != nil {
+		return nil, fmt.Errorf("assignedBy: %w", err)
+	}
+
+	startDate := parseRequiredDateString(input.StartDate)
+	endDate := parseRequiredDateString(input.EndDate)
+	img := parseNullString(input.Img)
+
+	_, err = db.ExecContext(ctx, `
+		INSERT INTO public.assign_class_teacher (
+			id, teacher_id, img, teacher_name, class_id, class_name, subject,
+			start_date, end_date, assigned_by, assignment_status, academic_year,
+			class_timing, room_number
+		) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
+	`,
+		id, teacherIDNull, img, input.TeacherName, classIDNull, input.ClassName, input.Subject,
+		startDate, endDate, assignedByNull, input.AssignmentStatus, input.AcademicYear,
+		input.ClassTiming, input.RoomNumber,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to insert assign_class_teacher: %w", err)
+	}
+
+	return &AssignClassTeacher{
+		ID:               id,
+		TeacherID:        input.TeacherID,
+		TeacherName:      input.TeacherName,
+		Img:              input.Img,
+		ClassID:          input.ClassID,
+		ClassName:        input.ClassName,
+		Subject:          input.Subject,
+		StartDate:        formatNullTime(startDate),
+		EndDate:          formatNullTime(endDate),
+		AssignedBy:       input.AssignedBy,
+		AssignmentStatus: input.AssignmentStatus,
+		AcademicYear:     input.AcademicYear,
+		ClassTiming:      input.ClassTiming,
+		RoomNumber:       input.RoomNumber,
+	}, nil
+}
+
+// UpdateAssignClassTeacher is the resolver for the updateAssignClassTeacher field.
+func (r *mutationResolver) UpdateAssignClassTeacher(ctx context.Context, input UpdateAssignClassTeacherInput) (*AssignClassTeacher, error) {
+	db := r.DB
+
+	teacherIDNull, err := parseUUIDString(input.TeacherID)
+	if err != nil {
+		return nil, fmt.Errorf("teacherId: %w", err)
+	}
+	classIDNull, err := parseUUIDString(input.ClassID)
+	if err != nil {
+		return nil, fmt.Errorf("classId: %w", err)
+	}
+	assignedByNull, err := parseUUIDString(input.AssignedBy)
+	if err != nil {
+		return nil, fmt.Errorf("assignedBy: %w", err)
+	}
+
+	startDate := parseRequiredDateString(input.StartDate)
+	endDate := parseRequiredDateString(input.EndDate)
+	img := parseNullString(input.Img)
+
+	_, err = db.ExecContext(ctx, `
+		UPDATE public.assign_class_teacher SET
+			teacher_id = $1, img = $2, teacher_name = $3, class_id = $4, class_name = $5,
+			subject = $6, start_date = $7, end_date = $8, assigned_by = $9,
+			assignment_status = $10, academic_year = $11, class_timing = $12, room_number = $13
+		WHERE id = $14
+	`,
+		teacherIDNull, img, input.TeacherName, classIDNull, input.ClassName, input.Subject,
+		startDate, endDate, assignedByNull, input.AssignmentStatus, input.AcademicYear,
+		input.ClassTiming, input.RoomNumber, input.ID,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to update assign_class_teacher: %w", err)
+	}
+
+	return &AssignClassTeacher{
+		ID:               input.ID,
+		TeacherID:        input.TeacherID,
+		TeacherName:      input.TeacherName,
+		Img:              input.Img,
+		ClassID:          input.ClassID,
+		ClassName:        input.ClassName,
+		Subject:          input.Subject,
+		StartDate:        formatNullTime(startDate),
+		EndDate:          formatNullTime(endDate),
+		AssignedBy:       input.AssignedBy,
+		AssignmentStatus: input.AssignmentStatus,
+		AcademicYear:     input.AcademicYear,
+		ClassTiming:      input.ClassTiming,
+		RoomNumber:       input.RoomNumber,
+	}, nil
+}
+
+// DeleteAssignClassTeacher is the resolver for the deleteAssignClassTeacher field.
+func (r *mutationResolver) DeleteAssignClassTeacher(ctx context.Context, id string) (string, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, "DELETE FROM public.assign_class_teacher WHERE id = $1", id)
+	if err != nil {
+		return "", fmt.Errorf("failed to delete assign_class_teacher: %w", err)
+	}
+
+	return id, nil
+}
+
 // AdmissionInquiries is the resolver for the admissionInquiries field.
 func (r *queryResolver) AdmissionInquiries(ctx context.Context) ([]*AdmissionInquiry, error) {
 	db := r.DB
@@ -872,6 +994,94 @@ func (r *queryResolver) TeachersList(ctx context.Context) ([]*TeacherInfo, error
 			Status:                status,
 			Birthdate:             formatNullTime(birthdate),
 			Bio:                   bioPtr,
+		})
+	}
+	return list, nil
+}
+
+// AssignClassTeacherList is the resolver for the assignClassTeacherList field.
+func (r *queryResolver) AssignClassTeacherList(ctx context.Context) ([]*AssignClassTeacher, error) {
+	db := r.DB
+
+	rows, err := db.QueryContext(ctx, `
+		SELECT 
+			id, COALESCE(teacher_id::text, ''), COALESCE(img, ''), COALESCE(teacher_name, ''), 
+			COALESCE(class_id::text, ''), COALESCE(class_name, ''), COALESCE(subject, ''), 
+			start_date, end_date, COALESCE(assigned_by::text, ''), 
+			COALESCE(assignment_status, ''), COALESCE(academic_year, ''), 
+			COALESCE(class_timing, ''), COALESCE(room_number, '')
+		FROM public.assign_class_teacher
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("failed to query assign_class_teacher: %w", err)
+	}
+	defer rows.Close()
+
+	var list []*AssignClassTeacher
+	for rows.Next() {
+		var (
+			id, teacherID, img, teacherName, classID, className, subject        string
+			assignedBy, assignmentStatus, academicYear, classTiming, roomNumber string
+			startDate, endDate                                                  sql.NullTime
+		)
+		err := rows.Scan(
+			&id, &teacherID, &img, &teacherName, &classID, &className, &subject,
+			&startDate, &endDate, &assignedBy, &assignmentStatus, &academicYear,
+			&classTiming, &roomNumber,
+		)
+		if err != nil {
+			return nil, fmt.Errorf("failed to scan assign_class_teacher row: %w", err)
+		}
+
+		var imgPtr *string
+		if img != "" {
+			imgPtr = &img
+		}
+
+		list = append(list, &AssignClassTeacher{
+			ID:               id,
+			TeacherID:        teacherID,
+			TeacherName:      teacherName,
+			Img:              imgPtr,
+			ClassID:          classID,
+			ClassName:        className,
+			Subject:          subject,
+			StartDate:        formatNullTime(startDate),
+			EndDate:          formatNullTime(endDate),
+			AssignedBy:       assignedBy,
+			AssignmentStatus: assignmentStatus,
+			AcademicYear:     academicYear,
+			ClassTiming:      classTiming,
+			RoomNumber:       roomNumber,
+		})
+	}
+	return list, nil
+}
+
+// ClassList is the resolver for the classList field.
+func (r *queryResolver) ClassList(ctx context.Context) ([]*ClassInfo, error) {
+	db := r.DB
+
+	rows, err := db.QueryContext(ctx, `
+		SELECT class_id, COALESCE(class_name, ''), COALESCE(class_code, '')
+		FROM public.class_list
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("failed to query class_list: %w", err)
+	}
+	defer rows.Close()
+
+	var list []*ClassInfo
+	for rows.Next() {
+		var classID, className, classCode string
+		err := rows.Scan(&classID, &className, &classCode)
+		if err != nil {
+			return nil, fmt.Errorf("failed to scan class row: %w", err)
+		}
+		list = append(list, &ClassInfo{
+			ClassID:   classID,
+			ClassName: className,
+			ClassCode: classCode,
 		})
 	}
 	return list, nil

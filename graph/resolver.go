@@ -113,3 +113,15 @@ func derefString(s *string) string {
 	}
 	return *s
 }
+
+func parseUUIDString(s string) (sql.NullString, error) {
+	if s == "" {
+		return sql.NullString{}, nil
+	}
+	_, err := uuid.Parse(s)
+	if err != nil {
+		return sql.NullString{}, fmt.Errorf("invalid UUID %q: %w", s, err)
+	}
+	return sql.NullString{String: s, Valid: true}, nil
+}
+
