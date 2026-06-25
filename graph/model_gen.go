@@ -115,6 +115,25 @@ type CreateComplaintInput struct {
 	Feedback              *string `json:"feedback,omitempty"`
 }
 
+type CreateStudentInfoInput struct {
+	Img                     *string `json:"img,omitempty"`
+	Gender                  string  `json:"gender"`
+	Email                   string  `json:"email"`
+	Department              string  `json:"department"`
+	Mobile                  string  `json:"mobile"`
+	Name                    string  `json:"name"`
+	RollNo                  string  `json:"rollNo"`
+	DateOfBirth             string  `json:"dateOfBirth"`
+	Address                 string  `json:"address"`
+	EnrollmentDate          string  `json:"enrollmentDate"`
+	GraduationYear          string  `json:"graduationYear"`
+	ParentGuardianName      string  `json:"parentGuardianName"`
+	ParentGuardianMobile    string  `json:"parentGuardianMobile"`
+	Status                  string  `json:"status"`
+	ProfileCompletionStatus string  `json:"profileCompletionStatus"`
+	ScholarshipStatus       string  `json:"scholarshipStatus"`
+}
+
 type CreateTeacherInfoInput struct {
 	Img                   *string `json:"img,omitempty"`
 	Name                  string  `json:"name"`
@@ -156,6 +175,26 @@ type LoginInput struct {
 type LoginResponse struct {
 	Token string `json:"token"`
 	Role  string `json:"role"`
+}
+
+type StudentInfo struct {
+	ID                      string  `json:"id"`
+	Img                     *string `json:"img,omitempty"`
+	Gender                  string  `json:"gender"`
+	Email                   string  `json:"email"`
+	Department              string  `json:"department"`
+	Mobile                  string  `json:"mobile"`
+	Name                    string  `json:"name"`
+	RollNo                  string  `json:"rollNo"`
+	DateOfBirth             string  `json:"dateOfBirth"`
+	Address                 string  `json:"address"`
+	EnrollmentDate          string  `json:"enrollmentDate"`
+	GraduationYear          string  `json:"graduationYear"`
+	ParentGuardianName      string  `json:"parentGuardianName"`
+	ParentGuardianMobile    string  `json:"parentGuardianMobile"`
+	Status                  string  `json:"status"`
+	ProfileCompletionStatus string  `json:"profileCompletionStatus"`
+	ScholarshipStatus       string  `json:"scholarshipStatus"`
 }
 
 type TeacherInfo struct {
@@ -229,6 +268,26 @@ type UpdateComplaintInput struct {
 	ResolutionDate        *string `json:"resolutionDate,omitempty"`
 	PriorityLevel         string  `json:"priorityLevel"`
 	Feedback              *string `json:"feedback,omitempty"`
+}
+
+type UpdateStudentInfoInput struct {
+	ID                      string  `json:"id"`
+	Img                     *string `json:"img,omitempty"`
+	Gender                  string  `json:"gender"`
+	Email                   string  `json:"email"`
+	Department              string  `json:"department"`
+	Mobile                  string  `json:"mobile"`
+	Name                    string  `json:"name"`
+	RollNo                  string  `json:"rollNo"`
+	DateOfBirth             string  `json:"dateOfBirth"`
+	Address                 string  `json:"address"`
+	EnrollmentDate          string  `json:"enrollmentDate"`
+	GraduationYear          string  `json:"graduationYear"`
+	ParentGuardianName      string  `json:"parentGuardianName"`
+	ParentGuardianMobile    string  `json:"parentGuardianMobile"`
+	Status                  string  `json:"status"`
+	ProfileCompletionStatus string  `json:"profileCompletionStatus"`
+	ScholarshipStatus       string  `json:"scholarshipStatus"`
 }
 
 type UpdateTeacherInfoInput struct {

@@ -98,6 +98,7 @@ type QueryResolver interface {
 	TeachersList(ctx context.Context) ([]*TeacherInfo, error)
 	AssignClassTeacherList(ctx context.Context) ([]*AssignClassTeacher, error)
 	ClassList(ctx context.Context) ([]*ClassInfo, error)
+	StudentsList(ctx context.Context) ([]*StudentInfo, error)
 }
 type RoleResolver interface {
 	ID(ctx context.Context, obj *ent.Role) (string, error)
@@ -3323,6 +3324,38 @@ func (ec *executionContext) fieldContext_Query_classList(_ context.Context, fiel
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return ec.childFields_ClassInfo(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_studentsList(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Query_studentsList(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return ec.Resolvers.Query().StudentsList(ctx)
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v []*StudentInfo) graphql.Marshaler {
+			return ec.marshalNStudentInfo2ᚕᚖgoᚑseedᚋgraphᚐStudentInfoᚄ(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Query_studentsList(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_StudentInfo(ctx, field)
 		},
 	}
 	return fc, nil
@@ -20482,6 +20515,28 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 					}
 				}()
 				res = ec._Query_classList(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx,
+					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
+		case "studentsList":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_studentsList(ctx, field)
 				if res == graphql.Null {
 					atomic.AddUint32(&fs.Invalids, 1)
 				}

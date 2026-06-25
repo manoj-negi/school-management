@@ -10,6 +10,7 @@ extend type Query {
   teachersList: [TeacherInfo!]!
   assignClassTeacherList: [AssignClassTeacher!]!
   classList: [ClassInfo!]!
+  studentsList: [StudentInfo!]!
 }
 
 extend type Mutation {
@@ -29,6 +30,9 @@ extend type Mutation {
   createAssignClassTeacher(input: CreateAssignClassTeacherInput!): AssignClassTeacher!
   updateAssignClassTeacher(input: UpdateAssignClassTeacherInput!): AssignClassTeacher!
   deleteAssignClassTeacher(id: String!): String!
+  createStudent(input: CreateStudentInfoInput!): StudentInfo!
+  updateStudent(input: UpdateStudentInfoInput!): StudentInfo!
+  deleteStudent(id: String!): String!
 }
 
 input UpdateAdmissionInquiryInput {
@@ -312,4 +316,64 @@ type ClassInfo {
   className: String!
   classCode: String!
 }
+
+type StudentInfo {
+  id: String!
+  img: String
+  gender: String!
+  email: String!
+  department: String!
+  mobile: String!
+  name: String!
+  rollNo: String!
+  dateOfBirth: String!
+  address: String!
+  enrollmentDate: String!
+  graduationYear: String!
+  parentGuardianName: String!
+  parentGuardianMobile: String!
+  status: String!
+  profileCompletionStatus: String!
+  scholarshipStatus: String!
+}
+
+input CreateStudentInfoInput {
+  img: String
+  gender: String!
+  email: String!
+  department: String!
+  mobile: String!
+  name: String!
+  rollNo: String!
+  dateOfBirth: String!
+  address: String!
+  enrollmentDate: String!
+  graduationYear: String!
+  parentGuardianName: String!
+  parentGuardianMobile: String!
+  status: String!
+  profileCompletionStatus: String!
+  scholarshipStatus: String!
+}
+
+input UpdateStudentInfoInput {
+  id: String!
+  img: String
+  gender: String!
+  email: String!
+  department: String!
+  mobile: String!
+  name: String!
+  rollNo: String!
+  dateOfBirth: String!
+  address: String!
+  enrollmentDate: String!
+  graduationYear: String!
+  parentGuardianName: String!
+  parentGuardianMobile: String!
+  status: String!
+  profileCompletionStatus: String!
+  scholarshipStatus: String!
+}
+
 

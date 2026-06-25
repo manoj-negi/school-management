@@ -755,6 +755,112 @@ func (r *mutationResolver) DeleteAssignClassTeacher(ctx context.Context, id stri
 	return id, nil
 }
 
+// CreateStudent is the resolver for the createStudent field.
+func (r *mutationResolver) CreateStudent(ctx context.Context, input CreateStudentInfoInput) (*StudentInfo, error) {
+	db := r.DB
+
+	id := uuid.New().String()
+
+	dateOfBirth := parseRequiredDateString(input.DateOfBirth)
+	enrollmentDate := parseRequiredDateString(input.EnrollmentDate)
+	img := parseNullString(input.Img)
+
+	_, err := db.ExecContext(ctx, `
+		INSERT INTO public.students (
+			id, img, gender, email, department, mobile, name, roll_no, 
+			date_of_birth, address, enrollment_date, graduation_year, 
+			parent_guardian_name, parent_guardian_mobile, status, 
+			profile_completion_status, scholarship_status
+		) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)
+	`,
+		id, img, input.Gender, input.Email, input.Department, input.Mobile, input.Name, input.RollNo,
+		dateOfBirth, input.Address, enrollmentDate, input.GraduationYear,
+		input.ParentGuardianName, input.ParentGuardianMobile, input.Status,
+		input.ProfileCompletionStatus, input.ScholarshipStatus,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to insert student: %w", err)
+	}
+
+	return &StudentInfo{
+		ID:                      id,
+		Img:                     input.Img,
+		Gender:                  input.Gender,
+		Email:                   input.Email,
+		Department:              input.Department,
+		Mobile:                  input.Mobile,
+		Name:                    input.Name,
+		RollNo:                  input.RollNo,
+		DateOfBirth:             formatNullTime(dateOfBirth),
+		Address:                 input.Address,
+		EnrollmentDate:          formatNullTime(enrollmentDate),
+		GraduationYear:          input.GraduationYear,
+		ParentGuardianName:      input.ParentGuardianName,
+		ParentGuardianMobile:    input.ParentGuardianMobile,
+		Status:                  input.Status,
+		ProfileCompletionStatus: input.ProfileCompletionStatus,
+		ScholarshipStatus:       input.ScholarshipStatus,
+	}, nil
+}
+
+// UpdateStudent is the resolver for the updateStudent field.
+func (r *mutationResolver) UpdateStudent(ctx context.Context, input UpdateStudentInfoInput) (*StudentInfo, error) {
+	db := r.DB
+
+	dateOfBirth := parseRequiredDateString(input.DateOfBirth)
+	enrollmentDate := parseRequiredDateString(input.EnrollmentDate)
+	img := parseNullString(input.Img)
+
+	_, err := db.ExecContext(ctx, `
+		UPDATE public.students SET
+			img = $1, gender = $2, email = $3, department = $4, mobile = $5, name = $6, roll_no = $7,
+			date_of_birth = $8, address = $9, enrollment_date = $10, graduation_year = $11,
+			parent_guardian_name = $12, parent_guardian_mobile = $13, status = $14,
+			profile_completion_status = $15, scholarship_status = $16
+		WHERE id = $17
+	`,
+		img, input.Gender, input.Email, input.Department, input.Mobile, input.Name, input.RollNo,
+		dateOfBirth, input.Address, enrollmentDate, input.GraduationYear,
+		input.ParentGuardianName, input.ParentGuardianMobile, input.Status,
+		input.ProfileCompletionStatus, input.ScholarshipStatus, input.ID,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to update student: %w", err)
+	}
+
+	return &StudentInfo{
+		ID:                      input.ID,
+		Img:                     input.Img,
+		Gender:                  input.Gender,
+		Email:                   input.Email,
+		Department:              input.Department,
+		Mobile:                  input.Mobile,
+		Name:                    input.Name,
+		RollNo:                  input.RollNo,
+		DateOfBirth:             formatNullTime(dateOfBirth),
+		Address:                 input.Address,
+		EnrollmentDate:          formatNullTime(enrollmentDate),
+		GraduationYear:          input.GraduationYear,
+		ParentGuardianName:      input.ParentGuardianName,
+		ParentGuardianMobile:    input.ParentGuardianMobile,
+		Status:                  input.Status,
+		ProfileCompletionStatus: input.ProfileCompletionStatus,
+		ScholarshipStatus:       input.ScholarshipStatus,
+	}, nil
+}
+
+// DeleteStudent is the resolver for the deleteStudent field.
+func (r *mutationResolver) DeleteStudent(ctx context.Context, id string) (string, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, "DELETE FROM public.students WHERE id = $1", id)
+	if err != nil {
+		return "", fmt.Errorf("failed to delete student: %w", err)
+	}
+
+	return id, nil
+}
+
 // AdmissionInquiries is the resolver for the admissionInquiries field.
 func (r *queryResolver) AdmissionInquiries(ctx context.Context) ([]*AdmissionInquiry, error) {
 	db := r.DB
@@ -1082,6 +1188,73 @@ func (r *queryResolver) ClassList(ctx context.Context) ([]*ClassInfo, error) {
 			ClassID:   classID,
 			ClassName: className,
 			ClassCode: classCode,
+		})
+	}
+	return list, nil
+}
+
+// StudentsList is the resolver for the studentsList field.
+func (r *queryResolver) StudentsList(ctx context.Context) ([]*StudentInfo, error) {
+	db := r.DB
+
+	rows, err := db.QueryContext(ctx, `
+		SELECT 
+			id, COALESCE(img, ''), COALESCE(gender, ''), COALESCE(email, ''), 
+			COALESCE(department, ''), COALESCE(mobile, ''), COALESCE(name, ''), 
+			COALESCE(roll_no, ''), date_of_birth, COALESCE(address, ''), 
+			enrollment_date, COALESCE(graduation_year, ''), 
+			COALESCE(parent_guardian_name, ''), COALESCE(parent_guardian_mobile, ''), 
+			COALESCE(status, ''), COALESCE(profile_completion_status, ''), 
+			COALESCE(scholarship_status, '')
+		FROM public.students
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("failed to query students: %w", err)
+	}
+	defer rows.Close()
+
+	var list []*StudentInfo
+	for rows.Next() {
+		var (
+			id, img, gender, email, department, mobile, name, rollNo string
+			address, graduationYear, parentGuardianName              string
+			parentGuardianMobile, status, profileCompletionStatus    string
+			scholarshipStatus                                        string
+			dateOfBirth, enrollmentDate                              sql.NullTime
+		)
+		err := rows.Scan(
+			&id, &img, &gender, &email, &department, &mobile, &name, &rollNo,
+			&dateOfBirth, &address, &enrollmentDate, &graduationYear,
+			&parentGuardianName, &parentGuardianMobile, &status,
+			&profileCompletionStatus, &scholarshipStatus,
+		)
+		if err != nil {
+			return nil, fmt.Errorf("failed to scan student row: %w", err)
+		}
+
+		var imgPtr *string
+		if img != "" {
+			imgPtr = &img
+		}
+
+		list = append(list, &StudentInfo{
+			ID:                      id,
+			Img:                     imgPtr,
+			Gender:                  gender,
+			Email:                   email,
+			Department:              department,
+			Mobile:                  mobile,
+			Name:                    name,
+			RollNo:                  rollNo,
+			DateOfBirth:             formatNullTime(dateOfBirth),
+			Address:                 address,
+			EnrollmentDate:          formatNullTime(enrollmentDate),
+			GraduationYear:          graduationYear,
+			ParentGuardianName:      parentGuardianName,
+			ParentGuardianMobile:    parentGuardianMobile,
+			Status:                  status,
+			ProfileCompletionStatus: profileCompletionStatus,
+			ScholarshipStatus:       scholarshipStatus,
 		})
 	}
 	return list, nil

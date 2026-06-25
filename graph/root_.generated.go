@@ -258,17 +258,20 @@ type ComplexityRoot struct {
 		CreateAdmissionInquiry   func(childComplexity int, input CreateAdmissionInquiryInput) int
 		CreateAssignClassTeacher func(childComplexity int, input CreateAssignClassTeacherInput) int
 		CreateComplaint          func(childComplexity int, input CreateComplaintInput) int
+		CreateStudent            func(childComplexity int, input CreateStudentInfoInput) int
 		CreateTeacher            func(childComplexity int, input CreateTeacherInfoInput) int
 		CreateVisitor            func(childComplexity int, input CreateVisitorInput) int
 		DeleteAdmissionInquiry   func(childComplexity int, inquiryID string) int
 		DeleteAssignClassTeacher func(childComplexity int, id string) int
 		DeleteComplaint          func(childComplexity int, complaintID string) int
+		DeleteStudent            func(childComplexity int, id string) int
 		DeleteTeacher            func(childComplexity int, id string) int
 		DeleteVisitor            func(childComplexity int, visitorID string) int
 		Login                    func(childComplexity int, input LoginInput) int
 		UpdateAdmissionInquiry   func(childComplexity int, input UpdateAdmissionInquiryInput) int
 		UpdateAssignClassTeacher func(childComplexity int, input UpdateAssignClassTeacherInput) int
 		UpdateComplaint          func(childComplexity int, input UpdateComplaintInput) int
+		UpdateStudent            func(childComplexity int, input UpdateStudentInfoInput) int
 		UpdateTeacher            func(childComplexity int, input UpdateTeacherInfoInput) int
 		UpdateVisitor            func(childComplexity int, input UpdateVisitorInput) int
 	}
@@ -306,6 +309,7 @@ type ComplexityRoot struct {
 		Roles                  func(childComplexity int) int
 		StudentAttendances     func(childComplexity int) int
 		Students               func(childComplexity int) int
+		StudentsList           func(childComplexity int) int
 		Subjects               func(childComplexity int) int
 		Tasks                  func(childComplexity int) int
 		TeacherAttendances     func(childComplexity int) int
@@ -352,6 +356,26 @@ type ComplexityRoot struct {
 		StudentID func(childComplexity int) int
 		Subject   func(childComplexity int) int
 		SubjectID func(childComplexity int) int
+	}
+
+	StudentInfo struct {
+		Address                 func(childComplexity int) int
+		DateOfBirth             func(childComplexity int) int
+		Department              func(childComplexity int) int
+		Email                   func(childComplexity int) int
+		EnrollmentDate          func(childComplexity int) int
+		Gender                  func(childComplexity int) int
+		GraduationYear          func(childComplexity int) int
+		ID                      func(childComplexity int) int
+		Img                     func(childComplexity int) int
+		Mobile                  func(childComplexity int) int
+		Name                    func(childComplexity int) int
+		ParentGuardianMobile    func(childComplexity int) int
+		ParentGuardianName      func(childComplexity int) int
+		ProfileCompletionStatus func(childComplexity int) int
+		RollNo                  func(childComplexity int) int
+		ScholarshipStatus       func(childComplexity int) int
+		Status                  func(childComplexity int) int
 	}
 
 	Subject struct {
@@ -1252,6 +1276,17 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.CreateComplaint(childComplexity, args["input"].(CreateComplaintInput)), true
+	case "Mutation.createStudent":
+		if e.ComplexityRoot.Mutation.CreateStudent == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_createStudent_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.CreateStudent(childComplexity, args["input"].(CreateStudentInfoInput)), true
 	case "Mutation.createTeacher":
 		if e.ComplexityRoot.Mutation.CreateTeacher == nil {
 			break
@@ -1307,6 +1342,17 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.DeleteComplaint(childComplexity, args["complaintId"].(string)), true
+	case "Mutation.deleteStudent":
+		if e.ComplexityRoot.Mutation.DeleteStudent == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_deleteStudent_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.DeleteStudent(childComplexity, args["id"].(string)), true
 	case "Mutation.deleteTeacher":
 		if e.ComplexityRoot.Mutation.DeleteTeacher == nil {
 			break
@@ -1373,6 +1419,17 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.UpdateComplaint(childComplexity, args["input"].(UpdateComplaintInput)), true
+	case "Mutation.updateStudent":
+		if e.ComplexityRoot.Mutation.UpdateStudent == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updateStudent_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.UpdateStudent(childComplexity, args["input"].(UpdateStudentInfoInput)), true
 	case "Mutation.updateTeacher":
 		if e.ComplexityRoot.Mutation.UpdateTeacher == nil {
 			break
@@ -1565,6 +1622,12 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Query.Students(childComplexity), true
+	case "Query.studentsList":
+		if e.ComplexityRoot.Query.StudentsList == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Query.StudentsList(childComplexity), true
 	case "Query.subjects":
 		if e.ComplexityRoot.Query.Subjects == nil {
 			break
@@ -1790,6 +1853,109 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.StudentAttendance.SubjectID(childComplexity), true
+
+	case "StudentInfo.address":
+		if e.ComplexityRoot.StudentInfo.Address == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StudentInfo.Address(childComplexity), true
+	case "StudentInfo.dateOfBirth":
+		if e.ComplexityRoot.StudentInfo.DateOfBirth == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StudentInfo.DateOfBirth(childComplexity), true
+	case "StudentInfo.department":
+		if e.ComplexityRoot.StudentInfo.Department == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StudentInfo.Department(childComplexity), true
+	case "StudentInfo.email":
+		if e.ComplexityRoot.StudentInfo.Email == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StudentInfo.Email(childComplexity), true
+	case "StudentInfo.enrollmentDate":
+		if e.ComplexityRoot.StudentInfo.EnrollmentDate == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StudentInfo.EnrollmentDate(childComplexity), true
+	case "StudentInfo.gender":
+		if e.ComplexityRoot.StudentInfo.Gender == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StudentInfo.Gender(childComplexity), true
+	case "StudentInfo.graduationYear":
+		if e.ComplexityRoot.StudentInfo.GraduationYear == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StudentInfo.GraduationYear(childComplexity), true
+	case "StudentInfo.id":
+		if e.ComplexityRoot.StudentInfo.ID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StudentInfo.ID(childComplexity), true
+	case "StudentInfo.img":
+		if e.ComplexityRoot.StudentInfo.Img == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StudentInfo.Img(childComplexity), true
+	case "StudentInfo.mobile":
+		if e.ComplexityRoot.StudentInfo.Mobile == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StudentInfo.Mobile(childComplexity), true
+	case "StudentInfo.name":
+		if e.ComplexityRoot.StudentInfo.Name == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StudentInfo.Name(childComplexity), true
+	case "StudentInfo.parentGuardianMobile":
+		if e.ComplexityRoot.StudentInfo.ParentGuardianMobile == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StudentInfo.ParentGuardianMobile(childComplexity), true
+	case "StudentInfo.parentGuardianName":
+		if e.ComplexityRoot.StudentInfo.ParentGuardianName == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StudentInfo.ParentGuardianName(childComplexity), true
+	case "StudentInfo.profileCompletionStatus":
+		if e.ComplexityRoot.StudentInfo.ProfileCompletionStatus == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StudentInfo.ProfileCompletionStatus(childComplexity), true
+	case "StudentInfo.rollNo":
+		if e.ComplexityRoot.StudentInfo.RollNo == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StudentInfo.RollNo(childComplexity), true
+	case "StudentInfo.scholarshipStatus":
+		if e.ComplexityRoot.StudentInfo.ScholarshipStatus == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StudentInfo.ScholarshipStatus(childComplexity), true
+	case "StudentInfo.status":
+		if e.ComplexityRoot.StudentInfo.Status == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StudentInfo.Status(childComplexity), true
 
 	case "Subject.code":
 		if e.ComplexityRoot.Subject.Code == nil {
@@ -2290,6 +2456,7 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 		ec.unmarshalInputCreatePermissionInput,
 		ec.unmarshalInputCreateRoleInput,
 		ec.unmarshalInputCreateStudentAttendanceInput,
+		ec.unmarshalInputCreateStudentInfoInput,
 		ec.unmarshalInputCreateStudentInput,
 		ec.unmarshalInputCreateSubjectInput,
 		ec.unmarshalInputCreateTaskInput,
@@ -2327,6 +2494,7 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 		ec.unmarshalInputUpdatePermissionInput,
 		ec.unmarshalInputUpdateRoleInput,
 		ec.unmarshalInputUpdateStudentAttendanceInput,
+		ec.unmarshalInputUpdateStudentInfoInput,
 		ec.unmarshalInputUpdateStudentInput,
 		ec.unmarshalInputUpdateSubjectInput,
 		ec.unmarshalInputUpdateTaskInput,
@@ -2845,6 +3013,46 @@ func (ec *executionContext) childFields_StudentAttendance(ctx context.Context, f
 		return ec.fieldContext_StudentAttendance_subject(ctx, field)
 	}
 	return nil, fmt.Errorf("no field named %q was found under type StudentAttendance", field.Name)
+}
+
+func (ec *executionContext) childFields_StudentInfo(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+	switch field.Name {
+	case "id":
+		return ec.fieldContext_StudentInfo_id(ctx, field)
+	case "img":
+		return ec.fieldContext_StudentInfo_img(ctx, field)
+	case "gender":
+		return ec.fieldContext_StudentInfo_gender(ctx, field)
+	case "email":
+		return ec.fieldContext_StudentInfo_email(ctx, field)
+	case "department":
+		return ec.fieldContext_StudentInfo_department(ctx, field)
+	case "mobile":
+		return ec.fieldContext_StudentInfo_mobile(ctx, field)
+	case "name":
+		return ec.fieldContext_StudentInfo_name(ctx, field)
+	case "rollNo":
+		return ec.fieldContext_StudentInfo_rollNo(ctx, field)
+	case "dateOfBirth":
+		return ec.fieldContext_StudentInfo_dateOfBirth(ctx, field)
+	case "address":
+		return ec.fieldContext_StudentInfo_address(ctx, field)
+	case "enrollmentDate":
+		return ec.fieldContext_StudentInfo_enrollmentDate(ctx, field)
+	case "graduationYear":
+		return ec.fieldContext_StudentInfo_graduationYear(ctx, field)
+	case "parentGuardianName":
+		return ec.fieldContext_StudentInfo_parentGuardianName(ctx, field)
+	case "parentGuardianMobile":
+		return ec.fieldContext_StudentInfo_parentGuardianMobile(ctx, field)
+	case "status":
+		return ec.fieldContext_StudentInfo_status(ctx, field)
+	case "profileCompletionStatus":
+		return ec.fieldContext_StudentInfo_profileCompletionStatus(ctx, field)
+	case "scholarshipStatus":
+		return ec.fieldContext_StudentInfo_scholarshipStatus(ctx, field)
+	}
+	return nil, fmt.Errorf("no field named %q was found under type StudentInfo", field.Name)
 }
 
 func (ec *executionContext) childFields_Subject(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
