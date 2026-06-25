@@ -11,6 +11,8 @@ extend type Query {
   assignClassTeacherList: [AssignClassTeacher!]!
   classList: [ClassInfo!]!
   studentsList: [StudentInfo!]!
+  studentAttendanceList: [StudentAttendanceInfo!]!
+  studentPromotionList: [StudentPromotionInfo!]!
 }
 
 extend type Mutation {
@@ -33,6 +35,12 @@ extend type Mutation {
   createStudent(input: CreateStudentInfoInput!): StudentInfo!
   updateStudent(input: UpdateStudentInfoInput!): StudentInfo!
   deleteStudent(id: String!): String!
+  createStudentAttendance(input: CreateStudentAttendanceInfoInput!): StudentAttendanceInfo!
+  updateStudentAttendance(input: UpdateStudentAttendanceInfoInput!): StudentAttendanceInfo!
+  deleteStudentAttendance(id: String!): String!
+  createStudentPromotion(input: CreateStudentPromotionInfoInput!): StudentPromotionInfo!
+  updateStudentPromotion(input: UpdateStudentPromotionInfoInput!): StudentPromotionInfo!
+  deleteStudentPromotion(id: String!): String!
 }
 
 input UpdateAdmissionInquiryInput {
@@ -375,5 +383,112 @@ input UpdateStudentInfoInput {
   profileCompletionStatus: String!
   scholarshipStatus: String!
 }
+
+type StudentAttendanceInfo {
+  id: String!
+  rollNo: String!
+  img: String
+  sName: String!
+  class: String!
+  date: String!
+  status: String!
+  note: String
+  semester: String!
+  subject: String!
+  attendance_time: String
+  present_count: Int
+  absent_count: Int
+  reason_for_absence: String
+  approved: Boolean
+  timestamp: String
+}
+
+input CreateStudentAttendanceInfoInput {
+  rollNo: String!
+  img: String
+  sName: String!
+  class: String!
+  date: String!
+  status: String!
+  note: String
+  semester: String!
+  subject: String!
+  attendance_time: String
+  present_count: Int
+  absent_count: Int
+  reason_for_absence: String
+  approved: Boolean
+  timestamp: String
+}
+
+input UpdateStudentAttendanceInfoInput {
+  id: String!
+  rollNo: String!
+  img: String
+  sName: String!
+  class: String!
+  date: String!
+  status: String!
+  note: String
+  semester: String!
+  subject: String!
+  attendance_time: String
+  present_count: Int
+  absent_count: Int
+  reason_for_absence: String
+  approved: Boolean
+  timestamp: String
+}
+
+type StudentPromotionInfo {
+  id: String!
+  img: String
+  student_name: String!
+  rollNo: String!
+  current_class: String!
+  promoted_class: String!
+  section: String!
+  session: String!
+  promotion_date: String!
+  total_marks: Int
+  obtained_marks: Int
+  percentage: String
+  result: String
+  status: String
+}
+
+input CreateStudentPromotionInfoInput {
+  img: String
+  student_name: String!
+  rollNo: String!
+  current_class: String!
+  promoted_class: String!
+  section: String!
+  session: String!
+  promotion_date: String!
+  total_marks: Int
+  obtained_marks: Int
+  percentage: String
+  result: String
+  status: String
+}
+
+input UpdateStudentPromotionInfoInput {
+  id: String!
+  img: String
+  student_name: String!
+  rollNo: String!
+  current_class: String!
+  promoted_class: String!
+  section: String!
+  session: String!
+  promotion_date: String!
+  total_marks: Int
+  obtained_marks: Int
+  percentage: String
+  result: String
+  status: String
+}
+
 
 

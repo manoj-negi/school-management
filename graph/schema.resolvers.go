@@ -861,6 +861,227 @@ func (r *mutationResolver) DeleteStudent(ctx context.Context, id string) (string
 	return id, nil
 }
 
+// CreateStudentAttendance is the resolver for the createStudentAttendance field.
+func (r *mutationResolver) CreateStudentAttendance(ctx context.Context, input CreateStudentAttendanceInfoInput) (*StudentAttendanceInfo, error) {
+	db := r.DB
+
+	id := uuid.New().String()
+	date := parseRequiredDateString(input.Date)
+	timestamp := parseTimestampString(input.Timestamp)
+	if !timestamp.Valid {
+		timestamp = sql.NullTime{Time: time.Now(), Valid: true}
+	}
+	img := parseNullString(input.Img)
+	note := parseNullString(input.Note)
+	attendanceTime := parseNullString(input.AttendanceTime)
+	reasonForAbsence := parseNullString(input.ReasonForAbsence)
+
+	_, err := db.ExecContext(ctx, `
+		INSERT INTO public.student_attendance (
+			id, roll_no, img, s_name, class, date, status, note, 
+			semester, subject, attendance_time, present_count, 
+			absent_count, reason_for_absence, approved, timestamp
+		) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
+	`,
+		id, input.RollNo, img, input.SName, input.Class, date, input.Status, note,
+		input.Semester, input.Subject, attendanceTime, derefInt(input.PresentCount),
+		derefInt(input.AbsentCount), reasonForAbsence, derefBool(input.Approved), timestamp,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to insert student attendance: %w", err)
+	}
+
+	timestampStr := formatTimestamp(timestamp)
+
+	return &StudentAttendanceInfo{
+		ID:               id,
+		RollNo:           input.RollNo,
+		Img:              input.Img,
+		SName:            input.SName,
+		Class:            input.Class,
+		Date:             formatNullTime(date),
+		Status:           input.Status,
+		Note:             input.Note,
+		Semester:         input.Semester,
+		Subject:          input.Subject,
+		AttendanceTime:   input.AttendanceTime,
+		PresentCount:     input.PresentCount,
+		AbsentCount:      input.AbsentCount,
+		ReasonForAbsence: input.ReasonForAbsence,
+		Approved:         input.Approved,
+		Timestamp:        &timestampStr,
+	}, nil
+}
+
+// UpdateStudentAttendance is the resolver for the updateStudentAttendance field.
+func (r *mutationResolver) UpdateStudentAttendance(ctx context.Context, input UpdateStudentAttendanceInfoInput) (*StudentAttendanceInfo, error) {
+	db := r.DB
+
+	date := parseRequiredDateString(input.Date)
+	img := parseNullString(input.Img)
+	note := parseNullString(input.Note)
+	attendanceTime := parseNullString(input.AttendanceTime)
+	reasonForAbsence := parseNullString(input.ReasonForAbsence)
+
+	// Fetch current timestamp from the database
+	var timestamp sql.NullTime
+	err := db.QueryRowContext(ctx, "SELECT timestamp FROM public.student_attendance WHERE id = $1", input.ID).Scan(&timestamp)
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return nil, fmt.Errorf("student attendance with ID %s not found", input.ID)
+		}
+		return nil, fmt.Errorf("failed to fetch student attendance timestamp: %w", err)
+	}
+
+	_, err = db.ExecContext(ctx, `
+		UPDATE public.student_attendance SET
+			roll_no = $1, img = $2, s_name = $3, class = $4, date = $5, status = $6, note = $7,
+			semester = $8, subject = $9, attendance_time = $10, present_count = $11,
+			absent_count = $12, reason_for_absence = $13, approved = $14
+		WHERE id = $15
+	`,
+		input.RollNo, img, input.SName, input.Class, date, input.Status, note,
+		input.Semester, input.Subject, attendanceTime, derefInt(input.PresentCount),
+		derefInt(input.AbsentCount), reasonForAbsence, derefBool(input.Approved), input.ID,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to update student attendance: %w", err)
+	}
+
+	timestampStr := formatTimestamp(timestamp)
+
+	return &StudentAttendanceInfo{
+		ID:               input.ID,
+		RollNo:           input.RollNo,
+		Img:              input.Img,
+		SName:            input.SName,
+		Class:            input.Class,
+		Date:             formatNullTime(date),
+		Status:           input.Status,
+		Note:             input.Note,
+		Semester:         input.Semester,
+		Subject:          input.Subject,
+		AttendanceTime:   input.AttendanceTime,
+		PresentCount:     input.PresentCount,
+		AbsentCount:      input.AbsentCount,
+		ReasonForAbsence: input.ReasonForAbsence,
+		Approved:         input.Approved,
+		Timestamp:        &timestampStr,
+	}, nil
+}
+
+// DeleteStudentAttendance is the resolver for the deleteStudentAttendance field.
+func (r *mutationResolver) DeleteStudentAttendance(ctx context.Context, id string) (string, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, "DELETE FROM public.student_attendance WHERE id = $1", id)
+	if err != nil {
+		return "", fmt.Errorf("failed to delete student attendance: %w", err)
+	}
+
+	return id, nil
+}
+
+// CreateStudentPromotion is the resolver for the createStudentPromotion field.
+func (r *mutationResolver) CreateStudentPromotion(ctx context.Context, input CreateStudentPromotionInfoInput) (*StudentPromotionInfo, error) {
+	db := r.DB
+
+	id := uuid.New().String()
+	promotionDate := parseRequiredDateString(input.PromotionDate)
+	img := parseNullString(input.Img)
+	percentage := parseNullString(input.Percentage)
+	result := parseNullString(input.Result)
+	status := parseNullString(input.Status)
+
+	_, err := db.ExecContext(ctx, `
+		INSERT INTO public.student_promotion (
+			id, img, student_name, roll_no, current_class, promoted_class, 
+			section, session, promotion_date, total_marks, obtained_marks, 
+			percentage, result, status
+		) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
+	`,
+		id, img, input.StudentName, input.RollNo, input.CurrentClass, input.PromotedClass,
+		input.Section, input.Session, promotionDate, derefInt(input.TotalMarks),
+		derefInt(input.ObtainedMarks), percentage, result, status,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to insert student promotion: %w", err)
+	}
+
+	return &StudentPromotionInfo{
+		ID:            id,
+		Img:           input.Img,
+		StudentName:   input.StudentName,
+		RollNo:        input.RollNo,
+		CurrentClass:  input.CurrentClass,
+		PromotedClass: input.PromotedClass,
+		Section:       input.Section,
+		Session:       input.Session,
+		PromotionDate: formatNullTime(promotionDate),
+		TotalMarks:    input.TotalMarks,
+		ObtainedMarks: input.ObtainedMarks,
+		Percentage:    input.Percentage,
+		Result:        input.Result,
+		Status:        input.Status,
+	}, nil
+}
+
+// UpdateStudentPromotion is the resolver for the updateStudentPromotion field.
+func (r *mutationResolver) UpdateStudentPromotion(ctx context.Context, input UpdateStudentPromotionInfoInput) (*StudentPromotionInfo, error) {
+	db := r.DB
+
+	promotionDate := parseRequiredDateString(input.PromotionDate)
+	img := parseNullString(input.Img)
+	percentage := parseNullString(input.Percentage)
+	result := parseNullString(input.Result)
+	status := parseNullString(input.Status)
+
+	_, err := db.ExecContext(ctx, `
+		UPDATE public.student_promotion SET
+			img = $1, student_name = $2, roll_no = $3, current_class = $4, promoted_class = $5,
+			section = $6, session = $7, promotion_date = $8, total_marks = $9, obtained_marks = $10,
+			percentage = $11, result = $12, status = $13
+		WHERE id = $14
+	`,
+		img, input.StudentName, input.RollNo, input.CurrentClass, input.PromotedClass,
+		input.Section, input.Session, promotionDate, derefInt(input.TotalMarks),
+		derefInt(input.ObtainedMarks), percentage, result, status, input.ID,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to update student promotion: %w", err)
+	}
+
+	return &StudentPromotionInfo{
+		ID:            input.ID,
+		Img:           input.Img,
+		StudentName:   input.StudentName,
+		RollNo:        input.RollNo,
+		CurrentClass:  input.CurrentClass,
+		PromotedClass: input.PromotedClass,
+		Section:       input.Section,
+		Session:       input.Session,
+		PromotionDate: formatNullTime(promotionDate),
+		TotalMarks:    input.TotalMarks,
+		ObtainedMarks: input.ObtainedMarks,
+		Percentage:    input.Percentage,
+		Result:        input.Result,
+		Status:        input.Status,
+	}, nil
+}
+
+// DeleteStudentPromotion is the resolver for the deleteStudentPromotion field.
+func (r *mutationResolver) DeleteStudentPromotion(ctx context.Context, id string) (string, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, "DELETE FROM public.student_promotion WHERE id = $1", id)
+	if err != nil {
+		return "", fmt.Errorf("failed to delete student promotion: %w", err)
+	}
+
+	return id, nil
+}
+
+
 // AdmissionInquiries is the resolver for the admissionInquiries field.
 func (r *queryResolver) AdmissionInquiries(ctx context.Context) ([]*AdmissionInquiry, error) {
 	db := r.DB
@@ -1259,6 +1480,157 @@ func (r *queryResolver) StudentsList(ctx context.Context) ([]*StudentInfo, error
 	}
 	return list, nil
 }
+
+// StudentAttendanceList is the resolver for the studentAttendanceList field.
+func (r *queryResolver) StudentAttendanceList(ctx context.Context) ([]*StudentAttendanceInfo, error) {
+	db := r.DB
+
+	rows, err := db.QueryContext(ctx, `
+		SELECT 
+			id, COALESCE(roll_no, ''), COALESCE(img, ''), COALESCE(s_name, ''), 
+			COALESCE(class, ''), date, COALESCE(status, ''), COALESCE(note, ''), 
+			COALESCE(semester, ''), COALESCE(subject, ''), COALESCE(attendance_time, ''), 
+			COALESCE(present_count, 0), COALESCE(absent_count, 0), 
+			COALESCE(reason_for_absence, ''), COALESCE(approved, false), timestamp
+		FROM public.student_attendance
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("failed to query student attendance: %w", err)
+	}
+	defer rows.Close()
+
+	var list []*StudentAttendanceInfo
+	for rows.Next() {
+		var (
+			id, rollNo, img, sName, class, status, note, semester, subject, attendanceTime, reasonForAbsence string
+			presentCount, absentCount                                                                        int
+			approved                                                                                         bool
+			date, timestamp                                                                                  sql.NullTime
+		)
+		err := rows.Scan(
+			&id, &rollNo, &img, &sName, &class, &date, &status, &note,
+			&semester, &subject, &attendanceTime, &presentCount, &absentCount,
+			&reasonForAbsence, &approved, &timestamp,
+		)
+		if err != nil {
+			return nil, fmt.Errorf("failed to scan student attendance row: %w", err)
+		}
+
+		var imgPtr *string
+		if img != "" {
+			imgPtr = &img
+		}
+
+		var notePtr *string
+		if note != "" {
+			notePtr = &note
+		}
+
+		var attendanceTimePtr *string
+		if attendanceTime != "" {
+			attendanceTimePtr = &attendanceTime
+		}
+
+		var reasonForAbsencePtr *string
+		if reasonForAbsence != "" {
+			reasonForAbsencePtr = &reasonForAbsence
+		}
+
+		timestampStr := formatTimestamp(timestamp)
+
+		list = append(list, &StudentAttendanceInfo{
+			ID:               id,
+			RollNo:           rollNo,
+			Img:              imgPtr,
+			SName:            sName,
+			Class:            class,
+			Date:             formatNullTime(date),
+			Status:           status,
+			Note:             notePtr,
+			Semester:         semester,
+			Subject:          subject,
+			AttendanceTime:   attendanceTimePtr,
+			PresentCount:     &presentCount,
+			AbsentCount:      &absentCount,
+			ReasonForAbsence: reasonForAbsencePtr,
+			Approved:         &approved,
+			Timestamp:        &timestampStr,
+		})
+	}
+	return list, nil
+}
+
+// StudentPromotionList is the resolver for the studentPromotionList field.
+func (r *queryResolver) StudentPromotionList(ctx context.Context) ([]*StudentPromotionInfo, error) {
+	db := r.DB
+
+	rows, err := db.QueryContext(ctx, `
+		SELECT 
+			id, COALESCE(img, ''), COALESCE(student_name, ''), COALESCE(roll_no, ''), 
+			COALESCE(current_class, ''), COALESCE(promoted_class, ''), COALESCE(section, ''), 
+			COALESCE(session, ''), promotion_date, COALESCE(total_marks, 0), 
+			COALESCE(obtained_marks, 0), COALESCE(percentage, ''), 
+			COALESCE(result, ''), COALESCE(status, '')
+		FROM public.student_promotion
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("failed to query student promotion: %w", err)
+	}
+	defer rows.Close()
+
+	var list []*StudentPromotionInfo
+	for rows.Next() {
+		var (
+			id, img, studentName, rollNo, currentClass, promotedClass, section, session, percentage, result, status string
+			totalMarks, obtainedMarks int
+			promotionDate sql.NullTime
+		)
+		err := rows.Scan(
+			&id, &img, &studentName, &rollNo, &currentClass, &promotedClass,
+			&section, &session, &promotionDate, &totalMarks, &obtainedMarks,
+			&percentage, &result, &status,
+		)
+		if err != nil {
+			return nil, fmt.Errorf("failed to scan student promotion row: %w", err)
+		}
+
+		var imgPtr *string
+		if img != "" {
+			imgPtr = &img
+		}
+		var percentagePtr *string
+		if percentage != "" {
+			percentagePtr = &percentage
+		}
+		var resultPtr *string
+		if result != "" {
+			resultPtr = &result
+		}
+		var statusPtr *string
+		if status != "" {
+			statusPtr = &status
+		}
+
+		list = append(list, &StudentPromotionInfo{
+			ID:            id,
+			Img:           imgPtr,
+			StudentName:   studentName,
+			RollNo:        rollNo,
+			CurrentClass:  currentClass,
+			PromotedClass: promotedClass,
+			Section:       section,
+			Session:       session,
+			PromotionDate: formatNullTime(promotionDate),
+			TotalMarks:    &totalMarks,
+			ObtainedMarks: &obtainedMarks,
+			Percentage:    percentagePtr,
+			Result:        resultPtr,
+			Status:        statusPtr,
+		})
+	}
+	return list, nil
+}
+
 
 // Mutation returns MutationResolver implementation.
 func (r *Resolver) Mutation() MutationResolver { return &mutationResolver{r} }

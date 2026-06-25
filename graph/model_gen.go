@@ -115,6 +115,24 @@ type CreateComplaintInput struct {
 	Feedback              *string `json:"feedback,omitempty"`
 }
 
+type CreateStudentAttendanceInfoInput struct {
+	RollNo           string  `json:"rollNo"`
+	Img              *string `json:"img,omitempty"`
+	SName            string  `json:"sName"`
+	Class            string  `json:"class"`
+	Date             string  `json:"date"`
+	Status           string  `json:"status"`
+	Note             *string `json:"note,omitempty"`
+	Semester         string  `json:"semester"`
+	Subject          string  `json:"subject"`
+	AttendanceTime   *string `json:"attendance_time,omitempty"`
+	PresentCount     *int    `json:"present_count,omitempty"`
+	AbsentCount      *int    `json:"absent_count,omitempty"`
+	ReasonForAbsence *string `json:"reason_for_absence,omitempty"`
+	Approved         *bool   `json:"approved,omitempty"`
+	Timestamp        *string `json:"timestamp,omitempty"`
+}
+
 type CreateStudentInfoInput struct {
 	Img                     *string `json:"img,omitempty"`
 	Gender                  string  `json:"gender"`
@@ -132,6 +150,22 @@ type CreateStudentInfoInput struct {
 	Status                  string  `json:"status"`
 	ProfileCompletionStatus string  `json:"profileCompletionStatus"`
 	ScholarshipStatus       string  `json:"scholarshipStatus"`
+}
+
+type CreateStudentPromotionInfoInput struct {
+	Img           *string `json:"img,omitempty"`
+	StudentName   string  `json:"student_name"`
+	RollNo        string  `json:"rollNo"`
+	CurrentClass  string  `json:"current_class"`
+	PromotedClass string  `json:"promoted_class"`
+	Section       string  `json:"section"`
+	Session       string  `json:"session"`
+	PromotionDate string  `json:"promotion_date"`
+	TotalMarks    *int    `json:"total_marks,omitempty"`
+	ObtainedMarks *int    `json:"obtained_marks,omitempty"`
+	Percentage    *string `json:"percentage,omitempty"`
+	Result        *string `json:"result,omitempty"`
+	Status        *string `json:"status,omitempty"`
 }
 
 type CreateTeacherInfoInput struct {
@@ -177,6 +211,25 @@ type LoginResponse struct {
 	Role  string `json:"role"`
 }
 
+type StudentAttendanceInfo struct {
+	ID               string  `json:"id"`
+	RollNo           string  `json:"rollNo"`
+	Img              *string `json:"img,omitempty"`
+	SName            string  `json:"sName"`
+	Class            string  `json:"class"`
+	Date             string  `json:"date"`
+	Status           string  `json:"status"`
+	Note             *string `json:"note,omitempty"`
+	Semester         string  `json:"semester"`
+	Subject          string  `json:"subject"`
+	AttendanceTime   *string `json:"attendance_time,omitempty"`
+	PresentCount     *int    `json:"present_count,omitempty"`
+	AbsentCount      *int    `json:"absent_count,omitempty"`
+	ReasonForAbsence *string `json:"reason_for_absence,omitempty"`
+	Approved         *bool   `json:"approved,omitempty"`
+	Timestamp        *string `json:"timestamp,omitempty"`
+}
+
 type StudentInfo struct {
 	ID                      string  `json:"id"`
 	Img                     *string `json:"img,omitempty"`
@@ -195,6 +248,23 @@ type StudentInfo struct {
 	Status                  string  `json:"status"`
 	ProfileCompletionStatus string  `json:"profileCompletionStatus"`
 	ScholarshipStatus       string  `json:"scholarshipStatus"`
+}
+
+type StudentPromotionInfo struct {
+	ID            string  `json:"id"`
+	Img           *string `json:"img,omitempty"`
+	StudentName   string  `json:"student_name"`
+	RollNo        string  `json:"rollNo"`
+	CurrentClass  string  `json:"current_class"`
+	PromotedClass string  `json:"promoted_class"`
+	Section       string  `json:"section"`
+	Session       string  `json:"session"`
+	PromotionDate string  `json:"promotion_date"`
+	TotalMarks    *int    `json:"total_marks,omitempty"`
+	ObtainedMarks *int    `json:"obtained_marks,omitempty"`
+	Percentage    *string `json:"percentage,omitempty"`
+	Result        *string `json:"result,omitempty"`
+	Status        *string `json:"status,omitempty"`
 }
 
 type TeacherInfo struct {
@@ -270,6 +340,25 @@ type UpdateComplaintInput struct {
 	Feedback              *string `json:"feedback,omitempty"`
 }
 
+type UpdateStudentAttendanceInfoInput struct {
+	ID               string  `json:"id"`
+	RollNo           string  `json:"rollNo"`
+	Img              *string `json:"img,omitempty"`
+	SName            string  `json:"sName"`
+	Class            string  `json:"class"`
+	Date             string  `json:"date"`
+	Status           string  `json:"status"`
+	Note             *string `json:"note,omitempty"`
+	Semester         string  `json:"semester"`
+	Subject          string  `json:"subject"`
+	AttendanceTime   *string `json:"attendance_time,omitempty"`
+	PresentCount     *int    `json:"present_count,omitempty"`
+	AbsentCount      *int    `json:"absent_count,omitempty"`
+	ReasonForAbsence *string `json:"reason_for_absence,omitempty"`
+	Approved         *bool   `json:"approved,omitempty"`
+	Timestamp        *string `json:"timestamp,omitempty"`
+}
+
 type UpdateStudentInfoInput struct {
 	ID                      string  `json:"id"`
 	Img                     *string `json:"img,omitempty"`
@@ -288,6 +377,23 @@ type UpdateStudentInfoInput struct {
 	Status                  string  `json:"status"`
 	ProfileCompletionStatus string  `json:"profileCompletionStatus"`
 	ScholarshipStatus       string  `json:"scholarshipStatus"`
+}
+
+type UpdateStudentPromotionInfoInput struct {
+	ID            string  `json:"id"`
+	Img           *string `json:"img,omitempty"`
+	StudentName   string  `json:"student_name"`
+	RollNo        string  `json:"rollNo"`
+	CurrentClass  string  `json:"current_class"`
+	PromotedClass string  `json:"promoted_class"`
+	Section       string  `json:"section"`
+	Session       string  `json:"session"`
+	PromotionDate string  `json:"promotion_date"`
+	TotalMarks    *int    `json:"total_marks,omitempty"`
+	ObtainedMarks *int    `json:"obtained_marks,omitempty"`
+	Percentage    *string `json:"percentage,omitempty"`
+	Result        *string `json:"result,omitempty"`
+	Status        *string `json:"status,omitempty"`
 }
 
 type UpdateTeacherInfoInput struct {

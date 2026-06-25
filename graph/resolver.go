@@ -84,6 +84,24 @@ func parseNullString(s *string) sql.NullString {
 	return sql.NullString{String: *s, Valid: true}
 }
 
+func parseTimestampString(s *string) sql.NullTime {
+	if s == nil || *s == "" {
+		return sql.NullTime{}
+	}
+	t, err := time.Parse(time.RFC3339, *s)
+	if err != nil {
+		t, err = time.Parse("2006-01-02T15:04:05Z", *s)
+		if err != nil {
+			t, err = time.Parse("2006-01-02 15:04:05", *s)
+			if err != nil {
+				return parseDateString(s)
+			}
+		}
+	}
+	return sql.NullTime{Time: t, Valid: true}
+}
+
+
 func resolveAssignedTo(ctx context.Context, db *sql.DB, s *string) (sql.NullString, error) {
 	if s == nil || *s == "" {
 		return sql.NullString{}, nil
@@ -113,6 +131,21 @@ func derefString(s *string) string {
 	}
 	return *s
 }
+
+func derefInt(i *int) int {
+	if i == nil {
+		return 0
+	}
+	return *i
+}
+
+func derefBool(b *bool) bool {
+	if b == nil {
+		return false
+	}
+	return *b
+}
+
 
 func parseUUIDString(s string) (sql.NullString, error) {
 	if s == "" {

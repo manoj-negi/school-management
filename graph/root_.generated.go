@@ -259,12 +259,16 @@ type ComplexityRoot struct {
 		CreateAssignClassTeacher func(childComplexity int, input CreateAssignClassTeacherInput) int
 		CreateComplaint          func(childComplexity int, input CreateComplaintInput) int
 		CreateStudent            func(childComplexity int, input CreateStudentInfoInput) int
+		CreateStudentAttendance  func(childComplexity int, input CreateStudentAttendanceInfoInput) int
+		CreateStudentPromotion   func(childComplexity int, input CreateStudentPromotionInfoInput) int
 		CreateTeacher            func(childComplexity int, input CreateTeacherInfoInput) int
 		CreateVisitor            func(childComplexity int, input CreateVisitorInput) int
 		DeleteAdmissionInquiry   func(childComplexity int, inquiryID string) int
 		DeleteAssignClassTeacher func(childComplexity int, id string) int
 		DeleteComplaint          func(childComplexity int, complaintID string) int
 		DeleteStudent            func(childComplexity int, id string) int
+		DeleteStudentAttendance  func(childComplexity int, id string) int
+		DeleteStudentPromotion   func(childComplexity int, id string) int
 		DeleteTeacher            func(childComplexity int, id string) int
 		DeleteVisitor            func(childComplexity int, visitorID string) int
 		Login                    func(childComplexity int, input LoginInput) int
@@ -272,6 +276,8 @@ type ComplexityRoot struct {
 		UpdateAssignClassTeacher func(childComplexity int, input UpdateAssignClassTeacherInput) int
 		UpdateComplaint          func(childComplexity int, input UpdateComplaintInput) int
 		UpdateStudent            func(childComplexity int, input UpdateStudentInfoInput) int
+		UpdateStudentAttendance  func(childComplexity int, input UpdateStudentAttendanceInfoInput) int
+		UpdateStudentPromotion   func(childComplexity int, input UpdateStudentPromotionInfoInput) int
 		UpdateTeacher            func(childComplexity int, input UpdateTeacherInfoInput) int
 		UpdateVisitor            func(childComplexity int, input UpdateVisitorInput) int
 	}
@@ -307,7 +313,9 @@ type ComplexityRoot struct {
 		Nodes                  func(childComplexity int, ids []string) int
 		Permissions            func(childComplexity int) int
 		Roles                  func(childComplexity int) int
+		StudentAttendanceList  func(childComplexity int) int
 		StudentAttendances     func(childComplexity int) int
+		StudentPromotionList   func(childComplexity int) int
 		Students               func(childComplexity int) int
 		StudentsList           func(childComplexity int) int
 		Subjects               func(childComplexity int) int
@@ -358,6 +366,25 @@ type ComplexityRoot struct {
 		SubjectID func(childComplexity int) int
 	}
 
+	StudentAttendanceInfo struct {
+		AbsentCount      func(childComplexity int) int
+		Approved         func(childComplexity int) int
+		AttendanceTime   func(childComplexity int) int
+		Class            func(childComplexity int) int
+		Date             func(childComplexity int) int
+		ID               func(childComplexity int) int
+		Img              func(childComplexity int) int
+		Note             func(childComplexity int) int
+		PresentCount     func(childComplexity int) int
+		ReasonForAbsence func(childComplexity int) int
+		RollNo           func(childComplexity int) int
+		SName            func(childComplexity int) int
+		Semester         func(childComplexity int) int
+		Status           func(childComplexity int) int
+		Subject          func(childComplexity int) int
+		Timestamp        func(childComplexity int) int
+	}
+
 	StudentInfo struct {
 		Address                 func(childComplexity int) int
 		DateOfBirth             func(childComplexity int) int
@@ -376,6 +403,23 @@ type ComplexityRoot struct {
 		RollNo                  func(childComplexity int) int
 		ScholarshipStatus       func(childComplexity int) int
 		Status                  func(childComplexity int) int
+	}
+
+	StudentPromotionInfo struct {
+		CurrentClass  func(childComplexity int) int
+		ID            func(childComplexity int) int
+		Img           func(childComplexity int) int
+		ObtainedMarks func(childComplexity int) int
+		Percentage    func(childComplexity int) int
+		PromotedClass func(childComplexity int) int
+		PromotionDate func(childComplexity int) int
+		Result        func(childComplexity int) int
+		RollNo        func(childComplexity int) int
+		Section       func(childComplexity int) int
+		Session       func(childComplexity int) int
+		Status        func(childComplexity int) int
+		StudentName   func(childComplexity int) int
+		TotalMarks    func(childComplexity int) int
 	}
 
 	Subject struct {
@@ -1287,6 +1331,28 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.CreateStudent(childComplexity, args["input"].(CreateStudentInfoInput)), true
+	case "Mutation.createStudentAttendance":
+		if e.ComplexityRoot.Mutation.CreateStudentAttendance == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_createStudentAttendance_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.CreateStudentAttendance(childComplexity, args["input"].(CreateStudentAttendanceInfoInput)), true
+	case "Mutation.createStudentPromotion":
+		if e.ComplexityRoot.Mutation.CreateStudentPromotion == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_createStudentPromotion_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.CreateStudentPromotion(childComplexity, args["input"].(CreateStudentPromotionInfoInput)), true
 	case "Mutation.createTeacher":
 		if e.ComplexityRoot.Mutation.CreateTeacher == nil {
 			break
@@ -1353,6 +1419,28 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.DeleteStudent(childComplexity, args["id"].(string)), true
+	case "Mutation.deleteStudentAttendance":
+		if e.ComplexityRoot.Mutation.DeleteStudentAttendance == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_deleteStudentAttendance_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.DeleteStudentAttendance(childComplexity, args["id"].(string)), true
+	case "Mutation.deleteStudentPromotion":
+		if e.ComplexityRoot.Mutation.DeleteStudentPromotion == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_deleteStudentPromotion_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.DeleteStudentPromotion(childComplexity, args["id"].(string)), true
 	case "Mutation.deleteTeacher":
 		if e.ComplexityRoot.Mutation.DeleteTeacher == nil {
 			break
@@ -1430,6 +1518,28 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.UpdateStudent(childComplexity, args["input"].(UpdateStudentInfoInput)), true
+	case "Mutation.updateStudentAttendance":
+		if e.ComplexityRoot.Mutation.UpdateStudentAttendance == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updateStudentAttendance_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.UpdateStudentAttendance(childComplexity, args["input"].(UpdateStudentAttendanceInfoInput)), true
+	case "Mutation.updateStudentPromotion":
+		if e.ComplexityRoot.Mutation.UpdateStudentPromotion == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updateStudentPromotion_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.UpdateStudentPromotion(childComplexity, args["input"].(UpdateStudentPromotionInfoInput)), true
 	case "Mutation.updateTeacher":
 		if e.ComplexityRoot.Mutation.UpdateTeacher == nil {
 			break
@@ -1610,12 +1720,24 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Query.Roles(childComplexity), true
+	case "Query.studentAttendanceList":
+		if e.ComplexityRoot.Query.StudentAttendanceList == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Query.StudentAttendanceList(childComplexity), true
 	case "Query.studentAttendances":
 		if e.ComplexityRoot.Query.StudentAttendances == nil {
 			break
 		}
 
 		return e.ComplexityRoot.Query.StudentAttendances(childComplexity), true
+	case "Query.studentPromotionList":
+		if e.ComplexityRoot.Query.StudentPromotionList == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Query.StudentPromotionList(childComplexity), true
 	case "Query.students":
 		if e.ComplexityRoot.Query.Students == nil {
 			break
@@ -1854,6 +1976,103 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 
 		return e.ComplexityRoot.StudentAttendance.SubjectID(childComplexity), true
 
+	case "StudentAttendanceInfo.absent_count":
+		if e.ComplexityRoot.StudentAttendanceInfo.AbsentCount == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StudentAttendanceInfo.AbsentCount(childComplexity), true
+	case "StudentAttendanceInfo.approved":
+		if e.ComplexityRoot.StudentAttendanceInfo.Approved == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StudentAttendanceInfo.Approved(childComplexity), true
+	case "StudentAttendanceInfo.attendance_time":
+		if e.ComplexityRoot.StudentAttendanceInfo.AttendanceTime == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StudentAttendanceInfo.AttendanceTime(childComplexity), true
+	case "StudentAttendanceInfo.class":
+		if e.ComplexityRoot.StudentAttendanceInfo.Class == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StudentAttendanceInfo.Class(childComplexity), true
+	case "StudentAttendanceInfo.date":
+		if e.ComplexityRoot.StudentAttendanceInfo.Date == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StudentAttendanceInfo.Date(childComplexity), true
+	case "StudentAttendanceInfo.id":
+		if e.ComplexityRoot.StudentAttendanceInfo.ID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StudentAttendanceInfo.ID(childComplexity), true
+	case "StudentAttendanceInfo.img":
+		if e.ComplexityRoot.StudentAttendanceInfo.Img == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StudentAttendanceInfo.Img(childComplexity), true
+	case "StudentAttendanceInfo.note":
+		if e.ComplexityRoot.StudentAttendanceInfo.Note == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StudentAttendanceInfo.Note(childComplexity), true
+	case "StudentAttendanceInfo.present_count":
+		if e.ComplexityRoot.StudentAttendanceInfo.PresentCount == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StudentAttendanceInfo.PresentCount(childComplexity), true
+	case "StudentAttendanceInfo.reason_for_absence":
+		if e.ComplexityRoot.StudentAttendanceInfo.ReasonForAbsence == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StudentAttendanceInfo.ReasonForAbsence(childComplexity), true
+	case "StudentAttendanceInfo.rollNo":
+		if e.ComplexityRoot.StudentAttendanceInfo.RollNo == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StudentAttendanceInfo.RollNo(childComplexity), true
+	case "StudentAttendanceInfo.sName":
+		if e.ComplexityRoot.StudentAttendanceInfo.SName == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StudentAttendanceInfo.SName(childComplexity), true
+	case "StudentAttendanceInfo.semester":
+		if e.ComplexityRoot.StudentAttendanceInfo.Semester == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StudentAttendanceInfo.Semester(childComplexity), true
+	case "StudentAttendanceInfo.status":
+		if e.ComplexityRoot.StudentAttendanceInfo.Status == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StudentAttendanceInfo.Status(childComplexity), true
+	case "StudentAttendanceInfo.subject":
+		if e.ComplexityRoot.StudentAttendanceInfo.Subject == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StudentAttendanceInfo.Subject(childComplexity), true
+	case "StudentAttendanceInfo.timestamp":
+		if e.ComplexityRoot.StudentAttendanceInfo.Timestamp == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StudentAttendanceInfo.Timestamp(childComplexity), true
+
 	case "StudentInfo.address":
 		if e.ComplexityRoot.StudentInfo.Address == nil {
 			break
@@ -1956,6 +2175,91 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.StudentInfo.Status(childComplexity), true
+
+	case "StudentPromotionInfo.current_class":
+		if e.ComplexityRoot.StudentPromotionInfo.CurrentClass == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StudentPromotionInfo.CurrentClass(childComplexity), true
+	case "StudentPromotionInfo.id":
+		if e.ComplexityRoot.StudentPromotionInfo.ID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StudentPromotionInfo.ID(childComplexity), true
+	case "StudentPromotionInfo.img":
+		if e.ComplexityRoot.StudentPromotionInfo.Img == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StudentPromotionInfo.Img(childComplexity), true
+	case "StudentPromotionInfo.obtained_marks":
+		if e.ComplexityRoot.StudentPromotionInfo.ObtainedMarks == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StudentPromotionInfo.ObtainedMarks(childComplexity), true
+	case "StudentPromotionInfo.percentage":
+		if e.ComplexityRoot.StudentPromotionInfo.Percentage == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StudentPromotionInfo.Percentage(childComplexity), true
+	case "StudentPromotionInfo.promoted_class":
+		if e.ComplexityRoot.StudentPromotionInfo.PromotedClass == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StudentPromotionInfo.PromotedClass(childComplexity), true
+	case "StudentPromotionInfo.promotion_date":
+		if e.ComplexityRoot.StudentPromotionInfo.PromotionDate == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StudentPromotionInfo.PromotionDate(childComplexity), true
+	case "StudentPromotionInfo.result":
+		if e.ComplexityRoot.StudentPromotionInfo.Result == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StudentPromotionInfo.Result(childComplexity), true
+	case "StudentPromotionInfo.rollNo":
+		if e.ComplexityRoot.StudentPromotionInfo.RollNo == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StudentPromotionInfo.RollNo(childComplexity), true
+	case "StudentPromotionInfo.section":
+		if e.ComplexityRoot.StudentPromotionInfo.Section == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StudentPromotionInfo.Section(childComplexity), true
+	case "StudentPromotionInfo.session":
+		if e.ComplexityRoot.StudentPromotionInfo.Session == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StudentPromotionInfo.Session(childComplexity), true
+	case "StudentPromotionInfo.status":
+		if e.ComplexityRoot.StudentPromotionInfo.Status == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StudentPromotionInfo.Status(childComplexity), true
+	case "StudentPromotionInfo.student_name":
+		if e.ComplexityRoot.StudentPromotionInfo.StudentName == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StudentPromotionInfo.StudentName(childComplexity), true
+	case "StudentPromotionInfo.total_marks":
+		if e.ComplexityRoot.StudentPromotionInfo.TotalMarks == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StudentPromotionInfo.TotalMarks(childComplexity), true
 
 	case "Subject.code":
 		if e.ComplexityRoot.Subject.Code == nil {
@@ -2455,9 +2759,11 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 		ec.unmarshalInputCreateFeeStructureInput,
 		ec.unmarshalInputCreatePermissionInput,
 		ec.unmarshalInputCreateRoleInput,
+		ec.unmarshalInputCreateStudentAttendanceInfoInput,
 		ec.unmarshalInputCreateStudentAttendanceInput,
 		ec.unmarshalInputCreateStudentInfoInput,
 		ec.unmarshalInputCreateStudentInput,
+		ec.unmarshalInputCreateStudentPromotionInfoInput,
 		ec.unmarshalInputCreateSubjectInput,
 		ec.unmarshalInputCreateTaskInput,
 		ec.unmarshalInputCreateTeacherAttendanceInput,
@@ -2493,9 +2799,11 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 		ec.unmarshalInputUpdateFeeStructureInput,
 		ec.unmarshalInputUpdatePermissionInput,
 		ec.unmarshalInputUpdateRoleInput,
+		ec.unmarshalInputUpdateStudentAttendanceInfoInput,
 		ec.unmarshalInputUpdateStudentAttendanceInput,
 		ec.unmarshalInputUpdateStudentInfoInput,
 		ec.unmarshalInputUpdateStudentInput,
+		ec.unmarshalInputUpdateStudentPromotionInfoInput,
 		ec.unmarshalInputUpdateSubjectInput,
 		ec.unmarshalInputUpdateTaskInput,
 		ec.unmarshalInputUpdateTeacherAttendanceInput,
@@ -3015,6 +3323,44 @@ func (ec *executionContext) childFields_StudentAttendance(ctx context.Context, f
 	return nil, fmt.Errorf("no field named %q was found under type StudentAttendance", field.Name)
 }
 
+func (ec *executionContext) childFields_StudentAttendanceInfo(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+	switch field.Name {
+	case "id":
+		return ec.fieldContext_StudentAttendanceInfo_id(ctx, field)
+	case "rollNo":
+		return ec.fieldContext_StudentAttendanceInfo_rollNo(ctx, field)
+	case "img":
+		return ec.fieldContext_StudentAttendanceInfo_img(ctx, field)
+	case "sName":
+		return ec.fieldContext_StudentAttendanceInfo_sName(ctx, field)
+	case "class":
+		return ec.fieldContext_StudentAttendanceInfo_class(ctx, field)
+	case "date":
+		return ec.fieldContext_StudentAttendanceInfo_date(ctx, field)
+	case "status":
+		return ec.fieldContext_StudentAttendanceInfo_status(ctx, field)
+	case "note":
+		return ec.fieldContext_StudentAttendanceInfo_note(ctx, field)
+	case "semester":
+		return ec.fieldContext_StudentAttendanceInfo_semester(ctx, field)
+	case "subject":
+		return ec.fieldContext_StudentAttendanceInfo_subject(ctx, field)
+	case "attendance_time":
+		return ec.fieldContext_StudentAttendanceInfo_attendance_time(ctx, field)
+	case "present_count":
+		return ec.fieldContext_StudentAttendanceInfo_present_count(ctx, field)
+	case "absent_count":
+		return ec.fieldContext_StudentAttendanceInfo_absent_count(ctx, field)
+	case "reason_for_absence":
+		return ec.fieldContext_StudentAttendanceInfo_reason_for_absence(ctx, field)
+	case "approved":
+		return ec.fieldContext_StudentAttendanceInfo_approved(ctx, field)
+	case "timestamp":
+		return ec.fieldContext_StudentAttendanceInfo_timestamp(ctx, field)
+	}
+	return nil, fmt.Errorf("no field named %q was found under type StudentAttendanceInfo", field.Name)
+}
+
 func (ec *executionContext) childFields_StudentInfo(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 	switch field.Name {
 	case "id":
@@ -3053,6 +3399,40 @@ func (ec *executionContext) childFields_StudentInfo(ctx context.Context, field g
 		return ec.fieldContext_StudentInfo_scholarshipStatus(ctx, field)
 	}
 	return nil, fmt.Errorf("no field named %q was found under type StudentInfo", field.Name)
+}
+
+func (ec *executionContext) childFields_StudentPromotionInfo(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+	switch field.Name {
+	case "id":
+		return ec.fieldContext_StudentPromotionInfo_id(ctx, field)
+	case "img":
+		return ec.fieldContext_StudentPromotionInfo_img(ctx, field)
+	case "student_name":
+		return ec.fieldContext_StudentPromotionInfo_student_name(ctx, field)
+	case "rollNo":
+		return ec.fieldContext_StudentPromotionInfo_rollNo(ctx, field)
+	case "current_class":
+		return ec.fieldContext_StudentPromotionInfo_current_class(ctx, field)
+	case "promoted_class":
+		return ec.fieldContext_StudentPromotionInfo_promoted_class(ctx, field)
+	case "section":
+		return ec.fieldContext_StudentPromotionInfo_section(ctx, field)
+	case "session":
+		return ec.fieldContext_StudentPromotionInfo_session(ctx, field)
+	case "promotion_date":
+		return ec.fieldContext_StudentPromotionInfo_promotion_date(ctx, field)
+	case "total_marks":
+		return ec.fieldContext_StudentPromotionInfo_total_marks(ctx, field)
+	case "obtained_marks":
+		return ec.fieldContext_StudentPromotionInfo_obtained_marks(ctx, field)
+	case "percentage":
+		return ec.fieldContext_StudentPromotionInfo_percentage(ctx, field)
+	case "result":
+		return ec.fieldContext_StudentPromotionInfo_result(ctx, field)
+	case "status":
+		return ec.fieldContext_StudentPromotionInfo_status(ctx, field)
+	}
+	return nil, fmt.Errorf("no field named %q was found under type StudentPromotionInfo", field.Name)
 }
 
 func (ec *executionContext) childFields_Subject(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
