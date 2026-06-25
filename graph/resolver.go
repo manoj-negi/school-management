@@ -125,3 +125,37 @@ func parseUUIDString(s string) (sql.NullString, error) {
 	return sql.NullString{String: s, Valid: true}, nil
 }
 
+func resolveTeacherID(ctx context.Context, db *sql.DB, teacherID string, teacherName string) (sql.NullString, error) {
+	if teacherID == "" {
+		return autoGenerateTeacher(ctx, db, teacherName)
+	}
+
+	_, err := uuid.Parse(teacherID)
+	if err == nil {
+		return sql.NullString{String: teacherID, Valid: true}, nil
+	}
+
+	// Not a valid UUID - search by teacher name
+	var existingID string
+	err = db.QueryRowContext(ctx, "SELECT id FROM public.teachers WHERE LOWER(name) = LOWER($1)", teacherName).Scan(&existingID)
+	if err == nil {
+		return sql.NullString{String: existingID, Valid: true}, nil
+	}
+
+	return autoGenerateTeacher(ctx, db, teacherName)
+}
+
+func autoGenerateTeacher(ctx context.Context, db *sql.DB, teacherName string) (sql.NullString, error) {
+	newID := uuid.New().String()
+	_, err := db.ExecContext(ctx, `
+		INSERT INTO public.teachers (
+			id, name, gender, email, department, mobile, degree, address, hire_date, salary, subject_specialization, experience_years, status, birthdate
+		) VALUES ($1, $2, 'male', $3, 'science', '1234567890', 'B.Sc', 'Address', NOW(), '0', 'General', 0, 'active', NOW())
+	`, newID, teacherName, strings.ToLower(strings.ReplaceAll(teacherName, " ", "."))+"@school.com")
+	if err != nil {
+		fmt.Printf("Warning: failed to auto-insert teacher %q: %v\n", teacherName, err)
+	}
+	return sql.NullString{String: newID, Valid: true}, nil
+}
+
+

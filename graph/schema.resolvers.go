@@ -639,7 +639,7 @@ func (r *mutationResolver) CreateAssignClassTeacher(ctx context.Context, input C
 
 	id := uuid.New().String()
 
-	teacherIDNull, err := parseUUIDString(input.TeacherID)
+	teacherIDNull, err := resolveTeacherID(ctx, db, input.TeacherID, input.TeacherName)
 	if err != nil {
 		return nil, fmt.Errorf("teacherId: %w", err)
 	}
@@ -673,7 +673,7 @@ func (r *mutationResolver) CreateAssignClassTeacher(ctx context.Context, input C
 
 	return &AssignClassTeacher{
 		ID:               id,
-		TeacherID:        input.TeacherID,
+		TeacherID:        teacherIDNull.String,
 		TeacherName:      input.TeacherName,
 		Img:              input.Img,
 		ClassID:          input.ClassID,
@@ -693,7 +693,7 @@ func (r *mutationResolver) CreateAssignClassTeacher(ctx context.Context, input C
 func (r *mutationResolver) UpdateAssignClassTeacher(ctx context.Context, input UpdateAssignClassTeacherInput) (*AssignClassTeacher, error) {
 	db := r.DB
 
-	teacherIDNull, err := parseUUIDString(input.TeacherID)
+	teacherIDNull, err := resolveTeacherID(ctx, db, input.TeacherID, input.TeacherName)
 	if err != nil {
 		return nil, fmt.Errorf("teacherId: %w", err)
 	}
@@ -727,7 +727,7 @@ func (r *mutationResolver) UpdateAssignClassTeacher(ctx context.Context, input U
 
 	return &AssignClassTeacher{
 		ID:               input.ID,
-		TeacherID:        input.TeacherID,
+		TeacherID:        teacherIDNull.String,
 		TeacherName:      input.TeacherName,
 		Img:              input.Img,
 		ClassID:          input.ClassID,
