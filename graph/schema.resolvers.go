@@ -1081,6 +1081,97 @@ func (r *mutationResolver) DeleteStudentPromotion(ctx context.Context, id string
 	return id, nil
 }
 
+// CreateStudentCertificate is the resolver for the createStudentCertificate field.
+func (r *mutationResolver) CreateStudentCertificate(ctx context.Context, input CreateStudentCertificateInfoInput) (*StudentCertificateInfo, error) {
+	db := r.DB
+
+	id := uuid.New().String()
+	issueDate := parseRequiredDateString(input.IssueDate)
+	expiryDate := parseRequiredDateString(input.ExpiryDate)
+	img := parseNullString(input.Img)
+	category := parseNullString(input.Category)
+	description := parseNullString(input.Description)
+	status := parseNullString(input.Status)
+
+	_, err := db.ExecContext(ctx, `
+		INSERT INTO public.student_certificates (
+			id, img, student_name, certificate_type, certificate_no, 
+			issued_by, issue_date, expiry_date, category, description, status
+		) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
+	`,
+		id, img, input.StudentName, input.CertificateType, input.CertificateNo,
+		input.IssuedBy, issueDate, expiryDate, category, description, status,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to insert student certificate: %w", err)
+	}
+
+	return &StudentCertificateInfo{
+		ID:              id,
+		Img:             input.Img,
+		StudentName:     input.StudentName,
+		CertificateType: input.CertificateType,
+		CertificateNo:   input.CertificateNo,
+		IssuedBy:        input.IssuedBy,
+		IssueDate:       formatNullTime(issueDate),
+		ExpiryDate:      formatNullTime(expiryDate),
+		Category:        input.Category,
+		Description:     input.Description,
+		Status:          input.Status,
+	}, nil
+}
+
+// UpdateStudentCertificate is the resolver for the updateStudentCertificate field.
+func (r *mutationResolver) UpdateStudentCertificate(ctx context.Context, input UpdateStudentCertificateInfoInput) (*StudentCertificateInfo, error) {
+	db := r.DB
+
+	issueDate := parseRequiredDateString(input.IssueDate)
+	expiryDate := parseRequiredDateString(input.ExpiryDate)
+	img := parseNullString(input.Img)
+	category := parseNullString(input.Category)
+	description := parseNullString(input.Description)
+	status := parseNullString(input.Status)
+
+	_, err := db.ExecContext(ctx, `
+		UPDATE public.student_certificates SET
+			img = $1, student_name = $2, certificate_type = $3, certificate_no = $4, 
+			issued_by = $5, issue_date = $6, expiry_date = $7, category = $8, 
+			description = $9, status = $10
+		WHERE id = $11
+	`,
+		img, input.StudentName, input.CertificateType, input.CertificateNo,
+		input.IssuedBy, issueDate, expiryDate, category, description, status, input.ID,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to update student certificate: %w", err)
+	}
+
+	return &StudentCertificateInfo{
+		ID:              input.ID,
+		Img:             input.Img,
+		StudentName:     input.StudentName,
+		CertificateType: input.CertificateType,
+		CertificateNo:   input.CertificateNo,
+		IssuedBy:        input.IssuedBy,
+		IssueDate:       formatNullTime(issueDate),
+		ExpiryDate:      formatNullTime(expiryDate),
+		Category:        input.Category,
+		Description:     input.Description,
+		Status:          input.Status,
+	}, nil
+}
+
+// DeleteStudentCertificate is the resolver for the deleteStudentCertificate field.
+func (r *mutationResolver) DeleteStudentCertificate(ctx context.Context, id string) (string, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, "DELETE FROM public.student_certificates WHERE id = $1", id)
+	if err != nil {
+		return "", fmt.Errorf("failed to delete student certificate: %w", err)
+	}
+
+	return id, nil
+}
 
 // AdmissionInquiries is the resolver for the admissionInquiries field.
 func (r *queryResolver) AdmissionInquiries(ctx context.Context) ([]*AdmissionInquiry, error) {
@@ -1582,8 +1673,8 @@ func (r *queryResolver) StudentPromotionList(ctx context.Context) ([]*StudentPro
 	for rows.Next() {
 		var (
 			id, img, studentName, rollNo, currentClass, promotedClass, section, session, percentage, result, status string
-			totalMarks, obtainedMarks int
-			promotionDate sql.NullTime
+			totalMarks, obtainedMarks                                                                               int
+			promotionDate                                                                                           sql.NullTime
 		)
 		err := rows.Scan(
 			&id, &img, &studentName, &rollNo, &currentClass, &promotedClass,
@@ -1631,6 +1722,77 @@ func (r *queryResolver) StudentPromotionList(ctx context.Context) ([]*StudentPro
 	return list, nil
 }
 
+// StudentCertificateList is the resolver for the studentCertificateList field.
+func (r *queryResolver) StudentCertificateList(ctx context.Context) ([]*StudentCertificateInfo, error) {
+	db := r.DB
+
+	rows, err := db.QueryContext(ctx, `
+		SELECT 
+			id, img, student_name, certificate_type, certificate_no, 
+			issued_by, issue_date, expiry_date, category, description, status 
+		FROM public.student_certificates
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("failed to query student certificates: %w", err)
+	}
+	defer rows.Close()
+
+	var list []*StudentCertificateInfo
+	for rows.Next() {
+		var (
+			id              string
+			img             sql.NullString
+			studentName     sql.NullString
+			certificateType sql.NullString
+			certificateNo   sql.NullString
+			issuedBy        sql.NullString
+			issueDate       sql.NullTime
+			expiryDate      sql.NullTime
+			category        sql.NullString
+			description     sql.NullString
+			status          sql.NullString
+		)
+		err := rows.Scan(
+			&id, &img, &studentName, &certificateType, &certificateNo,
+			&issuedBy, &issueDate, &expiryDate, &category, &description, &status,
+		)
+		if err != nil {
+			return nil, fmt.Errorf("failed to scan student certificate row: %w", err)
+		}
+
+		var imgPtr *string
+		if img.Valid && img.String != "" {
+			imgPtr = &img.String
+		}
+		var categoryPtr *string
+		if category.Valid && category.String != "" {
+			categoryPtr = &category.String
+		}
+		var descriptionPtr *string
+		if description.Valid && description.String != "" {
+			descriptionPtr = &description.String
+		}
+		var statusPtr *string
+		if status.Valid && status.String != "" {
+			statusPtr = &status.String
+		}
+
+		list = append(list, &StudentCertificateInfo{
+			ID:              id,
+			Img:             imgPtr,
+			StudentName:     studentName.String,
+			CertificateType: certificateType.String,
+			CertificateNo:   certificateNo.String,
+			IssuedBy:        issuedBy.String,
+			IssueDate:       formatNullTime(issueDate),
+			ExpiryDate:      formatNullTime(expiryDate),
+			Category:        categoryPtr,
+			Description:     descriptionPtr,
+			Status:          statusPtr,
+		})
+	}
+	return list, nil
+}
 
 // Mutation returns MutationResolver implementation.
 func (r *Resolver) Mutation() MutationResolver { return &mutationResolver{r} }

@@ -41,6 +41,9 @@ type MutationResolver interface {
 	CreateStudentPromotion(ctx context.Context, input CreateStudentPromotionInfoInput) (*StudentPromotionInfo, error)
 	UpdateStudentPromotion(ctx context.Context, input UpdateStudentPromotionInfoInput) (*StudentPromotionInfo, error)
 	DeleteStudentPromotion(ctx context.Context, id string) (string, error)
+	CreateStudentCertificate(ctx context.Context, input CreateStudentCertificateInfoInput) (*StudentCertificateInfo, error)
+	UpdateStudentCertificate(ctx context.Context, input UpdateStudentCertificateInfoInput) (*StudentCertificateInfo, error)
+	DeleteStudentCertificate(ctx context.Context, id string) (string, error)
 }
 
 // endregion ************************** generated!.gotpl **************************
@@ -95,6 +98,20 @@ func (ec *executionContext) field_Mutation_createStudentAttendance_args(ctx cont
 	arg0, err := graphql.ProcessArgField(ctx, rawArgs, "input",
 		func(ctx context.Context, v any) (CreateStudentAttendanceInfoInput, error) {
 			return ec.unmarshalNCreateStudentAttendanceInfoInput2goᚑseedᚋgraphᚐCreateStudentAttendanceInfoInput(ctx, v)
+		})
+	if err != nil {
+		return nil, err
+	}
+	args["input"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Mutation_createStudentCertificate_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
+	var err error
+	args := map[string]any{}
+	arg0, err := graphql.ProcessArgField(ctx, rawArgs, "input",
+		func(ctx context.Context, v any) (CreateStudentCertificateInfoInput, error) {
+			return ec.unmarshalNCreateStudentCertificateInfoInput2goᚑseedᚋgraphᚐCreateStudentCertificateInfoInput(ctx, v)
 		})
 	if err != nil {
 		return nil, err
@@ -202,6 +219,20 @@ func (ec *executionContext) field_Mutation_deleteComplaint_args(ctx context.Cont
 }
 
 func (ec *executionContext) field_Mutation_deleteStudentAttendance_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
+	var err error
+	args := map[string]any{}
+	arg0, err := graphql.ProcessArgField(ctx, rawArgs, "id",
+		func(ctx context.Context, v any) (string, error) {
+			return ec.unmarshalNString2string(ctx, v)
+		})
+	if err != nil {
+		return nil, err
+	}
+	args["id"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Mutation_deleteStudentCertificate_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
 	var err error
 	args := map[string]any{}
 	arg0, err := graphql.ProcessArgField(ctx, rawArgs, "id",
@@ -333,6 +364,20 @@ func (ec *executionContext) field_Mutation_updateStudentAttendance_args(ctx cont
 	arg0, err := graphql.ProcessArgField(ctx, rawArgs, "input",
 		func(ctx context.Context, v any) (UpdateStudentAttendanceInfoInput, error) {
 			return ec.unmarshalNUpdateStudentAttendanceInfoInput2goᚑseedᚋgraphᚐUpdateStudentAttendanceInfoInput(ctx, v)
+		})
+	if err != nil {
+		return nil, err
+	}
+	args["input"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Mutation_updateStudentCertificate_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
+	var err error
+	args := map[string]any{}
+	arg0, err := graphql.ProcessArgField(ctx, rawArgs, "input",
+		func(ctx context.Context, v any) (UpdateStudentCertificateInfoInput, error) {
+			return ec.unmarshalNUpdateStudentCertificateInfoInput2goᚑseedᚋgraphᚐUpdateStudentCertificateInfoInput(ctx, v)
 		})
 	if err != nil {
 		return nil, err
@@ -2697,6 +2742,138 @@ func (ec *executionContext) fieldContext_Mutation_deleteStudentPromotion(ctx con
 	return fc, nil
 }
 
+func (ec *executionContext) _Mutation_createStudentCertificate(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Mutation_createStudentCertificate(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			fc := graphql.GetFieldContext(ctx)
+			return ec.Resolvers.Mutation().CreateStudentCertificate(ctx, fc.Args["input"].(CreateStudentCertificateInfoInput))
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *StudentCertificateInfo) graphql.Marshaler {
+			return ec.marshalNStudentCertificateInfo2ᚖgoᚑseedᚋgraphᚐStudentCertificateInfo(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Mutation_createStudentCertificate(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_StudentCertificateInfo(ctx, field)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_createStudentCertificate_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_updateStudentCertificate(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Mutation_updateStudentCertificate(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			fc := graphql.GetFieldContext(ctx)
+			return ec.Resolvers.Mutation().UpdateStudentCertificate(ctx, fc.Args["input"].(UpdateStudentCertificateInfoInput))
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *StudentCertificateInfo) graphql.Marshaler {
+			return ec.marshalNStudentCertificateInfo2ᚖgoᚑseedᚋgraphᚐStudentCertificateInfo(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Mutation_updateStudentCertificate(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_StudentCertificateInfo(ctx, field)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_updateStudentCertificate_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_deleteStudentCertificate(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Mutation_deleteStudentCertificate(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			fc := graphql.GetFieldContext(ctx)
+			return ec.Resolvers.Mutation().DeleteStudentCertificate(ctx, fc.Args["id"].(string))
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Mutation_deleteStudentCertificate(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_deleteStudentCertificate_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _StudentAttendanceInfo_id(ctx context.Context, field graphql.CollectedField, obj *StudentAttendanceInfo) (ret graphql.Marshaler) {
 	return graphql.ResolveField(
 		ctx,
@@ -3063,6 +3240,259 @@ func (ec *executionContext) _StudentAttendanceInfo_timestamp(ctx context.Context
 }
 func (ec *executionContext) fieldContext_StudentAttendanceInfo_timestamp(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	return graphql.NewScalarFieldContext("StudentAttendanceInfo", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _StudentCertificateInfo_id(ctx context.Context, field graphql.CollectedField, obj *StudentCertificateInfo) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_StudentCertificateInfo_id(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ID, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_StudentCertificateInfo_id(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("StudentCertificateInfo", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _StudentCertificateInfo_img(ctx context.Context, field graphql.CollectedField, obj *StudentCertificateInfo) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_StudentCertificateInfo_img(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.Img, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *string) graphql.Marshaler {
+			return ec.marshalOString2ᚖstring(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_StudentCertificateInfo_img(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("StudentCertificateInfo", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _StudentCertificateInfo_student_name(ctx context.Context, field graphql.CollectedField, obj *StudentCertificateInfo) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_StudentCertificateInfo_student_name(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.StudentName, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_StudentCertificateInfo_student_name(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("StudentCertificateInfo", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _StudentCertificateInfo_certificate_type(ctx context.Context, field graphql.CollectedField, obj *StudentCertificateInfo) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_StudentCertificateInfo_certificate_type(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.CertificateType, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_StudentCertificateInfo_certificate_type(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("StudentCertificateInfo", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _StudentCertificateInfo_certificate_no(ctx context.Context, field graphql.CollectedField, obj *StudentCertificateInfo) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_StudentCertificateInfo_certificate_no(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.CertificateNo, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_StudentCertificateInfo_certificate_no(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("StudentCertificateInfo", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _StudentCertificateInfo_issued_by(ctx context.Context, field graphql.CollectedField, obj *StudentCertificateInfo) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_StudentCertificateInfo_issued_by(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.IssuedBy, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_StudentCertificateInfo_issued_by(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("StudentCertificateInfo", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _StudentCertificateInfo_issue_date(ctx context.Context, field graphql.CollectedField, obj *StudentCertificateInfo) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_StudentCertificateInfo_issue_date(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.IssueDate, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_StudentCertificateInfo_issue_date(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("StudentCertificateInfo", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _StudentCertificateInfo_expiry_date(ctx context.Context, field graphql.CollectedField, obj *StudentCertificateInfo) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_StudentCertificateInfo_expiry_date(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ExpiryDate, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_StudentCertificateInfo_expiry_date(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("StudentCertificateInfo", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _StudentCertificateInfo_category(ctx context.Context, field graphql.CollectedField, obj *StudentCertificateInfo) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_StudentCertificateInfo_category(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.Category, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *string) graphql.Marshaler {
+			return ec.marshalOString2ᚖstring(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_StudentCertificateInfo_category(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("StudentCertificateInfo", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _StudentCertificateInfo_description(ctx context.Context, field graphql.CollectedField, obj *StudentCertificateInfo) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_StudentCertificateInfo_description(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.Description, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *string) graphql.Marshaler {
+			return ec.marshalOString2ᚖstring(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_StudentCertificateInfo_description(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("StudentCertificateInfo", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _StudentCertificateInfo_status(ctx context.Context, field graphql.CollectedField, obj *StudentCertificateInfo) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_StudentCertificateInfo_status(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.Status, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *string) graphql.Marshaler {
+			return ec.marshalOString2ᚖstring(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_StudentCertificateInfo_status(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("StudentCertificateInfo", field, false, false, errors.New("field of type String does not have child fields"))
 }
 
 func (ec *executionContext) _StudentInfo_id(ctx context.Context, field graphql.CollectedField, obj *StudentInfo) (ret graphql.Marshaler) {
@@ -4986,6 +5416,99 @@ func (ec *executionContext) unmarshalInputCreateStudentAttendanceInfoInput(ctx c
 	return it, nil
 }
 
+func (ec *executionContext) unmarshalInputCreateStudentCertificateInfoInput(ctx context.Context, obj any) (CreateStudentCertificateInfoInput, error) {
+	var it CreateStudentCertificateInfoInput
+	if obj == nil {
+		return it, nil
+	}
+
+	asMap := map[string]any{}
+	for k, v := range obj.(map[string]any) {
+		asMap[k] = v
+	}
+
+	fieldsInOrder := [...]string{"img", "student_name", "certificate_type", "certificate_no", "issued_by", "issue_date", "expiry_date", "category", "description", "status"}
+	for _, k := range fieldsInOrder {
+		v, ok := asMap[k]
+		if !ok {
+			continue
+		}
+		switch k {
+		case "img":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("img"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Img = data
+		case "student_name":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("student_name"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.StudentName = data
+		case "certificate_type":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("certificate_type"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.CertificateType = data
+		case "certificate_no":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("certificate_no"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.CertificateNo = data
+		case "issued_by":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("issued_by"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.IssuedBy = data
+		case "issue_date":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("issue_date"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.IssueDate = data
+		case "expiry_date":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("expiry_date"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.ExpiryDate = data
+		case "category":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("category"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Category = data
+		case "description":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("description"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Description = data
+		case "status":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("status"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Status = data
+		}
+	}
+	return it, nil
+}
+
 func (ec *executionContext) unmarshalInputCreateStudentInfoInput(ctx context.Context, obj any) (CreateStudentInfoInput, error) {
 	var it CreateStudentInfoInput
 	if obj == nil {
@@ -6021,6 +6544,106 @@ func (ec *executionContext) unmarshalInputUpdateStudentAttendanceInfoInput(ctx c
 				return it, err
 			}
 			it.Timestamp = data
+		}
+	}
+	return it, nil
+}
+
+func (ec *executionContext) unmarshalInputUpdateStudentCertificateInfoInput(ctx context.Context, obj any) (UpdateStudentCertificateInfoInput, error) {
+	var it UpdateStudentCertificateInfoInput
+	if obj == nil {
+		return it, nil
+	}
+
+	asMap := map[string]any{}
+	for k, v := range obj.(map[string]any) {
+		asMap[k] = v
+	}
+
+	fieldsInOrder := [...]string{"id", "img", "student_name", "certificate_type", "certificate_no", "issued_by", "issue_date", "expiry_date", "category", "description", "status"}
+	for _, k := range fieldsInOrder {
+		v, ok := asMap[k]
+		if !ok {
+			continue
+		}
+		switch k {
+		case "id":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.ID = data
+		case "img":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("img"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Img = data
+		case "student_name":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("student_name"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.StudentName = data
+		case "certificate_type":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("certificate_type"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.CertificateType = data
+		case "certificate_no":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("certificate_no"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.CertificateNo = data
+		case "issued_by":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("issued_by"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.IssuedBy = data
+		case "issue_date":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("issue_date"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.IssueDate = data
+		case "expiry_date":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("expiry_date"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.ExpiryDate = data
+		case "category":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("category"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Category = data
+		case "description":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("description"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Description = data
+		case "status":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("status"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Status = data
 		}
 	}
 	return it, nil
@@ -7170,6 +7793,27 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
+		case "createStudentCertificate":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_createStudentCertificate(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "updateStudentCertificate":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_updateStudentCertificate(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "deleteStudentCertificate":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_deleteStudentCertificate(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -7281,6 +7925,95 @@ func (ec *executionContext) _StudentAttendanceInfo(ctx context.Context, sel ast.
 			}
 		case "timestamp":
 			out.Values[i] = ec._StudentAttendanceInfo_timestamp(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				out.Invalids++
+			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.Deferred, int32(min(len(deferred), math.MaxInt32)))
+
+	for label, dfs := range deferred {
+		ec.ProcessDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
+var studentCertificateInfoImplementors = []string{"StudentCertificateInfo"}
+
+func (ec *executionContext) _StudentCertificateInfo(ctx context.Context, sel ast.SelectionSet, obj *StudentCertificateInfo) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, studentCertificateInfoImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("StudentCertificateInfo")
+		case "id":
+			out.Values[i] = ec._StudentCertificateInfo_id(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "img":
+			out.Values[i] = ec._StudentCertificateInfo_img(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				out.Invalids++
+			}
+		case "student_name":
+			out.Values[i] = ec._StudentCertificateInfo_student_name(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "certificate_type":
+			out.Values[i] = ec._StudentCertificateInfo_certificate_type(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "certificate_no":
+			out.Values[i] = ec._StudentCertificateInfo_certificate_no(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "issued_by":
+			out.Values[i] = ec._StudentCertificateInfo_issued_by(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "issue_date":
+			out.Values[i] = ec._StudentCertificateInfo_issue_date(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "expiry_date":
+			out.Values[i] = ec._StudentCertificateInfo_expiry_date(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "category":
+			out.Values[i] = ec._StudentCertificateInfo_category(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				out.Invalids++
+			}
+		case "description":
+			out.Values[i] = ec._StudentCertificateInfo_description(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				out.Invalids++
+			}
+		case "status":
+			out.Values[i] = ec._StudentCertificateInfo_status(ctx, field, obj)
 			if out.Values[i] == graphql.RequiredNull {
 				out.Invalids++
 			}
@@ -7893,6 +8626,11 @@ func (ec *executionContext) unmarshalNCreateStudentAttendanceInfoInput2goᚑseed
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
+func (ec *executionContext) unmarshalNCreateStudentCertificateInfoInput2goᚑseedᚋgraphᚐCreateStudentCertificateInfoInput(ctx context.Context, v any) (CreateStudentCertificateInfoInput, error) {
+	res, err := ec.unmarshalInputCreateStudentCertificateInfoInput(ctx, v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
 func (ec *executionContext) unmarshalNCreateStudentInfoInput2goᚑseedᚋgraphᚐCreateStudentInfoInput(ctx context.Context, v any) (CreateStudentInfoInput, error) {
 	res, err := ec.unmarshalInputCreateStudentInfoInput(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
@@ -7960,6 +8698,36 @@ func (ec *executionContext) marshalNStudentAttendanceInfo2ᚖgoᚑseedᚋgraph�
 		return graphql.Null
 	}
 	return ec._StudentAttendanceInfo(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalNStudentCertificateInfo2goᚑseedᚋgraphᚐStudentCertificateInfo(ctx context.Context, sel ast.SelectionSet, v StudentCertificateInfo) graphql.Marshaler {
+	return ec._StudentCertificateInfo(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalNStudentCertificateInfo2ᚕᚖgoᚑseedᚋgraphᚐStudentCertificateInfoᚄ(ctx context.Context, sel ast.SelectionSet, v []*StudentCertificateInfo) graphql.Marshaler {
+	ret := graphql.MarshalSliceConcurrently(ctx, len(v), 0, false, func(ctx context.Context, i int) graphql.Marshaler {
+		fc := graphql.GetFieldContext(ctx)
+		fc.Result = &v[i]
+		return ec.marshalNStudentCertificateInfo2ᚖgoᚑseedᚋgraphᚐStudentCertificateInfo(ctx, sel, v[i])
+	})
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
+func (ec *executionContext) marshalNStudentCertificateInfo2ᚖgoᚑseedᚋgraphᚐStudentCertificateInfo(ctx context.Context, sel ast.SelectionSet, v *StudentCertificateInfo) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			graphql.AddErrorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._StudentCertificateInfo(ctx, sel, v)
 }
 
 func (ec *executionContext) marshalNStudentInfo2goᚑseedᚋgraphᚐStudentInfo(ctx context.Context, sel ast.SelectionSet, v StudentInfo) graphql.Marshaler {
@@ -8069,6 +8837,11 @@ func (ec *executionContext) unmarshalNUpdateComplaintInput2goᚑseedᚋgraphᚐU
 
 func (ec *executionContext) unmarshalNUpdateStudentAttendanceInfoInput2goᚑseedᚋgraphᚐUpdateStudentAttendanceInfoInput(ctx context.Context, v any) (UpdateStudentAttendanceInfoInput, error) {
 	res, err := ec.unmarshalInputUpdateStudentAttendanceInfoInput(ctx, v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) unmarshalNUpdateStudentCertificateInfoInput2goᚑseedᚋgraphᚐUpdateStudentCertificateInfoInput(ctx context.Context, v any) (UpdateStudentCertificateInfoInput, error) {
+	res, err := ec.unmarshalInputUpdateStudentCertificateInfoInput(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 

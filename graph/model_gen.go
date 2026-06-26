@@ -133,6 +133,19 @@ type CreateStudentAttendanceInfoInput struct {
 	Timestamp        *string `json:"timestamp,omitempty"`
 }
 
+type CreateStudentCertificateInfoInput struct {
+	Img             *string `json:"img,omitempty"`
+	StudentName     string  `json:"student_name"`
+	CertificateType string  `json:"certificate_type"`
+	CertificateNo   string  `json:"certificate_no"`
+	IssuedBy        string  `json:"issued_by"`
+	IssueDate       string  `json:"issue_date"`
+	ExpiryDate      string  `json:"expiry_date"`
+	Category        *string `json:"category,omitempty"`
+	Description     *string `json:"description,omitempty"`
+	Status          *string `json:"status,omitempty"`
+}
+
 type CreateStudentInfoInput struct {
 	Img                     *string `json:"img,omitempty"`
 	Gender                  string  `json:"gender"`
@@ -228,6 +241,20 @@ type StudentAttendanceInfo struct {
 	ReasonForAbsence *string `json:"reason_for_absence,omitempty"`
 	Approved         *bool   `json:"approved,omitempty"`
 	Timestamp        *string `json:"timestamp,omitempty"`
+}
+
+type StudentCertificateInfo struct {
+	ID              string  `json:"id"`
+	Img             *string `json:"img,omitempty"`
+	StudentName     string  `json:"student_name"`
+	CertificateType string  `json:"certificate_type"`
+	CertificateNo   string  `json:"certificate_no"`
+	IssuedBy        string  `json:"issued_by"`
+	IssueDate       string  `json:"issue_date"`
+	ExpiryDate      string  `json:"expiry_date"`
+	Category        *string `json:"category,omitempty"`
+	Description     *string `json:"description,omitempty"`
+	Status          *string `json:"status,omitempty"`
 }
 
 type StudentInfo struct {
@@ -357,6 +384,20 @@ type UpdateStudentAttendanceInfoInput struct {
 	ReasonForAbsence *string `json:"reason_for_absence,omitempty"`
 	Approved         *bool   `json:"approved,omitempty"`
 	Timestamp        *string `json:"timestamp,omitempty"`
+}
+
+type UpdateStudentCertificateInfoInput struct {
+	ID              string  `json:"id"`
+	Img             *string `json:"img,omitempty"`
+	StudentName     string  `json:"student_name"`
+	CertificateType string  `json:"certificate_type"`
+	CertificateNo   string  `json:"certificate_no"`
+	IssuedBy        string  `json:"issued_by"`
+	IssueDate       string  `json:"issue_date"`
+	ExpiryDate      string  `json:"expiry_date"`
+	Category        *string `json:"category,omitempty"`
+	Description     *string `json:"description,omitempty"`
+	Status          *string `json:"status,omitempty"`
 }
 
 type UpdateStudentInfoInput struct {

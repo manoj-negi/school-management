@@ -13,6 +13,7 @@ extend type Query {
   studentsList: [StudentInfo!]!
   studentAttendanceList: [StudentAttendanceInfo!]!
   studentPromotionList: [StudentPromotionInfo!]!
+  studentCertificateList: [StudentCertificateInfo!]!
 }
 
 extend type Mutation {
@@ -41,6 +42,9 @@ extend type Mutation {
   createStudentPromotion(input: CreateStudentPromotionInfoInput!): StudentPromotionInfo!
   updateStudentPromotion(input: UpdateStudentPromotionInfoInput!): StudentPromotionInfo!
   deleteStudentPromotion(id: String!): String!
+  createStudentCertificate(input: CreateStudentCertificateInfoInput!): StudentCertificateInfo!
+  updateStudentCertificate(input: UpdateStudentCertificateInfoInput!): StudentCertificateInfo!
+  deleteStudentCertificate(id: String!): String!
 }
 
 input UpdateAdmissionInquiryInput {
@@ -487,6 +491,47 @@ input UpdateStudentPromotionInfoInput {
   obtained_marks: Int
   percentage: String
   result: String
+  status: String
+}
+
+type StudentCertificateInfo {
+  id: String!
+  img: String
+  student_name: String!
+  certificate_type: String!
+  certificate_no: String!
+  issued_by: String!
+  issue_date: String!
+  expiry_date: String!
+  category: String
+  description: String
+  status: String
+}
+
+input CreateStudentCertificateInfoInput {
+  img: String
+  student_name: String!
+  certificate_type: String!
+  certificate_no: String!
+  issued_by: String!
+  issue_date: String!
+  expiry_date: String!
+  category: String
+  description: String
+  status: String
+}
+
+input UpdateStudentCertificateInfoInput {
+  id: String!
+  img: String
+  student_name: String!
+  certificate_type: String!
+  certificate_no: String!
+  issued_by: String!
+  issue_date: String!
+  expiry_date: String!
+  category: String
+  description: String
   status: String
 }
 
