@@ -15,6 +15,10 @@ extend type Query {
   studentPromotionList: [StudentPromotionInfo!]!
   studentCertificateList: [StudentCertificateInfo!]!
   studentDisciplineList: [StudentDisciplineInfo!]!
+  studentHealthRecordList: [StudentHealthRecordInfo!]!
+  onlineApplications: [OnlineApplication!]!
+  entranceExams: [EntranceExam!]!
+  meritLists: [MeritList!]!
 }
 
 extend type Mutation {
@@ -49,6 +53,18 @@ extend type Mutation {
   createStudentDiscipline(input: CreateStudentDisciplineInfoInput!): StudentDisciplineInfo!
   updateStudentDiscipline(input: UpdateStudentDisciplineInfoInput!): StudentDisciplineInfo!
   deleteStudentDiscipline(id: String!): String!
+  createStudentHealthRecord(input: CreateStudentHealthRecordInfoInput!): StudentHealthRecordInfo!
+  updateStudentHealthRecord(input: UpdateStudentHealthRecordInfoInput!): StudentHealthRecordInfo!
+  deleteStudentHealthRecord(id: String!): String!
+  createOnlineApplication(input: CreateOnlineApplicationInput!): OnlineApplication!
+  updateOnlineApplication(input: UpdateOnlineApplicationInput!): OnlineApplication!
+  deleteOnlineApplication(id: String!): String!
+  createEntranceExam(input: CreateEntranceExamInput!): EntranceExam!
+  updateEntranceExam(input: UpdateEntranceExamInput!): EntranceExam!
+  deleteEntranceExam(id: String!): String!
+  createMeritList(input: CreateMeritListInput!): MeritList!
+  updateMeritList(input: UpdateMeritListInput!): MeritList!
+  deleteMeritList(id: String!): String!
 }
 
 input UpdateAdmissionInquiryInput {
@@ -583,5 +599,157 @@ input UpdateStudentDisciplineInfoInput {
   status: String
 }
 
+type StudentHealthRecordInfo {
+  id: String!
+  img: String
+  student_name: String!
+  blood_group: String!
+  allergies: String
+  last_checkup: String!
+  status: String!
+}
 
+input CreateStudentHealthRecordInfoInput {
+  img: String
+  student_name: String!
+  blood_group: String!
+  allergies: String
+  last_checkup: String!
+  status: String!
+}
+
+input UpdateStudentHealthRecordInfoInput {
+  id: String!
+  img: String
+  student_name: String!
+  blood_group: String!
+  allergies: String
+  last_checkup: String!
+  status: String!
+}
+
+type OnlineApplication {
+  id: String!
+  img: String!
+  studentName: String!
+  applicationNo: String!
+  email: String!
+  mobile: String!
+  gender: String!
+  dateOfBirth: String!
+  course: String!
+  applicationDate: String!
+  paymentStatus: String!
+  applicationStatus: String!
+}
+
+input CreateOnlineApplicationInput {
+  img: String
+  studentName: String!
+  applicationNo: String!
+  email: String!
+  mobile: String!
+  gender: String!
+  dateOfBirth: String!
+  course: String!
+  applicationDate: String!
+  paymentStatus: String!
+  applicationStatus: String!
+}
+
+input UpdateOnlineApplicationInput {
+  id: String!
+  img: String
+  studentName: String!
+  applicationNo: String!
+  email: String!
+  mobile: String!
+  gender: String!
+  dateOfBirth: String!
+  course: String!
+  applicationDate: String!
+  paymentStatus: String!
+  applicationStatus: String!
+}
+
+type EntranceExam {
+  id: String!
+  examName: String!
+  examCode: String!
+  examDate: String!
+  startTime: String!
+  endTime: String!
+  venue: String!
+  maxMarks: Int!
+  passingMarks: Int!
+  status: String!
+  description: String
+}
+
+input CreateEntranceExamInput {
+  examName: String!
+  examCode: String!
+  examDate: String!
+  startTime: String!
+  endTime: String!
+  venue: String!
+  maxMarks: Int!
+  passingMarks: Int!
+  status: String!
+  description: String
+}
+
+input UpdateEntranceExamInput {
+  id: String!
+  examName: String!
+  examCode: String!
+  examDate: String!
+  startTime: String!
+  endTime: String!
+  venue: String!
+  maxMarks: Int!
+  passingMarks: Int!
+  status: String!
+  description: String
+}
+
+type MeritList {
+  id: String!
+  studentName: String!
+  applicationNo: String!
+  category: String!
+  entranceScore: Float!
+  academicScore: Float!
+  totalScore: Float!
+  rank: Int!
+  course: String!
+  selectionStatus: String!
+}
+
+input CreateMeritListInput {
+  studentName: String!
+  applicationNo: String!
+  category: String!
+  entranceScore: Float!
+  academicScore: Float!
+  totalScore: Float!
+  rank: Int!
+  course: String!
+  selectionStatus: String!
+}
+
+input UpdateMeritListInput {
+  id: String!
+  studentName: String!
+  applicationNo: String!
+  category: String!
+  entranceScore: Float!
+  academicScore: Float!
+  totalScore: Float!
+  rank: Int!
+  course: String!
+  selectionStatus: String!
+}
+
+scalar Time
 

@@ -115,6 +115,45 @@ type CreateComplaintInput struct {
 	Feedback              *string `json:"feedback,omitempty"`
 }
 
+type CreateEntranceExamInput struct {
+	ExamName     string  `json:"examName"`
+	ExamCode     string  `json:"examCode"`
+	ExamDate     string  `json:"examDate"`
+	StartTime    string  `json:"startTime"`
+	EndTime      string  `json:"endTime"`
+	Venue        string  `json:"venue"`
+	MaxMarks     int     `json:"maxMarks"`
+	PassingMarks int     `json:"passingMarks"`
+	Status       string  `json:"status"`
+	Description  *string `json:"description,omitempty"`
+}
+
+type CreateMeritListInput struct {
+	StudentName     string  `json:"studentName"`
+	ApplicationNo   string  `json:"applicationNo"`
+	Category        string  `json:"category"`
+	EntranceScore   float64 `json:"entranceScore"`
+	AcademicScore   float64 `json:"academicScore"`
+	TotalScore      float64 `json:"totalScore"`
+	Rank            int     `json:"rank"`
+	Course          string  `json:"course"`
+	SelectionStatus string  `json:"selectionStatus"`
+}
+
+type CreateOnlineApplicationInput struct {
+	Img               *string `json:"img,omitempty"`
+	StudentName       string  `json:"studentName"`
+	ApplicationNo     string  `json:"applicationNo"`
+	Email             string  `json:"email"`
+	Mobile            string  `json:"mobile"`
+	Gender            string  `json:"gender"`
+	DateOfBirth       string  `json:"dateOfBirth"`
+	Course            string  `json:"course"`
+	ApplicationDate   string  `json:"applicationDate"`
+	PaymentStatus     string  `json:"paymentStatus"`
+	ApplicationStatus string  `json:"applicationStatus"`
+}
+
 type CreateStudentAttendanceInfoInput struct {
 	RollNo           string  `json:"rollNo"`
 	Img              *string `json:"img,omitempty"`
@@ -158,6 +197,15 @@ type CreateStudentDisciplineInfoInput struct {
 	Description      *string `json:"description,omitempty"`
 	Severity         *string `json:"severity,omitempty"`
 	Status           *string `json:"status,omitempty"`
+}
+
+type CreateStudentHealthRecordInfoInput struct {
+	Img         *string `json:"img,omitempty"`
+	StudentName string  `json:"student_name"`
+	BloodGroup  string  `json:"blood_group"`
+	Allergies   *string `json:"allergies,omitempty"`
+	LastCheckup string  `json:"last_checkup"`
+	Status      string  `json:"status"`
 }
 
 type CreateStudentInfoInput struct {
@@ -228,6 +276,20 @@ type CreateVisitorInput struct {
 	Notes                   *string `json:"notes,omitempty"`
 }
 
+type EntranceExam struct {
+	ID           string  `json:"id"`
+	ExamName     string  `json:"examName"`
+	ExamCode     string  `json:"examCode"`
+	ExamDate     string  `json:"examDate"`
+	StartTime    string  `json:"startTime"`
+	EndTime      string  `json:"endTime"`
+	Venue        string  `json:"venue"`
+	MaxMarks     int     `json:"maxMarks"`
+	PassingMarks int     `json:"passingMarks"`
+	Status       string  `json:"status"`
+	Description  *string `json:"description,omitempty"`
+}
+
 type LoginInput struct {
 	Username string `json:"username"`
 	Password string `json:"password"`
@@ -236,6 +298,34 @@ type LoginInput struct {
 type LoginResponse struct {
 	Token string `json:"token"`
 	Role  string `json:"role"`
+}
+
+type MeritList struct {
+	ID              string  `json:"id"`
+	StudentName     string  `json:"studentName"`
+	ApplicationNo   string  `json:"applicationNo"`
+	Category        string  `json:"category"`
+	EntranceScore   float64 `json:"entranceScore"`
+	AcademicScore   float64 `json:"academicScore"`
+	TotalScore      float64 `json:"totalScore"`
+	Rank            int     `json:"rank"`
+	Course          string  `json:"course"`
+	SelectionStatus string  `json:"selectionStatus"`
+}
+
+type OnlineApplication struct {
+	ID                string `json:"id"`
+	Img               string `json:"img"`
+	StudentName       string `json:"studentName"`
+	ApplicationNo     string `json:"applicationNo"`
+	Email             string `json:"email"`
+	Mobile            string `json:"mobile"`
+	Gender            string `json:"gender"`
+	DateOfBirth       string `json:"dateOfBirth"`
+	Course            string `json:"course"`
+	ApplicationDate   string `json:"applicationDate"`
+	PaymentStatus     string `json:"paymentStatus"`
+	ApplicationStatus string `json:"applicationStatus"`
 }
 
 type StudentAttendanceInfo struct {
@@ -284,6 +374,16 @@ type StudentDisciplineInfo struct {
 	Description      *string `json:"description,omitempty"`
 	Severity         *string `json:"severity,omitempty"`
 	Status           *string `json:"status,omitempty"`
+}
+
+type StudentHealthRecordInfo struct {
+	ID          string  `json:"id"`
+	Img         *string `json:"img,omitempty"`
+	StudentName string  `json:"student_name"`
+	BloodGroup  string  `json:"blood_group"`
+	Allergies   *string `json:"allergies,omitempty"`
+	LastCheckup string  `json:"last_checkup"`
+	Status      string  `json:"status"`
 }
 
 type StudentInfo struct {
@@ -396,6 +496,48 @@ type UpdateComplaintInput struct {
 	Feedback              *string `json:"feedback,omitempty"`
 }
 
+type UpdateEntranceExamInput struct {
+	ID           string  `json:"id"`
+	ExamName     string  `json:"examName"`
+	ExamCode     string  `json:"examCode"`
+	ExamDate     string  `json:"examDate"`
+	StartTime    string  `json:"startTime"`
+	EndTime      string  `json:"endTime"`
+	Venue        string  `json:"venue"`
+	MaxMarks     int     `json:"maxMarks"`
+	PassingMarks int     `json:"passingMarks"`
+	Status       string  `json:"status"`
+	Description  *string `json:"description,omitempty"`
+}
+
+type UpdateMeritListInput struct {
+	ID              string  `json:"id"`
+	StudentName     string  `json:"studentName"`
+	ApplicationNo   string  `json:"applicationNo"`
+	Category        string  `json:"category"`
+	EntranceScore   float64 `json:"entranceScore"`
+	AcademicScore   float64 `json:"academicScore"`
+	TotalScore      float64 `json:"totalScore"`
+	Rank            int     `json:"rank"`
+	Course          string  `json:"course"`
+	SelectionStatus string  `json:"selectionStatus"`
+}
+
+type UpdateOnlineApplicationInput struct {
+	ID                string  `json:"id"`
+	Img               *string `json:"img,omitempty"`
+	StudentName       string  `json:"studentName"`
+	ApplicationNo     string  `json:"applicationNo"`
+	Email             string  `json:"email"`
+	Mobile            string  `json:"mobile"`
+	Gender            string  `json:"gender"`
+	DateOfBirth       string  `json:"dateOfBirth"`
+	Course            string  `json:"course"`
+	ApplicationDate   string  `json:"applicationDate"`
+	PaymentStatus     string  `json:"paymentStatus"`
+	ApplicationStatus string  `json:"applicationStatus"`
+}
+
 type UpdateStudentAttendanceInfoInput struct {
 	ID               string  `json:"id"`
 	RollNo           string  `json:"rollNo"`
@@ -442,6 +584,16 @@ type UpdateStudentDisciplineInfoInput struct {
 	Description      *string `json:"description,omitempty"`
 	Severity         *string `json:"severity,omitempty"`
 	Status           *string `json:"status,omitempty"`
+}
+
+type UpdateStudentHealthRecordInfoInput struct {
+	ID          string  `json:"id"`
+	Img         *string `json:"img,omitempty"`
+	StudentName string  `json:"student_name"`
+	BloodGroup  string  `json:"blood_group"`
+	Allergies   *string `json:"allergies,omitempty"`
+	LastCheckup string  `json:"last_checkup"`
+	Status      string  `json:"status"`
 }
 
 type UpdateStudentInfoInput struct {

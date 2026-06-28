@@ -1272,6 +1272,332 @@ func (r *mutationResolver) DeleteStudentDiscipline(ctx context.Context, id strin
 	return id, nil
 }
 
+// CreateStudentHealthRecord is the resolver for the createStudentHealthRecord field.
+func (r *mutationResolver) CreateStudentHealthRecord(ctx context.Context, input CreateStudentHealthRecordInfoInput) (*StudentHealthRecordInfo, error) {
+	db := r.DB
+
+	id := uuid.New().String()
+	lastCheckup := parseRequiredDateString(input.LastCheckup)
+	img := parseNullString(input.Img)
+	allergies := parseNullString(input.Allergies)
+
+	_, err := db.ExecContext(ctx, `
+		INSERT INTO public.student_health_records (
+			id, img, student_name, blood_group, allergies, last_checkup, status
+		) VALUES ($1, $2, $3, $4, $5, $6, $7)
+	`,
+		id, img, input.StudentName, input.BloodGroup, allergies, lastCheckup, input.Status,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to insert student health record: %w", err)
+	}
+
+	return &StudentHealthRecordInfo{
+		ID:          id,
+		Img:         input.Img,
+		StudentName: input.StudentName,
+		BloodGroup:  input.BloodGroup,
+		Allergies:   input.Allergies,
+		LastCheckup: formatNullTime(lastCheckup),
+		Status:      input.Status,
+	}, nil
+}
+
+// UpdateStudentHealthRecord is the resolver for the updateStudentHealthRecord field.
+func (r *mutationResolver) UpdateStudentHealthRecord(ctx context.Context, input UpdateStudentHealthRecordInfoInput) (*StudentHealthRecordInfo, error) {
+	db := r.DB
+
+	lastCheckup := parseRequiredDateString(input.LastCheckup)
+	img := parseNullString(input.Img)
+	allergies := parseNullString(input.Allergies)
+
+	_, err := db.ExecContext(ctx, `
+		UPDATE public.student_health_records SET
+			img = $1, student_name = $2, blood_group = $3, allergies = $4, 
+			last_checkup = $5, status = $6
+		WHERE id = $7
+	`,
+		img, input.StudentName, input.BloodGroup, allergies, lastCheckup, input.Status, input.ID,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to update student health record: %w", err)
+	}
+
+	return &StudentHealthRecordInfo{
+		ID:          input.ID,
+		Img:         input.Img,
+		StudentName: input.StudentName,
+		BloodGroup:  input.BloodGroup,
+		Allergies:   input.Allergies,
+		LastCheckup: formatNullTime(lastCheckup),
+		Status:      input.Status,
+	}, nil
+}
+
+// DeleteStudentHealthRecord is the resolver for the deleteStudentHealthRecord field.
+func (r *mutationResolver) DeleteStudentHealthRecord(ctx context.Context, id string) (string, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, "DELETE FROM public.student_health_records WHERE id = $1", id)
+	if err != nil {
+		return "", fmt.Errorf("failed to delete student health record: %w", err)
+	}
+
+	return id, nil
+}
+
+// CreateOnlineApplication is the resolver for the createOnlineApplication field.
+func (r *mutationResolver) CreateOnlineApplication(ctx context.Context, input CreateOnlineApplicationInput) (*OnlineApplication, error) {
+	db := r.DB
+
+	id := uuid.New().String()
+	dateOfBirth := parseRequiredDateString(input.DateOfBirth)
+	applicationDate := parseRequiredDateString(input.ApplicationDate)
+	img := parseNullString(input.Img)
+
+	_, err := db.ExecContext(ctx, `
+		INSERT INTO public.online_applications (
+			id, img, student_name, application_no, email, mobile,
+			gender, date_of_birth, course, application_date,
+			payment_status, application_status
+		) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+	`,
+		id, img, input.StudentName, input.ApplicationNo, input.Email, input.Mobile,
+		input.Gender, dateOfBirth, input.Course, applicationDate,
+		input.PaymentStatus, input.ApplicationStatus,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to insert online application: %w", err)
+	}
+
+	return &OnlineApplication{
+		ID:                id,
+		Img:               derefString(input.Img),
+		StudentName:       input.StudentName,
+		ApplicationNo:     input.ApplicationNo,
+		Email:             input.Email,
+		Mobile:            input.Mobile,
+		Gender:            input.Gender,
+		DateOfBirth:       formatNullTime(dateOfBirth),
+		Course:            input.Course,
+		ApplicationDate:   formatNullTime(applicationDate),
+		PaymentStatus:     input.PaymentStatus,
+		ApplicationStatus: input.ApplicationStatus,
+	}, nil
+}
+
+// UpdateOnlineApplication is the resolver for the updateOnlineApplication field.
+func (r *mutationResolver) UpdateOnlineApplication(ctx context.Context, input UpdateOnlineApplicationInput) (*OnlineApplication, error) {
+	db := r.DB
+
+	dateOfBirth := parseRequiredDateString(input.DateOfBirth)
+	applicationDate := parseRequiredDateString(input.ApplicationDate)
+	img := parseNullString(input.Img)
+
+	_, err := db.ExecContext(ctx, `
+		UPDATE public.online_applications SET
+			img = $1, student_name = $2, application_no = $3, email = $4, mobile = $5,
+			gender = $6, date_of_birth = $7, course = $8, application_date = $9,
+			payment_status = $10, application_status = $11
+		WHERE id = $12
+	`,
+		img, input.StudentName, input.ApplicationNo, input.Email, input.Mobile,
+		input.Gender, dateOfBirth, input.Course, applicationDate,
+		input.PaymentStatus, input.ApplicationStatus, input.ID,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to update online application: %w", err)
+	}
+
+	return &OnlineApplication{
+		ID:                input.ID,
+		Img:               derefString(input.Img),
+		StudentName:       input.StudentName,
+		ApplicationNo:     input.ApplicationNo,
+		Email:             input.Email,
+		Mobile:            input.Mobile,
+		Gender:            input.Gender,
+		DateOfBirth:       formatNullTime(dateOfBirth),
+		Course:            input.Course,
+		ApplicationDate:   formatNullTime(applicationDate),
+		PaymentStatus:     input.PaymentStatus,
+		ApplicationStatus: input.ApplicationStatus,
+	}, nil
+}
+
+// DeleteOnlineApplication is the resolver for the deleteOnlineApplication field.
+func (r *mutationResolver) DeleteOnlineApplication(ctx context.Context, id string) (string, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, "DELETE FROM public.online_applications WHERE id = $1", id)
+	if err != nil {
+		return "", fmt.Errorf("failed to delete online application: %w", err)
+	}
+
+	return id, nil
+}
+
+// CreateEntranceExam is the resolver for the createEntranceExam field.
+func (r *mutationResolver) CreateEntranceExam(ctx context.Context, input CreateEntranceExamInput) (*EntranceExam, error) {
+	db := r.DB
+
+	id := uuid.New().String()
+	examDate := parseRequiredDateString(input.ExamDate)
+
+	_, err := db.ExecContext(ctx, `
+		INSERT INTO public.entrance_exams (
+			id, exam_name, exam_code, exam_date, start_time, end_time,
+			venue, max_marks, passing_marks, status, description
+		) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
+	`,
+		id, input.ExamName, input.ExamCode, examDate, input.StartTime, input.EndTime,
+		input.Venue, input.MaxMarks, input.PassingMarks, input.Status, input.Description,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to insert entrance exam: %w", err)
+	}
+
+	return &EntranceExam{
+		ID:           id,
+		ExamName:     input.ExamName,
+		ExamCode:     input.ExamCode,
+		ExamDate:     formatNullTime(examDate),
+		StartTime:    input.StartTime,
+		EndTime:      input.EndTime,
+		Venue:        input.Venue,
+		MaxMarks:     input.MaxMarks,
+		PassingMarks: input.PassingMarks,
+		Status:       input.Status,
+		Description:  input.Description,
+	}, nil
+}
+
+// UpdateEntranceExam is the resolver for the updateEntranceExam field.
+func (r *mutationResolver) UpdateEntranceExam(ctx context.Context, input UpdateEntranceExamInput) (*EntranceExam, error) {
+	db := r.DB
+
+	examDate := parseRequiredDateString(input.ExamDate)
+
+	_, err := db.ExecContext(ctx, `
+		UPDATE public.entrance_exams SET
+			exam_name = $1, exam_code = $2, exam_date = $3, start_time = $4, end_time = $5,
+			venue = $6, max_marks = $7, passing_marks = $8, status = $9, description = $10
+		WHERE id = $11
+	`,
+		input.ExamName, input.ExamCode, examDate, input.StartTime, input.EndTime,
+		input.Venue, input.MaxMarks, input.PassingMarks, input.Status, input.Description, input.ID,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to update entrance exam: %w", err)
+	}
+
+	return &EntranceExam{
+		ID:           input.ID,
+		ExamName:     input.ExamName,
+		ExamCode:     input.ExamCode,
+		ExamDate:     formatNullTime(examDate),
+		StartTime:    input.StartTime,
+		EndTime:      input.EndTime,
+		Venue:        input.Venue,
+		MaxMarks:     input.MaxMarks,
+		PassingMarks: input.PassingMarks,
+		Status:       input.Status,
+		Description:  input.Description,
+	}, nil
+}
+
+// DeleteEntranceExam is the resolver for the deleteEntranceExam field.
+func (r *mutationResolver) DeleteEntranceExam(ctx context.Context, id string) (string, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, "DELETE FROM public.entrance_exams WHERE id = $1", id)
+	if err != nil {
+		return "", fmt.Errorf("failed to delete entrance exam: %w", err)
+	}
+
+	return id, nil
+}
+
+// CreateMeritList is the resolver for the createMeritList field.
+func (r *mutationResolver) CreateMeritList(ctx context.Context, input CreateMeritListInput) (*MeritList, error) {
+	db := r.DB
+
+	id := uuid.New().String()
+
+	_, err := db.ExecContext(ctx, `
+		INSERT INTO public.merit_lists (
+			id, student_name, application_no, category,
+			entrance_score, academic_score, total_score, rank,
+			course, selection_status
+		) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+	`,
+		id, input.StudentName, input.ApplicationNo, input.Category,
+		input.EntranceScore, input.AcademicScore, input.TotalScore, input.Rank,
+		input.Course, input.SelectionStatus,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to insert merit list entry: %w", err)
+	}
+
+	return &MeritList{
+		ID:              id,
+		StudentName:     input.StudentName,
+		ApplicationNo:   input.ApplicationNo,
+		Category:        input.Category,
+		EntranceScore:   input.EntranceScore,
+		AcademicScore:   input.AcademicScore,
+		TotalScore:      input.TotalScore,
+		Rank:            input.Rank,
+		Course:          input.Course,
+		SelectionStatus: input.SelectionStatus,
+	}, nil
+}
+
+// UpdateMeritList is the resolver for the updateMeritList field.
+func (r *mutationResolver) UpdateMeritList(ctx context.Context, input UpdateMeritListInput) (*MeritList, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, `
+		UPDATE public.merit_lists SET
+			student_name = $1, application_no = $2, category = $3,
+			entrance_score = $4, academic_score = $5, total_score = $6, rank = $7,
+			course = $8, selection_status = $9
+		WHERE id = $10
+	`,
+		input.StudentName, input.ApplicationNo, input.Category,
+		input.EntranceScore, input.AcademicScore, input.TotalScore, input.Rank,
+		input.Course, input.SelectionStatus, input.ID,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to update merit list entry: %w", err)
+	}
+
+	return &MeritList{
+		ID:              input.ID,
+		StudentName:     input.StudentName,
+		ApplicationNo:   input.ApplicationNo,
+		Category:        input.Category,
+		EntranceScore:   input.EntranceScore,
+		AcademicScore:   input.AcademicScore,
+		TotalScore:      input.TotalScore,
+		Rank:            input.Rank,
+		Course:          input.Course,
+		SelectionStatus: input.SelectionStatus,
+	}, nil
+}
+
+// DeleteMeritList is the resolver for the deleteMeritList field.
+func (r *mutationResolver) DeleteMeritList(ctx context.Context, id string) (string, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, "DELETE FROM public.merit_lists WHERE id = $1", id)
+	if err != nil {
+		return "", fmt.Errorf("failed to delete merit list entry: %w", err)
+	}
+
+	return id, nil
+}
+
 // AdmissionInquiries is the resolver for the admissionInquiries field.
 func (r *queryResolver) AdmissionInquiries(ctx context.Context) ([]*AdmissionInquiry, error) {
 	db := r.DB
@@ -1968,6 +2294,206 @@ func (r *queryResolver) StudentDisciplineList(ctx context.Context) ([]*StudentDi
 			Description:      descriptionPtr,
 			Severity:         severityPtr,
 			Status:           statusPtr,
+		})
+	}
+	return list, nil
+}
+
+// StudentHealthRecordList is the resolver for the studentHealthRecordList field.
+func (r *queryResolver) StudentHealthRecordList(ctx context.Context) ([]*StudentHealthRecordInfo, error) {
+	db := r.DB
+
+	rows, err := db.QueryContext(ctx, `
+		SELECT 
+			id, img, student_name, blood_group, allergies, last_checkup, status 
+		FROM public.student_health_records
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("failed to query student health records: %w", err)
+	}
+	defer rows.Close()
+
+	var list []*StudentHealthRecordInfo
+	for rows.Next() {
+		var (
+			id          string
+			img         sql.NullString
+			studentName sql.NullString
+			bloodGroup  sql.NullString
+			allergies   sql.NullString
+			lastCheckup sql.NullTime
+			status      sql.NullString
+		)
+		err := rows.Scan(&id, &img, &studentName, &bloodGroup, &allergies, &lastCheckup, &status)
+		if err != nil {
+			return nil, fmt.Errorf("failed to scan student health record row: %w", err)
+		}
+
+		var imgPtr *string
+		if img.Valid && img.String != "" {
+			imgPtr = &img.String
+		}
+		var allergiesPtr *string
+		if allergies.Valid && allergies.String != "" {
+			allergiesPtr = &allergies.String
+		}
+
+		list = append(list, &StudentHealthRecordInfo{
+			ID:          id,
+			Img:         imgPtr,
+			StudentName: studentName.String,
+			BloodGroup:  bloodGroup.String,
+			Allergies:   allergiesPtr,
+			LastCheckup: formatNullTime(lastCheckup),
+			Status:      status.String,
+		})
+	}
+	return list, nil
+}
+
+// OnlineApplications is the resolver for the onlineApplications field.
+func (r *queryResolver) OnlineApplications(ctx context.Context) ([]*OnlineApplication, error) {
+	db := r.DB
+
+	rows, err := db.QueryContext(ctx, `
+		SELECT
+			id, COALESCE(img, ''), COALESCE(student_name, ''), COALESCE(application_no, ''),
+			COALESCE(email, ''), COALESCE(mobile, ''), COALESCE(gender, ''),
+			date_of_birth, course, application_date,
+			COALESCE(payment_status, ''), COALESCE(application_status, '')
+		FROM public.online_applications
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("failed to query online applications: %w", err)
+	}
+	defer rows.Close()
+
+	var list []*OnlineApplication
+	for rows.Next() {
+		var (
+			id, img, studentName, applicationNo, email, mobile string
+			gender, course, paymentStatus, applicationStatus   string
+			dateOfBirth, applicationDate                       sql.NullTime
+		)
+		err := rows.Scan(
+			&id, &img, &studentName, &applicationNo, &email, &mobile,
+			&gender, &dateOfBirth, &course, &applicationDate,
+			&paymentStatus, &applicationStatus,
+		)
+		if err != nil {
+			return nil, fmt.Errorf("failed to scan online application row: %w", err)
+		}
+
+		list = append(list, &OnlineApplication{
+			ID:                id,
+			Img:               img,
+			StudentName:       studentName,
+			ApplicationNo:     applicationNo,
+			Email:             email,
+			Mobile:            mobile,
+			Gender:            gender,
+			DateOfBirth:       formatNullTime(dateOfBirth),
+			Course:            course,
+			ApplicationDate:   formatNullTime(applicationDate),
+			PaymentStatus:     paymentStatus,
+			ApplicationStatus: applicationStatus,
+		})
+	}
+	return list, nil
+}
+
+// EntranceExams is the resolver for the entranceExams field.
+func (r *queryResolver) EntranceExams(ctx context.Context) ([]*EntranceExam, error) {
+	db := r.DB
+
+	rows, err := db.QueryContext(ctx, `
+		SELECT
+			id, COALESCE(exam_name, ''), COALESCE(exam_code, ''), exam_date,
+			COALESCE(start_time, ''), COALESCE(end_time, ''), COALESCE(venue, ''),
+			COALESCE(max_marks, 0), COALESCE(passing_marks, 0), COALESCE(status, ''),
+			COALESCE(description, '')
+		FROM public.entrance_exams
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("failed to query entrance exams: %w", err)
+	}
+	defer rows.Close()
+
+	var list []*EntranceExam
+	for rows.Next() {
+		var (
+			id, examName, examCode, startTime, endTime, venue, status, description string
+			maxMarks, passingMarks                                                 int
+			examDate                                                               sql.NullTime
+		)
+		err := rows.Scan(
+			&id, &examName, &examCode, &examDate, &startTime, &endTime, &venue,
+			&maxMarks, &passingMarks, &status, &description,
+		)
+		if err != nil {
+			return nil, fmt.Errorf("failed to scan entrance exam row: %w", err)
+		}
+
+		list = append(list, &EntranceExam{
+			ID:           id,
+			ExamName:     examName,
+			ExamCode:     examCode,
+			ExamDate:     formatNullTime(examDate),
+			StartTime:    startTime,
+			EndTime:      endTime,
+			Venue:        venue,
+			MaxMarks:     maxMarks,
+			PassingMarks: passingMarks,
+			Status:       status,
+			Description:  &description,
+		})
+	}
+	return list, nil
+}
+
+// MeritLists is the resolver for the meritLists field.
+func (r *queryResolver) MeritLists(ctx context.Context) ([]*MeritList, error) {
+	db := r.DB
+
+	rows, err := db.QueryContext(ctx, `
+		SELECT
+			id, COALESCE(student_name, ''), COALESCE(application_no, ''), COALESCE(category, ''),
+			COALESCE(entrance_score, 0), COALESCE(academic_score, 0), COALESCE(total_score, 0),
+			COALESCE(rank, 0), COALESCE(course, ''), COALESCE(selection_status, '')
+		FROM public.merit_lists
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("failed to query merit lists: %w", err)
+	}
+	defer rows.Close()
+
+	var list []*MeritList
+	for rows.Next() {
+		var (
+			id, studentName, applicationNo, category, course, selectionStatus string
+			entranceScore, academicScore, totalScore                          float64
+			rank                                                              int
+		)
+		err := rows.Scan(
+			&id, &studentName, &applicationNo, &category,
+			&entranceScore, &academicScore, &totalScore, &rank,
+			&course, &selectionStatus,
+		)
+		if err != nil {
+			return nil, fmt.Errorf("failed to scan merit list row: %w", err)
+		}
+
+		list = append(list, &MeritList{
+			ID:              id,
+			StudentName:     studentName,
+			ApplicationNo:   applicationNo,
+			Category:        category,
+			EntranceScore:   entranceScore,
+			AcademicScore:   academicScore,
+			TotalScore:      totalScore,
+			Rank:            rank,
+			Course:          course,
+			SelectionStatus: selectionStatus,
 		})
 	}
 	return list, nil

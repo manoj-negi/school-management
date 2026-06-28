@@ -1,7 +1,5 @@
 directive @goField(forceResolver: Boolean, name: String, omittable: Boolean) on FIELD_DEFINITION | INPUT_FIELD_DEFINITION
 directive @goModel(model: String, models: [String!], forceGenerate: Boolean) on OBJECT | INPUT_OBJECT | SCALAR | ENUM | INTERFACE | UNION
-scalar Time
-scalar Cursor
 type AcademicYear implements Node {
   id: ID!
   label: String!
@@ -375,6 +373,7 @@ input CreateUserInput {
 Define a Relay Cursor type:
 https://relay.dev/graphql/connections.htm#sec-Cursor
 """
+scalar Cursor
 type Department implements Node {
   id: ID!
   name: String!
