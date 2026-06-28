@@ -28,6 +28,14 @@ func formatNullTime(nt sql.NullTime) string {
 	return nt.Time.Format("2006-01-02")
 }
 
+func formatNullTimePtr(nt sql.NullTime) *string {
+	if !nt.Valid {
+		return nil
+	}
+	s := nt.Time.Format("2006-01-02")
+	return &s
+}
+
 func formatTimestamp(nt sql.NullTime) string {
 	if !nt.Valid {
 		return ""

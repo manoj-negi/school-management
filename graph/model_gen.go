@@ -146,6 +146,20 @@ type CreateStudentCertificateInfoInput struct {
 	Status          *string `json:"status,omitempty"`
 }
 
+type CreateStudentDisciplineInfoInput struct {
+	Img              *string `json:"img,omitempty"`
+	StudentName      string  `json:"student_name"`
+	IncidentDate     string  `json:"incident_date"`
+	IncidentType     string  `json:"incident_type"`
+	IncidentLocation string  `json:"incident_location"`
+	ReportedBy       string  `json:"reported_by"`
+	ActionTaken      *string `json:"action_taken,omitempty"`
+	ActionDate       *string `json:"action_date,omitempty"`
+	Description      *string `json:"description,omitempty"`
+	Severity         *string `json:"severity,omitempty"`
+	Status           *string `json:"status,omitempty"`
+}
+
 type CreateStudentInfoInput struct {
 	Img                     *string `json:"img,omitempty"`
 	Gender                  string  `json:"gender"`
@@ -255,6 +269,21 @@ type StudentCertificateInfo struct {
 	Category        *string `json:"category,omitempty"`
 	Description     *string `json:"description,omitempty"`
 	Status          *string `json:"status,omitempty"`
+}
+
+type StudentDisciplineInfo struct {
+	ID               string  `json:"id"`
+	Img              *string `json:"img,omitempty"`
+	StudentName      string  `json:"student_name"`
+	IncidentDate     string  `json:"incident_date"`
+	IncidentType     string  `json:"incident_type"`
+	IncidentLocation string  `json:"incident_location"`
+	ReportedBy       string  `json:"reported_by"`
+	ActionTaken      *string `json:"action_taken,omitempty"`
+	ActionDate       *string `json:"action_date,omitempty"`
+	Description      *string `json:"description,omitempty"`
+	Severity         *string `json:"severity,omitempty"`
+	Status           *string `json:"status,omitempty"`
 }
 
 type StudentInfo struct {
@@ -398,6 +427,21 @@ type UpdateStudentCertificateInfoInput struct {
 	Category        *string `json:"category,omitempty"`
 	Description     *string `json:"description,omitempty"`
 	Status          *string `json:"status,omitempty"`
+}
+
+type UpdateStudentDisciplineInfoInput struct {
+	ID               string  `json:"id"`
+	Img              *string `json:"img,omitempty"`
+	StudentName      string  `json:"student_name"`
+	IncidentDate     string  `json:"incident_date"`
+	IncidentType     string  `json:"incident_type"`
+	IncidentLocation string  `json:"incident_location"`
+	ReportedBy       string  `json:"reported_by"`
+	ActionTaken      *string `json:"action_taken,omitempty"`
+	ActionDate       *string `json:"action_date,omitempty"`
+	Description      *string `json:"description,omitempty"`
+	Severity         *string `json:"severity,omitempty"`
+	Status           *string `json:"status,omitempty"`
 }
 
 type UpdateStudentInfoInput struct {

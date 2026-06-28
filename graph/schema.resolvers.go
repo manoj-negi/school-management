@@ -1173,6 +1173,105 @@ func (r *mutationResolver) DeleteStudentCertificate(ctx context.Context, id stri
 	return id, nil
 }
 
+// CreateStudentDiscipline is the resolver for the createStudentDiscipline field.
+func (r *mutationResolver) CreateStudentDiscipline(ctx context.Context, input CreateStudentDisciplineInfoInput) (*StudentDisciplineInfo, error) {
+	db := r.DB
+
+	id := uuid.New().String()
+	incidentDate := parseRequiredDateString(input.IncidentDate)
+	actionDate := parseDateString(input.ActionDate)
+	img := parseNullString(input.Img)
+	actionTaken := parseNullString(input.ActionTaken)
+	description := parseNullString(input.Description)
+	severity := parseNullString(input.Severity)
+	status := parseNullString(input.Status)
+
+	_, err := db.ExecContext(ctx, `
+		INSERT INTO public.student_discipline (
+			id, img, student_name, incident_date, incident_type, 
+			incident_location, reported_by, action_taken, action_date, 
+			description, severity, status
+		) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+	`,
+		id, img, input.StudentName, incidentDate, input.IncidentType,
+		input.IncidentLocation, input.ReportedBy, actionTaken, actionDate,
+		description, severity, status,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to insert student discipline: %w", err)
+	}
+
+	return &StudentDisciplineInfo{
+		ID:               id,
+		Img:              input.Img,
+		StudentName:      input.StudentName,
+		IncidentDate:     formatNullTime(incidentDate),
+		IncidentType:     input.IncidentType,
+		IncidentLocation: input.IncidentLocation,
+		ReportedBy:       input.ReportedBy,
+		ActionTaken:      input.ActionTaken,
+		ActionDate:       formatNullTimePtr(actionDate),
+		Description:      input.Description,
+		Severity:         input.Severity,
+		Status:           input.Status,
+	}, nil
+}
+
+// UpdateStudentDiscipline is the resolver for the updateStudentDiscipline field.
+func (r *mutationResolver) UpdateStudentDiscipline(ctx context.Context, input UpdateStudentDisciplineInfoInput) (*StudentDisciplineInfo, error) {
+	db := r.DB
+
+	incidentDate := parseRequiredDateString(input.IncidentDate)
+	actionDate := parseDateString(input.ActionDate)
+	img := parseNullString(input.Img)
+	actionTaken := parseNullString(input.ActionTaken)
+	description := parseNullString(input.Description)
+	severity := parseNullString(input.Severity)
+	status := parseNullString(input.Status)
+
+	_, err := db.ExecContext(ctx, `
+		UPDATE public.student_discipline SET
+			img = $1, student_name = $2, incident_date = $3, incident_type = $4, 
+			incident_location = $5, reported_by = $6, action_taken = $7, action_date = $8, 
+			description = $9, severity = $10, status = $11
+		WHERE id = $12
+	`,
+		img, input.StudentName, incidentDate, input.IncidentType,
+		input.IncidentLocation, input.ReportedBy, actionTaken, actionDate,
+		description, severity, status, input.ID,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to update student discipline: %w", err)
+	}
+
+	return &StudentDisciplineInfo{
+		ID:               input.ID,
+		Img:              input.Img,
+		StudentName:      input.StudentName,
+		IncidentDate:     formatNullTime(incidentDate),
+		IncidentType:     input.IncidentType,
+		IncidentLocation: input.IncidentLocation,
+		ReportedBy:       input.ReportedBy,
+		ActionTaken:      input.ActionTaken,
+		ActionDate:       formatNullTimePtr(actionDate),
+		Description:      input.Description,
+		Severity:         input.Severity,
+		Status:           input.Status,
+	}, nil
+}
+
+// DeleteStudentDiscipline is the resolver for the deleteStudentDiscipline field.
+func (r *mutationResolver) DeleteStudentDiscipline(ctx context.Context, id string) (string, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, "DELETE FROM public.student_discipline WHERE id = $1", id)
+	if err != nil {
+		return "", fmt.Errorf("failed to delete student discipline: %w", err)
+	}
+
+	return id, nil
+}
+
 // AdmissionInquiries is the resolver for the admissionInquiries field.
 func (r *queryResolver) AdmissionInquiries(ctx context.Context) ([]*AdmissionInquiry, error) {
 	db := r.DB
@@ -1789,6 +1888,86 @@ func (r *queryResolver) StudentCertificateList(ctx context.Context) ([]*StudentC
 			Category:        categoryPtr,
 			Description:     descriptionPtr,
 			Status:          statusPtr,
+		})
+	}
+	return list, nil
+}
+
+// StudentDisciplineList is the resolver for the studentDisciplineList field.
+func (r *queryResolver) StudentDisciplineList(ctx context.Context) ([]*StudentDisciplineInfo, error) {
+	db := r.DB
+
+	rows, err := db.QueryContext(ctx, `
+		SELECT 
+			id, img, student_name, incident_date, incident_type, 
+			incident_location, reported_by, action_taken, action_date, 
+			description, severity, status 
+		FROM public.student_discipline
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("failed to query student disciplines: %w", err)
+	}
+	defer rows.Close()
+
+	var list []*StudentDisciplineInfo
+	for rows.Next() {
+		var (
+			id               string
+			img              sql.NullString
+			studentName      sql.NullString
+			incidentDate     sql.NullTime
+			incidentType     sql.NullString
+			incidentLocation sql.NullString
+			reportedBy       sql.NullString
+			actionTaken      sql.NullString
+			actionDate       sql.NullTime
+			description      sql.NullString
+			severity         sql.NullString
+			status           sql.NullString
+		)
+		err := rows.Scan(
+			&id, &img, &studentName, &incidentDate, &incidentType,
+			&incidentLocation, &reportedBy, &actionTaken, &actionDate,
+			&description, &severity, &status,
+		)
+		if err != nil {
+			return nil, fmt.Errorf("failed to scan student discipline row: %w", err)
+		}
+
+		var imgPtr *string
+		if img.Valid && img.String != "" {
+			imgPtr = &img.String
+		}
+		var actionTakenPtr *string
+		if actionTaken.Valid && actionTaken.String != "" {
+			actionTakenPtr = &actionTaken.String
+		}
+		var descriptionPtr *string
+		if description.Valid && description.String != "" {
+			descriptionPtr = &description.String
+		}
+		var severityPtr *string
+		if severity.Valid && severity.String != "" {
+			severityPtr = &severity.String
+		}
+		var statusPtr *string
+		if status.Valid && status.String != "" {
+			statusPtr = &status.String
+		}
+
+		list = append(list, &StudentDisciplineInfo{
+			ID:               id,
+			Img:              imgPtr,
+			StudentName:      studentName.String,
+			IncidentDate:     formatNullTime(incidentDate),
+			IncidentType:     incidentType.String,
+			IncidentLocation: incidentLocation.String,
+			ReportedBy:       reportedBy.String,
+			ActionTaken:      actionTakenPtr,
+			ActionDate:       formatNullTimePtr(actionDate),
+			Description:      descriptionPtr,
+			Severity:         severityPtr,
+			Status:           statusPtr,
 		})
 	}
 	return list, nil

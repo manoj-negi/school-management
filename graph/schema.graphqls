@@ -14,6 +14,7 @@ extend type Query {
   studentAttendanceList: [StudentAttendanceInfo!]!
   studentPromotionList: [StudentPromotionInfo!]!
   studentCertificateList: [StudentCertificateInfo!]!
+  studentDisciplineList: [StudentDisciplineInfo!]!
 }
 
 extend type Mutation {
@@ -45,6 +46,9 @@ extend type Mutation {
   createStudentCertificate(input: CreateStudentCertificateInfoInput!): StudentCertificateInfo!
   updateStudentCertificate(input: UpdateStudentCertificateInfoInput!): StudentCertificateInfo!
   deleteStudentCertificate(id: String!): String!
+  createStudentDiscipline(input: CreateStudentDisciplineInfoInput!): StudentDisciplineInfo!
+  updateStudentDiscipline(input: UpdateStudentDisciplineInfoInput!): StudentDisciplineInfo!
+  deleteStudentDiscipline(id: String!): String!
 }
 
 input UpdateAdmissionInquiryInput {
@@ -532,6 +536,50 @@ input UpdateStudentCertificateInfoInput {
   expiry_date: String!
   category: String
   description: String
+  status: String
+}
+
+type StudentDisciplineInfo {
+  id: String!
+  img: String
+  student_name: String!
+  incident_date: String!
+  incident_type: String!
+  incident_location: String!
+  reported_by: String!
+  action_taken: String
+  action_date: String
+  description: String
+  severity: String
+  status: String
+}
+
+input CreateStudentDisciplineInfoInput {
+  img: String
+  student_name: String!
+  incident_date: String!
+  incident_type: String!
+  incident_location: String!
+  reported_by: String!
+  action_taken: String
+  action_date: String
+  description: String
+  severity: String
+  status: String
+}
+
+input UpdateStudentDisciplineInfoInput {
+  id: String!
+  img: String
+  student_name: String!
+  incident_date: String!
+  incident_type: String!
+  incident_location: String!
+  reported_by: String!
+  action_taken: String
+  action_date: String
+  description: String
+  severity: String
   status: String
 }
 
