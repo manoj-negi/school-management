@@ -1598,6 +1598,221 @@ func (r *mutationResolver) DeleteMeritList(ctx context.Context, id string) (stri
 	return id, nil
 }
 
+// CreateSeatAllocation is the resolver for the createSeatAllocation field.
+func (r *mutationResolver) CreateSeatAllocation(ctx context.Context, input CreateSeatAllocationInput) (*SeatAllocation, error) {
+	db := r.DB
+
+	id := uuid.New().String()
+	allocationDate := parseRequiredDateString(input.AllocationDate)
+	reportingDate := parseRequiredDateString(input.ReportingDate)
+
+	_, err := db.ExecContext(ctx, `
+		INSERT INTO public.seat_allocations (
+			id, student_name, application_no, course, category,
+			allotted_seat_type, allocation_date, reporting_date, status, fees_paid
+		) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+	`,
+		id, input.StudentName, input.ApplicationNo, input.Course, input.Category,
+		input.AllottedSeatType, allocationDate, reportingDate, input.Status, input.FeesPaid,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to insert seat allocation entry: %w", err)
+	}
+
+	return &SeatAllocation{
+		ID:               id,
+		StudentName:      input.StudentName,
+		ApplicationNo:    input.ApplicationNo,
+		Course:           input.Course,
+		Category:         input.Category,
+		AllottedSeatType: input.AllottedSeatType,
+		AllocationDate:   formatNullTime(allocationDate),
+		ReportingDate:    formatNullTime(reportingDate),
+		Status:           input.Status,
+		FeesPaid:         input.FeesPaid,
+	}, nil
+}
+
+// UpdateSeatAllocation is the resolver for the updateSeatAllocation field.
+func (r *mutationResolver) UpdateSeatAllocation(ctx context.Context, input UpdateSeatAllocationInput) (*SeatAllocation, error) {
+	db := r.DB
+
+	allocationDate := parseRequiredDateString(input.AllocationDate)
+	reportingDate := parseRequiredDateString(input.ReportingDate)
+
+	_, err := db.ExecContext(ctx, `
+		UPDATE public.seat_allocations SET
+			student_name = $1, application_no = $2, course = $3, category = $4,
+			allotted_seat_type = $5, allocation_date = $6, reporting_date = $7, status = $8, fees_paid = $9
+		WHERE id = $10
+	`,
+		input.StudentName, input.ApplicationNo, input.Course, input.Category,
+		input.AllottedSeatType, allocationDate, reportingDate, input.Status, input.FeesPaid, input.ID,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to update seat allocation entry: %w", err)
+	}
+
+	return &SeatAllocation{
+		ID:               input.ID,
+		StudentName:      input.StudentName,
+		ApplicationNo:    input.ApplicationNo,
+		Course:           input.Course,
+		Category:         input.Category,
+		AllottedSeatType: input.AllottedSeatType,
+		AllocationDate:   formatNullTime(allocationDate),
+		ReportingDate:    formatNullTime(reportingDate),
+		Status:           input.Status,
+		FeesPaid:         input.FeesPaid,
+	}, nil
+}
+
+// DeleteSeatAllocation is the resolver for the deleteSeatAllocation field.
+func (r *mutationResolver) DeleteSeatAllocation(ctx context.Context, id string) (string, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, "DELETE FROM public.seat_allocations WHERE id = $1", id)
+	if err != nil {
+		return "", fmt.Errorf("failed to delete seat allocation entry: %w", err)
+	}
+
+	return id, nil
+}
+
+// CreateExamType is the resolver for the createExamType field.
+func (r *mutationResolver) CreateExamType(ctx context.Context, input CreateExamTypeInput) (*ExamType, error) {
+	db := r.DB
+
+	id := uuid.New().String()
+
+	_, err := db.ExecContext(ctx, `
+		INSERT INTO public.exam_types (
+			id, exam_name, exam_code, description, status
+		) VALUES ($1, $2, $3, $4, $5)
+	`,
+		id, input.ExamName, input.ExamCode, input.Description, input.Status,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to insert exam type entry: %w", err)
+	}
+
+	return &ExamType{
+		ID:          id,
+		ExamName:    input.ExamName,
+		ExamCode:    input.ExamCode,
+		Description: input.Description,
+		Status:      input.Status,
+	}, nil
+}
+
+// UpdateExamType is the resolver for the updateExamType field.
+func (r *mutationResolver) UpdateExamType(ctx context.Context, input UpdateExamTypeInput) (*ExamType, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, `
+		UPDATE public.exam_types SET
+			exam_name = $1, exam_code = $2, description = $3, status = $4
+		WHERE id = $5
+	`,
+		input.ExamName, input.ExamCode, input.Description, input.Status, input.ID,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to update exam type entry: %w", err)
+	}
+
+	return &ExamType{
+		ID:          input.ID,
+		ExamName:    input.ExamName,
+		ExamCode:    input.ExamCode,
+		Description: input.Description,
+		Status:      input.Status,
+	}, nil
+}
+
+// DeleteExamType is the resolver for the deleteExamType field.
+func (r *mutationResolver) DeleteExamType(ctx context.Context, id string) (string, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, "DELETE FROM public.exam_types WHERE id = $1", id)
+	if err != nil {
+		return "", fmt.Errorf("failed to delete exam type entry: %w", err)
+	}
+
+	return id, nil
+}
+
+// CreateExamSchedule is the resolver for the createExamSchedule field.
+func (r *mutationResolver) CreateExamSchedule(ctx context.Context, input CreateExamScheduleInput) (*ExamSchedule, error) {
+	db := r.DB
+
+	id := uuid.New().String()
+	examDate := parseRequiredDateString(input.ExamDate)
+
+	_, err := db.ExecContext(ctx, `
+		INSERT INTO public.exam_schedules (
+			id, exam_type, course, semester, subject, exam_date, start_time, end_time, room_no
+		) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+	`,
+		id, input.ExamType, input.Course, input.Semester, input.Subject, examDate, input.StartTime, input.EndTime, input.RoomNo,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to insert exam schedule entry: %w", err)
+	}
+
+	return &ExamSchedule{
+		ID:         id,
+		ExamType:   input.ExamType,
+		Course:     input.Course,
+		Semester:   input.Semester,
+		Subject:    input.Subject,
+		ExamDate:   input.ExamDate,
+		StartTime:  input.StartTime,
+		EndTime:    input.EndTime,
+		RoomNo:     input.RoomNo,
+	}, nil
+}
+
+// UpdateExamSchedule is the resolver for the updateExamSchedule field.
+func (r *mutationResolver) UpdateExamSchedule(ctx context.Context, input UpdateExamScheduleInput) (*ExamSchedule, error) {
+	db := r.DB
+	examDate := parseRequiredDateString(input.ExamDate)
+
+	_, err := db.ExecContext(ctx, `
+		UPDATE public.exam_schedules SET
+			exam_type = $1, course = $2, semester = $3, subject = $4, exam_date = $5, start_time = $6, end_time = $7, room_no = $8
+		WHERE id = $9
+	`,
+		input.ExamType, input.Course, input.Semester, input.Subject, examDate, input.StartTime, input.EndTime, input.RoomNo, input.ID,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to update exam schedule entry: %w", err)
+	}
+
+	return &ExamSchedule{
+		ID:         input.ID,
+		ExamType:   input.ExamType,
+		Course:     input.Course,
+		Semester:   input.Semester,
+		Subject:    input.Subject,
+		ExamDate:   input.ExamDate,
+		StartTime:  input.StartTime,
+		EndTime:    input.EndTime,
+		RoomNo:     input.RoomNo,
+	}, nil
+}
+
+// DeleteExamSchedule is the resolver for the deleteExamSchedule field.
+func (r *mutationResolver) DeleteExamSchedule(ctx context.Context, id string) (string, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, "DELETE FROM public.exam_schedules WHERE id = $1", id)
+	if err != nil {
+		return "", fmt.Errorf("failed to delete exam schedule entry: %w", err)
+	}
+
+	return id, nil
+}
+
 // AdmissionInquiries is the resolver for the admissionInquiries field.
 func (r *queryResolver) AdmissionInquiries(ctx context.Context) ([]*AdmissionInquiry, error) {
 	db := r.DB
@@ -2494,6 +2709,131 @@ func (r *queryResolver) MeritLists(ctx context.Context) ([]*MeritList, error) {
 			Rank:            rank,
 			Course:          course,
 			SelectionStatus: selectionStatus,
+		})
+	}
+	return list, nil
+}
+
+// SeatAllocations is the resolver for the seatAllocations field.
+func (r *queryResolver) SeatAllocations(ctx context.Context) ([]*SeatAllocation, error) {
+	db := r.DB
+
+	rows, err := db.QueryContext(ctx, `
+		SELECT
+			id, COALESCE(student_name, ''), COALESCE(application_no, ''), COALESCE(course, ''),
+			COALESCE(category, ''), COALESCE(allotted_seat_type, ''), allocation_date, reporting_date,
+			COALESCE(status, ''), COALESCE(fees_paid, false)
+		FROM public.seat_allocations
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("failed to query seat allocations: %w", err)
+	}
+	defer rows.Close()
+
+	var list []*SeatAllocation
+	for rows.Next() {
+		var (
+			id, studentName, applicationNo, course, category, allottedSeatType, status string
+			allocationDate, reportingDate                                              sql.NullTime
+			feesPaid                                                                   bool
+		)
+		err := rows.Scan(
+			&id, &studentName, &applicationNo, &course, &category,
+			&allottedSeatType, &allocationDate, &reportingDate, &status, &feesPaid,
+		)
+		if err != nil {
+			return nil, fmt.Errorf("failed to scan seat allocation row: %w", err)
+		}
+
+		list = append(list, &SeatAllocation{
+			ID:               id,
+			StudentName:      studentName,
+			ApplicationNo:    applicationNo,
+			Course:           course,
+			Category:         category,
+			AllottedSeatType: allottedSeatType,
+			AllocationDate:   formatNullTime(allocationDate),
+			ReportingDate:    formatNullTime(reportingDate),
+			Status:           status,
+			FeesPaid:         feesPaid,
+		})
+	}
+	return list, nil
+}
+
+// ExamTypes is the resolver for the examTypes field.
+func (r *queryResolver) ExamTypes(ctx context.Context) ([]*ExamType, error) {
+	db := r.DB
+
+	rows, err := db.QueryContext(ctx, `
+		SELECT id, exam_name, exam_code, COALESCE(description, ''), COALESCE(status, '')
+		FROM public.exam_types
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("failed to query exam types: %w", err)
+	}
+	defer rows.Close()
+
+	var list []*ExamType
+	for rows.Next() {
+		var (
+			id, examName, examCode, description, status string
+		)
+		err := rows.Scan(
+			&id, &examName, &examCode, &description, &status,
+		)
+		if err != nil {
+			return nil, fmt.Errorf("failed to scan exam type row: %w", err)
+		}
+
+		list = append(list, &ExamType{
+			ID:          id,
+			ExamName:    examName,
+			ExamCode:    examCode,
+			Description: &description,
+			Status:      status,
+		})
+	}
+	return list, nil
+}
+
+// ExamSchedules is the resolver for the examSchedules field.
+func (r *queryResolver) ExamSchedules(ctx context.Context) ([]*ExamSchedule, error) {
+	db := r.DB
+
+	rows, err := db.QueryContext(ctx, `
+		SELECT id, COALESCE(exam_type, ''), COALESCE(course, ''), COALESCE(semester, ''), COALESCE(subject, ''), exam_date, COALESCE(start_time, ''), COALESCE(end_time, ''), COALESCE(room_no, '')
+		FROM public.exam_schedules
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("failed to query exam schedules: %w", err)
+	}
+	defer rows.Close()
+
+	var list []*ExamSchedule
+	for rows.Next() {
+		var (
+			id, examType, course, semester, subject string
+			examDate sql.NullTime
+			startTime, endTime, roomNo string
+		)
+		err := rows.Scan(
+			&id, &examType, &course, &semester, &subject, &examDate, &startTime, &endTime, &roomNo,
+		)
+		if err != nil {
+			return nil, fmt.Errorf("failed to scan exam schedule row: %w", err)
+		}
+
+		list = append(list, &ExamSchedule{
+			ID:        id,
+			ExamType:  examType,
+			Course:    course,
+			Semester:  semester,
+			Subject:   subject,
+			ExamDate:  formatNullTime(examDate),
+			StartTime: startTime,
+			EndTime:   endTime,
+			RoomNo:    roomNo,
 		})
 	}
 	return list, nil

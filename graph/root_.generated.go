@@ -238,6 +238,26 @@ type ComplexityRoot struct {
 		Title          func(childComplexity int) int
 	}
 
+	ExamSchedule struct {
+		Course    func(childComplexity int) int
+		EndTime   func(childComplexity int) int
+		ExamDate  func(childComplexity int) int
+		ExamType  func(childComplexity int) int
+		ID        func(childComplexity int) int
+		RoomNo    func(childComplexity int) int
+		Semester  func(childComplexity int) int
+		StartTime func(childComplexity int) int
+		Subject   func(childComplexity int) int
+	}
+
+	ExamType struct {
+		Description func(childComplexity int) int
+		ExamCode    func(childComplexity int) int
+		ExamName    func(childComplexity int) int
+		ID          func(childComplexity int) int
+		Status      func(childComplexity int) int
+	}
+
 	FeePayment struct {
 		AmountPaid     func(childComplexity int) int
 		FeeStructure   func(childComplexity int) int
@@ -286,8 +306,11 @@ type ComplexityRoot struct {
 		CreateAssignClassTeacher  func(childComplexity int, input CreateAssignClassTeacherInput) int
 		CreateComplaint           func(childComplexity int, input CreateComplaintInput) int
 		CreateEntranceExam        func(childComplexity int, input CreateEntranceExamInput) int
+		CreateExamSchedule        func(childComplexity int, input CreateExamScheduleInput) int
+		CreateExamType            func(childComplexity int, input CreateExamTypeInput) int
 		CreateMeritList           func(childComplexity int, input CreateMeritListInput) int
 		CreateOnlineApplication   func(childComplexity int, input CreateOnlineApplicationInput) int
+		CreateSeatAllocation      func(childComplexity int, input CreateSeatAllocationInput) int
 		CreateStudent             func(childComplexity int, input CreateStudentInfoInput) int
 		CreateStudentAttendance   func(childComplexity int, input CreateStudentAttendanceInfoInput) int
 		CreateStudentCertificate  func(childComplexity int, input CreateStudentCertificateInfoInput) int
@@ -300,8 +323,11 @@ type ComplexityRoot struct {
 		DeleteAssignClassTeacher  func(childComplexity int, id string) int
 		DeleteComplaint           func(childComplexity int, complaintID string) int
 		DeleteEntranceExam        func(childComplexity int, id string) int
+		DeleteExamSchedule        func(childComplexity int, id string) int
+		DeleteExamType            func(childComplexity int, id string) int
 		DeleteMeritList           func(childComplexity int, id string) int
 		DeleteOnlineApplication   func(childComplexity int, id string) int
+		DeleteSeatAllocation      func(childComplexity int, id string) int
 		DeleteStudent             func(childComplexity int, id string) int
 		DeleteStudentAttendance   func(childComplexity int, id string) int
 		DeleteStudentCertificate  func(childComplexity int, id string) int
@@ -315,8 +341,11 @@ type ComplexityRoot struct {
 		UpdateAssignClassTeacher  func(childComplexity int, input UpdateAssignClassTeacherInput) int
 		UpdateComplaint           func(childComplexity int, input UpdateComplaintInput) int
 		UpdateEntranceExam        func(childComplexity int, input UpdateEntranceExamInput) int
+		UpdateExamSchedule        func(childComplexity int, input UpdateExamScheduleInput) int
+		UpdateExamType            func(childComplexity int, input UpdateExamTypeInput) int
 		UpdateMeritList           func(childComplexity int, input UpdateMeritListInput) int
 		UpdateOnlineApplication   func(childComplexity int, input UpdateOnlineApplicationInput) int
+		UpdateSeatAllocation      func(childComplexity int, input UpdateSeatAllocationInput) int
 		UpdateStudent             func(childComplexity int, input UpdateStudentInfoInput) int
 		UpdateStudentAttendance   func(childComplexity int, input UpdateStudentAttendanceInfoInput) int
 		UpdateStudentCertificate  func(childComplexity int, input UpdateStudentCertificateInfoInput) int
@@ -367,6 +396,8 @@ type ComplexityRoot struct {
 		Employees               func(childComplexity int) int
 		EntranceExams           func(childComplexity int) int
 		Events                  func(childComplexity int) int
+		ExamSchedules           func(childComplexity int) int
+		ExamTypes               func(childComplexity int) int
 		Exams                   func(childComplexity int) int
 		FeePayments             func(childComplexity int) int
 		FeeStructures           func(childComplexity int) int
@@ -376,6 +407,7 @@ type ComplexityRoot struct {
 		OnlineApplications      func(childComplexity int) int
 		Permissions             func(childComplexity int) int
 		Roles                   func(childComplexity int) int
+		SeatAllocations         func(childComplexity int) int
 		StudentAttendanceList   func(childComplexity int) int
 		StudentAttendances      func(childComplexity int) int
 		StudentCertificateList  func(childComplexity int) int
@@ -399,6 +431,19 @@ type ComplexityRoot struct {
 		Name        func(childComplexity int) int
 		Permissions func(childComplexity int) int
 		Users       func(childComplexity int) int
+	}
+
+	SeatAllocation struct {
+		AllocationDate   func(childComplexity int) int
+		AllottedSeatType func(childComplexity int) int
+		ApplicationNo    func(childComplexity int) int
+		Category         func(childComplexity int) int
+		Course           func(childComplexity int) int
+		FeesPaid         func(childComplexity int) int
+		ID               func(childComplexity int) int
+		ReportingDate    func(childComplexity int) int
+		Status           func(childComplexity int) int
+		StudentName      func(childComplexity int) int
 	}
 
 	Student struct {
@@ -1330,6 +1375,92 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 
 		return e.ComplexityRoot.Exam.Title(childComplexity), true
 
+	case "ExamSchedule.course":
+		if e.ComplexityRoot.ExamSchedule.Course == nil {
+			break
+		}
+
+		return e.ComplexityRoot.ExamSchedule.Course(childComplexity), true
+	case "ExamSchedule.endTime":
+		if e.ComplexityRoot.ExamSchedule.EndTime == nil {
+			break
+		}
+
+		return e.ComplexityRoot.ExamSchedule.EndTime(childComplexity), true
+	case "ExamSchedule.examDate":
+		if e.ComplexityRoot.ExamSchedule.ExamDate == nil {
+			break
+		}
+
+		return e.ComplexityRoot.ExamSchedule.ExamDate(childComplexity), true
+	case "ExamSchedule.examType":
+		if e.ComplexityRoot.ExamSchedule.ExamType == nil {
+			break
+		}
+
+		return e.ComplexityRoot.ExamSchedule.ExamType(childComplexity), true
+	case "ExamSchedule.id":
+		if e.ComplexityRoot.ExamSchedule.ID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.ExamSchedule.ID(childComplexity), true
+	case "ExamSchedule.roomNo":
+		if e.ComplexityRoot.ExamSchedule.RoomNo == nil {
+			break
+		}
+
+		return e.ComplexityRoot.ExamSchedule.RoomNo(childComplexity), true
+	case "ExamSchedule.semester":
+		if e.ComplexityRoot.ExamSchedule.Semester == nil {
+			break
+		}
+
+		return e.ComplexityRoot.ExamSchedule.Semester(childComplexity), true
+	case "ExamSchedule.startTime":
+		if e.ComplexityRoot.ExamSchedule.StartTime == nil {
+			break
+		}
+
+		return e.ComplexityRoot.ExamSchedule.StartTime(childComplexity), true
+	case "ExamSchedule.subject":
+		if e.ComplexityRoot.ExamSchedule.Subject == nil {
+			break
+		}
+
+		return e.ComplexityRoot.ExamSchedule.Subject(childComplexity), true
+
+	case "ExamType.description":
+		if e.ComplexityRoot.ExamType.Description == nil {
+			break
+		}
+
+		return e.ComplexityRoot.ExamType.Description(childComplexity), true
+	case "ExamType.examCode":
+		if e.ComplexityRoot.ExamType.ExamCode == nil {
+			break
+		}
+
+		return e.ComplexityRoot.ExamType.ExamCode(childComplexity), true
+	case "ExamType.examName":
+		if e.ComplexityRoot.ExamType.ExamName == nil {
+			break
+		}
+
+		return e.ComplexityRoot.ExamType.ExamName(childComplexity), true
+	case "ExamType.id":
+		if e.ComplexityRoot.ExamType.ID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.ExamType.ID(childComplexity), true
+	case "ExamType.status":
+		if e.ComplexityRoot.ExamType.Status == nil {
+			break
+		}
+
+		return e.ComplexityRoot.ExamType.Status(childComplexity), true
+
 	case "FeePayment.amountPaid":
 		if e.ComplexityRoot.FeePayment.AmountPaid == nil {
 			break
@@ -1564,6 +1695,28 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.CreateEntranceExam(childComplexity, args["input"].(CreateEntranceExamInput)), true
+	case "Mutation.createExamSchedule":
+		if e.ComplexityRoot.Mutation.CreateExamSchedule == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_createExamSchedule_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.CreateExamSchedule(childComplexity, args["input"].(CreateExamScheduleInput)), true
+	case "Mutation.createExamType":
+		if e.ComplexityRoot.Mutation.CreateExamType == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_createExamType_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.CreateExamType(childComplexity, args["input"].(CreateExamTypeInput)), true
 	case "Mutation.createMeritList":
 		if e.ComplexityRoot.Mutation.CreateMeritList == nil {
 			break
@@ -1586,6 +1739,17 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.CreateOnlineApplication(childComplexity, args["input"].(CreateOnlineApplicationInput)), true
+	case "Mutation.createSeatAllocation":
+		if e.ComplexityRoot.Mutation.CreateSeatAllocation == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_createSeatAllocation_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.CreateSeatAllocation(childComplexity, args["input"].(CreateSeatAllocationInput)), true
 	case "Mutation.createStudent":
 		if e.ComplexityRoot.Mutation.CreateStudent == nil {
 			break
@@ -1718,6 +1882,28 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.DeleteEntranceExam(childComplexity, args["id"].(string)), true
+	case "Mutation.deleteExamSchedule":
+		if e.ComplexityRoot.Mutation.DeleteExamSchedule == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_deleteExamSchedule_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.DeleteExamSchedule(childComplexity, args["id"].(string)), true
+	case "Mutation.deleteExamType":
+		if e.ComplexityRoot.Mutation.DeleteExamType == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_deleteExamType_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.DeleteExamType(childComplexity, args["id"].(string)), true
 	case "Mutation.deleteMeritList":
 		if e.ComplexityRoot.Mutation.DeleteMeritList == nil {
 			break
@@ -1740,6 +1926,17 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.DeleteOnlineApplication(childComplexity, args["id"].(string)), true
+	case "Mutation.deleteSeatAllocation":
+		if e.ComplexityRoot.Mutation.DeleteSeatAllocation == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_deleteSeatAllocation_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.DeleteSeatAllocation(childComplexity, args["id"].(string)), true
 	case "Mutation.deleteStudent":
 		if e.ComplexityRoot.Mutation.DeleteStudent == nil {
 			break
@@ -1883,6 +2080,28 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.UpdateEntranceExam(childComplexity, args["input"].(UpdateEntranceExamInput)), true
+	case "Mutation.updateExamSchedule":
+		if e.ComplexityRoot.Mutation.UpdateExamSchedule == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updateExamSchedule_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.UpdateExamSchedule(childComplexity, args["input"].(UpdateExamScheduleInput)), true
+	case "Mutation.updateExamType":
+		if e.ComplexityRoot.Mutation.UpdateExamType == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updateExamType_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.UpdateExamType(childComplexity, args["input"].(UpdateExamTypeInput)), true
 	case "Mutation.updateMeritList":
 		if e.ComplexityRoot.Mutation.UpdateMeritList == nil {
 			break
@@ -1905,6 +2124,17 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.UpdateOnlineApplication(childComplexity, args["input"].(UpdateOnlineApplicationInput)), true
+	case "Mutation.updateSeatAllocation":
+		if e.ComplexityRoot.Mutation.UpdateSeatAllocation == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updateSeatAllocation_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.UpdateSeatAllocation(childComplexity, args["input"].(UpdateSeatAllocationInput)), true
 	case "Mutation.updateStudent":
 		if e.ComplexityRoot.Mutation.UpdateStudent == nil {
 			break
@@ -2177,6 +2407,18 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Query.Events(childComplexity), true
+	case "Query.examSchedules":
+		if e.ComplexityRoot.Query.ExamSchedules == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Query.ExamSchedules(childComplexity), true
+	case "Query.examTypes":
+		if e.ComplexityRoot.Query.ExamTypes == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Query.ExamTypes(childComplexity), true
 	case "Query.exams":
 		if e.ComplexityRoot.Query.Exams == nil {
 			break
@@ -2242,6 +2484,12 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Query.Roles(childComplexity), true
+	case "Query.seatAllocations":
+		if e.ComplexityRoot.Query.SeatAllocations == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Query.SeatAllocations(childComplexity), true
 	case "Query.studentAttendanceList":
 		if e.ComplexityRoot.Query.StudentAttendanceList == nil {
 			break
@@ -2363,6 +2611,67 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Role.Users(childComplexity), true
+
+	case "SeatAllocation.allocationDate":
+		if e.ComplexityRoot.SeatAllocation.AllocationDate == nil {
+			break
+		}
+
+		return e.ComplexityRoot.SeatAllocation.AllocationDate(childComplexity), true
+	case "SeatAllocation.allottedSeatType":
+		if e.ComplexityRoot.SeatAllocation.AllottedSeatType == nil {
+			break
+		}
+
+		return e.ComplexityRoot.SeatAllocation.AllottedSeatType(childComplexity), true
+	case "SeatAllocation.applicationNo":
+		if e.ComplexityRoot.SeatAllocation.ApplicationNo == nil {
+			break
+		}
+
+		return e.ComplexityRoot.SeatAllocation.ApplicationNo(childComplexity), true
+	case "SeatAllocation.category":
+		if e.ComplexityRoot.SeatAllocation.Category == nil {
+			break
+		}
+
+		return e.ComplexityRoot.SeatAllocation.Category(childComplexity), true
+	case "SeatAllocation.course":
+		if e.ComplexityRoot.SeatAllocation.Course == nil {
+			break
+		}
+
+		return e.ComplexityRoot.SeatAllocation.Course(childComplexity), true
+	case "SeatAllocation.feesPaid":
+		if e.ComplexityRoot.SeatAllocation.FeesPaid == nil {
+			break
+		}
+
+		return e.ComplexityRoot.SeatAllocation.FeesPaid(childComplexity), true
+	case "SeatAllocation.id":
+		if e.ComplexityRoot.SeatAllocation.ID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.SeatAllocation.ID(childComplexity), true
+	case "SeatAllocation.reportingDate":
+		if e.ComplexityRoot.SeatAllocation.ReportingDate == nil {
+			break
+		}
+
+		return e.ComplexityRoot.SeatAllocation.ReportingDate(childComplexity), true
+	case "SeatAllocation.status":
+		if e.ComplexityRoot.SeatAllocation.Status == nil {
+			break
+		}
+
+		return e.ComplexityRoot.SeatAllocation.Status(childComplexity), true
+	case "SeatAllocation.studentName":
+		if e.ComplexityRoot.SeatAllocation.StudentName == nil {
+			break
+		}
+
+		return e.ComplexityRoot.SeatAllocation.StudentName(childComplexity), true
 
 	case "Student.address":
 		if e.ComplexityRoot.Student.Address == nil {
@@ -3479,12 +3788,15 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 		ec.unmarshalInputCreateEntranceExamInput,
 		ec.unmarshalInputCreateEventInput,
 		ec.unmarshalInputCreateExamInput,
+		ec.unmarshalInputCreateExamScheduleInput,
+		ec.unmarshalInputCreateExamTypeInput,
 		ec.unmarshalInputCreateFeePaymentInput,
 		ec.unmarshalInputCreateFeeStructureInput,
 		ec.unmarshalInputCreateMeritListInput,
 		ec.unmarshalInputCreateOnlineApplicationInput,
 		ec.unmarshalInputCreatePermissionInput,
 		ec.unmarshalInputCreateRoleInput,
+		ec.unmarshalInputCreateSeatAllocationInput,
 		ec.unmarshalInputCreateStudentAttendanceInfoInput,
 		ec.unmarshalInputCreateStudentAttendanceInput,
 		ec.unmarshalInputCreateStudentCertificateInfoInput,
@@ -3525,12 +3837,15 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 		ec.unmarshalInputUpdateEntranceExamInput,
 		ec.unmarshalInputUpdateEventInput,
 		ec.unmarshalInputUpdateExamInput,
+		ec.unmarshalInputUpdateExamScheduleInput,
+		ec.unmarshalInputUpdateExamTypeInput,
 		ec.unmarshalInputUpdateFeePaymentInput,
 		ec.unmarshalInputUpdateFeeStructureInput,
 		ec.unmarshalInputUpdateMeritListInput,
 		ec.unmarshalInputUpdateOnlineApplicationInput,
 		ec.unmarshalInputUpdatePermissionInput,
 		ec.unmarshalInputUpdateRoleInput,
+		ec.unmarshalInputUpdateSeatAllocationInput,
 		ec.unmarshalInputUpdateStudentAttendanceInfoInput,
 		ec.unmarshalInputUpdateStudentAttendanceInput,
 		ec.unmarshalInputUpdateStudentCertificateInfoInput,
@@ -3934,6 +4249,46 @@ func (ec *executionContext) childFields_Exam(ctx context.Context, field graphql.
 	return nil, fmt.Errorf("no field named %q was found under type Exam", field.Name)
 }
 
+func (ec *executionContext) childFields_ExamSchedule(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+	switch field.Name {
+	case "id":
+		return ec.fieldContext_ExamSchedule_id(ctx, field)
+	case "examType":
+		return ec.fieldContext_ExamSchedule_examType(ctx, field)
+	case "course":
+		return ec.fieldContext_ExamSchedule_course(ctx, field)
+	case "semester":
+		return ec.fieldContext_ExamSchedule_semester(ctx, field)
+	case "subject":
+		return ec.fieldContext_ExamSchedule_subject(ctx, field)
+	case "examDate":
+		return ec.fieldContext_ExamSchedule_examDate(ctx, field)
+	case "startTime":
+		return ec.fieldContext_ExamSchedule_startTime(ctx, field)
+	case "endTime":
+		return ec.fieldContext_ExamSchedule_endTime(ctx, field)
+	case "roomNo":
+		return ec.fieldContext_ExamSchedule_roomNo(ctx, field)
+	}
+	return nil, fmt.Errorf("no field named %q was found under type ExamSchedule", field.Name)
+}
+
+func (ec *executionContext) childFields_ExamType(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+	switch field.Name {
+	case "id":
+		return ec.fieldContext_ExamType_id(ctx, field)
+	case "examName":
+		return ec.fieldContext_ExamType_examName(ctx, field)
+	case "examCode":
+		return ec.fieldContext_ExamType_examCode(ctx, field)
+	case "description":
+		return ec.fieldContext_ExamType_description(ctx, field)
+	case "status":
+		return ec.fieldContext_ExamType_status(ctx, field)
+	}
+	return nil, fmt.Errorf("no field named %q was found under type ExamType", field.Name)
+}
+
 func (ec *executionContext) childFields_FeePayment(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 	switch field.Name {
 	case "id":
@@ -4078,6 +4433,32 @@ func (ec *executionContext) childFields_Role(ctx context.Context, field graphql.
 		return ec.fieldContext_Role_users(ctx, field)
 	}
 	return nil, fmt.Errorf("no field named %q was found under type Role", field.Name)
+}
+
+func (ec *executionContext) childFields_SeatAllocation(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+	switch field.Name {
+	case "id":
+		return ec.fieldContext_SeatAllocation_id(ctx, field)
+	case "studentName":
+		return ec.fieldContext_SeatAllocation_studentName(ctx, field)
+	case "applicationNo":
+		return ec.fieldContext_SeatAllocation_applicationNo(ctx, field)
+	case "course":
+		return ec.fieldContext_SeatAllocation_course(ctx, field)
+	case "category":
+		return ec.fieldContext_SeatAllocation_category(ctx, field)
+	case "allottedSeatType":
+		return ec.fieldContext_SeatAllocation_allottedSeatType(ctx, field)
+	case "allocationDate":
+		return ec.fieldContext_SeatAllocation_allocationDate(ctx, field)
+	case "reportingDate":
+		return ec.fieldContext_SeatAllocation_reportingDate(ctx, field)
+	case "status":
+		return ec.fieldContext_SeatAllocation_status(ctx, field)
+	case "feesPaid":
+		return ec.fieldContext_SeatAllocation_feesPaid(ctx, field)
+	}
+	return nil, fmt.Errorf("no field named %q was found under type SeatAllocation", field.Name)
 }
 
 func (ec *executionContext) childFields_Student(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {

@@ -19,6 +19,9 @@ extend type Query {
   onlineApplications: [OnlineApplication!]!
   entranceExams: [EntranceExam!]!
   meritLists: [MeritList!]!
+  seatAllocations: [SeatAllocation!]!
+  examTypes: [ExamType!]!
+  examSchedules: [ExamSchedule!]!
 }
 
 extend type Mutation {
@@ -65,6 +68,15 @@ extend type Mutation {
   createMeritList(input: CreateMeritListInput!): MeritList!
   updateMeritList(input: UpdateMeritListInput!): MeritList!
   deleteMeritList(id: String!): String!
+  createSeatAllocation(input: CreateSeatAllocationInput!): SeatAllocation!
+  updateSeatAllocation(input: UpdateSeatAllocationInput!): SeatAllocation!
+  deleteSeatAllocation(id: String!): String!
+  createExamType(input: CreateExamTypeInput!): ExamType!
+  updateExamType(input: UpdateExamTypeInput!): ExamType!
+  deleteExamType(id: String!): String!
+  createExamSchedule(input: CreateExamScheduleInput!): ExamSchedule!
+  updateExamSchedule(input: UpdateExamScheduleInput!): ExamSchedule!
+  deleteExamSchedule(id: String!): String!
 }
 
 input UpdateAdmissionInquiryInput {
@@ -749,6 +761,102 @@ input UpdateMeritListInput {
   rank: Int!
   course: String!
   selectionStatus: String!
+}
+
+type SeatAllocation {
+  id: String!
+  studentName: String!
+  applicationNo: String!
+  course: String!
+  category: String!
+  allottedSeatType: String!
+  allocationDate: String!
+  reportingDate: String!
+  status: String!
+  feesPaid: Boolean!
+}
+
+input CreateSeatAllocationInput {
+  studentName: String!
+  applicationNo: String!
+  course: String!
+  category: String!
+  allottedSeatType: String!
+  allocationDate: String!
+  reportingDate: String!
+  status: String!
+  feesPaid: Boolean!
+}
+
+input UpdateSeatAllocationInput {
+  id: String!
+  studentName: String!
+  applicationNo: String!
+  course: String!
+  category: String!
+  allottedSeatType: String!
+  allocationDate: String!
+  reportingDate: String!
+  status: String!
+  feesPaid: Boolean!
+}
+
+type ExamType {
+  id: String!
+  examName: String!
+  examCode: String!
+  description: String
+  status: String!
+}
+
+input CreateExamTypeInput {
+  examName: String!
+  examCode: String!
+  description: String
+  status: String!
+}
+
+input UpdateExamTypeInput {
+  id: String!
+  examName: String!
+  examCode: String!
+  description: String
+  status: String!
+}
+
+type ExamSchedule {
+  id: String!
+  examType: String!
+  course: String!
+  semester: String!
+  subject: String!
+  examDate: String!
+  startTime: String!
+  endTime: String!
+  roomNo: String!
+}
+
+input CreateExamScheduleInput {
+  examType: String!
+  course: String!
+  semester: String!
+  subject: String!
+  examDate: String!
+  startTime: String!
+  endTime: String!
+  roomNo: String!
+}
+
+input UpdateExamScheduleInput {
+  id: String!
+  examType: String!
+  course: String!
+  semester: String!
+  subject: String!
+  examDate: String!
+  startTime: String!
+  endTime: String!
+  roomNo: String!
 }
 
 scalar Time

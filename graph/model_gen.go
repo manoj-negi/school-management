@@ -128,6 +128,24 @@ type CreateEntranceExamInput struct {
 	Description  *string `json:"description,omitempty"`
 }
 
+type CreateExamScheduleInput struct {
+	ExamType  string `json:"examType"`
+	Course    string `json:"course"`
+	Semester  string `json:"semester"`
+	Subject   string `json:"subject"`
+	ExamDate  string `json:"examDate"`
+	StartTime string `json:"startTime"`
+	EndTime   string `json:"endTime"`
+	RoomNo    string `json:"roomNo"`
+}
+
+type CreateExamTypeInput struct {
+	ExamName    string  `json:"examName"`
+	ExamCode    string  `json:"examCode"`
+	Description *string `json:"description,omitempty"`
+	Status      string  `json:"status"`
+}
+
 type CreateMeritListInput struct {
 	StudentName     string  `json:"studentName"`
 	ApplicationNo   string  `json:"applicationNo"`
@@ -152,6 +170,18 @@ type CreateOnlineApplicationInput struct {
 	ApplicationDate   string  `json:"applicationDate"`
 	PaymentStatus     string  `json:"paymentStatus"`
 	ApplicationStatus string  `json:"applicationStatus"`
+}
+
+type CreateSeatAllocationInput struct {
+	StudentName      string `json:"studentName"`
+	ApplicationNo    string `json:"applicationNo"`
+	Course           string `json:"course"`
+	Category         string `json:"category"`
+	AllottedSeatType string `json:"allottedSeatType"`
+	AllocationDate   string `json:"allocationDate"`
+	ReportingDate    string `json:"reportingDate"`
+	Status           string `json:"status"`
+	FeesPaid         bool   `json:"feesPaid"`
 }
 
 type CreateStudentAttendanceInfoInput struct {
@@ -290,6 +320,26 @@ type EntranceExam struct {
 	Description  *string `json:"description,omitempty"`
 }
 
+type ExamSchedule struct {
+	ID        string `json:"id"`
+	ExamType  string `json:"examType"`
+	Course    string `json:"course"`
+	Semester  string `json:"semester"`
+	Subject   string `json:"subject"`
+	ExamDate  string `json:"examDate"`
+	StartTime string `json:"startTime"`
+	EndTime   string `json:"endTime"`
+	RoomNo    string `json:"roomNo"`
+}
+
+type ExamType struct {
+	ID          string  `json:"id"`
+	ExamName    string  `json:"examName"`
+	ExamCode    string  `json:"examCode"`
+	Description *string `json:"description,omitempty"`
+	Status      string  `json:"status"`
+}
+
 type LoginInput struct {
 	Username string `json:"username"`
 	Password string `json:"password"`
@@ -326,6 +376,19 @@ type OnlineApplication struct {
 	ApplicationDate   string `json:"applicationDate"`
 	PaymentStatus     string `json:"paymentStatus"`
 	ApplicationStatus string `json:"applicationStatus"`
+}
+
+type SeatAllocation struct {
+	ID               string `json:"id"`
+	StudentName      string `json:"studentName"`
+	ApplicationNo    string `json:"applicationNo"`
+	Course           string `json:"course"`
+	Category         string `json:"category"`
+	AllottedSeatType string `json:"allottedSeatType"`
+	AllocationDate   string `json:"allocationDate"`
+	ReportingDate    string `json:"reportingDate"`
+	Status           string `json:"status"`
+	FeesPaid         bool   `json:"feesPaid"`
 }
 
 type StudentAttendanceInfo struct {
@@ -510,6 +573,26 @@ type UpdateEntranceExamInput struct {
 	Description  *string `json:"description,omitempty"`
 }
 
+type UpdateExamScheduleInput struct {
+	ID        string `json:"id"`
+	ExamType  string `json:"examType"`
+	Course    string `json:"course"`
+	Semester  string `json:"semester"`
+	Subject   string `json:"subject"`
+	ExamDate  string `json:"examDate"`
+	StartTime string `json:"startTime"`
+	EndTime   string `json:"endTime"`
+	RoomNo    string `json:"roomNo"`
+}
+
+type UpdateExamTypeInput struct {
+	ID          string  `json:"id"`
+	ExamName    string  `json:"examName"`
+	ExamCode    string  `json:"examCode"`
+	Description *string `json:"description,omitempty"`
+	Status      string  `json:"status"`
+}
+
 type UpdateMeritListInput struct {
 	ID              string  `json:"id"`
 	StudentName     string  `json:"studentName"`
@@ -536,6 +619,19 @@ type UpdateOnlineApplicationInput struct {
 	ApplicationDate   string  `json:"applicationDate"`
 	PaymentStatus     string  `json:"paymentStatus"`
 	ApplicationStatus string  `json:"applicationStatus"`
+}
+
+type UpdateSeatAllocationInput struct {
+	ID               string `json:"id"`
+	StudentName      string `json:"studentName"`
+	ApplicationNo    string `json:"applicationNo"`
+	Course           string `json:"course"`
+	Category         string `json:"category"`
+	AllottedSeatType string `json:"allottedSeatType"`
+	AllocationDate   string `json:"allocationDate"`
+	ReportingDate    string `json:"reportingDate"`
+	Status           string `json:"status"`
+	FeesPaid         bool   `json:"feesPaid"`
 }
 
 type UpdateStudentAttendanceInfoInput struct {
