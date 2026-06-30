@@ -1760,15 +1760,15 @@ func (r *mutationResolver) CreateExamSchedule(ctx context.Context, input CreateE
 	}
 
 	return &ExamSchedule{
-		ID:         id,
-		ExamType:   input.ExamType,
-		Course:     input.Course,
-		Semester:   input.Semester,
-		Subject:    input.Subject,
-		ExamDate:   input.ExamDate,
-		StartTime:  input.StartTime,
-		EndTime:    input.EndTime,
-		RoomNo:     input.RoomNo,
+		ID:        id,
+		ExamType:  input.ExamType,
+		Course:    input.Course,
+		Semester:  input.Semester,
+		Subject:   input.Subject,
+		ExamDate:  input.ExamDate,
+		StartTime: input.StartTime,
+		EndTime:   input.EndTime,
+		RoomNo:    input.RoomNo,
 	}, nil
 }
 
@@ -1789,15 +1789,15 @@ func (r *mutationResolver) UpdateExamSchedule(ctx context.Context, input UpdateE
 	}
 
 	return &ExamSchedule{
-		ID:         input.ID,
-		ExamType:   input.ExamType,
-		Course:     input.Course,
-		Semester:   input.Semester,
-		Subject:    input.Subject,
-		ExamDate:   input.ExamDate,
-		StartTime:  input.StartTime,
-		EndTime:    input.EndTime,
-		RoomNo:     input.RoomNo,
+		ID:        input.ID,
+		ExamType:  input.ExamType,
+		Course:    input.Course,
+		Semester:  input.Semester,
+		Subject:   input.Subject,
+		ExamDate:  input.ExamDate,
+		StartTime: input.StartTime,
+		EndTime:   input.EndTime,
+		RoomNo:    input.RoomNo,
 	}, nil
 }
 
@@ -1808,6 +1808,138 @@ func (r *mutationResolver) DeleteExamSchedule(ctx context.Context, id string) (s
 	_, err := db.ExecContext(ctx, "DELETE FROM public.exam_schedules WHERE id = $1", id)
 	if err != nil {
 		return "", fmt.Errorf("failed to delete exam schedule entry: %w", err)
+	}
+
+	return id, nil
+}
+
+// CreateHallAllocation is the resolver for the createHallAllocation field.
+func (r *mutationResolver) CreateHallAllocation(ctx context.Context, input CreateHallAllocationInput) (*HallAllocation, error) {
+	db := r.DB
+
+	id := uuid.New().String()
+
+	_, err := db.ExecContext(ctx, `
+		INSERT INTO public.hall_allocations (
+			id, exam_name, student_name, roll_no, hall_no, seat_no
+		) VALUES ($1, $2, $3, $4, $5, $6)
+	`,
+		id, input.ExamName, input.StudentName, input.RollNo, input.HallNo, input.SeatNo,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to insert hall allocation entry: %w", err)
+	}
+
+	return &HallAllocation{
+		ID:          id,
+		ExamName:    input.ExamName,
+		StudentName: input.StudentName,
+		RollNo:      input.RollNo,
+		HallNo:      input.HallNo,
+		SeatNo:      input.SeatNo,
+	}, nil
+}
+
+// UpdateHallAllocation is the resolver for the updateHallAllocation field.
+func (r *mutationResolver) UpdateHallAllocation(ctx context.Context, input UpdateHallAllocationInput) (*HallAllocation, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, `
+		UPDATE public.hall_allocations SET
+			exam_name = $1, student_name = $2, roll_no = $3, hall_no = $4, seat_no = $5
+		WHERE id = $6
+	`,
+		input.ExamName, input.StudentName, input.RollNo, input.HallNo, input.SeatNo, input.ID,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to update hall allocation entry: %w", err)
+	}
+
+	return &HallAllocation{
+		ID:          input.ID,
+		ExamName:    input.ExamName,
+		StudentName: input.StudentName,
+		RollNo:      input.RollNo,
+		HallNo:      input.HallNo,
+		SeatNo:      input.SeatNo,
+	}, nil
+}
+
+// DeleteHallAllocation is the resolver for the deleteHallAllocation field.
+func (r *mutationResolver) DeleteHallAllocation(ctx context.Context, id string) (string, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, "DELETE FROM public.hall_allocations WHERE id = $1", id)
+	if err != nil {
+		return "", fmt.Errorf("failed to delete hall allocation entry: %w", err)
+	}
+
+	return id, nil
+}
+
+// CreateMarksEntry is the resolver for the createMarksEntry field.
+func (r *mutationResolver) CreateMarksEntry(ctx context.Context, input CreateMarksEntryInput) (*MarksEntry, error) {
+	db := r.DB
+
+	id := uuid.New().String()
+
+	_, err := db.ExecContext(ctx, `
+		INSERT INTO public.marks_entries (
+			id, exam_name, student_name, roll_no, subject, marks_obtained, max_marks, status
+		) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+	`,
+		id, input.ExamName, input.StudentName, input.RollNo, input.Subject, input.MarksObtained, input.MaxMarks, input.Status,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to insert marks entry record: %w", err)
+	}
+
+	return &MarksEntry{
+		ID:            id,
+		ExamName:      input.ExamName,
+		StudentName:   input.StudentName,
+		RollNo:        input.RollNo,
+		Subject:       input.Subject,
+		MarksObtained: input.MarksObtained,
+		MaxMarks:      input.MaxMarks,
+		Status:        input.Status,
+	}, nil
+}
+
+// UpdateMarksEntry is the resolver for the updateMarksEntry field.
+func (r *mutationResolver) UpdateMarksEntry(ctx context.Context, input UpdateMarksEntryInput) (*MarksEntry, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, `
+		UPDATE public.marks_entries SET
+			exam_name = $1, student_name = $2, roll_no = $3, subject = $4, marks_obtained = $5, max_marks = $6, status = $7
+		WHERE id = $8
+	`,
+		input.ExamName, input.StudentName, input.RollNo, input.Subject, input.MarksObtained, input.MaxMarks, input.Status, input.ID,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to update marks entry record: %w", err)
+	}
+
+	return &MarksEntry{
+		ID:            input.ID,
+		ExamName:      input.ExamName,
+		StudentName:   input.StudentName,
+		RollNo:        input.RollNo,
+		Subject:       input.Subject,
+		MarksObtained: input.MarksObtained,
+		MaxMarks:      input.MaxMarks,
+		Status:        input.Status,
+	}, nil
+}
+
+// DeleteMarksEntry is the resolver for the deleteMarksEntry field.
+func (r *mutationResolver) DeleteMarksEntry(ctx context.Context, id string) (string, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, "DELETE FROM public.marks_entries WHERE id = $1", id)
+	if err != nil {
+		return "", fmt.Errorf("failed to delete marks entry record: %w", err)
 	}
 
 	return id, nil
@@ -2814,8 +2946,8 @@ func (r *queryResolver) ExamSchedules(ctx context.Context) ([]*ExamSchedule, err
 	for rows.Next() {
 		var (
 			id, examType, course, semester, subject string
-			examDate sql.NullTime
-			startTime, endTime, roomNo string
+			examDate                                sql.NullTime
+			startTime, endTime, roomNo              string
 		)
 		err := rows.Scan(
 			&id, &examType, &course, &semester, &subject, &examDate, &startTime, &endTime, &roomNo,
@@ -2834,6 +2966,83 @@ func (r *queryResolver) ExamSchedules(ctx context.Context) ([]*ExamSchedule, err
 			StartTime: startTime,
 			EndTime:   endTime,
 			RoomNo:    roomNo,
+		})
+	}
+	return list, nil
+}
+
+// HallAllocations is the resolver for the hallAllocations field.
+func (r *queryResolver) HallAllocations(ctx context.Context) ([]*HallAllocation, error) {
+	db := r.DB
+
+	rows, err := db.QueryContext(ctx, `
+		SELECT id, COALESCE(exam_name, ''), COALESCE(student_name, ''), COALESCE(roll_no, ''), COALESCE(hall_no, ''), COALESCE(seat_no, '')
+		FROM public.hall_allocations
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("failed to query hall allocations: %w", err)
+	}
+	defer rows.Close()
+
+	var list []*HallAllocation
+	for rows.Next() {
+		var (
+			id, examName, studentName, rollNo, hallNo, seatNo string
+		)
+		err := rows.Scan(
+			&id, &examName, &studentName, &rollNo, &hallNo, &seatNo,
+		)
+		if err != nil {
+			return nil, fmt.Errorf("failed to scan hall allocation row: %w", err)
+		}
+
+		list = append(list, &HallAllocation{
+			ID:          id,
+			ExamName:    examName,
+			StudentName: studentName,
+			RollNo:      rollNo,
+			HallNo:      hallNo,
+			SeatNo:      seatNo,
+		})
+	}
+	return list, nil
+}
+
+// MarksEntries is the resolver for the marksEntries field.
+func (r *queryResolver) MarksEntries(ctx context.Context) ([]*MarksEntry, error) {
+	db := r.DB
+
+	rows, err := db.QueryContext(ctx, `
+		SELECT id, COALESCE(exam_name, ''), COALESCE(student_name, ''), COALESCE(roll_no, ''), COALESCE(subject, ''), COALESCE(marks_obtained, 0), COALESCE(max_marks, 100), COALESCE(status, '')
+		FROM public.marks_entries
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("failed to query marks entries: %w", err)
+	}
+	defer rows.Close()
+
+	var list []*MarksEntry
+	for rows.Next() {
+		var (
+			id, examName, studentName, rollNo, subject, status string
+			marksObtained, maxMarks int
+		)
+		err := rows.Scan(
+			&id, &examName, &studentName, &rollNo, &subject, &marksObtained, &maxMarks, &status,
+		)
+		if err != nil {
+			return nil, fmt.Errorf("failed to scan marks entry row: %w", err)
+		}
+
+		list = append(list, &MarksEntry{
+			ID:            id,
+			ExamName:      examName,
+			StudentName:   studentName,
+			RollNo:        rollNo,
+			Subject:       subject,
+			MarksObtained: marksObtained,
+			MaxMarks:      maxMarks,
+			Status:        status,
 		})
 	}
 	return list, nil

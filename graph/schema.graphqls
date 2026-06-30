@@ -22,6 +22,8 @@ extend type Query {
   seatAllocations: [SeatAllocation!]!
   examTypes: [ExamType!]!
   examSchedules: [ExamSchedule!]!
+  hallAllocations: [HallAllocation!]!
+  marksEntries: [MarksEntry!]!
 }
 
 extend type Mutation {
@@ -77,6 +79,12 @@ extend type Mutation {
   createExamSchedule(input: CreateExamScheduleInput!): ExamSchedule!
   updateExamSchedule(input: UpdateExamScheduleInput!): ExamSchedule!
   deleteExamSchedule(id: String!): String!
+  createHallAllocation(input: CreateHallAllocationInput!): HallAllocation!
+  updateHallAllocation(input: UpdateHallAllocationInput!): HallAllocation!
+  deleteHallAllocation(id: String!): String!
+  createMarksEntry(input: CreateMarksEntryInput!): MarksEntry!
+  updateMarksEntry(input: UpdateMarksEntryInput!): MarksEntry!
+  deleteMarksEntry(id: String!): String!
 }
 
 input UpdateAdmissionInquiryInput {
@@ -857,6 +865,64 @@ input UpdateExamScheduleInput {
   startTime: String!
   endTime: String!
   roomNo: String!
+}
+
+type HallAllocation {
+  id: String!
+  examName: String!
+  studentName: String!
+  rollNo: String!
+  hallNo: String!
+  seatNo: String!
+}
+
+input CreateHallAllocationInput {
+  examName: String!
+  studentName: String!
+  rollNo: String!
+  hallNo: String!
+  seatNo: String!
+}
+
+input UpdateHallAllocationInput {
+  id: String!
+  examName: String!
+  studentName: String!
+  rollNo: String!
+  hallNo: String!
+  seatNo: String!
+}
+
+type MarksEntry {
+  id: String!
+  examName: String!
+  studentName: String!
+  rollNo: String!
+  subject: String!
+  marksObtained: Int!
+  maxMarks: Int!
+  status: String!
+}
+
+input CreateMarksEntryInput {
+  examName: String!
+  studentName: String!
+  rollNo: String!
+  subject: String!
+  marksObtained: Int!
+  maxMarks: Int!
+  status: String!
+}
+
+input UpdateMarksEntryInput {
+  id: String!
+  examName: String!
+  studentName: String!
+  rollNo: String!
+  subject: String!
+  marksObtained: Int!
+  maxMarks: Int!
+  status: String!
 }
 
 scalar Time

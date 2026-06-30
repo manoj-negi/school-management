@@ -146,6 +146,24 @@ type CreateExamTypeInput struct {
 	Status      string  `json:"status"`
 }
 
+type CreateHallAllocationInput struct {
+	ExamName    string `json:"examName"`
+	StudentName string `json:"studentName"`
+	RollNo      string `json:"rollNo"`
+	HallNo      string `json:"hallNo"`
+	SeatNo      string `json:"seatNo"`
+}
+
+type CreateMarksEntryInput struct {
+	ExamName      string `json:"examName"`
+	StudentName   string `json:"studentName"`
+	RollNo        string `json:"rollNo"`
+	Subject       string `json:"subject"`
+	MarksObtained int    `json:"marksObtained"`
+	MaxMarks      int    `json:"maxMarks"`
+	Status        string `json:"status"`
+}
+
 type CreateMeritListInput struct {
 	StudentName     string  `json:"studentName"`
 	ApplicationNo   string  `json:"applicationNo"`
@@ -340,6 +358,15 @@ type ExamType struct {
 	Status      string  `json:"status"`
 }
 
+type HallAllocation struct {
+	ID          string `json:"id"`
+	ExamName    string `json:"examName"`
+	StudentName string `json:"studentName"`
+	RollNo      string `json:"rollNo"`
+	HallNo      string `json:"hallNo"`
+	SeatNo      string `json:"seatNo"`
+}
+
 type LoginInput struct {
 	Username string `json:"username"`
 	Password string `json:"password"`
@@ -348,6 +375,17 @@ type LoginInput struct {
 type LoginResponse struct {
 	Token string `json:"token"`
 	Role  string `json:"role"`
+}
+
+type MarksEntry struct {
+	ID            string `json:"id"`
+	ExamName      string `json:"examName"`
+	StudentName   string `json:"studentName"`
+	RollNo        string `json:"rollNo"`
+	Subject       string `json:"subject"`
+	MarksObtained int    `json:"marksObtained"`
+	MaxMarks      int    `json:"maxMarks"`
+	Status        string `json:"status"`
 }
 
 type MeritList struct {
@@ -591,6 +629,26 @@ type UpdateExamTypeInput struct {
 	ExamCode    string  `json:"examCode"`
 	Description *string `json:"description,omitempty"`
 	Status      string  `json:"status"`
+}
+
+type UpdateHallAllocationInput struct {
+	ID          string `json:"id"`
+	ExamName    string `json:"examName"`
+	StudentName string `json:"studentName"`
+	RollNo      string `json:"rollNo"`
+	HallNo      string `json:"hallNo"`
+	SeatNo      string `json:"seatNo"`
+}
+
+type UpdateMarksEntryInput struct {
+	ID            string `json:"id"`
+	ExamName      string `json:"examName"`
+	StudentName   string `json:"studentName"`
+	RollNo        string `json:"rollNo"`
+	Subject       string `json:"subject"`
+	MarksObtained int    `json:"marksObtained"`
+	MaxMarks      int    `json:"maxMarks"`
+	Status        string `json:"status"`
 }
 
 type UpdateMeritListInput struct {

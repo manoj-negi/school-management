@@ -283,9 +283,29 @@ type ComplexityRoot struct {
 		ID             func(childComplexity int) int
 	}
 
+	HallAllocation struct {
+		ExamName    func(childComplexity int) int
+		HallNo      func(childComplexity int) int
+		ID          func(childComplexity int) int
+		RollNo      func(childComplexity int) int
+		SeatNo      func(childComplexity int) int
+		StudentName func(childComplexity int) int
+	}
+
 	LoginResponse struct {
 		Role  func(childComplexity int) int
 		Token func(childComplexity int) int
+	}
+
+	MarksEntry struct {
+		ExamName      func(childComplexity int) int
+		ID            func(childComplexity int) int
+		MarksObtained func(childComplexity int) int
+		MaxMarks      func(childComplexity int) int
+		RollNo        func(childComplexity int) int
+		Status        func(childComplexity int) int
+		StudentName   func(childComplexity int) int
+		Subject       func(childComplexity int) int
 	}
 
 	MeritList struct {
@@ -308,6 +328,8 @@ type ComplexityRoot struct {
 		CreateEntranceExam        func(childComplexity int, input CreateEntranceExamInput) int
 		CreateExamSchedule        func(childComplexity int, input CreateExamScheduleInput) int
 		CreateExamType            func(childComplexity int, input CreateExamTypeInput) int
+		CreateHallAllocation      func(childComplexity int, input CreateHallAllocationInput) int
+		CreateMarksEntry          func(childComplexity int, input CreateMarksEntryInput) int
 		CreateMeritList           func(childComplexity int, input CreateMeritListInput) int
 		CreateOnlineApplication   func(childComplexity int, input CreateOnlineApplicationInput) int
 		CreateSeatAllocation      func(childComplexity int, input CreateSeatAllocationInput) int
@@ -325,6 +347,8 @@ type ComplexityRoot struct {
 		DeleteEntranceExam        func(childComplexity int, id string) int
 		DeleteExamSchedule        func(childComplexity int, id string) int
 		DeleteExamType            func(childComplexity int, id string) int
+		DeleteHallAllocation      func(childComplexity int, id string) int
+		DeleteMarksEntry          func(childComplexity int, id string) int
 		DeleteMeritList           func(childComplexity int, id string) int
 		DeleteOnlineApplication   func(childComplexity int, id string) int
 		DeleteSeatAllocation      func(childComplexity int, id string) int
@@ -343,6 +367,8 @@ type ComplexityRoot struct {
 		UpdateEntranceExam        func(childComplexity int, input UpdateEntranceExamInput) int
 		UpdateExamSchedule        func(childComplexity int, input UpdateExamScheduleInput) int
 		UpdateExamType            func(childComplexity int, input UpdateExamTypeInput) int
+		UpdateHallAllocation      func(childComplexity int, input UpdateHallAllocationInput) int
+		UpdateMarksEntry          func(childComplexity int, input UpdateMarksEntryInput) int
 		UpdateMeritList           func(childComplexity int, input UpdateMeritListInput) int
 		UpdateOnlineApplication   func(childComplexity int, input UpdateOnlineApplicationInput) int
 		UpdateSeatAllocation      func(childComplexity int, input UpdateSeatAllocationInput) int
@@ -401,6 +427,8 @@ type ComplexityRoot struct {
 		Exams                   func(childComplexity int) int
 		FeePayments             func(childComplexity int) int
 		FeeStructures           func(childComplexity int) int
+		HallAllocations         func(childComplexity int) int
+		MarksEntries            func(childComplexity int) int
 		MeritLists              func(childComplexity int) int
 		Node                    func(childComplexity int, id string) int
 		Nodes                   func(childComplexity int, ids []string) int
@@ -1577,6 +1605,43 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 
 		return e.ComplexityRoot.FeeStructure.ID(childComplexity), true
 
+	case "HallAllocation.examName":
+		if e.ComplexityRoot.HallAllocation.ExamName == nil {
+			break
+		}
+
+		return e.ComplexityRoot.HallAllocation.ExamName(childComplexity), true
+	case "HallAllocation.hallNo":
+		if e.ComplexityRoot.HallAllocation.HallNo == nil {
+			break
+		}
+
+		return e.ComplexityRoot.HallAllocation.HallNo(childComplexity), true
+	case "HallAllocation.id":
+		if e.ComplexityRoot.HallAllocation.ID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.HallAllocation.ID(childComplexity), true
+	case "HallAllocation.rollNo":
+		if e.ComplexityRoot.HallAllocation.RollNo == nil {
+			break
+		}
+
+		return e.ComplexityRoot.HallAllocation.RollNo(childComplexity), true
+	case "HallAllocation.seatNo":
+		if e.ComplexityRoot.HallAllocation.SeatNo == nil {
+			break
+		}
+
+		return e.ComplexityRoot.HallAllocation.SeatNo(childComplexity), true
+	case "HallAllocation.studentName":
+		if e.ComplexityRoot.HallAllocation.StudentName == nil {
+			break
+		}
+
+		return e.ComplexityRoot.HallAllocation.StudentName(childComplexity), true
+
 	case "LoginResponse.role":
 		if e.ComplexityRoot.LoginResponse.Role == nil {
 			break
@@ -1589,6 +1654,55 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.LoginResponse.Token(childComplexity), true
+
+	case "MarksEntry.examName":
+		if e.ComplexityRoot.MarksEntry.ExamName == nil {
+			break
+		}
+
+		return e.ComplexityRoot.MarksEntry.ExamName(childComplexity), true
+	case "MarksEntry.id":
+		if e.ComplexityRoot.MarksEntry.ID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.MarksEntry.ID(childComplexity), true
+	case "MarksEntry.marksObtained":
+		if e.ComplexityRoot.MarksEntry.MarksObtained == nil {
+			break
+		}
+
+		return e.ComplexityRoot.MarksEntry.MarksObtained(childComplexity), true
+	case "MarksEntry.maxMarks":
+		if e.ComplexityRoot.MarksEntry.MaxMarks == nil {
+			break
+		}
+
+		return e.ComplexityRoot.MarksEntry.MaxMarks(childComplexity), true
+	case "MarksEntry.rollNo":
+		if e.ComplexityRoot.MarksEntry.RollNo == nil {
+			break
+		}
+
+		return e.ComplexityRoot.MarksEntry.RollNo(childComplexity), true
+	case "MarksEntry.status":
+		if e.ComplexityRoot.MarksEntry.Status == nil {
+			break
+		}
+
+		return e.ComplexityRoot.MarksEntry.Status(childComplexity), true
+	case "MarksEntry.studentName":
+		if e.ComplexityRoot.MarksEntry.StudentName == nil {
+			break
+		}
+
+		return e.ComplexityRoot.MarksEntry.StudentName(childComplexity), true
+	case "MarksEntry.subject":
+		if e.ComplexityRoot.MarksEntry.Subject == nil {
+			break
+		}
+
+		return e.ComplexityRoot.MarksEntry.Subject(childComplexity), true
 
 	case "MeritList.academicScore":
 		if e.ComplexityRoot.MeritList.AcademicScore == nil {
@@ -1717,6 +1831,28 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.CreateExamType(childComplexity, args["input"].(CreateExamTypeInput)), true
+	case "Mutation.createHallAllocation":
+		if e.ComplexityRoot.Mutation.CreateHallAllocation == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_createHallAllocation_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.CreateHallAllocation(childComplexity, args["input"].(CreateHallAllocationInput)), true
+	case "Mutation.createMarksEntry":
+		if e.ComplexityRoot.Mutation.CreateMarksEntry == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_createMarksEntry_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.CreateMarksEntry(childComplexity, args["input"].(CreateMarksEntryInput)), true
 	case "Mutation.createMeritList":
 		if e.ComplexityRoot.Mutation.CreateMeritList == nil {
 			break
@@ -1904,6 +2040,28 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.DeleteExamType(childComplexity, args["id"].(string)), true
+	case "Mutation.deleteHallAllocation":
+		if e.ComplexityRoot.Mutation.DeleteHallAllocation == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_deleteHallAllocation_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.DeleteHallAllocation(childComplexity, args["id"].(string)), true
+	case "Mutation.deleteMarksEntry":
+		if e.ComplexityRoot.Mutation.DeleteMarksEntry == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_deleteMarksEntry_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.DeleteMarksEntry(childComplexity, args["id"].(string)), true
 	case "Mutation.deleteMeritList":
 		if e.ComplexityRoot.Mutation.DeleteMeritList == nil {
 			break
@@ -2102,6 +2260,28 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.UpdateExamType(childComplexity, args["input"].(UpdateExamTypeInput)), true
+	case "Mutation.updateHallAllocation":
+		if e.ComplexityRoot.Mutation.UpdateHallAllocation == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updateHallAllocation_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.UpdateHallAllocation(childComplexity, args["input"].(UpdateHallAllocationInput)), true
+	case "Mutation.updateMarksEntry":
+		if e.ComplexityRoot.Mutation.UpdateMarksEntry == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updateMarksEntry_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.UpdateMarksEntry(childComplexity, args["input"].(UpdateMarksEntryInput)), true
 	case "Mutation.updateMeritList":
 		if e.ComplexityRoot.Mutation.UpdateMeritList == nil {
 			break
@@ -2437,7 +2617,19 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Query.FeeStructures(childComplexity), true
+	case "Query.hallAllocations":
+		if e.ComplexityRoot.Query.HallAllocations == nil {
+			break
+		}
 
+		return e.ComplexityRoot.Query.HallAllocations(childComplexity), true
+
+	case "Query.marksEntries":
+		if e.ComplexityRoot.Query.MarksEntries == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Query.MarksEntries(childComplexity), true
 	case "Query.meritLists":
 		if e.ComplexityRoot.Query.MeritLists == nil {
 			break
@@ -3792,6 +3984,8 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 		ec.unmarshalInputCreateExamTypeInput,
 		ec.unmarshalInputCreateFeePaymentInput,
 		ec.unmarshalInputCreateFeeStructureInput,
+		ec.unmarshalInputCreateHallAllocationInput,
+		ec.unmarshalInputCreateMarksEntryInput,
 		ec.unmarshalInputCreateMeritListInput,
 		ec.unmarshalInputCreateOnlineApplicationInput,
 		ec.unmarshalInputCreatePermissionInput,
@@ -3841,6 +4035,8 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 		ec.unmarshalInputUpdateExamTypeInput,
 		ec.unmarshalInputUpdateFeePaymentInput,
 		ec.unmarshalInputUpdateFeeStructureInput,
+		ec.unmarshalInputUpdateHallAllocationInput,
+		ec.unmarshalInputUpdateMarksEntryInput,
 		ec.unmarshalInputUpdateMeritListInput,
 		ec.unmarshalInputUpdateOnlineApplicationInput,
 		ec.unmarshalInputUpdatePermissionInput,
@@ -4339,6 +4535,24 @@ func (ec *executionContext) childFields_FeeStructure(ctx context.Context, field 
 	return nil, fmt.Errorf("no field named %q was found under type FeeStructure", field.Name)
 }
 
+func (ec *executionContext) childFields_HallAllocation(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+	switch field.Name {
+	case "id":
+		return ec.fieldContext_HallAllocation_id(ctx, field)
+	case "examName":
+		return ec.fieldContext_HallAllocation_examName(ctx, field)
+	case "studentName":
+		return ec.fieldContext_HallAllocation_studentName(ctx, field)
+	case "rollNo":
+		return ec.fieldContext_HallAllocation_rollNo(ctx, field)
+	case "hallNo":
+		return ec.fieldContext_HallAllocation_hallNo(ctx, field)
+	case "seatNo":
+		return ec.fieldContext_HallAllocation_seatNo(ctx, field)
+	}
+	return nil, fmt.Errorf("no field named %q was found under type HallAllocation", field.Name)
+}
+
 func (ec *executionContext) childFields_LoginResponse(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 	switch field.Name {
 	case "token":
@@ -4347,6 +4561,28 @@ func (ec *executionContext) childFields_LoginResponse(ctx context.Context, field
 		return ec.fieldContext_LoginResponse_role(ctx, field)
 	}
 	return nil, fmt.Errorf("no field named %q was found under type LoginResponse", field.Name)
+}
+
+func (ec *executionContext) childFields_MarksEntry(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+	switch field.Name {
+	case "id":
+		return ec.fieldContext_MarksEntry_id(ctx, field)
+	case "examName":
+		return ec.fieldContext_MarksEntry_examName(ctx, field)
+	case "studentName":
+		return ec.fieldContext_MarksEntry_studentName(ctx, field)
+	case "rollNo":
+		return ec.fieldContext_MarksEntry_rollNo(ctx, field)
+	case "subject":
+		return ec.fieldContext_MarksEntry_subject(ctx, field)
+	case "marksObtained":
+		return ec.fieldContext_MarksEntry_marksObtained(ctx, field)
+	case "maxMarks":
+		return ec.fieldContext_MarksEntry_maxMarks(ctx, field)
+	case "status":
+		return ec.fieldContext_MarksEntry_status(ctx, field)
+	}
+	return nil, fmt.Errorf("no field named %q was found under type MarksEntry", field.Name)
 }
 
 func (ec *executionContext) childFields_MeritList(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
