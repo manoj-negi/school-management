@@ -38,6 +38,21 @@ type AssignClassTeacher struct {
 	RoomNumber       string  `json:"roomNumber"`
 }
 
+type BookStatus struct {
+	BookStatusID       string `json:"bookStatusID"`
+	BookID             string `json:"bookID"`
+	BookName           string `json:"bookName"`
+	Status             string `json:"status"`
+	DateUpdated        string `json:"dateUpdated"`
+	LastCheckedOutDate string `json:"lastCheckedOutDate"`
+	DueDate            string `json:"dueDate"`
+	CheckedOutBy       string `json:"checkedOutBy"`
+	ReservedBy         string `json:"reservedBy"`
+	Condition          string `json:"condition"`
+	ReturnDate         string `json:"returnDate"`
+	Notes              string `json:"notes"`
+}
+
 type ClassInfo struct {
 	ClassID   string `json:"classId"`
 	ClassName string `json:"className"`
@@ -98,6 +113,20 @@ type CreateAssignClassTeacherInput struct {
 	RoomNumber       string  `json:"roomNumber"`
 }
 
+type CreateBookStatusInput struct {
+	BookID             string `json:"bookID"`
+	BookName           string `json:"bookName"`
+	Status             string `json:"status"`
+	DateUpdated        string `json:"dateUpdated"`
+	LastCheckedOutDate string `json:"lastCheckedOutDate"`
+	DueDate            string `json:"dueDate"`
+	CheckedOutBy       string `json:"checkedOutBy"`
+	ReservedBy         string `json:"reservedBy"`
+	Condition          string `json:"condition"`
+	ReturnDate         string `json:"returnDate"`
+	Notes              string `json:"notes"`
+}
+
 type CreateComplaintInput struct {
 	ComplaintDate         string  `json:"complaintDate"`
 	ComplaintTime         string  `json:"complaintTime"`
@@ -154,6 +183,37 @@ type CreateHallAllocationInput struct {
 	SeatNo      string `json:"seatNo"`
 }
 
+type CreateIssueReturnInput struct {
+	BookNo      string `json:"bookNo"`
+	BookTitle   string `json:"bookTitle"`
+	StudentName string `json:"studentName"`
+	RollNo      string `json:"rollNo"`
+	IssueDate   string `json:"issueDate"`
+	ReturnDate  string `json:"returnDate"`
+	Status      string `json:"status"`
+}
+
+type CreateLibraryAssetInput struct {
+	No            string `json:"no"`
+	Title         string `json:"title"`
+	Subject       string `json:"subject"`
+	PurchaseDate  string `json:"purchaseDate"`
+	Department    string `json:"department"`
+	Type          string `json:"type"`
+	Status        string `json:"status"`
+	LastBorrowed  string `json:"lastBorrowed"`
+	BorrowerName  string `json:"borrowerName"`
+	DueDate       string `json:"dueDate"`
+	ShelfLocation string `json:"shelfLocation"`
+}
+
+type CreateLibraryReportInput struct {
+	ReportName    string `json:"reportName"`
+	GeneratedDate string `json:"generatedDate"`
+	Type          string `json:"type"`
+	Status        string `json:"status"`
+}
+
 type CreateMarksEntryInput struct {
 	ExamName      string `json:"examName"`
 	StudentName   string `json:"studentName"`
@@ -188,6 +248,24 @@ type CreateOnlineApplicationInput struct {
 	ApplicationDate   string  `json:"applicationDate"`
 	PaymentStatus     string  `json:"paymentStatus"`
 	ApplicationStatus string  `json:"applicationStatus"`
+}
+
+type CreateReportCardInput struct {
+	StudentName string  `json:"studentName"`
+	RollNo      string  `json:"rollNo"`
+	ExamName    string  `json:"examName"`
+	TotalMarks  int     `json:"totalMarks"`
+	Percentage  float64 `json:"percentage"`
+	Grade       string  `json:"grade"`
+	Result      string  `json:"result"`
+}
+
+type CreateResultGenerationInput struct {
+	ExamName   string `json:"examName"`
+	Course     string `json:"course"`
+	Semester   string `json:"semester"`
+	ResultDate string `json:"resultDate"`
+	Status     string `json:"status"`
 }
 
 type CreateSeatAllocationInput struct {
@@ -367,6 +445,40 @@ type HallAllocation struct {
 	SeatNo      string `json:"seatNo"`
 }
 
+type IssueReturn struct {
+	ID          string `json:"id"`
+	BookNo      string `json:"bookNo"`
+	BookTitle   string `json:"bookTitle"`
+	StudentName string `json:"studentName"`
+	RollNo      string `json:"rollNo"`
+	IssueDate   string `json:"issueDate"`
+	ReturnDate  string `json:"returnDate"`
+	Status      string `json:"status"`
+}
+
+type LibraryAsset struct {
+	ID            string `json:"id"`
+	No            string `json:"no"`
+	Title         string `json:"title"`
+	Subject       string `json:"subject"`
+	PurchaseDate  string `json:"purchaseDate"`
+	Department    string `json:"department"`
+	Type          string `json:"type"`
+	Status        string `json:"status"`
+	LastBorrowed  string `json:"lastBorrowed"`
+	BorrowerName  string `json:"borrowerName"`
+	DueDate       string `json:"dueDate"`
+	ShelfLocation string `json:"shelfLocation"`
+}
+
+type LibraryReport struct {
+	ID            string `json:"id"`
+	ReportName    string `json:"reportName"`
+	GeneratedDate string `json:"generatedDate"`
+	Type          string `json:"type"`
+	Status        string `json:"status"`
+}
+
 type LoginInput struct {
 	Username string `json:"username"`
 	Password string `json:"password"`
@@ -414,6 +526,26 @@ type OnlineApplication struct {
 	ApplicationDate   string `json:"applicationDate"`
 	PaymentStatus     string `json:"paymentStatus"`
 	ApplicationStatus string `json:"applicationStatus"`
+}
+
+type ReportCard struct {
+	ID          string  `json:"id"`
+	StudentName string  `json:"studentName"`
+	RollNo      string  `json:"rollNo"`
+	ExamName    string  `json:"examName"`
+	TotalMarks  int     `json:"totalMarks"`
+	Percentage  float64 `json:"percentage"`
+	Grade       string  `json:"grade"`
+	Result      string  `json:"result"`
+}
+
+type ResultGeneration struct {
+	ID         string `json:"id"`
+	ExamName   string `json:"examName"`
+	Course     string `json:"course"`
+	Semester   string `json:"semester"`
+	ResultDate string `json:"resultDate"`
+	Status     string `json:"status"`
 }
 
 type SeatAllocation struct {
@@ -579,6 +711,21 @@ type UpdateAssignClassTeacherInput struct {
 	RoomNumber       string  `json:"roomNumber"`
 }
 
+type UpdateBookStatusInput struct {
+	BookStatusID       string `json:"bookStatusID"`
+	BookID             string `json:"bookID"`
+	BookName           string `json:"bookName"`
+	Status             string `json:"status"`
+	DateUpdated        string `json:"dateUpdated"`
+	LastCheckedOutDate string `json:"lastCheckedOutDate"`
+	DueDate            string `json:"dueDate"`
+	CheckedOutBy       string `json:"checkedOutBy"`
+	ReservedBy         string `json:"reservedBy"`
+	Condition          string `json:"condition"`
+	ReturnDate         string `json:"returnDate"`
+	Notes              string `json:"notes"`
+}
+
 type UpdateComplaintInput struct {
 	ComplaintID           string  `json:"complaintId"`
 	ComplaintDate         string  `json:"complaintDate"`
@@ -640,6 +787,40 @@ type UpdateHallAllocationInput struct {
 	SeatNo      string `json:"seatNo"`
 }
 
+type UpdateIssueReturnInput struct {
+	ID          string `json:"id"`
+	BookNo      string `json:"bookNo"`
+	BookTitle   string `json:"bookTitle"`
+	StudentName string `json:"studentName"`
+	RollNo      string `json:"rollNo"`
+	IssueDate   string `json:"issueDate"`
+	ReturnDate  string `json:"returnDate"`
+	Status      string `json:"status"`
+}
+
+type UpdateLibraryAssetInput struct {
+	ID            string `json:"id"`
+	No            string `json:"no"`
+	Title         string `json:"title"`
+	Subject       string `json:"subject"`
+	PurchaseDate  string `json:"purchaseDate"`
+	Department    string `json:"department"`
+	Type          string `json:"type"`
+	Status        string `json:"status"`
+	LastBorrowed  string `json:"lastBorrowed"`
+	BorrowerName  string `json:"borrowerName"`
+	DueDate       string `json:"dueDate"`
+	ShelfLocation string `json:"shelfLocation"`
+}
+
+type UpdateLibraryReportInput struct {
+	ID            string `json:"id"`
+	ReportName    string `json:"reportName"`
+	GeneratedDate string `json:"generatedDate"`
+	Type          string `json:"type"`
+	Status        string `json:"status"`
+}
+
 type UpdateMarksEntryInput struct {
 	ID            string `json:"id"`
 	ExamName      string `json:"examName"`
@@ -677,6 +858,26 @@ type UpdateOnlineApplicationInput struct {
 	ApplicationDate   string  `json:"applicationDate"`
 	PaymentStatus     string  `json:"paymentStatus"`
 	ApplicationStatus string  `json:"applicationStatus"`
+}
+
+type UpdateReportCardInput struct {
+	ID          string  `json:"id"`
+	StudentName string  `json:"studentName"`
+	RollNo      string  `json:"rollNo"`
+	ExamName    string  `json:"examName"`
+	TotalMarks  int     `json:"totalMarks"`
+	Percentage  float64 `json:"percentage"`
+	Grade       string  `json:"grade"`
+	Result      string  `json:"result"`
+}
+
+type UpdateResultGenerationInput struct {
+	ID         string `json:"id"`
+	ExamName   string `json:"examName"`
+	Course     string `json:"course"`
+	Semester   string `json:"semester"`
+	ResultDate string `json:"resultDate"`
+	Status     string `json:"status"`
 }
 
 type UpdateSeatAllocationInput struct {

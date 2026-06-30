@@ -24,6 +24,12 @@ extend type Query {
   examSchedules: [ExamSchedule!]!
   hallAllocations: [HallAllocation!]!
   marksEntries: [MarksEntry!]!
+  resultGenerations: [ResultGeneration!]!
+  reportCards: [ReportCard!]!
+  allAssets: [LibraryAsset!]!
+  bookStatuses: [BookStatus!]!
+  issueReturns: [IssueReturn!]!
+  libraryReports: [LibraryReport!]!
 }
 
 extend type Mutation {
@@ -85,6 +91,24 @@ extend type Mutation {
   createMarksEntry(input: CreateMarksEntryInput!): MarksEntry!
   updateMarksEntry(input: UpdateMarksEntryInput!): MarksEntry!
   deleteMarksEntry(id: String!): String!
+  createResultGeneration(input: CreateResultGenerationInput!): ResultGeneration!
+  updateResultGeneration(input: UpdateResultGenerationInput!): ResultGeneration!
+  deleteResultGeneration(id: String!): String!
+  createReportCard(input: CreateReportCardInput!): ReportCard!
+  updateReportCard(input: UpdateReportCardInput!): ReportCard!
+  deleteReportCard(id: String!): String!
+  createLibraryAsset(input: CreateLibraryAssetInput!): LibraryAsset!
+  updateLibraryAsset(input: UpdateLibraryAssetInput!): LibraryAsset!
+  deleteLibraryAsset(id: String!): String!
+  createBookStatus(input: CreateBookStatusInput!): BookStatus!
+  updateBookStatus(input: UpdateBookStatusInput!): BookStatus!
+  deleteBookStatus(id: String!): String!
+  createIssueReturn(input: CreateIssueReturnInput!): IssueReturn!
+  updateIssueReturn(input: UpdateIssueReturnInput!): IssueReturn!
+  deleteIssueReturn(id: String!): String!
+  createLibraryReport(input: CreateLibraryReportInput!): LibraryReport!
+  updateLibraryReport(input: UpdateLibraryReportInput!): LibraryReport!
+  deleteLibraryReport(id: String!): String!
 }
 
 input UpdateAdmissionInquiryInput {
@@ -922,6 +946,207 @@ input UpdateMarksEntryInput {
   subject: String!
   marksObtained: Int!
   maxMarks: Int!
+  status: String!
+}
+
+type ResultGeneration {
+  id: String!
+  examName: String!
+  course: String!
+  semester: String!
+  resultDate: String!
+  status: String!
+}
+
+input CreateResultGenerationInput {
+  examName: String!
+  course: String!
+  semester: String!
+  resultDate: String!
+  status: String!
+}
+
+input UpdateResultGenerationInput {
+  id: String!
+  examName: String!
+  course: String!
+  semester: String!
+  resultDate: String!
+  status: String!
+}
+
+type ReportCard {
+  id: String!
+  studentName: String!
+  rollNo: String!
+  examName: String!
+  totalMarks: Int!
+  percentage: Float!
+  grade: String!
+  result: String!
+}
+
+input CreateReportCardInput {
+  studentName: String!
+  rollNo: String!
+  examName: String!
+  totalMarks: Int!
+  percentage: Float!
+  grade: String!
+  result: String!
+}
+
+input UpdateReportCardInput {
+  id: String!
+  studentName: String!
+  rollNo: String!
+  examName: String!
+  totalMarks: Int!
+  percentage: Float!
+  grade: String!
+  result: String!
+}
+
+type LibraryAsset {
+  id: String!
+  no: String!
+  title: String!
+  subject: String!
+  purchaseDate: String!
+  department: String!
+  type: String!
+  status: String!
+  lastBorrowed: String!
+  borrowerName: String!
+  dueDate: String!
+  shelfLocation: String!
+}
+
+input CreateLibraryAssetInput {
+  no: String!
+  title: String!
+  subject: String!
+  purchaseDate: String!
+  department: String!
+  type: String!
+  status: String!
+  lastBorrowed: String!
+  borrowerName: String!
+  dueDate: String!
+  shelfLocation: String!
+}
+
+input UpdateLibraryAssetInput {
+  id: String!
+  no: String!
+  title: String!
+  subject: String!
+  purchaseDate: String!
+  department: String!
+  type: String!
+  status: String!
+  lastBorrowed: String!
+  borrowerName: String!
+  dueDate: String!
+  shelfLocation: String!
+}
+
+type BookStatus {
+  bookStatusID: String!
+  bookID: String!
+  bookName: String!
+  status: String!
+  dateUpdated: String!
+  lastCheckedOutDate: String!
+  dueDate: String!
+  checkedOutBy: String!
+  reservedBy: String!
+  condition: String!
+  returnDate: String!
+  notes: String!
+}
+
+input CreateBookStatusInput {
+  bookID: String!
+  bookName: String!
+  status: String!
+  dateUpdated: String!
+  lastCheckedOutDate: String!
+  dueDate: String!
+  checkedOutBy: String!
+  reservedBy: String!
+  condition: String!
+  returnDate: String!
+  notes: String!
+}
+
+input UpdateBookStatusInput {
+  bookStatusID: String!
+  bookID: String!
+  bookName: String!
+  status: String!
+  dateUpdated: String!
+  lastCheckedOutDate: String!
+  dueDate: String!
+  checkedOutBy: String!
+  reservedBy: String!
+  condition: String!
+  returnDate: String!
+  notes: String!
+}
+
+type IssueReturn {
+  id: String!
+  bookNo: String!
+  bookTitle: String!
+  studentName: String!
+  rollNo: String!
+  issueDate: String!
+  returnDate: String!
+  status: String!
+}
+
+input CreateIssueReturnInput {
+  bookNo: String!
+  bookTitle: String!
+  studentName: String!
+  rollNo: String!
+  issueDate: String!
+  returnDate: String!
+  status: String!
+}
+
+input UpdateIssueReturnInput {
+  id: String!
+  bookNo: String!
+  bookTitle: String!
+  studentName: String!
+  rollNo: String!
+  issueDate: String!
+  returnDate: String!
+  status: String!
+}
+
+type LibraryReport {
+  id: String!
+  reportName: String!
+  generatedDate: String!
+  type: String!
+  status: String!
+}
+
+input CreateLibraryReportInput {
+  reportName: String!
+  generatedDate: String!
+  type: String!
+  status: String!
+}
+
+input UpdateLibraryReportInput {
+  id: String!
+  reportName: String!
+  generatedDate: String!
+  type: String!
   status: String!
 }
 

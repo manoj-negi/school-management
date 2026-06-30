@@ -136,6 +136,21 @@ type ComplexityRoot struct {
 		TeacherName      func(childComplexity int) int
 	}
 
+	BookStatus struct {
+		BookID             func(childComplexity int) int
+		BookName           func(childComplexity int) int
+		BookStatusID       func(childComplexity int) int
+		CheckedOutBy       func(childComplexity int) int
+		Condition          func(childComplexity int) int
+		DateUpdated        func(childComplexity int) int
+		DueDate            func(childComplexity int) int
+		LastCheckedOutDate func(childComplexity int) int
+		Notes              func(childComplexity int) int
+		ReservedBy         func(childComplexity int) int
+		ReturnDate         func(childComplexity int) int
+		Status             func(childComplexity int) int
+	}
+
 	Class struct {
 		AcademicYear   func(childComplexity int) int
 		AcademicYearID func(childComplexity int) int
@@ -292,6 +307,40 @@ type ComplexityRoot struct {
 		StudentName func(childComplexity int) int
 	}
 
+	IssueReturn struct {
+		BookNo      func(childComplexity int) int
+		BookTitle   func(childComplexity int) int
+		ID          func(childComplexity int) int
+		IssueDate   func(childComplexity int) int
+		ReturnDate  func(childComplexity int) int
+		RollNo      func(childComplexity int) int
+		Status      func(childComplexity int) int
+		StudentName func(childComplexity int) int
+	}
+
+	LibraryAsset struct {
+		BorrowerName  func(childComplexity int) int
+		Department    func(childComplexity int) int
+		DueDate       func(childComplexity int) int
+		ID            func(childComplexity int) int
+		LastBorrowed  func(childComplexity int) int
+		No            func(childComplexity int) int
+		PurchaseDate  func(childComplexity int) int
+		ShelfLocation func(childComplexity int) int
+		Status        func(childComplexity int) int
+		Subject       func(childComplexity int) int
+		Title         func(childComplexity int) int
+		Type          func(childComplexity int) int
+	}
+
+	LibraryReport struct {
+		GeneratedDate func(childComplexity int) int
+		ID            func(childComplexity int) int
+		ReportName    func(childComplexity int) int
+		Status        func(childComplexity int) int
+		Type          func(childComplexity int) int
+	}
+
 	LoginResponse struct {
 		Role  func(childComplexity int) int
 		Token func(childComplexity int) int
@@ -324,14 +373,20 @@ type ComplexityRoot struct {
 	Mutation struct {
 		CreateAdmissionInquiry    func(childComplexity int, input CreateAdmissionInquiryInput) int
 		CreateAssignClassTeacher  func(childComplexity int, input CreateAssignClassTeacherInput) int
+		CreateBookStatus          func(childComplexity int, input CreateBookStatusInput) int
 		CreateComplaint           func(childComplexity int, input CreateComplaintInput) int
 		CreateEntranceExam        func(childComplexity int, input CreateEntranceExamInput) int
 		CreateExamSchedule        func(childComplexity int, input CreateExamScheduleInput) int
 		CreateExamType            func(childComplexity int, input CreateExamTypeInput) int
 		CreateHallAllocation      func(childComplexity int, input CreateHallAllocationInput) int
+		CreateIssueReturn         func(childComplexity int, input CreateIssueReturnInput) int
+		CreateLibraryAsset        func(childComplexity int, input CreateLibraryAssetInput) int
+		CreateLibraryReport       func(childComplexity int, input CreateLibraryReportInput) int
 		CreateMarksEntry          func(childComplexity int, input CreateMarksEntryInput) int
 		CreateMeritList           func(childComplexity int, input CreateMeritListInput) int
 		CreateOnlineApplication   func(childComplexity int, input CreateOnlineApplicationInput) int
+		CreateReportCard          func(childComplexity int, input CreateReportCardInput) int
+		CreateResultGeneration    func(childComplexity int, input CreateResultGenerationInput) int
 		CreateSeatAllocation      func(childComplexity int, input CreateSeatAllocationInput) int
 		CreateStudent             func(childComplexity int, input CreateStudentInfoInput) int
 		CreateStudentAttendance   func(childComplexity int, input CreateStudentAttendanceInfoInput) int
@@ -343,14 +398,20 @@ type ComplexityRoot struct {
 		CreateVisitor             func(childComplexity int, input CreateVisitorInput) int
 		DeleteAdmissionInquiry    func(childComplexity int, inquiryID string) int
 		DeleteAssignClassTeacher  func(childComplexity int, id string) int
+		DeleteBookStatus          func(childComplexity int, id string) int
 		DeleteComplaint           func(childComplexity int, complaintID string) int
 		DeleteEntranceExam        func(childComplexity int, id string) int
 		DeleteExamSchedule        func(childComplexity int, id string) int
 		DeleteExamType            func(childComplexity int, id string) int
 		DeleteHallAllocation      func(childComplexity int, id string) int
+		DeleteIssueReturn         func(childComplexity int, id string) int
+		DeleteLibraryAsset        func(childComplexity int, id string) int
+		DeleteLibraryReport       func(childComplexity int, id string) int
 		DeleteMarksEntry          func(childComplexity int, id string) int
 		DeleteMeritList           func(childComplexity int, id string) int
 		DeleteOnlineApplication   func(childComplexity int, id string) int
+		DeleteReportCard          func(childComplexity int, id string) int
+		DeleteResultGeneration    func(childComplexity int, id string) int
 		DeleteSeatAllocation      func(childComplexity int, id string) int
 		DeleteStudent             func(childComplexity int, id string) int
 		DeleteStudentAttendance   func(childComplexity int, id string) int
@@ -363,14 +424,20 @@ type ComplexityRoot struct {
 		Login                     func(childComplexity int, input LoginInput) int
 		UpdateAdmissionInquiry    func(childComplexity int, input UpdateAdmissionInquiryInput) int
 		UpdateAssignClassTeacher  func(childComplexity int, input UpdateAssignClassTeacherInput) int
+		UpdateBookStatus          func(childComplexity int, input UpdateBookStatusInput) int
 		UpdateComplaint           func(childComplexity int, input UpdateComplaintInput) int
 		UpdateEntranceExam        func(childComplexity int, input UpdateEntranceExamInput) int
 		UpdateExamSchedule        func(childComplexity int, input UpdateExamScheduleInput) int
 		UpdateExamType            func(childComplexity int, input UpdateExamTypeInput) int
 		UpdateHallAllocation      func(childComplexity int, input UpdateHallAllocationInput) int
+		UpdateIssueReturn         func(childComplexity int, input UpdateIssueReturnInput) int
+		UpdateLibraryAsset        func(childComplexity int, input UpdateLibraryAssetInput) int
+		UpdateLibraryReport       func(childComplexity int, input UpdateLibraryReportInput) int
 		UpdateMarksEntry          func(childComplexity int, input UpdateMarksEntryInput) int
 		UpdateMeritList           func(childComplexity int, input UpdateMeritListInput) int
 		UpdateOnlineApplication   func(childComplexity int, input UpdateOnlineApplicationInput) int
+		UpdateReportCard          func(childComplexity int, input UpdateReportCardInput) int
+		UpdateResultGeneration    func(childComplexity int, input UpdateResultGenerationInput) int
 		UpdateSeatAllocation      func(childComplexity int, input UpdateSeatAllocationInput) int
 		UpdateStudent             func(childComplexity int, input UpdateStudentInfoInput) int
 		UpdateStudentAttendance   func(childComplexity int, input UpdateStudentAttendanceInfoInput) int
@@ -414,7 +481,9 @@ type ComplexityRoot struct {
 	Query struct {
 		AcademicYears           func(childComplexity int) int
 		AdmissionInquiries      func(childComplexity int) int
+		AllAssets               func(childComplexity int) int
 		AssignClassTeacherList  func(childComplexity int) int
+		BookStatuses            func(childComplexity int) int
 		ClassList               func(childComplexity int) int
 		Classes                 func(childComplexity int) int
 		Complaints              func(childComplexity int) int
@@ -428,12 +497,16 @@ type ComplexityRoot struct {
 		FeePayments             func(childComplexity int) int
 		FeeStructures           func(childComplexity int) int
 		HallAllocations         func(childComplexity int) int
+		IssueReturns            func(childComplexity int) int
+		LibraryReports          func(childComplexity int) int
 		MarksEntries            func(childComplexity int) int
 		MeritLists              func(childComplexity int) int
 		Node                    func(childComplexity int, id string) int
 		Nodes                   func(childComplexity int, ids []string) int
 		OnlineApplications      func(childComplexity int) int
 		Permissions             func(childComplexity int) int
+		ReportCards             func(childComplexity int) int
+		ResultGenerations       func(childComplexity int) int
 		Roles                   func(childComplexity int) int
 		SeatAllocations         func(childComplexity int) int
 		StudentAttendanceList   func(childComplexity int) int
@@ -451,6 +524,26 @@ type ComplexityRoot struct {
 		TeachersList            func(childComplexity int) int
 		Users                   func(childComplexity int) int
 		Visitors                func(childComplexity int) int
+	}
+
+	ReportCard struct {
+		ExamName    func(childComplexity int) int
+		Grade       func(childComplexity int) int
+		ID          func(childComplexity int) int
+		Percentage  func(childComplexity int) int
+		Result      func(childComplexity int) int
+		RollNo      func(childComplexity int) int
+		StudentName func(childComplexity int) int
+		TotalMarks  func(childComplexity int) int
+	}
+
+	ResultGeneration struct {
+		Course     func(childComplexity int) int
+		ExamName   func(childComplexity int) int
+		ID         func(childComplexity int) int
+		ResultDate func(childComplexity int) int
+		Semester   func(childComplexity int) int
+		Status     func(childComplexity int) int
 	}
 
 	Role struct {
@@ -926,6 +1019,79 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.AssignClassTeacher.TeacherName(childComplexity), true
+
+	case "BookStatus.bookID":
+		if e.ComplexityRoot.BookStatus.BookID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.BookStatus.BookID(childComplexity), true
+	case "BookStatus.bookName":
+		if e.ComplexityRoot.BookStatus.BookName == nil {
+			break
+		}
+
+		return e.ComplexityRoot.BookStatus.BookName(childComplexity), true
+	case "BookStatus.bookStatusID":
+		if e.ComplexityRoot.BookStatus.BookStatusID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.BookStatus.BookStatusID(childComplexity), true
+	case "BookStatus.checkedOutBy":
+		if e.ComplexityRoot.BookStatus.CheckedOutBy == nil {
+			break
+		}
+
+		return e.ComplexityRoot.BookStatus.CheckedOutBy(childComplexity), true
+	case "BookStatus.condition":
+		if e.ComplexityRoot.BookStatus.Condition == nil {
+			break
+		}
+
+		return e.ComplexityRoot.BookStatus.Condition(childComplexity), true
+	case "BookStatus.dateUpdated":
+		if e.ComplexityRoot.BookStatus.DateUpdated == nil {
+			break
+		}
+
+		return e.ComplexityRoot.BookStatus.DateUpdated(childComplexity), true
+	case "BookStatus.dueDate":
+		if e.ComplexityRoot.BookStatus.DueDate == nil {
+			break
+		}
+
+		return e.ComplexityRoot.BookStatus.DueDate(childComplexity), true
+	case "BookStatus.lastCheckedOutDate":
+		if e.ComplexityRoot.BookStatus.LastCheckedOutDate == nil {
+			break
+		}
+
+		return e.ComplexityRoot.BookStatus.LastCheckedOutDate(childComplexity), true
+	case "BookStatus.notes":
+		if e.ComplexityRoot.BookStatus.Notes == nil {
+			break
+		}
+
+		return e.ComplexityRoot.BookStatus.Notes(childComplexity), true
+	case "BookStatus.reservedBy":
+		if e.ComplexityRoot.BookStatus.ReservedBy == nil {
+			break
+		}
+
+		return e.ComplexityRoot.BookStatus.ReservedBy(childComplexity), true
+	case "BookStatus.returnDate":
+		if e.ComplexityRoot.BookStatus.ReturnDate == nil {
+			break
+		}
+
+		return e.ComplexityRoot.BookStatus.ReturnDate(childComplexity), true
+	case "BookStatus.status":
+		if e.ComplexityRoot.BookStatus.Status == nil {
+			break
+		}
+
+		return e.ComplexityRoot.BookStatus.Status(childComplexity), true
 
 	case "Class.academicYear":
 		if e.ComplexityRoot.Class.AcademicYear == nil {
@@ -1642,6 +1808,159 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 
 		return e.ComplexityRoot.HallAllocation.StudentName(childComplexity), true
 
+	case "IssueReturn.bookNo":
+		if e.ComplexityRoot.IssueReturn.BookNo == nil {
+			break
+		}
+
+		return e.ComplexityRoot.IssueReturn.BookNo(childComplexity), true
+	case "IssueReturn.bookTitle":
+		if e.ComplexityRoot.IssueReturn.BookTitle == nil {
+			break
+		}
+
+		return e.ComplexityRoot.IssueReturn.BookTitle(childComplexity), true
+	case "IssueReturn.id":
+		if e.ComplexityRoot.IssueReturn.ID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.IssueReturn.ID(childComplexity), true
+	case "IssueReturn.issueDate":
+		if e.ComplexityRoot.IssueReturn.IssueDate == nil {
+			break
+		}
+
+		return e.ComplexityRoot.IssueReturn.IssueDate(childComplexity), true
+	case "IssueReturn.returnDate":
+		if e.ComplexityRoot.IssueReturn.ReturnDate == nil {
+			break
+		}
+
+		return e.ComplexityRoot.IssueReturn.ReturnDate(childComplexity), true
+	case "IssueReturn.rollNo":
+		if e.ComplexityRoot.IssueReturn.RollNo == nil {
+			break
+		}
+
+		return e.ComplexityRoot.IssueReturn.RollNo(childComplexity), true
+	case "IssueReturn.status":
+		if e.ComplexityRoot.IssueReturn.Status == nil {
+			break
+		}
+
+		return e.ComplexityRoot.IssueReturn.Status(childComplexity), true
+	case "IssueReturn.studentName":
+		if e.ComplexityRoot.IssueReturn.StudentName == nil {
+			break
+		}
+
+		return e.ComplexityRoot.IssueReturn.StudentName(childComplexity), true
+
+	case "LibraryAsset.borrowerName":
+		if e.ComplexityRoot.LibraryAsset.BorrowerName == nil {
+			break
+		}
+
+		return e.ComplexityRoot.LibraryAsset.BorrowerName(childComplexity), true
+	case "LibraryAsset.department":
+		if e.ComplexityRoot.LibraryAsset.Department == nil {
+			break
+		}
+
+		return e.ComplexityRoot.LibraryAsset.Department(childComplexity), true
+	case "LibraryAsset.dueDate":
+		if e.ComplexityRoot.LibraryAsset.DueDate == nil {
+			break
+		}
+
+		return e.ComplexityRoot.LibraryAsset.DueDate(childComplexity), true
+	case "LibraryAsset.id":
+		if e.ComplexityRoot.LibraryAsset.ID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.LibraryAsset.ID(childComplexity), true
+	case "LibraryAsset.lastBorrowed":
+		if e.ComplexityRoot.LibraryAsset.LastBorrowed == nil {
+			break
+		}
+
+		return e.ComplexityRoot.LibraryAsset.LastBorrowed(childComplexity), true
+	case "LibraryAsset.no":
+		if e.ComplexityRoot.LibraryAsset.No == nil {
+			break
+		}
+
+		return e.ComplexityRoot.LibraryAsset.No(childComplexity), true
+	case "LibraryAsset.purchaseDate":
+		if e.ComplexityRoot.LibraryAsset.PurchaseDate == nil {
+			break
+		}
+
+		return e.ComplexityRoot.LibraryAsset.PurchaseDate(childComplexity), true
+	case "LibraryAsset.shelfLocation":
+		if e.ComplexityRoot.LibraryAsset.ShelfLocation == nil {
+			break
+		}
+
+		return e.ComplexityRoot.LibraryAsset.ShelfLocation(childComplexity), true
+	case "LibraryAsset.status":
+		if e.ComplexityRoot.LibraryAsset.Status == nil {
+			break
+		}
+
+		return e.ComplexityRoot.LibraryAsset.Status(childComplexity), true
+	case "LibraryAsset.subject":
+		if e.ComplexityRoot.LibraryAsset.Subject == nil {
+			break
+		}
+
+		return e.ComplexityRoot.LibraryAsset.Subject(childComplexity), true
+	case "LibraryAsset.title":
+		if e.ComplexityRoot.LibraryAsset.Title == nil {
+			break
+		}
+
+		return e.ComplexityRoot.LibraryAsset.Title(childComplexity), true
+	case "LibraryAsset.type":
+		if e.ComplexityRoot.LibraryAsset.Type == nil {
+			break
+		}
+
+		return e.ComplexityRoot.LibraryAsset.Type(childComplexity), true
+
+	case "LibraryReport.generatedDate":
+		if e.ComplexityRoot.LibraryReport.GeneratedDate == nil {
+			break
+		}
+
+		return e.ComplexityRoot.LibraryReport.GeneratedDate(childComplexity), true
+	case "LibraryReport.id":
+		if e.ComplexityRoot.LibraryReport.ID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.LibraryReport.ID(childComplexity), true
+	case "LibraryReport.reportName":
+		if e.ComplexityRoot.LibraryReport.ReportName == nil {
+			break
+		}
+
+		return e.ComplexityRoot.LibraryReport.ReportName(childComplexity), true
+	case "LibraryReport.status":
+		if e.ComplexityRoot.LibraryReport.Status == nil {
+			break
+		}
+
+		return e.ComplexityRoot.LibraryReport.Status(childComplexity), true
+	case "LibraryReport.type":
+		if e.ComplexityRoot.LibraryReport.Type == nil {
+			break
+		}
+
+		return e.ComplexityRoot.LibraryReport.Type(childComplexity), true
+
 	case "LoginResponse.role":
 		if e.ComplexityRoot.LoginResponse.Role == nil {
 			break
@@ -1787,6 +2106,17 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.CreateAssignClassTeacher(childComplexity, args["input"].(CreateAssignClassTeacherInput)), true
+	case "Mutation.createBookStatus":
+		if e.ComplexityRoot.Mutation.CreateBookStatus == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_createBookStatus_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.CreateBookStatus(childComplexity, args["input"].(CreateBookStatusInput)), true
 	case "Mutation.createComplaint":
 		if e.ComplexityRoot.Mutation.CreateComplaint == nil {
 			break
@@ -1842,6 +2172,39 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.CreateHallAllocation(childComplexity, args["input"].(CreateHallAllocationInput)), true
+	case "Mutation.createIssueReturn":
+		if e.ComplexityRoot.Mutation.CreateIssueReturn == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_createIssueReturn_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.CreateIssueReturn(childComplexity, args["input"].(CreateIssueReturnInput)), true
+	case "Mutation.createLibraryAsset":
+		if e.ComplexityRoot.Mutation.CreateLibraryAsset == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_createLibraryAsset_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.CreateLibraryAsset(childComplexity, args["input"].(CreateLibraryAssetInput)), true
+	case "Mutation.createLibraryReport":
+		if e.ComplexityRoot.Mutation.CreateLibraryReport == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_createLibraryReport_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.CreateLibraryReport(childComplexity, args["input"].(CreateLibraryReportInput)), true
 	case "Mutation.createMarksEntry":
 		if e.ComplexityRoot.Mutation.CreateMarksEntry == nil {
 			break
@@ -1875,6 +2238,28 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.CreateOnlineApplication(childComplexity, args["input"].(CreateOnlineApplicationInput)), true
+	case "Mutation.createReportCard":
+		if e.ComplexityRoot.Mutation.CreateReportCard == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_createReportCard_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.CreateReportCard(childComplexity, args["input"].(CreateReportCardInput)), true
+	case "Mutation.createResultGeneration":
+		if e.ComplexityRoot.Mutation.CreateResultGeneration == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_createResultGeneration_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.CreateResultGeneration(childComplexity, args["input"].(CreateResultGenerationInput)), true
 	case "Mutation.createSeatAllocation":
 		if e.ComplexityRoot.Mutation.CreateSeatAllocation == nil {
 			break
@@ -1996,6 +2381,17 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.DeleteAssignClassTeacher(childComplexity, args["id"].(string)), true
+	case "Mutation.deleteBookStatus":
+		if e.ComplexityRoot.Mutation.DeleteBookStatus == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_deleteBookStatus_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.DeleteBookStatus(childComplexity, args["id"].(string)), true
 	case "Mutation.deleteComplaint":
 		if e.ComplexityRoot.Mutation.DeleteComplaint == nil {
 			break
@@ -2051,6 +2447,39 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.DeleteHallAllocation(childComplexity, args["id"].(string)), true
+	case "Mutation.deleteIssueReturn":
+		if e.ComplexityRoot.Mutation.DeleteIssueReturn == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_deleteIssueReturn_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.DeleteIssueReturn(childComplexity, args["id"].(string)), true
+	case "Mutation.deleteLibraryAsset":
+		if e.ComplexityRoot.Mutation.DeleteLibraryAsset == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_deleteLibraryAsset_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.DeleteLibraryAsset(childComplexity, args["id"].(string)), true
+	case "Mutation.deleteLibraryReport":
+		if e.ComplexityRoot.Mutation.DeleteLibraryReport == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_deleteLibraryReport_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.DeleteLibraryReport(childComplexity, args["id"].(string)), true
 	case "Mutation.deleteMarksEntry":
 		if e.ComplexityRoot.Mutation.DeleteMarksEntry == nil {
 			break
@@ -2084,6 +2513,28 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.DeleteOnlineApplication(childComplexity, args["id"].(string)), true
+	case "Mutation.deleteReportCard":
+		if e.ComplexityRoot.Mutation.DeleteReportCard == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_deleteReportCard_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.DeleteReportCard(childComplexity, args["id"].(string)), true
+	case "Mutation.deleteResultGeneration":
+		if e.ComplexityRoot.Mutation.DeleteResultGeneration == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_deleteResultGeneration_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.DeleteResultGeneration(childComplexity, args["id"].(string)), true
 	case "Mutation.deleteSeatAllocation":
 		if e.ComplexityRoot.Mutation.DeleteSeatAllocation == nil {
 			break
@@ -2216,6 +2667,17 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.UpdateAssignClassTeacher(childComplexity, args["input"].(UpdateAssignClassTeacherInput)), true
+	case "Mutation.updateBookStatus":
+		if e.ComplexityRoot.Mutation.UpdateBookStatus == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updateBookStatus_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.UpdateBookStatus(childComplexity, args["input"].(UpdateBookStatusInput)), true
 	case "Mutation.updateComplaint":
 		if e.ComplexityRoot.Mutation.UpdateComplaint == nil {
 			break
@@ -2271,6 +2733,39 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.UpdateHallAllocation(childComplexity, args["input"].(UpdateHallAllocationInput)), true
+	case "Mutation.updateIssueReturn":
+		if e.ComplexityRoot.Mutation.UpdateIssueReturn == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updateIssueReturn_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.UpdateIssueReturn(childComplexity, args["input"].(UpdateIssueReturnInput)), true
+	case "Mutation.updateLibraryAsset":
+		if e.ComplexityRoot.Mutation.UpdateLibraryAsset == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updateLibraryAsset_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.UpdateLibraryAsset(childComplexity, args["input"].(UpdateLibraryAssetInput)), true
+	case "Mutation.updateLibraryReport":
+		if e.ComplexityRoot.Mutation.UpdateLibraryReport == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updateLibraryReport_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.UpdateLibraryReport(childComplexity, args["input"].(UpdateLibraryReportInput)), true
 	case "Mutation.updateMarksEntry":
 		if e.ComplexityRoot.Mutation.UpdateMarksEntry == nil {
 			break
@@ -2304,6 +2799,28 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.UpdateOnlineApplication(childComplexity, args["input"].(UpdateOnlineApplicationInput)), true
+	case "Mutation.updateReportCard":
+		if e.ComplexityRoot.Mutation.UpdateReportCard == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updateReportCard_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.UpdateReportCard(childComplexity, args["input"].(UpdateReportCardInput)), true
+	case "Mutation.updateResultGeneration":
+		if e.ComplexityRoot.Mutation.UpdateResultGeneration == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updateResultGeneration_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.UpdateResultGeneration(childComplexity, args["input"].(UpdateResultGenerationInput)), true
 	case "Mutation.updateSeatAllocation":
 		if e.ComplexityRoot.Mutation.UpdateSeatAllocation == nil {
 			break
@@ -2539,12 +3056,24 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Query.AdmissionInquiries(childComplexity), true
+	case "Query.allAssets":
+		if e.ComplexityRoot.Query.AllAssets == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Query.AllAssets(childComplexity), true
 	case "Query.assignClassTeacherList":
 		if e.ComplexityRoot.Query.AssignClassTeacherList == nil {
 			break
 		}
 
 		return e.ComplexityRoot.Query.AssignClassTeacherList(childComplexity), true
+	case "Query.bookStatuses":
+		if e.ComplexityRoot.Query.BookStatuses == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Query.BookStatuses(childComplexity), true
 	case "Query.classList":
 		if e.ComplexityRoot.Query.ClassList == nil {
 			break
@@ -2624,6 +3153,18 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 
 		return e.ComplexityRoot.Query.HallAllocations(childComplexity), true
 
+	case "Query.issueReturns":
+		if e.ComplexityRoot.Query.IssueReturns == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Query.IssueReturns(childComplexity), true
+	case "Query.libraryReports":
+		if e.ComplexityRoot.Query.LibraryReports == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Query.LibraryReports(childComplexity), true
 	case "Query.marksEntries":
 		if e.ComplexityRoot.Query.MarksEntries == nil {
 			break
@@ -2670,6 +3211,18 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Query.Permissions(childComplexity), true
+	case "Query.reportCards":
+		if e.ComplexityRoot.Query.ReportCards == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Query.ReportCards(childComplexity), true
+	case "Query.resultGenerations":
+		if e.ComplexityRoot.Query.ResultGenerations == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Query.ResultGenerations(childComplexity), true
 	case "Query.roles":
 		if e.ComplexityRoot.Query.Roles == nil {
 			break
@@ -2772,6 +3325,92 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Query.Visitors(childComplexity), true
+
+	case "ReportCard.examName":
+		if e.ComplexityRoot.ReportCard.ExamName == nil {
+			break
+		}
+
+		return e.ComplexityRoot.ReportCard.ExamName(childComplexity), true
+	case "ReportCard.grade":
+		if e.ComplexityRoot.ReportCard.Grade == nil {
+			break
+		}
+
+		return e.ComplexityRoot.ReportCard.Grade(childComplexity), true
+	case "ReportCard.id":
+		if e.ComplexityRoot.ReportCard.ID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.ReportCard.ID(childComplexity), true
+	case "ReportCard.percentage":
+		if e.ComplexityRoot.ReportCard.Percentage == nil {
+			break
+		}
+
+		return e.ComplexityRoot.ReportCard.Percentage(childComplexity), true
+	case "ReportCard.result":
+		if e.ComplexityRoot.ReportCard.Result == nil {
+			break
+		}
+
+		return e.ComplexityRoot.ReportCard.Result(childComplexity), true
+	case "ReportCard.rollNo":
+		if e.ComplexityRoot.ReportCard.RollNo == nil {
+			break
+		}
+
+		return e.ComplexityRoot.ReportCard.RollNo(childComplexity), true
+	case "ReportCard.studentName":
+		if e.ComplexityRoot.ReportCard.StudentName == nil {
+			break
+		}
+
+		return e.ComplexityRoot.ReportCard.StudentName(childComplexity), true
+	case "ReportCard.totalMarks":
+		if e.ComplexityRoot.ReportCard.TotalMarks == nil {
+			break
+		}
+
+		return e.ComplexityRoot.ReportCard.TotalMarks(childComplexity), true
+
+	case "ResultGeneration.course":
+		if e.ComplexityRoot.ResultGeneration.Course == nil {
+			break
+		}
+
+		return e.ComplexityRoot.ResultGeneration.Course(childComplexity), true
+	case "ResultGeneration.examName":
+		if e.ComplexityRoot.ResultGeneration.ExamName == nil {
+			break
+		}
+
+		return e.ComplexityRoot.ResultGeneration.ExamName(childComplexity), true
+	case "ResultGeneration.id":
+		if e.ComplexityRoot.ResultGeneration.ID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.ResultGeneration.ID(childComplexity), true
+	case "ResultGeneration.resultDate":
+		if e.ComplexityRoot.ResultGeneration.ResultDate == nil {
+			break
+		}
+
+		return e.ComplexityRoot.ResultGeneration.ResultDate(childComplexity), true
+	case "ResultGeneration.semester":
+		if e.ComplexityRoot.ResultGeneration.Semester == nil {
+			break
+		}
+
+		return e.ComplexityRoot.ResultGeneration.Semester(childComplexity), true
+	case "ResultGeneration.status":
+		if e.ComplexityRoot.ResultGeneration.Status == nil {
+			break
+		}
+
+		return e.ComplexityRoot.ResultGeneration.Status(childComplexity), true
 
 	case "Role.description":
 		if e.ComplexityRoot.Role.Description == nil {
@@ -3973,6 +4612,7 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 		ec.unmarshalInputCreateAcademicYearInput,
 		ec.unmarshalInputCreateAdmissionInquiryInput,
 		ec.unmarshalInputCreateAssignClassTeacherInput,
+		ec.unmarshalInputCreateBookStatusInput,
 		ec.unmarshalInputCreateClassInput,
 		ec.unmarshalInputCreateComplaintInput,
 		ec.unmarshalInputCreateDepartmentInput,
@@ -3985,10 +4625,15 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 		ec.unmarshalInputCreateFeePaymentInput,
 		ec.unmarshalInputCreateFeeStructureInput,
 		ec.unmarshalInputCreateHallAllocationInput,
+		ec.unmarshalInputCreateIssueReturnInput,
+		ec.unmarshalInputCreateLibraryAssetInput,
+		ec.unmarshalInputCreateLibraryReportInput,
 		ec.unmarshalInputCreateMarksEntryInput,
 		ec.unmarshalInputCreateMeritListInput,
 		ec.unmarshalInputCreateOnlineApplicationInput,
 		ec.unmarshalInputCreatePermissionInput,
+		ec.unmarshalInputCreateReportCardInput,
+		ec.unmarshalInputCreateResultGenerationInput,
 		ec.unmarshalInputCreateRoleInput,
 		ec.unmarshalInputCreateSeatAllocationInput,
 		ec.unmarshalInputCreateStudentAttendanceInfoInput,
@@ -4024,6 +4669,7 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 		ec.unmarshalInputUpdateAcademicYearInput,
 		ec.unmarshalInputUpdateAdmissionInquiryInput,
 		ec.unmarshalInputUpdateAssignClassTeacherInput,
+		ec.unmarshalInputUpdateBookStatusInput,
 		ec.unmarshalInputUpdateClassInput,
 		ec.unmarshalInputUpdateComplaintInput,
 		ec.unmarshalInputUpdateDepartmentInput,
@@ -4036,10 +4682,15 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 		ec.unmarshalInputUpdateFeePaymentInput,
 		ec.unmarshalInputUpdateFeeStructureInput,
 		ec.unmarshalInputUpdateHallAllocationInput,
+		ec.unmarshalInputUpdateIssueReturnInput,
+		ec.unmarshalInputUpdateLibraryAssetInput,
+		ec.unmarshalInputUpdateLibraryReportInput,
 		ec.unmarshalInputUpdateMarksEntryInput,
 		ec.unmarshalInputUpdateMeritListInput,
 		ec.unmarshalInputUpdateOnlineApplicationInput,
 		ec.unmarshalInputUpdatePermissionInput,
+		ec.unmarshalInputUpdateReportCardInput,
+		ec.unmarshalInputUpdateResultGenerationInput,
 		ec.unmarshalInputUpdateRoleInput,
 		ec.unmarshalInputUpdateSeatAllocationInput,
 		ec.unmarshalInputUpdateStudentAttendanceInfoInput,
@@ -4239,6 +4890,36 @@ func (ec *executionContext) childFields_AssignClassTeacher(ctx context.Context, 
 		return ec.fieldContext_AssignClassTeacher_roomNumber(ctx, field)
 	}
 	return nil, fmt.Errorf("no field named %q was found under type AssignClassTeacher", field.Name)
+}
+
+func (ec *executionContext) childFields_BookStatus(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+	switch field.Name {
+	case "bookStatusID":
+		return ec.fieldContext_BookStatus_bookStatusID(ctx, field)
+	case "bookID":
+		return ec.fieldContext_BookStatus_bookID(ctx, field)
+	case "bookName":
+		return ec.fieldContext_BookStatus_bookName(ctx, field)
+	case "status":
+		return ec.fieldContext_BookStatus_status(ctx, field)
+	case "dateUpdated":
+		return ec.fieldContext_BookStatus_dateUpdated(ctx, field)
+	case "lastCheckedOutDate":
+		return ec.fieldContext_BookStatus_lastCheckedOutDate(ctx, field)
+	case "dueDate":
+		return ec.fieldContext_BookStatus_dueDate(ctx, field)
+	case "checkedOutBy":
+		return ec.fieldContext_BookStatus_checkedOutBy(ctx, field)
+	case "reservedBy":
+		return ec.fieldContext_BookStatus_reservedBy(ctx, field)
+	case "condition":
+		return ec.fieldContext_BookStatus_condition(ctx, field)
+	case "returnDate":
+		return ec.fieldContext_BookStatus_returnDate(ctx, field)
+	case "notes":
+		return ec.fieldContext_BookStatus_notes(ctx, field)
+	}
+	return nil, fmt.Errorf("no field named %q was found under type BookStatus", field.Name)
 }
 
 func (ec *executionContext) childFields_Class(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
@@ -4553,6 +5234,74 @@ func (ec *executionContext) childFields_HallAllocation(ctx context.Context, fiel
 	return nil, fmt.Errorf("no field named %q was found under type HallAllocation", field.Name)
 }
 
+func (ec *executionContext) childFields_IssueReturn(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+	switch field.Name {
+	case "id":
+		return ec.fieldContext_IssueReturn_id(ctx, field)
+	case "bookNo":
+		return ec.fieldContext_IssueReturn_bookNo(ctx, field)
+	case "bookTitle":
+		return ec.fieldContext_IssueReturn_bookTitle(ctx, field)
+	case "studentName":
+		return ec.fieldContext_IssueReturn_studentName(ctx, field)
+	case "rollNo":
+		return ec.fieldContext_IssueReturn_rollNo(ctx, field)
+	case "issueDate":
+		return ec.fieldContext_IssueReturn_issueDate(ctx, field)
+	case "returnDate":
+		return ec.fieldContext_IssueReturn_returnDate(ctx, field)
+	case "status":
+		return ec.fieldContext_IssueReturn_status(ctx, field)
+	}
+	return nil, fmt.Errorf("no field named %q was found under type IssueReturn", field.Name)
+}
+
+func (ec *executionContext) childFields_LibraryAsset(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+	switch field.Name {
+	case "id":
+		return ec.fieldContext_LibraryAsset_id(ctx, field)
+	case "no":
+		return ec.fieldContext_LibraryAsset_no(ctx, field)
+	case "title":
+		return ec.fieldContext_LibraryAsset_title(ctx, field)
+	case "subject":
+		return ec.fieldContext_LibraryAsset_subject(ctx, field)
+	case "purchaseDate":
+		return ec.fieldContext_LibraryAsset_purchaseDate(ctx, field)
+	case "department":
+		return ec.fieldContext_LibraryAsset_department(ctx, field)
+	case "type":
+		return ec.fieldContext_LibraryAsset_type(ctx, field)
+	case "status":
+		return ec.fieldContext_LibraryAsset_status(ctx, field)
+	case "lastBorrowed":
+		return ec.fieldContext_LibraryAsset_lastBorrowed(ctx, field)
+	case "borrowerName":
+		return ec.fieldContext_LibraryAsset_borrowerName(ctx, field)
+	case "dueDate":
+		return ec.fieldContext_LibraryAsset_dueDate(ctx, field)
+	case "shelfLocation":
+		return ec.fieldContext_LibraryAsset_shelfLocation(ctx, field)
+	}
+	return nil, fmt.Errorf("no field named %q was found under type LibraryAsset", field.Name)
+}
+
+func (ec *executionContext) childFields_LibraryReport(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+	switch field.Name {
+	case "id":
+		return ec.fieldContext_LibraryReport_id(ctx, field)
+	case "reportName":
+		return ec.fieldContext_LibraryReport_reportName(ctx, field)
+	case "generatedDate":
+		return ec.fieldContext_LibraryReport_generatedDate(ctx, field)
+	case "type":
+		return ec.fieldContext_LibraryReport_type(ctx, field)
+	case "status":
+		return ec.fieldContext_LibraryReport_status(ctx, field)
+	}
+	return nil, fmt.Errorf("no field named %q was found under type LibraryReport", field.Name)
+}
+
 func (ec *executionContext) childFields_LoginResponse(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 	switch field.Name {
 	case "token":
@@ -4653,6 +5402,46 @@ func (ec *executionContext) childFields_Permission(ctx context.Context, field gr
 		return ec.fieldContext_Permission_roles(ctx, field)
 	}
 	return nil, fmt.Errorf("no field named %q was found under type Permission", field.Name)
+}
+
+func (ec *executionContext) childFields_ReportCard(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+	switch field.Name {
+	case "id":
+		return ec.fieldContext_ReportCard_id(ctx, field)
+	case "studentName":
+		return ec.fieldContext_ReportCard_studentName(ctx, field)
+	case "rollNo":
+		return ec.fieldContext_ReportCard_rollNo(ctx, field)
+	case "examName":
+		return ec.fieldContext_ReportCard_examName(ctx, field)
+	case "totalMarks":
+		return ec.fieldContext_ReportCard_totalMarks(ctx, field)
+	case "percentage":
+		return ec.fieldContext_ReportCard_percentage(ctx, field)
+	case "grade":
+		return ec.fieldContext_ReportCard_grade(ctx, field)
+	case "result":
+		return ec.fieldContext_ReportCard_result(ctx, field)
+	}
+	return nil, fmt.Errorf("no field named %q was found under type ReportCard", field.Name)
+}
+
+func (ec *executionContext) childFields_ResultGeneration(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+	switch field.Name {
+	case "id":
+		return ec.fieldContext_ResultGeneration_id(ctx, field)
+	case "examName":
+		return ec.fieldContext_ResultGeneration_examName(ctx, field)
+	case "course":
+		return ec.fieldContext_ResultGeneration_course(ctx, field)
+	case "semester":
+		return ec.fieldContext_ResultGeneration_semester(ctx, field)
+	case "resultDate":
+		return ec.fieldContext_ResultGeneration_resultDate(ctx, field)
+	case "status":
+		return ec.fieldContext_ResultGeneration_status(ctx, field)
+	}
+	return nil, fmt.Errorf("no field named %q was found under type ResultGeneration", field.Name)
 }
 
 func (ec *executionContext) childFields_Role(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {

@@ -1945,6 +1945,406 @@ func (r *mutationResolver) DeleteMarksEntry(ctx context.Context, id string) (str
 	return id, nil
 }
 
+// CreateResultGeneration is the resolver for the createResultGeneration field.
+func (r *mutationResolver) CreateResultGeneration(ctx context.Context, input CreateResultGenerationInput) (*ResultGeneration, error) {
+	db := r.DB
+
+	id := uuid.New().String()
+
+	_, err := db.ExecContext(ctx, `
+		INSERT INTO public.result_generations (id, exam_name, course, semester, result_date, status)
+		VALUES ($1, $2, $3, $4, $5, $6)
+	`, id, input.ExamName, input.Course, input.Semester, input.ResultDate, input.Status)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create result generation: %w", err)
+	}
+
+	return &ResultGeneration{
+		ID:         id,
+		ExamName:   input.ExamName,
+		Course:     input.Course,
+		Semester:   input.Semester,
+		ResultDate: input.ResultDate,
+		Status:     input.Status,
+	}, nil
+}
+
+// UpdateResultGeneration is the resolver for the updateResultGeneration field.
+func (r *mutationResolver) UpdateResultGeneration(ctx context.Context, input UpdateResultGenerationInput) (*ResultGeneration, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, `
+		UPDATE public.result_generations
+		SET exam_name=$1, course=$2, semester=$3, result_date=$4, status=$5
+		WHERE id=$6
+	`, input.ExamName, input.Course, input.Semester, input.ResultDate, input.Status, input.ID)
+	if err != nil {
+		return nil, fmt.Errorf("failed to update result generation: %w", err)
+	}
+
+	return &ResultGeneration{
+		ID:         input.ID,
+		ExamName:   input.ExamName,
+		Course:     input.Course,
+		Semester:   input.Semester,
+		ResultDate: input.ResultDate,
+		Status:     input.Status,
+	}, nil
+}
+
+// DeleteResultGeneration is the resolver for the deleteResultGeneration field.
+func (r *mutationResolver) DeleteResultGeneration(ctx context.Context, id string) (string, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, `DELETE FROM public.result_generations WHERE id=$1`, id)
+	if err != nil {
+		return "", fmt.Errorf("failed to delete result generation: %w", err)
+	}
+
+	return id, nil
+}
+
+// CreateReportCard is the resolver for the createReportCard field.
+func (r *mutationResolver) CreateReportCard(ctx context.Context, input CreateReportCardInput) (*ReportCard, error) {
+	db := r.DB
+
+	id := uuid.New().String()
+
+	_, err := db.ExecContext(ctx, `
+		INSERT INTO public.report_cards (id, student_name, roll_no, exam_name, total_marks, percentage, grade, result)
+		VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+	`, id, input.StudentName, input.RollNo, input.ExamName, input.TotalMarks, input.Percentage, input.Grade, input.Result)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create report card: %w", err)
+	}
+
+	return &ReportCard{
+		ID:          id,
+		StudentName: input.StudentName,
+		RollNo:      input.RollNo,
+		ExamName:    input.ExamName,
+		TotalMarks:  input.TotalMarks,
+		Percentage:  input.Percentage,
+		Grade:       input.Grade,
+		Result:      input.Result,
+	}, nil
+}
+
+// UpdateReportCard is the resolver for the updateReportCard field.
+func (r *mutationResolver) UpdateReportCard(ctx context.Context, input UpdateReportCardInput) (*ReportCard, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, `
+		UPDATE public.report_cards
+		SET student_name=$1, roll_no=$2, exam_name=$3, total_marks=$4, percentage=$5, grade=$6, result=$7
+		WHERE id=$8
+	`, input.StudentName, input.RollNo, input.ExamName, input.TotalMarks, input.Percentage, input.Grade, input.Result, input.ID)
+	if err != nil {
+		return nil, fmt.Errorf("failed to update report card: %w", err)
+	}
+
+	return &ReportCard{
+		ID:          input.ID,
+		StudentName: input.StudentName,
+		RollNo:      input.RollNo,
+		ExamName:    input.ExamName,
+		TotalMarks:  input.TotalMarks,
+		Percentage:  input.Percentage,
+		Grade:       input.Grade,
+		Result:      input.Result,
+	}, nil
+}
+
+// DeleteReportCard is the resolver for the deleteReportCard field.
+func (r *mutationResolver) DeleteReportCard(ctx context.Context, id string) (string, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, `DELETE FROM public.report_cards WHERE id=$1`, id)
+	if err != nil {
+		return "", fmt.Errorf("failed to delete report card: %w", err)
+	}
+
+	return id, nil
+}
+
+// CreateLibraryAsset is the resolver for the createLibraryAsset field.
+func (r *mutationResolver) CreateLibraryAsset(ctx context.Context, input CreateLibraryAssetInput) (*LibraryAsset, error) {
+	db := r.DB
+
+	id := uuid.New().String()
+
+	_, err := db.ExecContext(ctx, `
+		INSERT INTO public.all_assets (id, no, title, subject, purchase_date, department, type, status, last_borrowed, borrower_name, due_date, shelf_location)
+		VALUES ($1, $2, $3, $4, $5::timestamp, $6, $7, $8, NULLIF($9,'')::timestamp, $10, NULLIF($11,'')::timestamp, $12)
+	`, id, input.No, input.Title, input.Subject, input.PurchaseDate, input.Department, input.Type, input.Status,
+		input.LastBorrowed, input.BorrowerName, input.DueDate, input.ShelfLocation)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create library asset: %w", err)
+	}
+
+	return &LibraryAsset{
+		ID:            id,
+		No:            input.No,
+		Title:         input.Title,
+		Subject:       input.Subject,
+		PurchaseDate:  input.PurchaseDate,
+		Department:    input.Department,
+		Type:          input.Type,
+		Status:        input.Status,
+		LastBorrowed:  input.LastBorrowed,
+		BorrowerName:  input.BorrowerName,
+		DueDate:       input.DueDate,
+		ShelfLocation: input.ShelfLocation,
+	}, nil
+}
+
+// UpdateLibraryAsset is the resolver for the updateLibraryAsset field.
+func (r *mutationResolver) UpdateLibraryAsset(ctx context.Context, input UpdateLibraryAssetInput) (*LibraryAsset, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, `
+		UPDATE public.all_assets
+		SET no=$1, title=$2, subject=$3, purchase_date=$4::timestamp, department=$5, type=$6, status=$7,
+		    last_borrowed=NULLIF($8,'')::timestamp, borrower_name=$9, due_date=NULLIF($10,'')::timestamp, shelf_location=$11
+		WHERE id=$12
+	`, input.No, input.Title, input.Subject, input.PurchaseDate, input.Department, input.Type, input.Status,
+		input.LastBorrowed, input.BorrowerName, input.DueDate, input.ShelfLocation, input.ID)
+	if err != nil {
+		return nil, fmt.Errorf("failed to update library asset: %w", err)
+	}
+
+	return &LibraryAsset{
+		ID:            input.ID,
+		No:            input.No,
+		Title:         input.Title,
+		Subject:       input.Subject,
+		PurchaseDate:  input.PurchaseDate,
+		Department:    input.Department,
+		Type:          input.Type,
+		Status:        input.Status,
+		LastBorrowed:  input.LastBorrowed,
+		BorrowerName:  input.BorrowerName,
+		DueDate:       input.DueDate,
+		ShelfLocation: input.ShelfLocation,
+	}, nil
+}
+
+// DeleteLibraryAsset is the resolver for the deleteLibraryAsset field.
+func (r *mutationResolver) DeleteLibraryAsset(ctx context.Context, id string) (string, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, `DELETE FROM public.all_assets WHERE id=$1`, id)
+	if err != nil {
+		return "", fmt.Errorf("failed to delete library asset: %w", err)
+	}
+
+	return id, nil
+}
+
+// CreateBookStatus is the resolver for the createBookStatus field.
+func (r *mutationResolver) CreateBookStatus(ctx context.Context, input CreateBookStatusInput) (*BookStatus, error) {
+	db := r.DB
+
+	id := uuid.New().String()
+
+	_, err := db.ExecContext(ctx, `
+		INSERT INTO public.book_status (
+			book_status_id, book_id, book_name, status, date_updated, 
+			last_checked_out_date, due_date, checked_out_by, reserved_by, 
+			condition, return_date, notes
+		)
+		VALUES ($1, NULLIF($2, '')::uuid, $3, $4, NULLIF($5, '')::timestamp, 
+		        NULLIF($6, '')::timestamp, NULLIF($7, '')::timestamp, $8, $9, 
+		        $10, $11, $12)
+	`, id, input.BookID, input.BookName, input.Status, input.DateUpdated,
+		input.LastCheckedOutDate, input.DueDate, input.CheckedOutBy, input.ReservedBy,
+		input.Condition, input.ReturnDate, input.Notes)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create book status: %w", err)
+	}
+
+	return &BookStatus{
+		BookStatusID:       id,
+		BookID:             input.BookID,
+		BookName:           input.BookName,
+		Status:             input.Status,
+		DateUpdated:        input.DateUpdated,
+		LastCheckedOutDate: input.LastCheckedOutDate,
+		DueDate:            input.DueDate,
+		CheckedOutBy:       input.CheckedOutBy,
+		ReservedBy:         input.ReservedBy,
+		Condition:          input.Condition,
+		ReturnDate:         input.ReturnDate,
+		Notes:              input.Notes,
+	}, nil
+}
+
+// UpdateBookStatus is the resolver for the updateBookStatus field.
+func (r *mutationResolver) UpdateBookStatus(ctx context.Context, input UpdateBookStatusInput) (*BookStatus, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, `
+		UPDATE public.book_status
+		SET book_id=NULLIF($1, '')::uuid, book_name=$2, status=$3, date_updated=NULLIF($4, '')::timestamp, 
+		    last_checked_out_date=NULLIF($5, '')::timestamp, due_date=NULLIF($6, '')::timestamp, 
+		    checked_out_by=$7, reserved_by=$8, condition=$9, return_date=$10, notes=$11
+		WHERE book_status_id=$12
+	`, input.BookID, input.BookName, input.Status, input.DateUpdated,
+		input.LastCheckedOutDate, input.DueDate, input.CheckedOutBy, input.ReservedBy,
+		input.Condition, input.ReturnDate, input.Notes, input.BookStatusID)
+	if err != nil {
+		return nil, fmt.Errorf("failed to update book status: %w", err)
+	}
+
+	return &BookStatus{
+		BookStatusID:       input.BookStatusID,
+		BookID:             input.BookID,
+		BookName:           input.BookName,
+		Status:             input.Status,
+		DateUpdated:        input.DateUpdated,
+		LastCheckedOutDate: input.LastCheckedOutDate,
+		DueDate:            input.DueDate,
+		CheckedOutBy:       input.CheckedOutBy,
+		ReservedBy:         input.ReservedBy,
+		Condition:          input.Condition,
+		ReturnDate:         input.ReturnDate,
+		Notes:              input.Notes,
+	}, nil
+}
+
+// DeleteBookStatus is the resolver for the deleteBookStatus field.
+func (r *mutationResolver) DeleteBookStatus(ctx context.Context, id string) (string, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, `DELETE FROM public.book_status WHERE book_status_id=$1`, id)
+	if err != nil {
+		return "", fmt.Errorf("failed to delete book status: %w", err)
+	}
+
+	return id, nil
+}
+
+// CreateIssueReturn is the resolver for the createIssueReturn field.
+func (r *mutationResolver) CreateIssueReturn(ctx context.Context, input CreateIssueReturnInput) (*IssueReturn, error) {
+	db := r.DB
+
+	id := uuid.New().String()
+
+	_, err := db.ExecContext(ctx, `
+		INSERT INTO public.issue_returns (id, book_no, book_title, student_name, roll_no, issue_date, return_date, status)
+		VALUES ($1, $2, $3, $4, $5, NULLIF($6, '')::timestamp, NULLIF($7, '')::timestamp, $8)
+	`, id, input.BookNo, input.BookTitle, input.StudentName, input.RollNo, input.IssueDate, input.ReturnDate, input.Status)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create issue return record: %w", err)
+	}
+
+	return &IssueReturn{
+		ID:          id,
+		BookNo:      input.BookNo,
+		BookTitle:   input.BookTitle,
+		StudentName: input.StudentName,
+		RollNo:      input.RollNo,
+		IssueDate:   input.IssueDate,
+		ReturnDate:  input.ReturnDate,
+		Status:      input.Status,
+	}, nil
+}
+
+// UpdateIssueReturn is the resolver for the updateIssueReturn field.
+func (r *mutationResolver) UpdateIssueReturn(ctx context.Context, input UpdateIssueReturnInput) (*IssueReturn, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, `
+		UPDATE public.issue_returns
+		SET book_no=$1, book_title=$2, student_name=$3, roll_no=$4,
+		    issue_date=NULLIF($5, '')::timestamp, return_date=NULLIF($6, '')::timestamp, status=$7
+		WHERE id=$8
+	`, input.BookNo, input.BookTitle, input.StudentName, input.RollNo, input.IssueDate, input.ReturnDate, input.Status, input.ID)
+	if err != nil {
+		return nil, fmt.Errorf("failed to update issue return record: %w", err)
+	}
+
+	return &IssueReturn{
+		ID:          input.ID,
+		BookNo:      input.BookNo,
+		BookTitle:   input.BookTitle,
+		StudentName: input.StudentName,
+		RollNo:      input.RollNo,
+		IssueDate:   input.IssueDate,
+		ReturnDate:  input.ReturnDate,
+		Status:      input.Status,
+	}, nil
+}
+
+// DeleteIssueReturn is the resolver for the deleteIssueReturn field.
+func (r *mutationResolver) DeleteIssueReturn(ctx context.Context, id string) (string, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, `DELETE FROM public.issue_returns WHERE id=$1`, id)
+	if err != nil {
+		return "", fmt.Errorf("failed to delete issue return record: %w", err)
+	}
+
+	return id, nil
+}
+
+// CreateLibraryReport is the resolver for the createLibraryReport field.
+func (r *mutationResolver) CreateLibraryReport(ctx context.Context, input CreateLibraryReportInput) (*LibraryReport, error) {
+	db := r.DB
+
+	id := uuid.New().String()
+
+	_, err := db.ExecContext(ctx, `
+		INSERT INTO public.library_reports (id, report_name, generated_date, type, status)
+		VALUES ($1, $2, NULLIF($3, '')::timestamp, $4, $5)
+	`, id, input.ReportName, input.GeneratedDate, input.Type, input.Status)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create library report record: %w", err)
+	}
+
+	return &LibraryReport{
+		ID:            id,
+		ReportName:    input.ReportName,
+		GeneratedDate: input.GeneratedDate,
+		Type:          input.Type,
+		Status:        input.Status,
+	}, nil
+}
+
+// UpdateLibraryReport is the resolver for the updateLibraryReport field.
+func (r *mutationResolver) UpdateLibraryReport(ctx context.Context, input UpdateLibraryReportInput) (*LibraryReport, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, `
+		UPDATE public.library_reports
+		SET report_name=$1, generated_date=NULLIF($2, '')::timestamp, type=$3, status=$4
+		WHERE id=$5
+	`, input.ReportName, input.GeneratedDate, input.Type, input.Status, input.ID)
+	if err != nil {
+		return nil, fmt.Errorf("failed to update library report record: %w", err)
+	}
+
+	return &LibraryReport{
+		ID:            input.ID,
+		ReportName:    input.ReportName,
+		GeneratedDate: input.GeneratedDate,
+		Type:          input.Type,
+		Status:        input.Status,
+	}, nil
+}
+
+// DeleteLibraryReport is the resolver for the deleteLibraryReport field.
+func (r *mutationResolver) DeleteLibraryReport(ctx context.Context, id string) (string, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, `DELETE FROM public.library_reports WHERE id=$1`, id)
+	if err != nil {
+		return "", fmt.Errorf("failed to delete library report record: %w", err)
+	}
+
+	return id, nil
+}
+
 // AdmissionInquiries is the resolver for the admissionInquiries field.
 func (r *queryResolver) AdmissionInquiries(ctx context.Context) ([]*AdmissionInquiry, error) {
 	db := r.DB
@@ -3025,7 +3425,7 @@ func (r *queryResolver) MarksEntries(ctx context.Context) ([]*MarksEntry, error)
 	for rows.Next() {
 		var (
 			id, examName, studentName, rollNo, subject, status string
-			marksObtained, maxMarks int
+			marksObtained, maxMarks                            int
 		)
 		err := rows.Scan(
 			&id, &examName, &studentName, &rollNo, &subject, &marksObtained, &maxMarks, &status,
@@ -3044,6 +3444,249 @@ func (r *queryResolver) MarksEntries(ctx context.Context) ([]*MarksEntry, error)
 			MaxMarks:      maxMarks,
 			Status:        status,
 		})
+	}
+	return list, nil
+}
+
+// ResultGenerations is the resolver for the resultGenerations field.
+func (r *queryResolver) ResultGenerations(ctx context.Context) ([]*ResultGeneration, error) {
+	db := r.DB
+
+	rows, err := db.QueryContext(ctx, `
+		SELECT id, COALESCE(exam_name, ''), COALESCE(course, ''), COALESCE(semester, ''), COALESCE(result_date, ''), COALESCE(status, '')
+		FROM public.result_generations
+		ORDER BY exam_name
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("failed to fetch result generations: %w", err)
+	}
+	defer rows.Close()
+
+	var list []*ResultGeneration
+	for rows.Next() {
+		var rg ResultGeneration
+		if err := rows.Scan(&rg.ID, &rg.ExamName, &rg.Course, &rg.Semester, &rg.ResultDate, &rg.Status); err != nil {
+			return nil, fmt.Errorf("failed to scan result generation row: %w", err)
+		}
+		list = append(list, &rg)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("row iteration error: %w", err)
+	}
+
+	if list == nil {
+		list = []*ResultGeneration{}
+	}
+	return list, nil
+}
+
+// ReportCards is the resolver for the reportCards field.
+func (r *queryResolver) ReportCards(ctx context.Context) ([]*ReportCard, error) {
+	db := r.DB
+
+	rows, err := db.QueryContext(ctx, `
+		SELECT id, COALESCE(student_name,''), COALESCE(roll_no,''), COALESCE(exam_name,''),
+		       COALESCE(total_marks,0), COALESCE(percentage,0), COALESCE(grade,''), COALESCE(result,'')
+		FROM public.report_cards
+		ORDER BY student_name
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("failed to fetch report cards: %w", err)
+	}
+	defer rows.Close()
+
+	var list []*ReportCard
+	for rows.Next() {
+		var rc ReportCard
+		if err := rows.Scan(&rc.ID, &rc.StudentName, &rc.RollNo, &rc.ExamName, &rc.TotalMarks, &rc.Percentage, &rc.Grade, &rc.Result); err != nil {
+			return nil, fmt.Errorf("failed to scan report card row: %w", err)
+		}
+		list = append(list, &rc)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("row iteration error: %w", err)
+	}
+
+	if list == nil {
+		list = []*ReportCard{}
+	}
+	return list, nil
+}
+
+// AllAssets is the resolver for the allAssets field.
+func (r *queryResolver) AllAssets(ctx context.Context) ([]*LibraryAsset, error) {
+	db := r.DB
+
+	rows, err := db.QueryContext(ctx, `
+		SELECT
+			id,
+			COALESCE(no,''),
+			COALESCE(title,''),
+			COALESCE(subject,''),
+			COALESCE(TO_CHAR(purchase_date, 'YYYY-MM-DD'),''),
+			COALESCE(department,''),
+			COALESCE(type,''),
+			COALESCE(status,''),
+			COALESCE(TO_CHAR(last_borrowed, 'YYYY-MM-DD'),''),
+			COALESCE(borrower_name,''),
+			COALESCE(TO_CHAR(due_date, 'YYYY-MM-DD'),''),
+			COALESCE(shelf_location,'')
+		FROM public.all_assets
+		ORDER BY title
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("failed to fetch library assets: %w", err)
+	}
+	defer rows.Close()
+
+	var list []*LibraryAsset
+	for rows.Next() {
+		var a LibraryAsset
+		if err := rows.Scan(
+			&a.ID, &a.No, &a.Title, &a.Subject, &a.PurchaseDate,
+			&a.Department, &a.Type, &a.Status, &a.LastBorrowed,
+			&a.BorrowerName, &a.DueDate, &a.ShelfLocation,
+		); err != nil {
+			return nil, fmt.Errorf("failed to scan library asset row: %w", err)
+		}
+		list = append(list, &a)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("row iteration error: %w", err)
+	}
+
+	if list == nil {
+		list = []*LibraryAsset{}
+	}
+	return list, nil
+}
+
+// BookStatuses is the resolver for the bookStatuses field.
+func (r *queryResolver) BookStatuses(ctx context.Context) ([]*BookStatus, error) {
+	db := r.DB
+
+	rows, err := db.QueryContext(ctx, `
+		SELECT
+			book_status_id,
+			COALESCE(book_id::text,''),
+			COALESCE(book_name,''),
+			COALESCE(status,''),
+			COALESCE(TO_CHAR(date_updated, 'YYYY-MM-DD HH24:MI:SS'),''),
+			COALESCE(TO_CHAR(last_checked_out_date, 'YYYY-MM-DD'),''),
+			COALESCE(TO_CHAR(due_date, 'YYYY-MM-DD'),''),
+			COALESCE(checked_out_by,''),
+			COALESCE(reserved_by,''),
+			COALESCE(condition,''),
+			COALESCE(return_date,''),
+			COALESCE(notes,'')
+		FROM public.book_status
+		ORDER BY book_name
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("failed to fetch book statuses: %w", err)
+	}
+	defer rows.Close()
+
+	var list []*BookStatus
+	for rows.Next() {
+		var b BookStatus
+		if err := rows.Scan(
+			&b.BookStatusID, &b.BookID, &b.BookName, &b.Status, &b.DateUpdated,
+			&b.LastCheckedOutDate, &b.DueDate, &b.CheckedOutBy, &b.ReservedBy,
+			&b.Condition, &b.ReturnDate, &b.Notes,
+		); err != nil {
+			return nil, fmt.Errorf("failed to scan book status row: %w", err)
+		}
+		list = append(list, &b)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("row iteration error: %w", err)
+	}
+
+	if list == nil {
+		list = []*BookStatus{}
+	}
+	return list, nil
+}
+
+// IssueReturns is the resolver for the issueReturns field.
+func (r *queryResolver) IssueReturns(ctx context.Context) ([]*IssueReturn, error) {
+	db := r.DB
+
+	rows, err := db.QueryContext(ctx, `
+		SELECT
+			id,
+			COALESCE(book_no,''),
+			COALESCE(book_title,''),
+			COALESCE(student_name,''),
+			COALESCE(roll_no,''),
+			COALESCE(TO_CHAR(issue_date, 'YYYY-MM-DD'),''),
+			COALESCE(TO_CHAR(return_date, 'YYYY-MM-DD'),''),
+			COALESCE(status,'')
+		FROM public.issue_returns
+		ORDER BY issue_date DESC
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("failed to fetch issue returns: %w", err)
+	}
+	defer rows.Close()
+
+	var list []*IssueReturn
+	for rows.Next() {
+		var ir IssueReturn
+		if err := rows.Scan(
+			&ir.ID, &ir.BookNo, &ir.BookTitle, &ir.StudentName, &ir.RollNo,
+			&ir.IssueDate, &ir.ReturnDate, &ir.Status,
+		); err != nil {
+			return nil, fmt.Errorf("failed to scan issue return row: %w", err)
+		}
+		list = append(list, &ir)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("row iteration error: %w", err)
+	}
+
+	if list == nil {
+		list = []*IssueReturn{}
+	}
+	return list, nil
+}
+
+// LibraryReports is the resolver for the libraryReports field.
+func (r *queryResolver) LibraryReports(ctx context.Context) ([]*LibraryReport, error) {
+	db := r.DB
+
+	rows, err := db.QueryContext(ctx, `
+		SELECT
+			id,
+			COALESCE(report_name,''),
+			COALESCE(TO_CHAR(generated_date, 'YYYY-MM-DD'),''),
+			COALESCE(type,''),
+			COALESCE(status,'')
+		FROM public.library_reports
+		ORDER BY generated_date DESC
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("failed to fetch library reports: %w", err)
+	}
+	defer rows.Close()
+
+	var list []*LibraryReport
+	for rows.Next() {
+		var lr LibraryReport
+		if err := rows.Scan(
+			&lr.ID, &lr.ReportName, &lr.GeneratedDate, &lr.Type, &lr.Status,
+		); err != nil {
+			return nil, fmt.Errorf("failed to scan library report row: %w", err)
+		}
+		list = append(list, &lr)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("row iteration error: %w", err)
+	}
+
+	if list == nil {
+		list = []*LibraryReport{}
 	}
 	return list, nil
 }
