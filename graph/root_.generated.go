@@ -213,6 +213,21 @@ type ComplexityRoot struct {
 		UserID       func(childComplexity int) int
 	}
 
+	EmployeeSalary struct {
+		Bonus      func(childComplexity int) int
+		Deductions func(childComplexity int) int
+		Department func(childComplexity int) int
+		Email      func(childComplexity int) int
+		EmpID      func(childComplexity int) int
+		ID         func(childComplexity int) int
+		Img        func(childComplexity int) int
+		Name       func(childComplexity int) int
+		NetSalary  func(childComplexity int) int
+		Payslip    func(childComplexity int) int
+		Role       func(childComplexity int) int
+		Salary     func(childComplexity int) int
+	}
+
 	EntranceExam struct {
 		Description  func(childComplexity int) int
 		EndTime      func(childComplexity int) int
@@ -307,6 +322,19 @@ type ComplexityRoot struct {
 		StudentName func(childComplexity int) int
 	}
 
+	Holiday struct {
+		ApprovalStatus func(childComplexity int) int
+		CreatedBy      func(childComplexity int) int
+		CreationDate   func(childComplexity int) int
+		Date           func(childComplexity int) int
+		Details        func(childComplexity int) int
+		HolidayName    func(childComplexity int) int
+		HolidayType    func(childComplexity int) int
+		ID             func(childComplexity int) int
+		Location       func(childComplexity int) int
+		Shift          func(childComplexity int) int
+	}
+
 	IssueReturn struct {
 		BookNo      func(childComplexity int) int
 		BookTitle   func(childComplexity int) int
@@ -316,6 +344,54 @@ type ComplexityRoot struct {
 		RollNo      func(childComplexity int) int
 		Status      func(childComplexity int) int
 		StudentName func(childComplexity int) int
+	}
+
+	LeaveBalance struct {
+		Accepted  func(childComplexity int) int
+		CarryOver func(childComplexity int) int
+		Current   func(childComplexity int) int
+		Expired   func(childComplexity int) int
+		ID        func(childComplexity int) int
+		Img       func(childComplexity int) int
+		Name      func(childComplexity int) int
+		Prev      func(childComplexity int) int
+		Rejected  func(childComplexity int) int
+		Total     func(childComplexity int) int
+		Used      func(childComplexity int) int
+	}
+
+	LeaveRequest struct {
+		ApprovalDate func(childComplexity int) int
+		ApprovedBy   func(childComplexity int) int
+		Department   func(childComplexity int) int
+		DurationType func(childComplexity int) int
+		EmployeeID   func(childComplexity int) int
+		From         func(childComplexity int) int
+		ID           func(childComplexity int) int
+		Img          func(childComplexity int) int
+		LeaveTo      func(childComplexity int) int
+		Name         func(childComplexity int) int
+		NoOfDays     func(childComplexity int) int
+		Note         func(childComplexity int) int
+		Reason       func(childComplexity int) int
+		RequestedOn  func(childComplexity int) int
+		Status       func(childComplexity int) int
+		Type         func(childComplexity int) int
+	}
+
+	LeaveTypes struct {
+		AnnualLimit        func(childComplexity int) int
+		CarryOver          func(childComplexity int) int
+		CreatedBy          func(childComplexity int) int
+		Duration           func(childComplexity int) int
+		ID                 func(childComplexity int) int
+		LeaveName          func(childComplexity int) int
+		LeaveUnit          func(childComplexity int) int
+		MaxLeaves          func(childComplexity int) int
+		Note               func(childComplexity int) int
+		NotificationPeriod func(childComplexity int) int
+		Status             func(childComplexity int) int
+		Type               func(childComplexity int) int
 	}
 
 	LibraryAsset struct {
@@ -375,11 +451,16 @@ type ComplexityRoot struct {
 		CreateAssignClassTeacher  func(childComplexity int, input CreateAssignClassTeacherInput) int
 		CreateBookStatus          func(childComplexity int, input CreateBookStatusInput) int
 		CreateComplaint           func(childComplexity int, input CreateComplaintInput) int
+		CreateEmployeeSalary      func(childComplexity int, input CreateEmployeeSalaryInput) int
 		CreateEntranceExam        func(childComplexity int, input CreateEntranceExamInput) int
 		CreateExamSchedule        func(childComplexity int, input CreateExamScheduleInput) int
 		CreateExamType            func(childComplexity int, input CreateExamTypeInput) int
 		CreateHallAllocation      func(childComplexity int, input CreateHallAllocationInput) int
+		CreateHoliday             func(childComplexity int, input CreateHolidayInput) int
 		CreateIssueReturn         func(childComplexity int, input CreateIssueReturnInput) int
+		CreateLeaveBalance        func(childComplexity int, input CreateLeaveBalanceInput) int
+		CreateLeaveRequest        func(childComplexity int, input CreateLeaveRequestInput) int
+		CreateLeaveTypes          func(childComplexity int, input CreateLeaveTypesInput) int
 		CreateLibraryAsset        func(childComplexity int, input CreateLibraryAssetInput) int
 		CreateLibraryReport       func(childComplexity int, input CreateLibraryReportInput) int
 		CreateMarksEntry          func(childComplexity int, input CreateMarksEntryInput) int
@@ -388,6 +469,8 @@ type ComplexityRoot struct {
 		CreateReportCard          func(childComplexity int, input CreateReportCardInput) int
 		CreateResultGeneration    func(childComplexity int, input CreateResultGenerationInput) int
 		CreateSeatAllocation      func(childComplexity int, input CreateSeatAllocationInput) int
+		CreateStaff               func(childComplexity int, input CreateStaffInput) int
+		CreateStaffAttendance     func(childComplexity int, input CreateStaffAttendanceInput) int
 		CreateStudent             func(childComplexity int, input CreateStudentInfoInput) int
 		CreateStudentAttendance   func(childComplexity int, input CreateStudentAttendanceInfoInput) int
 		CreateStudentCertificate  func(childComplexity int, input CreateStudentCertificateInfoInput) int
@@ -395,16 +478,22 @@ type ComplexityRoot struct {
 		CreateStudentHealthRecord func(childComplexity int, input CreateStudentHealthRecordInfoInput) int
 		CreateStudentPromotion    func(childComplexity int, input CreateStudentPromotionInfoInput) int
 		CreateTeacher             func(childComplexity int, input CreateTeacherInfoInput) int
+		CreateTodaysAttendance    func(childComplexity int, input CreateTodaysAttendanceInput) int
 		CreateVisitor             func(childComplexity int, input CreateVisitorInput) int
 		DeleteAdmissionInquiry    func(childComplexity int, inquiryID string) int
 		DeleteAssignClassTeacher  func(childComplexity int, id string) int
 		DeleteBookStatus          func(childComplexity int, id string) int
 		DeleteComplaint           func(childComplexity int, complaintID string) int
+		DeleteEmployeeSalary      func(childComplexity int, id string) int
 		DeleteEntranceExam        func(childComplexity int, id string) int
 		DeleteExamSchedule        func(childComplexity int, id string) int
 		DeleteExamType            func(childComplexity int, id string) int
 		DeleteHallAllocation      func(childComplexity int, id string) int
+		DeleteHoliday             func(childComplexity int, id string) int
 		DeleteIssueReturn         func(childComplexity int, id string) int
+		DeleteLeaveBalance        func(childComplexity int, id string) int
+		DeleteLeaveRequest        func(childComplexity int, id string) int
+		DeleteLeaveTypes          func(childComplexity int, id string) int
 		DeleteLibraryAsset        func(childComplexity int, id string) int
 		DeleteLibraryReport       func(childComplexity int, id string) int
 		DeleteMarksEntry          func(childComplexity int, id string) int
@@ -413,6 +502,8 @@ type ComplexityRoot struct {
 		DeleteReportCard          func(childComplexity int, id string) int
 		DeleteResultGeneration    func(childComplexity int, id string) int
 		DeleteSeatAllocation      func(childComplexity int, id string) int
+		DeleteStaff               func(childComplexity int, id string) int
+		DeleteStaffAttendance     func(childComplexity int, id string) int
 		DeleteStudent             func(childComplexity int, id string) int
 		DeleteStudentAttendance   func(childComplexity int, id string) int
 		DeleteStudentCertificate  func(childComplexity int, id string) int
@@ -420,17 +511,23 @@ type ComplexityRoot struct {
 		DeleteStudentHealthRecord func(childComplexity int, id string) int
 		DeleteStudentPromotion    func(childComplexity int, id string) int
 		DeleteTeacher             func(childComplexity int, id string) int
+		DeleteTodaysAttendance    func(childComplexity int, id string) int
 		DeleteVisitor             func(childComplexity int, visitorID string) int
 		Login                     func(childComplexity int, input LoginInput) int
 		UpdateAdmissionInquiry    func(childComplexity int, input UpdateAdmissionInquiryInput) int
 		UpdateAssignClassTeacher  func(childComplexity int, input UpdateAssignClassTeacherInput) int
 		UpdateBookStatus          func(childComplexity int, input UpdateBookStatusInput) int
 		UpdateComplaint           func(childComplexity int, input UpdateComplaintInput) int
+		UpdateEmployeeSalary      func(childComplexity int, input UpdateEmployeeSalaryInput) int
 		UpdateEntranceExam        func(childComplexity int, input UpdateEntranceExamInput) int
 		UpdateExamSchedule        func(childComplexity int, input UpdateExamScheduleInput) int
 		UpdateExamType            func(childComplexity int, input UpdateExamTypeInput) int
 		UpdateHallAllocation      func(childComplexity int, input UpdateHallAllocationInput) int
+		UpdateHoliday             func(childComplexity int, input UpdateHolidayInput) int
 		UpdateIssueReturn         func(childComplexity int, input UpdateIssueReturnInput) int
+		UpdateLeaveBalance        func(childComplexity int, input UpdateLeaveBalanceInput) int
+		UpdateLeaveRequest        func(childComplexity int, input UpdateLeaveRequestInput) int
+		UpdateLeaveTypes          func(childComplexity int, input UpdateLeaveTypesInput) int
 		UpdateLibraryAsset        func(childComplexity int, input UpdateLibraryAssetInput) int
 		UpdateLibraryReport       func(childComplexity int, input UpdateLibraryReportInput) int
 		UpdateMarksEntry          func(childComplexity int, input UpdateMarksEntryInput) int
@@ -439,6 +536,8 @@ type ComplexityRoot struct {
 		UpdateReportCard          func(childComplexity int, input UpdateReportCardInput) int
 		UpdateResultGeneration    func(childComplexity int, input UpdateResultGenerationInput) int
 		UpdateSeatAllocation      func(childComplexity int, input UpdateSeatAllocationInput) int
+		UpdateStaff               func(childComplexity int, input UpdateStaffInput) int
+		UpdateStaffAttendance     func(childComplexity int, input UpdateStaffAttendanceInput) int
 		UpdateStudent             func(childComplexity int, input UpdateStudentInfoInput) int
 		UpdateStudentAttendance   func(childComplexity int, input UpdateStudentAttendanceInfoInput) int
 		UpdateStudentCertificate  func(childComplexity int, input UpdateStudentCertificateInfoInput) int
@@ -446,6 +545,7 @@ type ComplexityRoot struct {
 		UpdateStudentHealthRecord func(childComplexity int, input UpdateStudentHealthRecordInfoInput) int
 		UpdateStudentPromotion    func(childComplexity int, input UpdateStudentPromotionInfoInput) int
 		UpdateTeacher             func(childComplexity int, input UpdateTeacherInfoInput) int
+		UpdateTodaysAttendance    func(childComplexity int, input UpdateTodaysAttendanceInput) int
 		UpdateVisitor             func(childComplexity int, input UpdateVisitorInput) int
 	}
 
@@ -488,6 +588,7 @@ type ComplexityRoot struct {
 		Classes                 func(childComplexity int) int
 		Complaints              func(childComplexity int) int
 		Departments             func(childComplexity int) int
+		EmployeeSalaryList      func(childComplexity int) int
 		Employees               func(childComplexity int) int
 		EntranceExams           func(childComplexity int) int
 		Events                  func(childComplexity int) int
@@ -497,7 +598,11 @@ type ComplexityRoot struct {
 		FeePayments             func(childComplexity int) int
 		FeeStructures           func(childComplexity int) int
 		HallAllocations         func(childComplexity int) int
+		Holidays                func(childComplexity int) int
 		IssueReturns            func(childComplexity int) int
+		LeaveBalances           func(childComplexity int) int
+		LeaveRequests           func(childComplexity int) int
+		LeaveTypesList          func(childComplexity int) int
 		LibraryReports          func(childComplexity int) int
 		MarksEntries            func(childComplexity int) int
 		MeritLists              func(childComplexity int) int
@@ -509,6 +614,8 @@ type ComplexityRoot struct {
 		ResultGenerations       func(childComplexity int) int
 		Roles                   func(childComplexity int) int
 		SeatAllocations         func(childComplexity int) int
+		StaffAttendanceList     func(childComplexity int) int
+		StaffList               func(childComplexity int) int
 		StudentAttendanceList   func(childComplexity int) int
 		StudentAttendances      func(childComplexity int) int
 		StudentCertificateList  func(childComplexity int) int
@@ -522,6 +629,7 @@ type ComplexityRoot struct {
 		TeacherAttendances      func(childComplexity int) int
 		Teachers                func(childComplexity int) int
 		TeachersList            func(childComplexity int) int
+		TodaysAttendanceList    func(childComplexity int) int
 		Users                   func(childComplexity int) int
 		Visitors                func(childComplexity int) int
 	}
@@ -565,6 +673,45 @@ type ComplexityRoot struct {
 		ReportingDate    func(childComplexity int) int
 		Status           func(childComplexity int) int
 		StudentName      func(childComplexity int) int
+	}
+
+	Staff struct {
+		Address     func(childComplexity int) int
+		DateOfBirth func(childComplexity int) int
+		Department  func(childComplexity int) int
+		Email       func(childComplexity int) int
+		Experience  func(childComplexity int) int
+		Gender      func(childComplexity int) int
+		ID          func(childComplexity int) int
+		Img         func(childComplexity int) int
+		JoiningDate func(childComplexity int) int
+		Mobile      func(childComplexity int) int
+		Name        func(childComplexity int) int
+		Role        func(childComplexity int) int
+		Salary      func(childComplexity int) int
+		Status      func(childComplexity int) int
+	}
+
+	StaffAttendance struct {
+		AbsenceReason    func(childComplexity int) int
+		AttendanceStatus func(childComplexity int) int
+		BreakTime        func(childComplexity int) int
+		CheckIn          func(childComplexity int) int
+		CheckOut         func(childComplexity int) int
+		Date             func(childComplexity int) int
+		Department       func(childComplexity int) int
+		Designation      func(childComplexity int) int
+		EarlyDeparture   func(childComplexity int) int
+		EmployeeID       func(childComplexity int) int
+		ID               func(childComplexity int) int
+		Img              func(childComplexity int) int
+		LateArrival      func(childComplexity int) int
+		Name             func(childComplexity int) int
+		Overtime         func(childComplexity int) int
+		Remarks          func(childComplexity int) int
+		Shift            func(childComplexity int) int
+		Total            func(childComplexity int) int
+		TotalBreaks      func(childComplexity int) int
 	}
 
 	Student struct {
@@ -759,6 +906,18 @@ type ComplexityRoot struct {
 		Salary                func(childComplexity int) int
 		Status                func(childComplexity int) int
 		SubjectSpecialization func(childComplexity int) int
+	}
+
+	TodaysAttendance struct {
+		Break   func(childComplexity int) int
+		FirstIn func(childComplexity int) int
+		ID      func(childComplexity int) int
+		Img     func(childComplexity int) int
+		LastOut func(childComplexity int) int
+		Name    func(childComplexity int) int
+		Shift   func(childComplexity int) int
+		Status  func(childComplexity int) int
+		Total   func(childComplexity int) int
 	}
 
 	User struct {
@@ -1380,6 +1539,79 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 
 		return e.ComplexityRoot.Employee.UserID(childComplexity), true
 
+	case "EmployeeSalary.bonus":
+		if e.ComplexityRoot.EmployeeSalary.Bonus == nil {
+			break
+		}
+
+		return e.ComplexityRoot.EmployeeSalary.Bonus(childComplexity), true
+	case "EmployeeSalary.deductions":
+		if e.ComplexityRoot.EmployeeSalary.Deductions == nil {
+			break
+		}
+
+		return e.ComplexityRoot.EmployeeSalary.Deductions(childComplexity), true
+	case "EmployeeSalary.department":
+		if e.ComplexityRoot.EmployeeSalary.Department == nil {
+			break
+		}
+
+		return e.ComplexityRoot.EmployeeSalary.Department(childComplexity), true
+	case "EmployeeSalary.email":
+		if e.ComplexityRoot.EmployeeSalary.Email == nil {
+			break
+		}
+
+		return e.ComplexityRoot.EmployeeSalary.Email(childComplexity), true
+	case "EmployeeSalary.empId":
+		if e.ComplexityRoot.EmployeeSalary.EmpID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.EmployeeSalary.EmpID(childComplexity), true
+	case "EmployeeSalary.id":
+		if e.ComplexityRoot.EmployeeSalary.ID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.EmployeeSalary.ID(childComplexity), true
+	case "EmployeeSalary.img":
+		if e.ComplexityRoot.EmployeeSalary.Img == nil {
+			break
+		}
+
+		return e.ComplexityRoot.EmployeeSalary.Img(childComplexity), true
+	case "EmployeeSalary.name":
+		if e.ComplexityRoot.EmployeeSalary.Name == nil {
+			break
+		}
+
+		return e.ComplexityRoot.EmployeeSalary.Name(childComplexity), true
+	case "EmployeeSalary.netSalary":
+		if e.ComplexityRoot.EmployeeSalary.NetSalary == nil {
+			break
+		}
+
+		return e.ComplexityRoot.EmployeeSalary.NetSalary(childComplexity), true
+	case "EmployeeSalary.payslip":
+		if e.ComplexityRoot.EmployeeSalary.Payslip == nil {
+			break
+		}
+
+		return e.ComplexityRoot.EmployeeSalary.Payslip(childComplexity), true
+	case "EmployeeSalary.role":
+		if e.ComplexityRoot.EmployeeSalary.Role == nil {
+			break
+		}
+
+		return e.ComplexityRoot.EmployeeSalary.Role(childComplexity), true
+	case "EmployeeSalary.salary":
+		if e.ComplexityRoot.EmployeeSalary.Salary == nil {
+			break
+		}
+
+		return e.ComplexityRoot.EmployeeSalary.Salary(childComplexity), true
+
 	case "EntranceExam.description":
 		if e.ComplexityRoot.EntranceExam.Description == nil {
 			break
@@ -1808,6 +2040,67 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 
 		return e.ComplexityRoot.HallAllocation.StudentName(childComplexity), true
 
+	case "Holiday.approvalStatus":
+		if e.ComplexityRoot.Holiday.ApprovalStatus == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Holiday.ApprovalStatus(childComplexity), true
+	case "Holiday.createdBy":
+		if e.ComplexityRoot.Holiday.CreatedBy == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Holiday.CreatedBy(childComplexity), true
+	case "Holiday.creationDate":
+		if e.ComplexityRoot.Holiday.CreationDate == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Holiday.CreationDate(childComplexity), true
+	case "Holiday.date":
+		if e.ComplexityRoot.Holiday.Date == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Holiday.Date(childComplexity), true
+	case "Holiday.details":
+		if e.ComplexityRoot.Holiday.Details == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Holiday.Details(childComplexity), true
+	case "Holiday.holidayName":
+		if e.ComplexityRoot.Holiday.HolidayName == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Holiday.HolidayName(childComplexity), true
+	case "Holiday.holidayType":
+		if e.ComplexityRoot.Holiday.HolidayType == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Holiday.HolidayType(childComplexity), true
+	case "Holiday.id":
+		if e.ComplexityRoot.Holiday.ID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Holiday.ID(childComplexity), true
+	case "Holiday.location":
+		if e.ComplexityRoot.Holiday.Location == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Holiday.Location(childComplexity), true
+	case "Holiday.shift":
+		if e.ComplexityRoot.Holiday.Shift == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Holiday.Shift(childComplexity), true
+
 	case "IssueReturn.bookNo":
 		if e.ComplexityRoot.IssueReturn.BookNo == nil {
 			break
@@ -1856,6 +2149,243 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.IssueReturn.StudentName(childComplexity), true
+
+	case "LeaveBalance.accepted":
+		if e.ComplexityRoot.LeaveBalance.Accepted == nil {
+			break
+		}
+
+		return e.ComplexityRoot.LeaveBalance.Accepted(childComplexity), true
+	case "LeaveBalance.carryOver":
+		if e.ComplexityRoot.LeaveBalance.CarryOver == nil {
+			break
+		}
+
+		return e.ComplexityRoot.LeaveBalance.CarryOver(childComplexity), true
+	case "LeaveBalance.current":
+		if e.ComplexityRoot.LeaveBalance.Current == nil {
+			break
+		}
+
+		return e.ComplexityRoot.LeaveBalance.Current(childComplexity), true
+	case "LeaveBalance.expired":
+		if e.ComplexityRoot.LeaveBalance.Expired == nil {
+			break
+		}
+
+		return e.ComplexityRoot.LeaveBalance.Expired(childComplexity), true
+	case "LeaveBalance.id":
+		if e.ComplexityRoot.LeaveBalance.ID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.LeaveBalance.ID(childComplexity), true
+	case "LeaveBalance.img":
+		if e.ComplexityRoot.LeaveBalance.Img == nil {
+			break
+		}
+
+		return e.ComplexityRoot.LeaveBalance.Img(childComplexity), true
+	case "LeaveBalance.name":
+		if e.ComplexityRoot.LeaveBalance.Name == nil {
+			break
+		}
+
+		return e.ComplexityRoot.LeaveBalance.Name(childComplexity), true
+	case "LeaveBalance.prev":
+		if e.ComplexityRoot.LeaveBalance.Prev == nil {
+			break
+		}
+
+		return e.ComplexityRoot.LeaveBalance.Prev(childComplexity), true
+	case "LeaveBalance.rejected":
+		if e.ComplexityRoot.LeaveBalance.Rejected == nil {
+			break
+		}
+
+		return e.ComplexityRoot.LeaveBalance.Rejected(childComplexity), true
+	case "LeaveBalance.total":
+		if e.ComplexityRoot.LeaveBalance.Total == nil {
+			break
+		}
+
+		return e.ComplexityRoot.LeaveBalance.Total(childComplexity), true
+	case "LeaveBalance.used":
+		if e.ComplexityRoot.LeaveBalance.Used == nil {
+			break
+		}
+
+		return e.ComplexityRoot.LeaveBalance.Used(childComplexity), true
+
+	case "LeaveRequest.approvalDate":
+		if e.ComplexityRoot.LeaveRequest.ApprovalDate == nil {
+			break
+		}
+
+		return e.ComplexityRoot.LeaveRequest.ApprovalDate(childComplexity), true
+	case "LeaveRequest.approvedBy":
+		if e.ComplexityRoot.LeaveRequest.ApprovedBy == nil {
+			break
+		}
+
+		return e.ComplexityRoot.LeaveRequest.ApprovedBy(childComplexity), true
+	case "LeaveRequest.department":
+		if e.ComplexityRoot.LeaveRequest.Department == nil {
+			break
+		}
+
+		return e.ComplexityRoot.LeaveRequest.Department(childComplexity), true
+	case "LeaveRequest.durationType":
+		if e.ComplexityRoot.LeaveRequest.DurationType == nil {
+			break
+		}
+
+		return e.ComplexityRoot.LeaveRequest.DurationType(childComplexity), true
+	case "LeaveRequest.employeeId":
+		if e.ComplexityRoot.LeaveRequest.EmployeeID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.LeaveRequest.EmployeeID(childComplexity), true
+	case "LeaveRequest.from":
+		if e.ComplexityRoot.LeaveRequest.From == nil {
+			break
+		}
+
+		return e.ComplexityRoot.LeaveRequest.From(childComplexity), true
+	case "LeaveRequest.id":
+		if e.ComplexityRoot.LeaveRequest.ID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.LeaveRequest.ID(childComplexity), true
+	case "LeaveRequest.img":
+		if e.ComplexityRoot.LeaveRequest.Img == nil {
+			break
+		}
+
+		return e.ComplexityRoot.LeaveRequest.Img(childComplexity), true
+	case "LeaveRequest.leaveTo":
+		if e.ComplexityRoot.LeaveRequest.LeaveTo == nil {
+			break
+		}
+
+		return e.ComplexityRoot.LeaveRequest.LeaveTo(childComplexity), true
+	case "LeaveRequest.name":
+		if e.ComplexityRoot.LeaveRequest.Name == nil {
+			break
+		}
+
+		return e.ComplexityRoot.LeaveRequest.Name(childComplexity), true
+	case "LeaveRequest.noOfDays":
+		if e.ComplexityRoot.LeaveRequest.NoOfDays == nil {
+			break
+		}
+
+		return e.ComplexityRoot.LeaveRequest.NoOfDays(childComplexity), true
+	case "LeaveRequest.note":
+		if e.ComplexityRoot.LeaveRequest.Note == nil {
+			break
+		}
+
+		return e.ComplexityRoot.LeaveRequest.Note(childComplexity), true
+	case "LeaveRequest.reason":
+		if e.ComplexityRoot.LeaveRequest.Reason == nil {
+			break
+		}
+
+		return e.ComplexityRoot.LeaveRequest.Reason(childComplexity), true
+	case "LeaveRequest.requestedOn":
+		if e.ComplexityRoot.LeaveRequest.RequestedOn == nil {
+			break
+		}
+
+		return e.ComplexityRoot.LeaveRequest.RequestedOn(childComplexity), true
+	case "LeaveRequest.status":
+		if e.ComplexityRoot.LeaveRequest.Status == nil {
+			break
+		}
+
+		return e.ComplexityRoot.LeaveRequest.Status(childComplexity), true
+	case "LeaveRequest.type":
+		if e.ComplexityRoot.LeaveRequest.Type == nil {
+			break
+		}
+
+		return e.ComplexityRoot.LeaveRequest.Type(childComplexity), true
+
+	case "LeaveTypes.annualLimit":
+		if e.ComplexityRoot.LeaveTypes.AnnualLimit == nil {
+			break
+		}
+
+		return e.ComplexityRoot.LeaveTypes.AnnualLimit(childComplexity), true
+	case "LeaveTypes.carryOver":
+		if e.ComplexityRoot.LeaveTypes.CarryOver == nil {
+			break
+		}
+
+		return e.ComplexityRoot.LeaveTypes.CarryOver(childComplexity), true
+	case "LeaveTypes.createdBy":
+		if e.ComplexityRoot.LeaveTypes.CreatedBy == nil {
+			break
+		}
+
+		return e.ComplexityRoot.LeaveTypes.CreatedBy(childComplexity), true
+	case "LeaveTypes.duration":
+		if e.ComplexityRoot.LeaveTypes.Duration == nil {
+			break
+		}
+
+		return e.ComplexityRoot.LeaveTypes.Duration(childComplexity), true
+	case "LeaveTypes.id":
+		if e.ComplexityRoot.LeaveTypes.ID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.LeaveTypes.ID(childComplexity), true
+	case "LeaveTypes.leaveName":
+		if e.ComplexityRoot.LeaveTypes.LeaveName == nil {
+			break
+		}
+
+		return e.ComplexityRoot.LeaveTypes.LeaveName(childComplexity), true
+	case "LeaveTypes.leaveUnit":
+		if e.ComplexityRoot.LeaveTypes.LeaveUnit == nil {
+			break
+		}
+
+		return e.ComplexityRoot.LeaveTypes.LeaveUnit(childComplexity), true
+	case "LeaveTypes.maxLeaves":
+		if e.ComplexityRoot.LeaveTypes.MaxLeaves == nil {
+			break
+		}
+
+		return e.ComplexityRoot.LeaveTypes.MaxLeaves(childComplexity), true
+	case "LeaveTypes.note":
+		if e.ComplexityRoot.LeaveTypes.Note == nil {
+			break
+		}
+
+		return e.ComplexityRoot.LeaveTypes.Note(childComplexity), true
+	case "LeaveTypes.notificationPeriod":
+		if e.ComplexityRoot.LeaveTypes.NotificationPeriod == nil {
+			break
+		}
+
+		return e.ComplexityRoot.LeaveTypes.NotificationPeriod(childComplexity), true
+	case "LeaveTypes.status":
+		if e.ComplexityRoot.LeaveTypes.Status == nil {
+			break
+		}
+
+		return e.ComplexityRoot.LeaveTypes.Status(childComplexity), true
+	case "LeaveTypes.type":
+		if e.ComplexityRoot.LeaveTypes.Type == nil {
+			break
+		}
+
+		return e.ComplexityRoot.LeaveTypes.Type(childComplexity), true
 
 	case "LibraryAsset.borrowerName":
 		if e.ComplexityRoot.LibraryAsset.BorrowerName == nil {
@@ -2128,6 +2658,17 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.CreateComplaint(childComplexity, args["input"].(CreateComplaintInput)), true
+	case "Mutation.createEmployeeSalary":
+		if e.ComplexityRoot.Mutation.CreateEmployeeSalary == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_createEmployeeSalary_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.CreateEmployeeSalary(childComplexity, args["input"].(CreateEmployeeSalaryInput)), true
 	case "Mutation.createEntranceExam":
 		if e.ComplexityRoot.Mutation.CreateEntranceExam == nil {
 			break
@@ -2172,6 +2713,17 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.CreateHallAllocation(childComplexity, args["input"].(CreateHallAllocationInput)), true
+	case "Mutation.createHoliday":
+		if e.ComplexityRoot.Mutation.CreateHoliday == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_createHoliday_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.CreateHoliday(childComplexity, args["input"].(CreateHolidayInput)), true
 	case "Mutation.createIssueReturn":
 		if e.ComplexityRoot.Mutation.CreateIssueReturn == nil {
 			break
@@ -2183,6 +2735,39 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.CreateIssueReturn(childComplexity, args["input"].(CreateIssueReturnInput)), true
+	case "Mutation.createLeaveBalance":
+		if e.ComplexityRoot.Mutation.CreateLeaveBalance == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_createLeaveBalance_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.CreateLeaveBalance(childComplexity, args["input"].(CreateLeaveBalanceInput)), true
+	case "Mutation.createLeaveRequest":
+		if e.ComplexityRoot.Mutation.CreateLeaveRequest == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_createLeaveRequest_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.CreateLeaveRequest(childComplexity, args["input"].(CreateLeaveRequestInput)), true
+	case "Mutation.createLeaveTypes":
+		if e.ComplexityRoot.Mutation.CreateLeaveTypes == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_createLeaveTypes_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.CreateLeaveTypes(childComplexity, args["input"].(CreateLeaveTypesInput)), true
 	case "Mutation.createLibraryAsset":
 		if e.ComplexityRoot.Mutation.CreateLibraryAsset == nil {
 			break
@@ -2271,6 +2856,28 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.CreateSeatAllocation(childComplexity, args["input"].(CreateSeatAllocationInput)), true
+	case "Mutation.createStaff":
+		if e.ComplexityRoot.Mutation.CreateStaff == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_createStaff_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.CreateStaff(childComplexity, args["input"].(CreateStaffInput)), true
+	case "Mutation.createStaffAttendance":
+		if e.ComplexityRoot.Mutation.CreateStaffAttendance == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_createStaffAttendance_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.CreateStaffAttendance(childComplexity, args["input"].(CreateStaffAttendanceInput)), true
 	case "Mutation.createStudent":
 		if e.ComplexityRoot.Mutation.CreateStudent == nil {
 			break
@@ -2348,6 +2955,17 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.CreateTeacher(childComplexity, args["input"].(CreateTeacherInfoInput)), true
+	case "Mutation.createTodaysAttendance":
+		if e.ComplexityRoot.Mutation.CreateTodaysAttendance == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_createTodaysAttendance_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.CreateTodaysAttendance(childComplexity, args["input"].(CreateTodaysAttendanceInput)), true
 	case "Mutation.createVisitor":
 		if e.ComplexityRoot.Mutation.CreateVisitor == nil {
 			break
@@ -2403,6 +3021,17 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.DeleteComplaint(childComplexity, args["complaintId"].(string)), true
+	case "Mutation.deleteEmployeeSalary":
+		if e.ComplexityRoot.Mutation.DeleteEmployeeSalary == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_deleteEmployeeSalary_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.DeleteEmployeeSalary(childComplexity, args["id"].(string)), true
 	case "Mutation.deleteEntranceExam":
 		if e.ComplexityRoot.Mutation.DeleteEntranceExam == nil {
 			break
@@ -2447,6 +3076,17 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.DeleteHallAllocation(childComplexity, args["id"].(string)), true
+	case "Mutation.deleteHoliday":
+		if e.ComplexityRoot.Mutation.DeleteHoliday == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_deleteHoliday_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.DeleteHoliday(childComplexity, args["id"].(string)), true
 	case "Mutation.deleteIssueReturn":
 		if e.ComplexityRoot.Mutation.DeleteIssueReturn == nil {
 			break
@@ -2458,6 +3098,39 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.DeleteIssueReturn(childComplexity, args["id"].(string)), true
+	case "Mutation.deleteLeaveBalance":
+		if e.ComplexityRoot.Mutation.DeleteLeaveBalance == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_deleteLeaveBalance_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.DeleteLeaveBalance(childComplexity, args["id"].(string)), true
+	case "Mutation.deleteLeaveRequest":
+		if e.ComplexityRoot.Mutation.DeleteLeaveRequest == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_deleteLeaveRequest_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.DeleteLeaveRequest(childComplexity, args["id"].(string)), true
+	case "Mutation.deleteLeaveTypes":
+		if e.ComplexityRoot.Mutation.DeleteLeaveTypes == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_deleteLeaveTypes_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.DeleteLeaveTypes(childComplexity, args["id"].(string)), true
 	case "Mutation.deleteLibraryAsset":
 		if e.ComplexityRoot.Mutation.DeleteLibraryAsset == nil {
 			break
@@ -2546,6 +3219,28 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.DeleteSeatAllocation(childComplexity, args["id"].(string)), true
+	case "Mutation.deleteStaff":
+		if e.ComplexityRoot.Mutation.DeleteStaff == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_deleteStaff_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.DeleteStaff(childComplexity, args["id"].(string)), true
+	case "Mutation.deleteStaffAttendance":
+		if e.ComplexityRoot.Mutation.DeleteStaffAttendance == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_deleteStaffAttendance_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.DeleteStaffAttendance(childComplexity, args["id"].(string)), true
 	case "Mutation.deleteStudent":
 		if e.ComplexityRoot.Mutation.DeleteStudent == nil {
 			break
@@ -2623,6 +3318,17 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.DeleteTeacher(childComplexity, args["id"].(string)), true
+	case "Mutation.deleteTodaysAttendance":
+		if e.ComplexityRoot.Mutation.DeleteTodaysAttendance == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_deleteTodaysAttendance_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.DeleteTodaysAttendance(childComplexity, args["id"].(string)), true
 	case "Mutation.deleteVisitor":
 		if e.ComplexityRoot.Mutation.DeleteVisitor == nil {
 			break
@@ -2689,6 +3395,17 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.UpdateComplaint(childComplexity, args["input"].(UpdateComplaintInput)), true
+	case "Mutation.updateEmployeeSalary":
+		if e.ComplexityRoot.Mutation.UpdateEmployeeSalary == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updateEmployeeSalary_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.UpdateEmployeeSalary(childComplexity, args["input"].(UpdateEmployeeSalaryInput)), true
 	case "Mutation.updateEntranceExam":
 		if e.ComplexityRoot.Mutation.UpdateEntranceExam == nil {
 			break
@@ -2733,6 +3450,17 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.UpdateHallAllocation(childComplexity, args["input"].(UpdateHallAllocationInput)), true
+	case "Mutation.updateHoliday":
+		if e.ComplexityRoot.Mutation.UpdateHoliday == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updateHoliday_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.UpdateHoliday(childComplexity, args["input"].(UpdateHolidayInput)), true
 	case "Mutation.updateIssueReturn":
 		if e.ComplexityRoot.Mutation.UpdateIssueReturn == nil {
 			break
@@ -2744,6 +3472,39 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.UpdateIssueReturn(childComplexity, args["input"].(UpdateIssueReturnInput)), true
+	case "Mutation.updateLeaveBalance":
+		if e.ComplexityRoot.Mutation.UpdateLeaveBalance == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updateLeaveBalance_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.UpdateLeaveBalance(childComplexity, args["input"].(UpdateLeaveBalanceInput)), true
+	case "Mutation.updateLeaveRequest":
+		if e.ComplexityRoot.Mutation.UpdateLeaveRequest == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updateLeaveRequest_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.UpdateLeaveRequest(childComplexity, args["input"].(UpdateLeaveRequestInput)), true
+	case "Mutation.updateLeaveTypes":
+		if e.ComplexityRoot.Mutation.UpdateLeaveTypes == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updateLeaveTypes_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.UpdateLeaveTypes(childComplexity, args["input"].(UpdateLeaveTypesInput)), true
 	case "Mutation.updateLibraryAsset":
 		if e.ComplexityRoot.Mutation.UpdateLibraryAsset == nil {
 			break
@@ -2832,6 +3593,28 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.UpdateSeatAllocation(childComplexity, args["input"].(UpdateSeatAllocationInput)), true
+	case "Mutation.updateStaff":
+		if e.ComplexityRoot.Mutation.UpdateStaff == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updateStaff_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.UpdateStaff(childComplexity, args["input"].(UpdateStaffInput)), true
+	case "Mutation.updateStaffAttendance":
+		if e.ComplexityRoot.Mutation.UpdateStaffAttendance == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updateStaffAttendance_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.UpdateStaffAttendance(childComplexity, args["input"].(UpdateStaffAttendanceInput)), true
 	case "Mutation.updateStudent":
 		if e.ComplexityRoot.Mutation.UpdateStudent == nil {
 			break
@@ -2909,6 +3692,17 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.UpdateTeacher(childComplexity, args["input"].(UpdateTeacherInfoInput)), true
+	case "Mutation.updateTodaysAttendance":
+		if e.ComplexityRoot.Mutation.UpdateTodaysAttendance == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updateTodaysAttendance_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.UpdateTodaysAttendance(childComplexity, args["input"].(UpdateTodaysAttendanceInput)), true
 	case "Mutation.updateVisitor":
 		if e.ComplexityRoot.Mutation.UpdateVisitor == nil {
 			break
@@ -3098,6 +3892,12 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Query.Departments(childComplexity), true
+	case "Query.employeeSalaryList":
+		if e.ComplexityRoot.Query.EmployeeSalaryList == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Query.EmployeeSalaryList(childComplexity), true
 	case "Query.employees":
 		if e.ComplexityRoot.Query.Employees == nil {
 			break
@@ -3152,6 +3952,12 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Query.HallAllocations(childComplexity), true
+	case "Query.holidays":
+		if e.ComplexityRoot.Query.Holidays == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Query.Holidays(childComplexity), true
 
 	case "Query.issueReturns":
 		if e.ComplexityRoot.Query.IssueReturns == nil {
@@ -3159,6 +3965,24 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Query.IssueReturns(childComplexity), true
+	case "Query.leaveBalances":
+		if e.ComplexityRoot.Query.LeaveBalances == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Query.LeaveBalances(childComplexity), true
+	case "Query.leaveRequests":
+		if e.ComplexityRoot.Query.LeaveRequests == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Query.LeaveRequests(childComplexity), true
+	case "Query.leaveTypesList":
+		if e.ComplexityRoot.Query.LeaveTypesList == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Query.LeaveTypesList(childComplexity), true
 	case "Query.libraryReports":
 		if e.ComplexityRoot.Query.LibraryReports == nil {
 			break
@@ -3235,6 +4059,18 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Query.SeatAllocations(childComplexity), true
+	case "Query.staffAttendanceList":
+		if e.ComplexityRoot.Query.StaffAttendanceList == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Query.StaffAttendanceList(childComplexity), true
+	case "Query.staffList":
+		if e.ComplexityRoot.Query.StaffList == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Query.StaffList(childComplexity), true
 	case "Query.studentAttendanceList":
 		if e.ComplexityRoot.Query.StudentAttendanceList == nil {
 			break
@@ -3313,6 +4149,12 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Query.TeachersList(childComplexity), true
+	case "Query.todaysAttendanceList":
+		if e.ComplexityRoot.Query.TodaysAttendanceList == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Query.TodaysAttendanceList(childComplexity), true
 	case "Query.users":
 		if e.ComplexityRoot.Query.Users == nil {
 			break
@@ -3503,6 +4345,206 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.SeatAllocation.StudentName(childComplexity), true
+
+	case "Staff.address":
+		if e.ComplexityRoot.Staff.Address == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Staff.Address(childComplexity), true
+	case "Staff.dateOfBirth":
+		if e.ComplexityRoot.Staff.DateOfBirth == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Staff.DateOfBirth(childComplexity), true
+	case "Staff.department":
+		if e.ComplexityRoot.Staff.Department == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Staff.Department(childComplexity), true
+	case "Staff.email":
+		if e.ComplexityRoot.Staff.Email == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Staff.Email(childComplexity), true
+	case "Staff.experience":
+		if e.ComplexityRoot.Staff.Experience == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Staff.Experience(childComplexity), true
+	case "Staff.gender":
+		if e.ComplexityRoot.Staff.Gender == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Staff.Gender(childComplexity), true
+	case "Staff.id":
+		if e.ComplexityRoot.Staff.ID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Staff.ID(childComplexity), true
+	case "Staff.img":
+		if e.ComplexityRoot.Staff.Img == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Staff.Img(childComplexity), true
+	case "Staff.joiningDate":
+		if e.ComplexityRoot.Staff.JoiningDate == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Staff.JoiningDate(childComplexity), true
+	case "Staff.mobile":
+		if e.ComplexityRoot.Staff.Mobile == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Staff.Mobile(childComplexity), true
+	case "Staff.name":
+		if e.ComplexityRoot.Staff.Name == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Staff.Name(childComplexity), true
+	case "Staff.role":
+		if e.ComplexityRoot.Staff.Role == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Staff.Role(childComplexity), true
+	case "Staff.salary":
+		if e.ComplexityRoot.Staff.Salary == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Staff.Salary(childComplexity), true
+	case "Staff.status":
+		if e.ComplexityRoot.Staff.Status == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Staff.Status(childComplexity), true
+
+	case "StaffAttendance.absenceReason":
+		if e.ComplexityRoot.StaffAttendance.AbsenceReason == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StaffAttendance.AbsenceReason(childComplexity), true
+	case "StaffAttendance.attendanceStatus":
+		if e.ComplexityRoot.StaffAttendance.AttendanceStatus == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StaffAttendance.AttendanceStatus(childComplexity), true
+	case "StaffAttendance.breakTime":
+		if e.ComplexityRoot.StaffAttendance.BreakTime == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StaffAttendance.BreakTime(childComplexity), true
+	case "StaffAttendance.checkIn":
+		if e.ComplexityRoot.StaffAttendance.CheckIn == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StaffAttendance.CheckIn(childComplexity), true
+	case "StaffAttendance.checkOut":
+		if e.ComplexityRoot.StaffAttendance.CheckOut == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StaffAttendance.CheckOut(childComplexity), true
+	case "StaffAttendance.date":
+		if e.ComplexityRoot.StaffAttendance.Date == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StaffAttendance.Date(childComplexity), true
+	case "StaffAttendance.department":
+		if e.ComplexityRoot.StaffAttendance.Department == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StaffAttendance.Department(childComplexity), true
+	case "StaffAttendance.designation":
+		if e.ComplexityRoot.StaffAttendance.Designation == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StaffAttendance.Designation(childComplexity), true
+	case "StaffAttendance.earlyDeparture":
+		if e.ComplexityRoot.StaffAttendance.EarlyDeparture == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StaffAttendance.EarlyDeparture(childComplexity), true
+	case "StaffAttendance.employeeId":
+		if e.ComplexityRoot.StaffAttendance.EmployeeID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StaffAttendance.EmployeeID(childComplexity), true
+	case "StaffAttendance.id":
+		if e.ComplexityRoot.StaffAttendance.ID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StaffAttendance.ID(childComplexity), true
+	case "StaffAttendance.img":
+		if e.ComplexityRoot.StaffAttendance.Img == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StaffAttendance.Img(childComplexity), true
+	case "StaffAttendance.lateArrival":
+		if e.ComplexityRoot.StaffAttendance.LateArrival == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StaffAttendance.LateArrival(childComplexity), true
+	case "StaffAttendance.name":
+		if e.ComplexityRoot.StaffAttendance.Name == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StaffAttendance.Name(childComplexity), true
+	case "StaffAttendance.overtime":
+		if e.ComplexityRoot.StaffAttendance.Overtime == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StaffAttendance.Overtime(childComplexity), true
+	case "StaffAttendance.remarks":
+		if e.ComplexityRoot.StaffAttendance.Remarks == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StaffAttendance.Remarks(childComplexity), true
+	case "StaffAttendance.shift":
+		if e.ComplexityRoot.StaffAttendance.Shift == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StaffAttendance.Shift(childComplexity), true
+	case "StaffAttendance.total":
+		if e.ComplexityRoot.StaffAttendance.Total == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StaffAttendance.Total(childComplexity), true
+	case "StaffAttendance.totalBreaks":
+		if e.ComplexityRoot.StaffAttendance.TotalBreaks == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StaffAttendance.TotalBreaks(childComplexity), true
 
 	case "Student.address":
 		if e.ComplexityRoot.Student.Address == nil {
@@ -4447,6 +5489,61 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 
 		return e.ComplexityRoot.TeacherInfo.SubjectSpecialization(childComplexity), true
 
+	case "TodaysAttendance.break":
+		if e.ComplexityRoot.TodaysAttendance.Break == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TodaysAttendance.Break(childComplexity), true
+	case "TodaysAttendance.firstIn":
+		if e.ComplexityRoot.TodaysAttendance.FirstIn == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TodaysAttendance.FirstIn(childComplexity), true
+	case "TodaysAttendance.id":
+		if e.ComplexityRoot.TodaysAttendance.ID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TodaysAttendance.ID(childComplexity), true
+	case "TodaysAttendance.img":
+		if e.ComplexityRoot.TodaysAttendance.Img == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TodaysAttendance.Img(childComplexity), true
+	case "TodaysAttendance.lastOut":
+		if e.ComplexityRoot.TodaysAttendance.LastOut == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TodaysAttendance.LastOut(childComplexity), true
+	case "TodaysAttendance.name":
+		if e.ComplexityRoot.TodaysAttendance.Name == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TodaysAttendance.Name(childComplexity), true
+	case "TodaysAttendance.shift":
+		if e.ComplexityRoot.TodaysAttendance.Shift == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TodaysAttendance.Shift(childComplexity), true
+	case "TodaysAttendance.status":
+		if e.ComplexityRoot.TodaysAttendance.Status == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TodaysAttendance.Status(childComplexity), true
+	case "TodaysAttendance.total":
+		if e.ComplexityRoot.TodaysAttendance.Total == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TodaysAttendance.Total(childComplexity), true
+
 	case "User.avatarURL":
 		if e.ComplexityRoot.User.AvatarURL == nil {
 			break
@@ -4617,6 +5714,7 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 		ec.unmarshalInputCreateComplaintInput,
 		ec.unmarshalInputCreateDepartmentInput,
 		ec.unmarshalInputCreateEmployeeInput,
+		ec.unmarshalInputCreateEmployeeSalaryInput,
 		ec.unmarshalInputCreateEntranceExamInput,
 		ec.unmarshalInputCreateEventInput,
 		ec.unmarshalInputCreateExamInput,
@@ -4625,7 +5723,11 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 		ec.unmarshalInputCreateFeePaymentInput,
 		ec.unmarshalInputCreateFeeStructureInput,
 		ec.unmarshalInputCreateHallAllocationInput,
+		ec.unmarshalInputCreateHolidayInput,
 		ec.unmarshalInputCreateIssueReturnInput,
+		ec.unmarshalInputCreateLeaveBalanceInput,
+		ec.unmarshalInputCreateLeaveRequestInput,
+		ec.unmarshalInputCreateLeaveTypesInput,
 		ec.unmarshalInputCreateLibraryAssetInput,
 		ec.unmarshalInputCreateLibraryReportInput,
 		ec.unmarshalInputCreateMarksEntryInput,
@@ -4636,6 +5738,8 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 		ec.unmarshalInputCreateResultGenerationInput,
 		ec.unmarshalInputCreateRoleInput,
 		ec.unmarshalInputCreateSeatAllocationInput,
+		ec.unmarshalInputCreateStaffAttendanceInput,
+		ec.unmarshalInputCreateStaffInput,
 		ec.unmarshalInputCreateStudentAttendanceInfoInput,
 		ec.unmarshalInputCreateStudentAttendanceInput,
 		ec.unmarshalInputCreateStudentCertificateInfoInput,
@@ -4649,6 +5753,7 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 		ec.unmarshalInputCreateTeacherAttendanceInput,
 		ec.unmarshalInputCreateTeacherInfoInput,
 		ec.unmarshalInputCreateTeacherInput,
+		ec.unmarshalInputCreateTodaysAttendanceInput,
 		ec.unmarshalInputCreateUserInput,
 		ec.unmarshalInputCreateVisitorInput,
 		ec.unmarshalInputDepartmentWhereInput,
@@ -4674,6 +5779,7 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 		ec.unmarshalInputUpdateComplaintInput,
 		ec.unmarshalInputUpdateDepartmentInput,
 		ec.unmarshalInputUpdateEmployeeInput,
+		ec.unmarshalInputUpdateEmployeeSalaryInput,
 		ec.unmarshalInputUpdateEntranceExamInput,
 		ec.unmarshalInputUpdateEventInput,
 		ec.unmarshalInputUpdateExamInput,
@@ -4682,7 +5788,11 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 		ec.unmarshalInputUpdateFeePaymentInput,
 		ec.unmarshalInputUpdateFeeStructureInput,
 		ec.unmarshalInputUpdateHallAllocationInput,
+		ec.unmarshalInputUpdateHolidayInput,
 		ec.unmarshalInputUpdateIssueReturnInput,
+		ec.unmarshalInputUpdateLeaveBalanceInput,
+		ec.unmarshalInputUpdateLeaveRequestInput,
+		ec.unmarshalInputUpdateLeaveTypesInput,
 		ec.unmarshalInputUpdateLibraryAssetInput,
 		ec.unmarshalInputUpdateLibraryReportInput,
 		ec.unmarshalInputUpdateMarksEntryInput,
@@ -4693,6 +5803,8 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 		ec.unmarshalInputUpdateResultGenerationInput,
 		ec.unmarshalInputUpdateRoleInput,
 		ec.unmarshalInputUpdateSeatAllocationInput,
+		ec.unmarshalInputUpdateStaffAttendanceInput,
+		ec.unmarshalInputUpdateStaffInput,
 		ec.unmarshalInputUpdateStudentAttendanceInfoInput,
 		ec.unmarshalInputUpdateStudentAttendanceInput,
 		ec.unmarshalInputUpdateStudentCertificateInfoInput,
@@ -4706,6 +5818,7 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 		ec.unmarshalInputUpdateTeacherAttendanceInput,
 		ec.unmarshalInputUpdateTeacherInfoInput,
 		ec.unmarshalInputUpdateTeacherInput,
+		ec.unmarshalInputUpdateTodaysAttendanceInput,
 		ec.unmarshalInputUpdateUserInput,
 		ec.unmarshalInputUpdateVisitorInput,
 		ec.unmarshalInputUserWhereInput,
@@ -5046,6 +6159,36 @@ func (ec *executionContext) childFields_Employee(ctx context.Context, field grap
 	return nil, fmt.Errorf("no field named %q was found under type Employee", field.Name)
 }
 
+func (ec *executionContext) childFields_EmployeeSalary(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+	switch field.Name {
+	case "id":
+		return ec.fieldContext_EmployeeSalary_id(ctx, field)
+	case "img":
+		return ec.fieldContext_EmployeeSalary_img(ctx, field)
+	case "name":
+		return ec.fieldContext_EmployeeSalary_name(ctx, field)
+	case "email":
+		return ec.fieldContext_EmployeeSalary_email(ctx, field)
+	case "payslip":
+		return ec.fieldContext_EmployeeSalary_payslip(ctx, field)
+	case "role":
+		return ec.fieldContext_EmployeeSalary_role(ctx, field)
+	case "empId":
+		return ec.fieldContext_EmployeeSalary_empId(ctx, field)
+	case "department":
+		return ec.fieldContext_EmployeeSalary_department(ctx, field)
+	case "salary":
+		return ec.fieldContext_EmployeeSalary_salary(ctx, field)
+	case "bonus":
+		return ec.fieldContext_EmployeeSalary_bonus(ctx, field)
+	case "deductions":
+		return ec.fieldContext_EmployeeSalary_deductions(ctx, field)
+	case "netSalary":
+		return ec.fieldContext_EmployeeSalary_netSalary(ctx, field)
+	}
+	return nil, fmt.Errorf("no field named %q was found under type EmployeeSalary", field.Name)
+}
+
 func (ec *executionContext) childFields_EntranceExam(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 	switch field.Name {
 	case "id":
@@ -5234,6 +6377,32 @@ func (ec *executionContext) childFields_HallAllocation(ctx context.Context, fiel
 	return nil, fmt.Errorf("no field named %q was found under type HallAllocation", field.Name)
 }
 
+func (ec *executionContext) childFields_Holiday(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+	switch field.Name {
+	case "id":
+		return ec.fieldContext_Holiday_id(ctx, field)
+	case "holidayName":
+		return ec.fieldContext_Holiday_holidayName(ctx, field)
+	case "date":
+		return ec.fieldContext_Holiday_date(ctx, field)
+	case "location":
+		return ec.fieldContext_Holiday_location(ctx, field)
+	case "shift":
+		return ec.fieldContext_Holiday_shift(ctx, field)
+	case "details":
+		return ec.fieldContext_Holiday_details(ctx, field)
+	case "holidayType":
+		return ec.fieldContext_Holiday_holidayType(ctx, field)
+	case "createdBy":
+		return ec.fieldContext_Holiday_createdBy(ctx, field)
+	case "creationDate":
+		return ec.fieldContext_Holiday_creationDate(ctx, field)
+	case "approvalStatus":
+		return ec.fieldContext_Holiday_approvalStatus(ctx, field)
+	}
+	return nil, fmt.Errorf("no field named %q was found under type Holiday", field.Name)
+}
+
 func (ec *executionContext) childFields_IssueReturn(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 	switch field.Name {
 	case "id":
@@ -5254,6 +6423,102 @@ func (ec *executionContext) childFields_IssueReturn(ctx context.Context, field g
 		return ec.fieldContext_IssueReturn_status(ctx, field)
 	}
 	return nil, fmt.Errorf("no field named %q was found under type IssueReturn", field.Name)
+}
+
+func (ec *executionContext) childFields_LeaveBalance(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+	switch field.Name {
+	case "id":
+		return ec.fieldContext_LeaveBalance_id(ctx, field)
+	case "img":
+		return ec.fieldContext_LeaveBalance_img(ctx, field)
+	case "name":
+		return ec.fieldContext_LeaveBalance_name(ctx, field)
+	case "prev":
+		return ec.fieldContext_LeaveBalance_prev(ctx, field)
+	case "current":
+		return ec.fieldContext_LeaveBalance_current(ctx, field)
+	case "total":
+		return ec.fieldContext_LeaveBalance_total(ctx, field)
+	case "used":
+		return ec.fieldContext_LeaveBalance_used(ctx, field)
+	case "accepted":
+		return ec.fieldContext_LeaveBalance_accepted(ctx, field)
+	case "rejected":
+		return ec.fieldContext_LeaveBalance_rejected(ctx, field)
+	case "expired":
+		return ec.fieldContext_LeaveBalance_expired(ctx, field)
+	case "carryOver":
+		return ec.fieldContext_LeaveBalance_carryOver(ctx, field)
+	}
+	return nil, fmt.Errorf("no field named %q was found under type LeaveBalance", field.Name)
+}
+
+func (ec *executionContext) childFields_LeaveRequest(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+	switch field.Name {
+	case "id":
+		return ec.fieldContext_LeaveRequest_id(ctx, field)
+	case "img":
+		return ec.fieldContext_LeaveRequest_img(ctx, field)
+	case "name":
+		return ec.fieldContext_LeaveRequest_name(ctx, field)
+	case "employeeId":
+		return ec.fieldContext_LeaveRequest_employeeId(ctx, field)
+	case "department":
+		return ec.fieldContext_LeaveRequest_department(ctx, field)
+	case "type":
+		return ec.fieldContext_LeaveRequest_type(ctx, field)
+	case "from":
+		return ec.fieldContext_LeaveRequest_from(ctx, field)
+	case "leaveTo":
+		return ec.fieldContext_LeaveRequest_leaveTo(ctx, field)
+	case "noOfDays":
+		return ec.fieldContext_LeaveRequest_noOfDays(ctx, field)
+	case "durationType":
+		return ec.fieldContext_LeaveRequest_durationType(ctx, field)
+	case "status":
+		return ec.fieldContext_LeaveRequest_status(ctx, field)
+	case "reason":
+		return ec.fieldContext_LeaveRequest_reason(ctx, field)
+	case "note":
+		return ec.fieldContext_LeaveRequest_note(ctx, field)
+	case "requestedOn":
+		return ec.fieldContext_LeaveRequest_requestedOn(ctx, field)
+	case "approvedBy":
+		return ec.fieldContext_LeaveRequest_approvedBy(ctx, field)
+	case "approvalDate":
+		return ec.fieldContext_LeaveRequest_approvalDate(ctx, field)
+	}
+	return nil, fmt.Errorf("no field named %q was found under type LeaveRequest", field.Name)
+}
+
+func (ec *executionContext) childFields_LeaveTypes(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+	switch field.Name {
+	case "id":
+		return ec.fieldContext_LeaveTypes_id(ctx, field)
+	case "leaveName":
+		return ec.fieldContext_LeaveTypes_leaveName(ctx, field)
+	case "leaveUnit":
+		return ec.fieldContext_LeaveTypes_leaveUnit(ctx, field)
+	case "type":
+		return ec.fieldContext_LeaveTypes_type(ctx, field)
+	case "status":
+		return ec.fieldContext_LeaveTypes_status(ctx, field)
+	case "note":
+		return ec.fieldContext_LeaveTypes_note(ctx, field)
+	case "duration":
+		return ec.fieldContext_LeaveTypes_duration(ctx, field)
+	case "createdBy":
+		return ec.fieldContext_LeaveTypes_createdBy(ctx, field)
+	case "carryOver":
+		return ec.fieldContext_LeaveTypes_carryOver(ctx, field)
+	case "notificationPeriod":
+		return ec.fieldContext_LeaveTypes_notificationPeriod(ctx, field)
+	case "maxLeaves":
+		return ec.fieldContext_LeaveTypes_maxLeaves(ctx, field)
+	case "annualLimit":
+		return ec.fieldContext_LeaveTypes_annualLimit(ctx, field)
+	}
+	return nil, fmt.Errorf("no field named %q was found under type LeaveTypes", field.Name)
 }
 
 func (ec *executionContext) childFields_LibraryAsset(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
@@ -5484,6 +6749,84 @@ func (ec *executionContext) childFields_SeatAllocation(ctx context.Context, fiel
 		return ec.fieldContext_SeatAllocation_feesPaid(ctx, field)
 	}
 	return nil, fmt.Errorf("no field named %q was found under type SeatAllocation", field.Name)
+}
+
+func (ec *executionContext) childFields_Staff(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+	switch field.Name {
+	case "id":
+		return ec.fieldContext_Staff_id(ctx, field)
+	case "img":
+		return ec.fieldContext_Staff_img(ctx, field)
+	case "name":
+		return ec.fieldContext_Staff_name(ctx, field)
+	case "email":
+		return ec.fieldContext_Staff_email(ctx, field)
+	case "address":
+		return ec.fieldContext_Staff_address(ctx, field)
+	case "mobile":
+		return ec.fieldContext_Staff_mobile(ctx, field)
+	case "department":
+		return ec.fieldContext_Staff_department(ctx, field)
+	case "status":
+		return ec.fieldContext_Staff_status(ctx, field)
+	case "joiningDate":
+		return ec.fieldContext_Staff_joiningDate(ctx, field)
+	case "salary":
+		return ec.fieldContext_Staff_salary(ctx, field)
+	case "experience":
+		return ec.fieldContext_Staff_experience(ctx, field)
+	case "role":
+		return ec.fieldContext_Staff_role(ctx, field)
+	case "dateOfBirth":
+		return ec.fieldContext_Staff_dateOfBirth(ctx, field)
+	case "gender":
+		return ec.fieldContext_Staff_gender(ctx, field)
+	}
+	return nil, fmt.Errorf("no field named %q was found under type Staff", field.Name)
+}
+
+func (ec *executionContext) childFields_StaffAttendance(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+	switch field.Name {
+	case "id":
+		return ec.fieldContext_StaffAttendance_id(ctx, field)
+	case "img":
+		return ec.fieldContext_StaffAttendance_img(ctx, field)
+	case "name":
+		return ec.fieldContext_StaffAttendance_name(ctx, field)
+	case "employeeId":
+		return ec.fieldContext_StaffAttendance_employeeId(ctx, field)
+	case "designation":
+		return ec.fieldContext_StaffAttendance_designation(ctx, field)
+	case "date":
+		return ec.fieldContext_StaffAttendance_date(ctx, field)
+	case "checkIn":
+		return ec.fieldContext_StaffAttendance_checkIn(ctx, field)
+	case "breakTime":
+		return ec.fieldContext_StaffAttendance_breakTime(ctx, field)
+	case "checkOut":
+		return ec.fieldContext_StaffAttendance_checkOut(ctx, field)
+	case "total":
+		return ec.fieldContext_StaffAttendance_total(ctx, field)
+	case "shift":
+		return ec.fieldContext_StaffAttendance_shift(ctx, field)
+	case "lateArrival":
+		return ec.fieldContext_StaffAttendance_lateArrival(ctx, field)
+	case "earlyDeparture":
+		return ec.fieldContext_StaffAttendance_earlyDeparture(ctx, field)
+	case "absenceReason":
+		return ec.fieldContext_StaffAttendance_absenceReason(ctx, field)
+	case "overtime":
+		return ec.fieldContext_StaffAttendance_overtime(ctx, field)
+	case "totalBreaks":
+		return ec.fieldContext_StaffAttendance_totalBreaks(ctx, field)
+	case "remarks":
+		return ec.fieldContext_StaffAttendance_remarks(ctx, field)
+	case "attendanceStatus":
+		return ec.fieldContext_StaffAttendance_attendanceStatus(ctx, field)
+	case "department":
+		return ec.fieldContext_StaffAttendance_department(ctx, field)
+	}
+	return nil, fmt.Errorf("no field named %q was found under type StaffAttendance", field.Name)
 }
 
 func (ec *executionContext) childFields_Student(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
@@ -5872,6 +7215,30 @@ func (ec *executionContext) childFields_TeacherInfo(ctx context.Context, field g
 		return ec.fieldContext_TeacherInfo_bio(ctx, field)
 	}
 	return nil, fmt.Errorf("no field named %q was found under type TeacherInfo", field.Name)
+}
+
+func (ec *executionContext) childFields_TodaysAttendance(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+	switch field.Name {
+	case "id":
+		return ec.fieldContext_TodaysAttendance_id(ctx, field)
+	case "img":
+		return ec.fieldContext_TodaysAttendance_img(ctx, field)
+	case "name":
+		return ec.fieldContext_TodaysAttendance_name(ctx, field)
+	case "firstIn":
+		return ec.fieldContext_TodaysAttendance_firstIn(ctx, field)
+	case "break":
+		return ec.fieldContext_TodaysAttendance_break(ctx, field)
+	case "lastOut":
+		return ec.fieldContext_TodaysAttendance_lastOut(ctx, field)
+	case "total":
+		return ec.fieldContext_TodaysAttendance_total(ctx, field)
+	case "status":
+		return ec.fieldContext_TodaysAttendance_status(ctx, field)
+	case "shift":
+		return ec.fieldContext_TodaysAttendance_shift(ctx, field)
+	}
+	return nil, fmt.Errorf("no field named %q was found under type TodaysAttendance", field.Name)
 }
 
 func (ec *executionContext) childFields_User(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {

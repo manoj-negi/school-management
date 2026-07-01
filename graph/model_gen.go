@@ -144,6 +144,20 @@ type CreateComplaintInput struct {
 	Feedback              *string `json:"feedback,omitempty"`
 }
 
+type CreateEmployeeSalaryInput struct {
+	Img        string `json:"img"`
+	Name       string `json:"name"`
+	Email      string `json:"email"`
+	Payslip    string `json:"payslip"`
+	Role       string `json:"role"`
+	EmpID      string `json:"empId"`
+	Department string `json:"department"`
+	Salary     string `json:"salary"`
+	Bonus      string `json:"bonus"`
+	Deductions string `json:"deductions"`
+	NetSalary  string `json:"netSalary"`
+}
+
 type CreateEntranceExamInput struct {
 	ExamName     string  `json:"examName"`
 	ExamCode     string  `json:"examCode"`
@@ -183,6 +197,18 @@ type CreateHallAllocationInput struct {
 	SeatNo      string `json:"seatNo"`
 }
 
+type CreateHolidayInput struct {
+	HolidayName    string `json:"holidayName"`
+	Date           string `json:"date"`
+	Location       string `json:"location"`
+	Shift          string `json:"shift"`
+	Details        string `json:"details"`
+	HolidayType    string `json:"holidayType"`
+	CreatedBy      string `json:"createdBy"`
+	CreationDate   string `json:"creationDate"`
+	ApprovalStatus string `json:"approvalStatus"`
+}
+
 type CreateIssueReturnInput struct {
 	BookNo      string `json:"bookNo"`
 	BookTitle   string `json:"bookTitle"`
@@ -191,6 +217,51 @@ type CreateIssueReturnInput struct {
 	IssueDate   string `json:"issueDate"`
 	ReturnDate  string `json:"returnDate"`
 	Status      string `json:"status"`
+}
+
+type CreateLeaveBalanceInput struct {
+	Img       string `json:"img"`
+	Name      string `json:"name"`
+	Prev      string `json:"prev"`
+	Current   string `json:"current"`
+	Total     string `json:"total"`
+	Used      string `json:"used"`
+	Accepted  string `json:"accepted"`
+	Rejected  string `json:"rejected"`
+	Expired   string `json:"expired"`
+	CarryOver string `json:"carryOver"`
+}
+
+type CreateLeaveRequestInput struct {
+	Img          string `json:"img"`
+	Name         string `json:"name"`
+	EmployeeID   string `json:"employeeId"`
+	Department   string `json:"department"`
+	Type         string `json:"type"`
+	From         string `json:"from"`
+	LeaveTo      string `json:"leaveTo"`
+	NoOfDays     string `json:"noOfDays"`
+	DurationType string `json:"durationType"`
+	Status       string `json:"status"`
+	Reason       string `json:"reason"`
+	Note         string `json:"note"`
+	RequestedOn  string `json:"requestedOn"`
+	ApprovedBy   string `json:"approvedBy"`
+	ApprovalDate string `json:"approvalDate"`
+}
+
+type CreateLeaveTypesInput struct {
+	LeaveName          string `json:"leaveName"`
+	LeaveUnit          string `json:"leaveUnit"`
+	Type               string `json:"type"`
+	Status             string `json:"status"`
+	Note               string `json:"note"`
+	Duration           int    `json:"duration"`
+	CreatedBy          string `json:"createdBy"`
+	CarryOver          string `json:"carryOver"`
+	NotificationPeriod string `json:"notificationPeriod"`
+	MaxLeaves          int    `json:"maxLeaves"`
+	AnnualLimit        int    `json:"annualLimit"`
 }
 
 type CreateLibraryAssetInput struct {
@@ -278,6 +349,43 @@ type CreateSeatAllocationInput struct {
 	ReportingDate    string `json:"reportingDate"`
 	Status           string `json:"status"`
 	FeesPaid         bool   `json:"feesPaid"`
+}
+
+type CreateStaffAttendanceInput struct {
+	Img              string `json:"img"`
+	Name             string `json:"name"`
+	EmployeeID       string `json:"employeeId"`
+	Designation      string `json:"designation"`
+	Date             string `json:"date"`
+	CheckIn          string `json:"checkIn"`
+	BreakTime        string `json:"breakTime"`
+	CheckOut         string `json:"checkOut"`
+	Total            string `json:"total"`
+	Shift            string `json:"shift"`
+	LateArrival      string `json:"lateArrival"`
+	EarlyDeparture   string `json:"earlyDeparture"`
+	AbsenceReason    string `json:"absenceReason"`
+	Overtime         string `json:"overtime"`
+	TotalBreaks      string `json:"totalBreaks"`
+	Remarks          string `json:"remarks"`
+	AttendanceStatus string `json:"attendanceStatus"`
+	Department       string `json:"department"`
+}
+
+type CreateStaffInput struct {
+	Img         string `json:"img"`
+	Name        string `json:"name"`
+	Email       string `json:"email"`
+	Address     string `json:"address"`
+	Mobile      string `json:"mobile"`
+	Department  string `json:"department"`
+	Status      string `json:"status"`
+	JoiningDate string `json:"joiningDate"`
+	Salary      string `json:"salary"`
+	Experience  string `json:"experience"`
+	Role        string `json:"role"`
+	DateOfBirth string `json:"dateOfBirth"`
+	Gender      string `json:"gender"`
 }
 
 type CreateStudentAttendanceInfoInput struct {
@@ -387,6 +495,17 @@ type CreateTeacherInfoInput struct {
 	Bio                   *string `json:"bio,omitempty"`
 }
 
+type CreateTodaysAttendanceInput struct {
+	Img     string `json:"img"`
+	Name    string `json:"name"`
+	FirstIn string `json:"firstIn"`
+	Break   string `json:"break"`
+	LastOut string `json:"lastOut"`
+	Total   string `json:"total"`
+	Status  string `json:"status"`
+	Shift   string `json:"shift"`
+}
+
 type CreateVisitorInput struct {
 	VisitorName             string  `json:"visitorName"`
 	VisitDate               string  `json:"visitDate"`
@@ -400,6 +519,21 @@ type CreateVisitorInput struct {
 	IDProofType             *string `json:"idProofType,omitempty"`
 	IDProofNumber           *string `json:"idProofNumber,omitempty"`
 	Notes                   *string `json:"notes,omitempty"`
+}
+
+type EmployeeSalary struct {
+	ID         string `json:"id"`
+	Img        string `json:"img"`
+	Name       string `json:"name"`
+	Email      string `json:"email"`
+	Payslip    string `json:"payslip"`
+	Role       string `json:"role"`
+	EmpID      string `json:"empId"`
+	Department string `json:"department"`
+	Salary     string `json:"salary"`
+	Bonus      string `json:"bonus"`
+	Deductions string `json:"deductions"`
+	NetSalary  string `json:"netSalary"`
 }
 
 type EntranceExam struct {
@@ -445,6 +579,19 @@ type HallAllocation struct {
 	SeatNo      string `json:"seatNo"`
 }
 
+type Holiday struct {
+	ID             string `json:"id"`
+	HolidayName    string `json:"holidayName"`
+	Date           string `json:"date"`
+	Location       string `json:"location"`
+	Shift          string `json:"shift"`
+	Details        string `json:"details"`
+	HolidayType    string `json:"holidayType"`
+	CreatedBy      string `json:"createdBy"`
+	CreationDate   string `json:"creationDate"`
+	ApprovalStatus string `json:"approvalStatus"`
+}
+
 type IssueReturn struct {
 	ID          string `json:"id"`
 	BookNo      string `json:"bookNo"`
@@ -454,6 +601,54 @@ type IssueReturn struct {
 	IssueDate   string `json:"issueDate"`
 	ReturnDate  string `json:"returnDate"`
 	Status      string `json:"status"`
+}
+
+type LeaveBalance struct {
+	ID        string `json:"id"`
+	Img       string `json:"img"`
+	Name      string `json:"name"`
+	Prev      string `json:"prev"`
+	Current   string `json:"current"`
+	Total     string `json:"total"`
+	Used      string `json:"used"`
+	Accepted  string `json:"accepted"`
+	Rejected  string `json:"rejected"`
+	Expired   string `json:"expired"`
+	CarryOver string `json:"carryOver"`
+}
+
+type LeaveRequest struct {
+	ID           string `json:"id"`
+	Img          string `json:"img"`
+	Name         string `json:"name"`
+	EmployeeID   string `json:"employeeId"`
+	Department   string `json:"department"`
+	Type         string `json:"type"`
+	From         string `json:"from"`
+	LeaveTo      string `json:"leaveTo"`
+	NoOfDays     string `json:"noOfDays"`
+	DurationType string `json:"durationType"`
+	Status       string `json:"status"`
+	Reason       string `json:"reason"`
+	Note         string `json:"note"`
+	RequestedOn  string `json:"requestedOn"`
+	ApprovedBy   string `json:"approvedBy"`
+	ApprovalDate string `json:"approvalDate"`
+}
+
+type LeaveTypes struct {
+	ID                 string `json:"id"`
+	LeaveName          string `json:"leaveName"`
+	LeaveUnit          string `json:"leaveUnit"`
+	Type               string `json:"type"`
+	Status             string `json:"status"`
+	Note               string `json:"note"`
+	Duration           int    `json:"duration"`
+	CreatedBy          string `json:"createdBy"`
+	CarryOver          string `json:"carryOver"`
+	NotificationPeriod string `json:"notificationPeriod"`
+	MaxLeaves          int    `json:"maxLeaves"`
+	AnnualLimit        int    `json:"annualLimit"`
 }
 
 type LibraryAsset struct {
@@ -559,6 +754,45 @@ type SeatAllocation struct {
 	ReportingDate    string `json:"reportingDate"`
 	Status           string `json:"status"`
 	FeesPaid         bool   `json:"feesPaid"`
+}
+
+type Staff struct {
+	ID          string `json:"id"`
+	Img         string `json:"img"`
+	Name        string `json:"name"`
+	Email       string `json:"email"`
+	Address     string `json:"address"`
+	Mobile      string `json:"mobile"`
+	Department  string `json:"department"`
+	Status      string `json:"status"`
+	JoiningDate string `json:"joiningDate"`
+	Salary      string `json:"salary"`
+	Experience  string `json:"experience"`
+	Role        string `json:"role"`
+	DateOfBirth string `json:"dateOfBirth"`
+	Gender      string `json:"gender"`
+}
+
+type StaffAttendance struct {
+	ID               string `json:"id"`
+	Img              string `json:"img"`
+	Name             string `json:"name"`
+	EmployeeID       string `json:"employeeId"`
+	Designation      string `json:"designation"`
+	Date             string `json:"date"`
+	CheckIn          string `json:"checkIn"`
+	BreakTime        string `json:"breakTime"`
+	CheckOut         string `json:"checkOut"`
+	Total            string `json:"total"`
+	Shift            string `json:"shift"`
+	LateArrival      string `json:"lateArrival"`
+	EarlyDeparture   string `json:"earlyDeparture"`
+	AbsenceReason    string `json:"absenceReason"`
+	Overtime         string `json:"overtime"`
+	TotalBreaks      string `json:"totalBreaks"`
+	Remarks          string `json:"remarks"`
+	AttendanceStatus string `json:"attendanceStatus"`
+	Department       string `json:"department"`
 }
 
 type StudentAttendanceInfo struct {
@@ -675,6 +909,18 @@ type TeacherInfo struct {
 	Bio                   *string `json:"bio,omitempty"`
 }
 
+type TodaysAttendance struct {
+	ID      string `json:"id"`
+	Img     string `json:"img"`
+	Name    string `json:"name"`
+	FirstIn string `json:"firstIn"`
+	Break   string `json:"break"`
+	LastOut string `json:"lastOut"`
+	Total   string `json:"total"`
+	Status  string `json:"status"`
+	Shift   string `json:"shift"`
+}
+
 type UpdateAdmissionInquiryInput struct {
 	InquiryID          string  `json:"inquiryId"`
 	StudentName        string  `json:"studentName"`
@@ -744,6 +990,21 @@ type UpdateComplaintInput struct {
 	Feedback              *string `json:"feedback,omitempty"`
 }
 
+type UpdateEmployeeSalaryInput struct {
+	ID         string `json:"id"`
+	Img        string `json:"img"`
+	Name       string `json:"name"`
+	Email      string `json:"email"`
+	Payslip    string `json:"payslip"`
+	Role       string `json:"role"`
+	EmpID      string `json:"empId"`
+	Department string `json:"department"`
+	Salary     string `json:"salary"`
+	Bonus      string `json:"bonus"`
+	Deductions string `json:"deductions"`
+	NetSalary  string `json:"netSalary"`
+}
+
 type UpdateEntranceExamInput struct {
 	ID           string  `json:"id"`
 	ExamName     string  `json:"examName"`
@@ -787,6 +1048,19 @@ type UpdateHallAllocationInput struct {
 	SeatNo      string `json:"seatNo"`
 }
 
+type UpdateHolidayInput struct {
+	ID             string `json:"id"`
+	HolidayName    string `json:"holidayName"`
+	Date           string `json:"date"`
+	Location       string `json:"location"`
+	Shift          string `json:"shift"`
+	Details        string `json:"details"`
+	HolidayType    string `json:"holidayType"`
+	CreatedBy      string `json:"createdBy"`
+	CreationDate   string `json:"creationDate"`
+	ApprovalStatus string `json:"approvalStatus"`
+}
+
 type UpdateIssueReturnInput struct {
 	ID          string `json:"id"`
 	BookNo      string `json:"bookNo"`
@@ -796,6 +1070,54 @@ type UpdateIssueReturnInput struct {
 	IssueDate   string `json:"issueDate"`
 	ReturnDate  string `json:"returnDate"`
 	Status      string `json:"status"`
+}
+
+type UpdateLeaveBalanceInput struct {
+	ID        string `json:"id"`
+	Img       string `json:"img"`
+	Name      string `json:"name"`
+	Prev      string `json:"prev"`
+	Current   string `json:"current"`
+	Total     string `json:"total"`
+	Used      string `json:"used"`
+	Accepted  string `json:"accepted"`
+	Rejected  string `json:"rejected"`
+	Expired   string `json:"expired"`
+	CarryOver string `json:"carryOver"`
+}
+
+type UpdateLeaveRequestInput struct {
+	ID           string `json:"id"`
+	Img          string `json:"img"`
+	Name         string `json:"name"`
+	EmployeeID   string `json:"employeeId"`
+	Department   string `json:"department"`
+	Type         string `json:"type"`
+	From         string `json:"from"`
+	LeaveTo      string `json:"leaveTo"`
+	NoOfDays     string `json:"noOfDays"`
+	DurationType string `json:"durationType"`
+	Status       string `json:"status"`
+	Reason       string `json:"reason"`
+	Note         string `json:"note"`
+	RequestedOn  string `json:"requestedOn"`
+	ApprovedBy   string `json:"approvedBy"`
+	ApprovalDate string `json:"approvalDate"`
+}
+
+type UpdateLeaveTypesInput struct {
+	ID                 string `json:"id"`
+	LeaveName          string `json:"leaveName"`
+	LeaveUnit          string `json:"leaveUnit"`
+	Type               string `json:"type"`
+	Status             string `json:"status"`
+	Note               string `json:"note"`
+	Duration           int    `json:"duration"`
+	CreatedBy          string `json:"createdBy"`
+	CarryOver          string `json:"carryOver"`
+	NotificationPeriod string `json:"notificationPeriod"`
+	MaxLeaves          int    `json:"maxLeaves"`
+	AnnualLimit        int    `json:"annualLimit"`
 }
 
 type UpdateLibraryAssetInput struct {
@@ -891,6 +1213,45 @@ type UpdateSeatAllocationInput struct {
 	ReportingDate    string `json:"reportingDate"`
 	Status           string `json:"status"`
 	FeesPaid         bool   `json:"feesPaid"`
+}
+
+type UpdateStaffAttendanceInput struct {
+	ID               string `json:"id"`
+	Img              string `json:"img"`
+	Name             string `json:"name"`
+	EmployeeID       string `json:"employeeId"`
+	Designation      string `json:"designation"`
+	Date             string `json:"date"`
+	CheckIn          string `json:"checkIn"`
+	BreakTime        string `json:"breakTime"`
+	CheckOut         string `json:"checkOut"`
+	Total            string `json:"total"`
+	Shift            string `json:"shift"`
+	LateArrival      string `json:"lateArrival"`
+	EarlyDeparture   string `json:"earlyDeparture"`
+	AbsenceReason    string `json:"absenceReason"`
+	Overtime         string `json:"overtime"`
+	TotalBreaks      string `json:"totalBreaks"`
+	Remarks          string `json:"remarks"`
+	AttendanceStatus string `json:"attendanceStatus"`
+	Department       string `json:"department"`
+}
+
+type UpdateStaffInput struct {
+	ID          string `json:"id"`
+	Img         string `json:"img"`
+	Name        string `json:"name"`
+	Email       string `json:"email"`
+	Address     string `json:"address"`
+	Mobile      string `json:"mobile"`
+	Department  string `json:"department"`
+	Status      string `json:"status"`
+	JoiningDate string `json:"joiningDate"`
+	Salary      string `json:"salary"`
+	Experience  string `json:"experience"`
+	Role        string `json:"role"`
+	DateOfBirth string `json:"dateOfBirth"`
+	Gender      string `json:"gender"`
 }
 
 type UpdateStudentAttendanceInfoInput struct {
@@ -1005,6 +1366,18 @@ type UpdateTeacherInfoInput struct {
 	Status                string  `json:"status"`
 	Birthdate             string  `json:"birthdate"`
 	Bio                   *string `json:"bio,omitempty"`
+}
+
+type UpdateTodaysAttendanceInput struct {
+	ID      string `json:"id"`
+	Img     string `json:"img"`
+	Name    string `json:"name"`
+	FirstIn string `json:"firstIn"`
+	Break   string `json:"break"`
+	LastOut string `json:"lastOut"`
+	Total   string `json:"total"`
+	Status  string `json:"status"`
+	Shift   string `json:"shift"`
 }
 
 type UpdateVisitorInput struct {

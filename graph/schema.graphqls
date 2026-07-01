@@ -30,6 +30,14 @@ extend type Query {
   bookStatuses: [BookStatus!]!
   issueReturns: [IssueReturn!]!
   libraryReports: [LibraryReport!]!
+  staffList: [Staff!]!
+  staffAttendanceList: [StaffAttendance!]!
+  leaveRequests: [LeaveRequest!]!
+  leaveBalances: [LeaveBalance!]!
+  leaveTypesList: [LeaveTypes!]!
+  holidays: [Holiday!]!
+  todaysAttendanceList: [TodaysAttendance!]!
+  employeeSalaryList: [EmployeeSalary!]!
 }
 
 extend type Mutation {
@@ -109,6 +117,30 @@ extend type Mutation {
   createLibraryReport(input: CreateLibraryReportInput!): LibraryReport!
   updateLibraryReport(input: UpdateLibraryReportInput!): LibraryReport!
   deleteLibraryReport(id: String!): String!
+  createStaff(input: CreateStaffInput!): Staff!
+  updateStaff(input: UpdateStaffInput!): Staff!
+  deleteStaff(id: String!): String!
+  createStaffAttendance(input: CreateStaffAttendanceInput!): StaffAttendance!
+  updateStaffAttendance(input: UpdateStaffAttendanceInput!): StaffAttendance!
+  deleteStaffAttendance(id: String!): String!
+  createLeaveRequest(input: CreateLeaveRequestInput!): LeaveRequest!
+  updateLeaveRequest(input: UpdateLeaveRequestInput!): LeaveRequest!
+  deleteLeaveRequest(id: String!): String!
+  createLeaveBalance(input: CreateLeaveBalanceInput!): LeaveBalance!
+  updateLeaveBalance(input: UpdateLeaveBalanceInput!): LeaveBalance!
+  deleteLeaveBalance(id: String!): String!
+  createLeaveTypes(input: CreateLeaveTypesInput!): LeaveTypes!
+  updateLeaveTypes(input: UpdateLeaveTypesInput!): LeaveTypes!
+  deleteLeaveTypes(id: String!): String!
+  createHoliday(input: CreateHolidayInput!): Holiday!
+  updateHoliday(input: UpdateHolidayInput!): Holiday!
+  deleteHoliday(id: String!): String!
+  createTodaysAttendance(input: CreateTodaysAttendanceInput!): TodaysAttendance!
+  updateTodaysAttendance(input: UpdateTodaysAttendanceInput!): TodaysAttendance!
+  deleteTodaysAttendance(id: String!): String!
+  createEmployeeSalary(input: CreateEmployeeSalaryInput!): EmployeeSalary!
+  updateEmployeeSalary(input: UpdateEmployeeSalaryInput!): EmployeeSalary!
+  deleteEmployeeSalary(id: String!): String!
 }
 
 input UpdateAdmissionInquiryInput {
@@ -1150,5 +1182,380 @@ input UpdateLibraryReportInput {
   status: String!
 }
 
+type Staff {
+  id: String!
+  img: String!
+  name: String!
+  email: String!
+  address: String!
+  mobile: String!
+  department: String!
+  status: String!
+  joiningDate: String!
+  salary: String!
+  experience: String!
+  role: String!
+  dateOfBirth: String!
+  gender: String!
+}
+
+input CreateStaffInput {
+  img: String!
+  name: String!
+  email: String!
+  address: String!
+  mobile: String!
+  department: String!
+  status: String!
+  joiningDate: String!
+  salary: String!
+  experience: String!
+  role: String!
+  dateOfBirth: String!
+  gender: String!
+}
+
+input UpdateStaffInput {
+  id: String!
+  img: String!
+  name: String!
+  email: String!
+  address: String!
+  mobile: String!
+  department: String!
+  status: String!
+  joiningDate: String!
+  salary: String!
+  experience: String!
+  role: String!
+  dateOfBirth: String!
+  gender: String!
+}
+
 scalar Time
 
+type StaffAttendance {
+  id: String!
+  img: String!
+  name: String!
+  employeeId: String!
+  designation: String!
+  date: String!
+  checkIn: String!
+  breakTime: String!
+  checkOut: String!
+  total: String!
+  shift: String!
+  lateArrival: String!
+  earlyDeparture: String!
+  absenceReason: String!
+  overtime: String!
+  totalBreaks: String!
+  remarks: String!
+  attendanceStatus: String!
+  department: String!
+}
+
+input CreateStaffAttendanceInput {
+  img: String!
+  name: String!
+  employeeId: String!
+  designation: String!
+  date: String!
+  checkIn: String!
+  breakTime: String!
+  checkOut: String!
+  total: String!
+  shift: String!
+  lateArrival: String!
+  earlyDeparture: String!
+  absenceReason: String!
+  overtime: String!
+  totalBreaks: String!
+  remarks: String!
+  attendanceStatus: String!
+  department: String!
+}
+
+input UpdateStaffAttendanceInput {
+  id: String!
+  img: String!
+  name: String!
+  employeeId: String!
+  designation: String!
+  date: String!
+  checkIn: String!
+  breakTime: String!
+  checkOut: String!
+  total: String!
+  shift: String!
+  lateArrival: String!
+  earlyDeparture: String!
+  absenceReason: String!
+  overtime: String!
+  totalBreaks: String!
+  remarks: String!
+  attendanceStatus: String!
+  department: String!
+}
+
+type LeaveRequest {
+  id: String!
+  img: String!
+  name: String!
+  employeeId: String!
+  department: String!
+  type: String!
+  from: String!
+  leaveTo: String!
+  noOfDays: String!
+  durationType: String!
+  status: String!
+  reason: String!
+  note: String!
+  requestedOn: String!
+  approvedBy: String!
+  approvalDate: String!
+}
+
+input CreateLeaveRequestInput {
+  img: String!
+  name: String!
+  employeeId: String!
+  department: String!
+  type: String!
+  from: String!
+  leaveTo: String!
+  noOfDays: String!
+  durationType: String!
+  status: String!
+  reason: String!
+  note: String!
+  requestedOn: String!
+  approvedBy: String!
+  approvalDate: String!
+}
+
+input UpdateLeaveRequestInput {
+  id: String!
+  img: String!
+  name: String!
+  employeeId: String!
+  department: String!
+  type: String!
+  from: String!
+  leaveTo: String!
+  noOfDays: String!
+  durationType: String!
+  status: String!
+  reason: String!
+  note: String!
+  requestedOn: String!
+  approvedBy: String!
+  approvalDate: String!
+}
+
+type LeaveBalance {
+  id: String!
+  img: String!
+  name: String!
+  prev: String!
+  current: String!
+  total: String!
+  used: String!
+  accepted: String!
+  rejected: String!
+  expired: String!
+  carryOver: String!
+}
+
+input CreateLeaveBalanceInput {
+  img: String!
+  name: String!
+  prev: String!
+  current: String!
+  total: String!
+  used: String!
+  accepted: String!
+  rejected: String!
+  expired: String!
+  carryOver: String!
+}
+
+input UpdateLeaveBalanceInput {
+  id: String!
+  img: String!
+  name: String!
+  prev: String!
+  current: String!
+  total: String!
+  used: String!
+  accepted: String!
+  rejected: String!
+  expired: String!
+  carryOver: String!
+}
+
+
+type LeaveTypes {
+  id: String!
+  leaveName: String!
+  leaveUnit: String!
+  type: String!
+  status: String!
+  note: String!
+  duration: Int!
+  createdBy: String!
+  carryOver: String!
+  notificationPeriod: String!
+  maxLeaves: Int!
+  annualLimit: Int!
+}
+
+input CreateLeaveTypesInput {
+  leaveName: String!
+  leaveUnit: String!
+  type: String!
+  status: String!
+  note: String!
+  duration: Int!
+  createdBy: String!
+  carryOver: String!
+  notificationPeriod: String!
+  maxLeaves: Int!
+  annualLimit: Int!
+}
+
+input UpdateLeaveTypesInput {
+  id: String!
+  leaveName: String!
+  leaveUnit: String!
+  type: String!
+  status: String!
+  note: String!
+  duration: Int!
+  createdBy: String!
+  carryOver: String!
+  notificationPeriod: String!
+  maxLeaves: Int!
+  annualLimit: Int!
+}
+
+
+type Holiday {
+  id: String!
+  holidayName: String!
+  date: String!
+  location: String!
+  shift: String!
+  details: String!
+  holidayType: String!
+  createdBy: String!
+  creationDate: String!
+  approvalStatus: String!
+}
+
+input CreateHolidayInput {
+  holidayName: String!
+  date: String!
+  location: String!
+  shift: String!
+  details: String!
+  holidayType: String!
+  createdBy: String!
+  creationDate: String!
+  approvalStatus: String!
+}
+
+input UpdateHolidayInput {
+  id: String!
+  holidayName: String!
+  date: String!
+  location: String!
+  shift: String!
+  details: String!
+  holidayType: String!
+  createdBy: String!
+  creationDate: String!
+  approvalStatus: String!
+}
+
+type TodaysAttendance {
+  id: String!
+  img: String!
+  name: String!
+  firstIn: String!
+  break: String!
+  lastOut: String!
+  total: String!
+  status: String!
+  shift: String!
+}
+
+input CreateTodaysAttendanceInput {
+  img: String!
+  name: String!
+  firstIn: String!
+  break: String!
+  lastOut: String!
+  total: String!
+  status: String!
+  shift: String!
+}
+
+input UpdateTodaysAttendanceInput {
+  id: String!
+  img: String!
+  name: String!
+  firstIn: String!
+  break: String!
+  lastOut: String!
+  total: String!
+  status: String!
+  shift: String!
+}
+
+
+type EmployeeSalary {
+  id: String!
+  img: String!
+  name: String!
+  email: String!
+  payslip: String!
+  role: String!
+  empId: String!
+  department: String!
+  salary: String!
+  bonus: String!
+  deductions: String!
+  netSalary: String!
+}
+
+input CreateEmployeeSalaryInput {
+  img: String!
+  name: String!
+  email: String!
+  payslip: String!
+  role: String!
+  empId: String!
+  department: String!
+  salary: String!
+  bonus: String!
+  deductions: String!
+  netSalary: String!
+}
+
+input UpdateEmployeeSalaryInput {
+  id: String!
+  img: String!
+  name: String!
+  email: String!
+  payslip: String!
+  role: String!
+  empId: String!
+  department: String!
+  salary: String!
+  bonus: String!
+  deductions: String!
+  netSalary: String!
+}

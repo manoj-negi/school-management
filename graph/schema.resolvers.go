@@ -2345,6 +2345,626 @@ func (r *mutationResolver) DeleteLibraryReport(ctx context.Context, id string) (
 	return id, nil
 }
 
+// CreateStaff is the resolver for the createStaff field.
+func (r *mutationResolver) CreateStaff(ctx context.Context, input CreateStaffInput) (*Staff, error) {
+	db := r.DB
+	id := uuid.New().String()
+
+	_, err := db.ExecContext(ctx, `
+		INSERT INTO public.staff
+			(id, img, name, email, address, mobile, department, status,
+			 joining_date, salary, experience, role, date_of_birth, gender, date)
+		VALUES ($1, $2, $3, $4, $5, $6, $7, $8,
+		        NULLIF($9,'')::timestamp, $10, $11, $12,
+		        NULLIF($13,'')::timestamp, $14, NOW())
+	`, id, input.Img, input.Name, input.Email, input.Address, input.Mobile,
+		input.Department, input.Status, input.JoiningDate, input.Salary,
+		input.Experience, input.Role, input.DateOfBirth, input.Gender)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create staff member: %w", err)
+	}
+
+	return &Staff{
+		ID: id, Img: input.Img, Name: input.Name, Email: input.Email,
+		Address: input.Address, Mobile: input.Mobile, Department: input.Department,
+		Status: input.Status, JoiningDate: input.JoiningDate, Salary: input.Salary,
+		Experience: input.Experience, Role: input.Role, DateOfBirth: input.DateOfBirth,
+		Gender: input.Gender,
+	}, nil
+}
+
+// UpdateStaff is the resolver for the updateStaff field.
+func (r *mutationResolver) UpdateStaff(ctx context.Context, input UpdateStaffInput) (*Staff, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, `
+		UPDATE public.staff
+		SET img=$1, name=$2, email=$3, address=$4, mobile=$5, department=$6,
+		    status=$7, joining_date=NULLIF($8,'')::timestamp, salary=$9,
+		    experience=$10, role=$11, date_of_birth=NULLIF($12,'')::timestamp, gender=$13
+		WHERE id=$14
+	`, input.Img, input.Name, input.Email, input.Address, input.Mobile,
+		input.Department, input.Status, input.JoiningDate, input.Salary,
+		input.Experience, input.Role, input.DateOfBirth, input.Gender, input.ID)
+	if err != nil {
+		return nil, fmt.Errorf("failed to update staff member: %w", err)
+	}
+
+	return &Staff{
+		ID: input.ID, Img: input.Img, Name: input.Name, Email: input.Email,
+		Address: input.Address, Mobile: input.Mobile, Department: input.Department,
+		Status: input.Status, JoiningDate: input.JoiningDate, Salary: input.Salary,
+		Experience: input.Experience, Role: input.Role, DateOfBirth: input.DateOfBirth,
+		Gender: input.Gender,
+	}, nil
+}
+
+// DeleteStaff is the resolver for the deleteStaff field.
+func (r *mutationResolver) DeleteStaff(ctx context.Context, id string) (string, error) {
+	db := r.DB
+	_, err := db.ExecContext(ctx, `DELETE FROM public.staff WHERE id=$1`, id)
+	if err != nil {
+		return "", fmt.Errorf("failed to delete staff member: %w", err)
+	}
+	return id, nil
+}
+
+// CreateStaffAttendance is the resolver for the createStaffAttendance field.
+func (r *mutationResolver) CreateStaffAttendance(ctx context.Context, input CreateStaffAttendanceInput) (*StaffAttendance, error) {
+	db := r.DB
+	id := uuid.New().String()
+
+	_, err := db.ExecContext(ctx, `
+		INSERT INTO public.staff_attendance
+			(id, img, name, employee_id, designation, date,
+			 check_in, "break", check_out, total, shift,
+			 late_arrival, early_departure, absence_reason,
+			 overtime, total_breaks, remarks, attendance_status, department)
+		VALUES ($1,$2,$3,
+			CASE WHEN $4='' THEN NULL ELSE $4::uuid END,
+			$5,
+			NULLIF($6,'')::timestamp,
+			$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19)
+	`, id, input.Img, input.Name, input.EmployeeID, input.Designation, input.Date,
+		input.CheckIn, input.BreakTime, input.CheckOut, input.Total, input.Shift,
+		input.LateArrival, input.EarlyDeparture, input.AbsenceReason,
+		input.Overtime, input.TotalBreaks, input.Remarks, input.AttendanceStatus, input.Department)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create staff attendance: %w", err)
+	}
+
+	return &StaffAttendance{
+		ID: id, Img: input.Img, Name: input.Name, EmployeeID: input.EmployeeID,
+		Designation: input.Designation, Date: input.Date,
+		CheckIn: input.CheckIn, BreakTime: input.BreakTime, CheckOut: input.CheckOut,
+		Total: input.Total, Shift: input.Shift, LateArrival: input.LateArrival,
+		EarlyDeparture: input.EarlyDeparture, AbsenceReason: input.AbsenceReason,
+		Overtime: input.Overtime, TotalBreaks: input.TotalBreaks, Remarks: input.Remarks,
+		AttendanceStatus: input.AttendanceStatus, Department: input.Department,
+	}, nil
+}
+
+// UpdateStaffAttendance is the resolver for the updateStaffAttendance field.
+func (r *mutationResolver) UpdateStaffAttendance(ctx context.Context, input UpdateStaffAttendanceInput) (*StaffAttendance, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, `
+		UPDATE public.staff_attendance
+		SET img=$1, name=$2,
+		    employee_id=CASE WHEN $3='' THEN NULL ELSE $3::uuid END,
+		    designation=$4, date=NULLIF($5,'')::timestamp,
+		    check_in=$6, "break"=$7, check_out=$8, total=$9, shift=$10,
+		    late_arrival=$11, early_departure=$12, absence_reason=$13,
+		    overtime=$14, total_breaks=$15, remarks=$16,
+		    attendance_status=$17, department=$18
+		WHERE id=$19
+	`, input.Img, input.Name, input.EmployeeID, input.Designation, input.Date,
+		input.CheckIn, input.BreakTime, input.CheckOut, input.Total, input.Shift,
+		input.LateArrival, input.EarlyDeparture, input.AbsenceReason,
+		input.Overtime, input.TotalBreaks, input.Remarks, input.AttendanceStatus, input.Department, input.ID)
+	if err != nil {
+		return nil, fmt.Errorf("failed to update staff attendance: %w", err)
+	}
+
+	return &StaffAttendance{
+		ID: input.ID, Img: input.Img, Name: input.Name, EmployeeID: input.EmployeeID,
+		Designation: input.Designation, Date: input.Date,
+		CheckIn: input.CheckIn, BreakTime: input.BreakTime, CheckOut: input.CheckOut,
+		Total: input.Total, Shift: input.Shift, LateArrival: input.LateArrival,
+		EarlyDeparture: input.EarlyDeparture, AbsenceReason: input.AbsenceReason,
+		Overtime: input.Overtime, TotalBreaks: input.TotalBreaks, Remarks: input.Remarks,
+		AttendanceStatus: input.AttendanceStatus, Department: input.Department,
+	}, nil
+}
+
+// DeleteStaffAttendance is the resolver for the deleteStaffAttendance field.
+func (r *mutationResolver) DeleteStaffAttendance(ctx context.Context, id string) (string, error) {
+	db := r.DB
+	_, err := db.ExecContext(ctx, `DELETE FROM public.staff_attendance WHERE id=$1`, id)
+	if err != nil {
+		return "", fmt.Errorf("failed to delete staff attendance: %w", err)
+	}
+	return id, nil
+}
+
+// CreateLeaveRequest is the resolver for the createLeaveRequest field.
+func (r *mutationResolver) CreateLeaveRequest(ctx context.Context, input CreateLeaveRequestInput) (*LeaveRequest, error) {
+	db := r.DB
+	id := uuid.New().String()
+
+	_, err := db.ExecContext(ctx, `
+		INSERT INTO public.leaves
+			(id, img, name, employee_id, role, department, type,
+			 "from", leave_to, no_of_days, duration_type, status,
+			 requested_on, approved_by, approval_date, reason, note)
+		VALUES ($1, $2, $3, CASE WHEN $4='' THEN NULL ELSE $4::uuid END, '', $5, $6,
+		        NULLIF($7,'')::timestamp, NULLIF($8,'')::timestamp, $9, $10, $11,
+		        NULLIF($12,'')::timestamp, $13, NULLIF($14,'')::timestamp, $15, $16)
+	`, id, input.Img, input.Name, input.EmployeeID, input.Department, input.Type,
+		input.From, input.LeaveTo, input.NoOfDays, input.DurationType, input.Status,
+		input.RequestedOn, input.ApprovedBy, input.ApprovalDate, input.Reason, input.Note)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create leave request: %w", err)
+	}
+
+	return &LeaveRequest{
+		ID:           id,
+		Img:          input.Img,
+		Name:         input.Name,
+		EmployeeID:   input.EmployeeID,
+		Department:   input.Department,
+		Type:         input.Type,
+		From:         input.From,
+		LeaveTo:      input.LeaveTo,
+		NoOfDays:     input.NoOfDays,
+		DurationType: input.DurationType,
+		Status:       input.Status,
+		Reason:       input.Reason,
+		Note:         input.Note,
+		RequestedOn:  input.RequestedOn,
+		ApprovedBy:   input.ApprovedBy,
+		ApprovalDate: input.ApprovalDate,
+	}, nil
+}
+
+// UpdateLeaveRequest is the resolver for the updateLeaveRequest field.
+func (r *mutationResolver) UpdateLeaveRequest(ctx context.Context, input UpdateLeaveRequestInput) (*LeaveRequest, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, `
+		UPDATE public.leaves
+		SET img=$1, name=$2, employee_id=CASE WHEN $3='' THEN NULL ELSE $3::uuid END,
+		    department=$4, type=$5, "from"=NULLIF($6,'')::timestamp, leave_to=NULLIF($7,'')::timestamp,
+		    no_of_days=$8, duration_type=$9, status=$10, requested_on=NULLIF($11,'')::timestamp,
+		    approved_by=$12, approval_date=NULLIF($13,'')::timestamp, reason=$14, note=$15
+		WHERE id=$16
+	`, input.Img, input.Name, input.EmployeeID, input.Department, input.Type,
+		input.From, input.LeaveTo, input.NoOfDays, input.DurationType, input.Status,
+		input.RequestedOn, input.ApprovedBy, input.ApprovalDate, input.Reason, input.Note, input.ID)
+	if err != nil {
+		return nil, fmt.Errorf("failed to update leave request: %w", err)
+	}
+
+	return &LeaveRequest{
+		ID:           input.ID,
+		Img:          input.Img,
+		Name:         input.Name,
+		EmployeeID:   input.EmployeeID,
+		Department:   input.Department,
+		Type:         input.Type,
+		From:         input.From,
+		LeaveTo:      input.LeaveTo,
+		NoOfDays:     input.NoOfDays,
+		DurationType: input.DurationType,
+		Status:       input.Status,
+		Reason:       input.Reason,
+		Note:         input.Note,
+		RequestedOn:  input.RequestedOn,
+		ApprovedBy:   input.ApprovedBy,
+		ApprovalDate: input.ApprovalDate,
+	}, nil
+}
+
+// DeleteLeaveRequest is the resolver for the deleteLeaveRequest field.
+func (r *mutationResolver) DeleteLeaveRequest(ctx context.Context, id string) (string, error) {
+	db := r.DB
+	_, err := db.ExecContext(ctx, `DELETE FROM public.leaves WHERE id=$1`, id)
+	if err != nil {
+		return "", fmt.Errorf("failed to delete leave request: %w", err)
+	}
+	return id, nil
+}
+
+// CreateLeaveBalance is the resolver for the createLeaveBalance field.
+func (r *mutationResolver) CreateLeaveBalance(ctx context.Context, input CreateLeaveBalanceInput) (*LeaveBalance, error) {
+	db := r.DB
+	id := uuid.New().String()
+
+	_, err := db.ExecContext(ctx, `
+		INSERT INTO public.leave_balance
+			(id, img, name, prev, current, total, used, accepted, rejected, expired, carry_over)
+		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
+	`, id, input.Img, input.Name, input.Prev, input.Current, input.Total, input.Used, input.Accepted, input.Rejected, input.Expired, input.CarryOver)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create leave balance: %w", err)
+	}
+
+	return &LeaveBalance{
+		ID:        id,
+		Img:       input.Img,
+		Name:      input.Name,
+		Prev:      input.Prev,
+		Current:   input.Current,
+		Total:     input.Total,
+		Used:      input.Used,
+		Accepted:  input.Accepted,
+		Rejected:  input.Rejected,
+		Expired:   input.Expired,
+		CarryOver: input.CarryOver,
+	}, nil
+}
+
+// UpdateLeaveBalance is the resolver for the updateLeaveBalance field.
+func (r *mutationResolver) UpdateLeaveBalance(ctx context.Context, input UpdateLeaveBalanceInput) (*LeaveBalance, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, `
+		UPDATE public.leave_balance
+		SET img=$1, name=$2, prev=$3, current=$4, total=$5, used=$6, accepted=$7, rejected=$8, expired=$9, carry_over=$10
+		WHERE id=$11
+	`, input.Img, input.Name, input.Prev, input.Current, input.Total, input.Used, input.Accepted, input.Rejected, input.Expired, input.CarryOver, input.ID)
+	if err != nil {
+		return nil, fmt.Errorf("failed to update leave balance: %w", err)
+	}
+
+	return &LeaveBalance{
+		ID:        input.ID,
+		Img:       input.Img,
+		Name:      input.Name,
+		Prev:      input.Prev,
+		Current:   input.Current,
+		Total:     input.Total,
+		Used:      input.Used,
+		Accepted:  input.Accepted,
+		Rejected:  input.Rejected,
+		Expired:   input.Expired,
+		CarryOver: input.CarryOver,
+	}, nil
+}
+
+// DeleteLeaveBalance is the resolver for the deleteLeaveBalance field.
+func (r *mutationResolver) DeleteLeaveBalance(ctx context.Context, id string) (string, error) {
+	db := r.DB
+	_, err := db.ExecContext(ctx, `DELETE FROM public.leave_balance WHERE id=$1`, id)
+	if err != nil {
+		return "", fmt.Errorf("failed to delete leave balance: %w", err)
+	}
+	return id, nil
+}
+
+// CreateLeaveTypes is the resolver for the createLeaveTypes field.
+func (r *mutationResolver) CreateLeaveTypes(ctx context.Context, input CreateLeaveTypesInput) (*LeaveTypes, error) {
+	db := r.DB
+
+	id := uuid.New().String()
+
+	_, err := db.ExecContext(ctx, `
+		INSERT INTO public.leave_types (
+			id, leave_name, leave_unit, type, status, note,
+			duration, created_by, carry_over, notification_period, max_leaves, annual_limit
+		) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+	`,
+		id, input.LeaveName, input.LeaveUnit, input.Type, input.Status, input.Note,
+		input.Duration, input.CreatedBy, input.CarryOver, input.NotificationPeriod,
+		input.MaxLeaves, input.AnnualLimit,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to insert leave type: %w", err)
+	}
+
+	return &LeaveTypes{
+		ID:                 id,
+		LeaveName:          input.LeaveName,
+		LeaveUnit:          input.LeaveUnit,
+		Type:               input.Type,
+		Status:             input.Status,
+		Note:               input.Note,
+		Duration:           input.Duration,
+		CreatedBy:          input.CreatedBy,
+		CarryOver:          input.CarryOver,
+		NotificationPeriod: input.NotificationPeriod,
+		MaxLeaves:          input.MaxLeaves,
+		AnnualLimit:        input.AnnualLimit,
+	}, nil
+}
+
+// UpdateLeaveTypes is the resolver for the updateLeaveTypes field.
+func (r *mutationResolver) UpdateLeaveTypes(ctx context.Context, input UpdateLeaveTypesInput) (*LeaveTypes, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, `
+		UPDATE public.leave_types SET
+			leave_name = $1, leave_unit = $2, type = $3, status = $4, note = $5,
+			duration = $6, created_by = $7, carry_over = $8,
+			notification_period = $9, max_leaves = $10, annual_limit = $11
+		WHERE id = $12
+	`,
+		input.LeaveName, input.LeaveUnit, input.Type, input.Status, input.Note,
+		input.Duration, input.CreatedBy, input.CarryOver, input.NotificationPeriod,
+		input.MaxLeaves, input.AnnualLimit, input.ID,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to update leave type: %w", err)
+	}
+
+	return &LeaveTypes{
+		ID:                 input.ID,
+		LeaveName:          input.LeaveName,
+		LeaveUnit:          input.LeaveUnit,
+		Type:               input.Type,
+		Status:             input.Status,
+		Note:               input.Note,
+		Duration:           input.Duration,
+		CreatedBy:          input.CreatedBy,
+		CarryOver:          input.CarryOver,
+		NotificationPeriod: input.NotificationPeriod,
+		MaxLeaves:          input.MaxLeaves,
+		AnnualLimit:        input.AnnualLimit,
+	}, nil
+}
+
+// DeleteLeaveTypes is the resolver for the deleteLeaveTypes field.
+func (r *mutationResolver) DeleteLeaveTypes(ctx context.Context, id string) (string, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, "DELETE FROM public.leave_types WHERE id = $1", id)
+	if err != nil {
+		return "", fmt.Errorf("failed to delete leave type: %w", err)
+	}
+
+	return id, nil
+}
+
+// CreateHoliday is the resolver for the createHoliday field.
+func (r *mutationResolver) CreateHoliday(ctx context.Context, input CreateHolidayInput) (*Holiday, error) {
+	db := r.DB
+
+	id := uuid.New().String()
+
+	_, err := db.ExecContext(ctx, `
+		INSERT INTO public.holidays (
+			id, holiday_name, date, location, shift, details,
+			holiday_type, created_by, creation_date, approval_status
+		) VALUES ($1, $2, NULLIF($3,'')::timestamp, $4, $5, $6, $7, $8, NULLIF($9,'')::timestamp, $10)
+	`,
+		id, input.HolidayName, input.Date, input.Location, input.Shift, input.Details,
+		input.HolidayType, input.CreatedBy, input.CreationDate, input.ApprovalStatus,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to insert holiday: %w", err)
+	}
+
+	return &Holiday{
+		ID:             id,
+		HolidayName:    input.HolidayName,
+		Date:           input.Date,
+		Location:       input.Location,
+		Shift:          input.Shift,
+		Details:        input.Details,
+		HolidayType:    input.HolidayType,
+		CreatedBy:      input.CreatedBy,
+		CreationDate:   input.CreationDate,
+		ApprovalStatus: input.ApprovalStatus,
+	}, nil
+}
+
+// UpdateHoliday is the resolver for the updateHoliday field.
+func (r *mutationResolver) UpdateHoliday(ctx context.Context, input UpdateHolidayInput) (*Holiday, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, `
+		UPDATE public.holidays SET
+			holiday_name = $1, date = NULLIF($2,'')::timestamp, location = $3,
+			shift = $4, details = $5, holiday_type = $6,
+			created_by = $7, creation_date = NULLIF($8,'')::timestamp, approval_status = $9
+		WHERE id = $10
+	`,
+		input.HolidayName, input.Date, input.Location, input.Shift, input.Details,
+		input.HolidayType, input.CreatedBy, input.CreationDate, input.ApprovalStatus, input.ID,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to update holiday: %w", err)
+	}
+
+	return &Holiday{
+		ID:             input.ID,
+		HolidayName:    input.HolidayName,
+		Date:           input.Date,
+		Location:       input.Location,
+		Shift:          input.Shift,
+		Details:        input.Details,
+		HolidayType:    input.HolidayType,
+		CreatedBy:      input.CreatedBy,
+		CreationDate:   input.CreationDate,
+		ApprovalStatus: input.ApprovalStatus,
+	}, nil
+}
+
+// DeleteHoliday is the resolver for the deleteHoliday field.
+func (r *mutationResolver) DeleteHoliday(ctx context.Context, id string) (string, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, "DELETE FROM public.holidays WHERE id = $1", id)
+	if err != nil {
+		return "", fmt.Errorf("failed to delete holiday: %w", err)
+	}
+
+	return id, nil
+}
+
+// CreateTodaysAttendance is the resolver for the createTodaysAttendance field.
+func (r *mutationResolver) CreateTodaysAttendance(ctx context.Context, input CreateTodaysAttendanceInput) (*TodaysAttendance, error) {
+	db := r.DB
+
+	id := uuid.New().String()
+
+	_, err := db.ExecContext(ctx, `
+		INSERT INTO public.todays_attendance (
+			id, img, name, first_in, break, last_out, total, status, shift
+		) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+	`,
+		id, input.Img, input.Name, input.FirstIn, input.Break, input.LastOut, input.Total, input.Status, input.Shift,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to insert todays attendance: %w", err)
+	}
+
+	return &TodaysAttendance{
+		ID:      id,
+		Img:     input.Img,
+		Name:    input.Name,
+		FirstIn: input.FirstIn,
+		Break:   input.Break,
+		LastOut: input.LastOut,
+		Total:   input.Total,
+		Status:  input.Status,
+		Shift:   input.Shift,
+	}, nil
+}
+
+// UpdateTodaysAttendance is the resolver for the updateTodaysAttendance field.
+func (r *mutationResolver) UpdateTodaysAttendance(ctx context.Context, input UpdateTodaysAttendanceInput) (*TodaysAttendance, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, `
+		UPDATE public.todays_attendance SET
+			img = $1, name = $2, first_in = $3, break = $4, last_out = $5, total = $6, status = $7, shift = $8
+		WHERE id = $9
+	`,
+		input.Img, input.Name, input.FirstIn, input.Break, input.LastOut, input.Total, input.Status, input.Shift, input.ID,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to update todays attendance: %w", err)
+	}
+
+	return &TodaysAttendance{
+		ID:      input.ID,
+		Img:     input.Img,
+		Name:    input.Name,
+		FirstIn: input.FirstIn,
+		Break:   input.Break,
+		LastOut: input.LastOut,
+		Total:   input.Total,
+		Status:  input.Status,
+		Shift:   input.Shift,
+	}, nil
+}
+
+// DeleteTodaysAttendance is the resolver for the deleteTodaysAttendance field.
+func (r *mutationResolver) DeleteTodaysAttendance(ctx context.Context, id string) (string, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, "DELETE FROM public.todays_attendance WHERE id = $1", id)
+	if err != nil {
+		return "", fmt.Errorf("failed to delete todays attendance: %w", err)
+	}
+
+	return id, nil
+}
+
+// CreateEmployeeSalary is the resolver for the createEmployeeSalary field.
+func (r *mutationResolver) CreateEmployeeSalary(ctx context.Context, input CreateEmployeeSalaryInput) (*EmployeeSalary, error) {
+	db := r.DB
+
+	id := uuid.New().String()
+
+	var empIDVal interface{}
+	if parsedUUID, err := uuid.Parse(input.EmpID); err == nil {
+		empIDVal = parsedUUID.String()
+	} else {
+		empIDVal = nil
+	}
+
+	_, err := db.ExecContext(ctx, `
+		INSERT INTO public.employee_salary (
+			id, img, role, email, payslip, department, emp_id, name, salary, bonus, deductions, net_salary
+		) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+	`,
+		id, input.Img, input.Role, input.Email, input.Payslip, input.Department,
+		empIDVal, input.Name, input.Salary, input.Bonus, input.Deductions, input.NetSalary,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to insert employee salary: %w", err)
+	}
+
+	return &EmployeeSalary{
+		ID:         id,
+		Img:        input.Img,
+		Name:       input.Name,
+		Email:      input.Email,
+		Payslip:    input.Payslip,
+		Role:       input.Role,
+		EmpID:      input.EmpID,
+		Department: input.Department,
+		Salary:     input.Salary,
+		Bonus:      input.Bonus,
+		Deductions: input.Deductions,
+		NetSalary:  input.NetSalary,
+	}, nil
+}
+
+// UpdateEmployeeSalary is the resolver for the updateEmployeeSalary field.
+func (r *mutationResolver) UpdateEmployeeSalary(ctx context.Context, input UpdateEmployeeSalaryInput) (*EmployeeSalary, error) {
+	db := r.DB
+
+	var empIDVal interface{}
+	if parsedUUID, err := uuid.Parse(input.EmpID); err == nil {
+		empIDVal = parsedUUID.String()
+	} else {
+		empIDVal = nil
+	}
+
+	_, err := db.ExecContext(ctx, `
+		UPDATE public.employee_salary SET
+			img = $1, role = $2, email = $3, payslip = $4, department = $5,
+			emp_id = $6, name = $7, salary = $8, bonus = $9, deductions = $10, net_salary = $11
+		WHERE id = $12
+	`,
+		input.Img, input.Role, input.Email, input.Payslip, input.Department,
+		empIDVal, input.Name, input.Salary, input.Bonus, input.Deductions, input.NetSalary, input.ID,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to update employee salary: %w", err)
+	}
+
+	return &EmployeeSalary{
+		ID:         input.ID,
+		Img:        input.Img,
+		Name:       input.Name,
+		Email:      input.Email,
+		Payslip:    input.Payslip,
+		Role:       input.Role,
+		EmpID:      input.EmpID,
+		Department: input.Department,
+		Salary:     input.Salary,
+		Bonus:      input.Bonus,
+		Deductions: input.Deductions,
+		NetSalary:  input.NetSalary,
+	}, nil
+}
+
+// DeleteEmployeeSalary is the resolver for the deleteEmployeeSalary field.
+func (r *mutationResolver) DeleteEmployeeSalary(ctx context.Context, id string) (string, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, "DELETE FROM public.employee_salary WHERE id = $1", id)
+	if err != nil {
+		return "", fmt.Errorf("failed to delete employee salary: %w", err)
+	}
+
+	return id, nil
+}
+
 // AdmissionInquiries is the resolver for the admissionInquiries field.
 func (r *queryResolver) AdmissionInquiries(ctx context.Context) ([]*AdmissionInquiry, error) {
 	db := r.DB
@@ -3687,6 +4307,362 @@ func (r *queryResolver) LibraryReports(ctx context.Context) ([]*LibraryReport, e
 
 	if list == nil {
 		list = []*LibraryReport{}
+	}
+	return list, nil
+}
+
+// StaffList is the resolver for the staffList field.
+func (r *queryResolver) StaffList(ctx context.Context) ([]*Staff, error) {
+	db := r.DB
+
+	rows, err := db.QueryContext(ctx, `
+		SELECT
+			id,
+			COALESCE(img,''),
+			COALESCE(name,''),
+			COALESCE(email,''),
+			COALESCE(address,''),
+			COALESCE(mobile,''),
+			COALESCE(department,''),
+			COALESCE(status,''),
+			COALESCE(TO_CHAR(joining_date,'YYYY-MM-DD'),''),
+			COALESCE(salary,''),
+			COALESCE(experience,''),
+			COALESCE(role,''),
+			COALESCE(TO_CHAR(date_of_birth,'YYYY-MM-DD'),''),
+			COALESCE(gender,'')
+		FROM public.staff
+		ORDER BY name
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("failed to fetch staff list: %w", err)
+	}
+	defer rows.Close()
+
+	var list []*Staff
+	for rows.Next() {
+		var s Staff
+		if err := rows.Scan(
+			&s.ID, &s.Img, &s.Name, &s.Email, &s.Address, &s.Mobile,
+			&s.Department, &s.Status, &s.JoiningDate, &s.Salary,
+			&s.Experience, &s.Role, &s.DateOfBirth, &s.Gender,
+		); err != nil {
+			return nil, fmt.Errorf("failed to scan staff row: %w", err)
+		}
+		list = append(list, &s)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("row iteration error: %w", err)
+	}
+
+	if list == nil {
+		list = []*Staff{}
+	}
+	return list, nil
+}
+
+// StaffAttendanceList is the resolver for the staffAttendanceList field.
+func (r *queryResolver) StaffAttendanceList(ctx context.Context) ([]*StaffAttendance, error) {
+	db := r.DB
+
+	rows, err := db.QueryContext(ctx, `
+		SELECT
+			id,
+			COALESCE(img,''),
+			COALESCE(name,''),
+			COALESCE(employee_id::text,''),
+			COALESCE(designation,''),
+			COALESCE(TO_CHAR(date,'YYYY-MM-DD'),''),
+			COALESCE(check_in,''),
+			COALESCE("break",''),
+			COALESCE(check_out,''),
+			COALESCE(total,''),
+			COALESCE(shift,''),
+			COALESCE(late_arrival,''),
+			COALESCE(early_departure,''),
+			COALESCE(absence_reason,''),
+			COALESCE(overtime,''),
+			COALESCE(total_breaks,''),
+			COALESCE(remarks,''),
+			COALESCE(attendance_status,''),
+			COALESCE(department,'')
+		FROM public.staff_attendance
+		ORDER BY date DESC, name
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("failed to fetch staff attendance list: %w", err)
+	}
+	defer rows.Close()
+
+	var list []*StaffAttendance
+	for rows.Next() {
+		var s StaffAttendance
+		if err := rows.Scan(
+			&s.ID, &s.Img, &s.Name, &s.EmployeeID, &s.Designation, &s.Date,
+			&s.CheckIn, &s.BreakTime, &s.CheckOut, &s.Total, &s.Shift,
+			&s.LateArrival, &s.EarlyDeparture, &s.AbsenceReason,
+			&s.Overtime, &s.TotalBreaks, &s.Remarks,
+			&s.AttendanceStatus, &s.Department,
+		); err != nil {
+			return nil, fmt.Errorf("failed to scan staff attendance row: %w", err)
+		}
+		list = append(list, &s)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("row iteration error: %w", err)
+	}
+	if list == nil {
+		list = []*StaffAttendance{}
+	}
+	return list, nil
+}
+
+// LeaveRequests is the resolver for the leaveRequests field.
+func (r *queryResolver) LeaveRequests(ctx context.Context) ([]*LeaveRequest, error) {
+	db := r.DB
+
+	rows, err := db.QueryContext(ctx, `
+		SELECT
+			id,
+			COALESCE(img, ''),
+			COALESCE(name, ''),
+			COALESCE(employee_id::text, ''),
+			COALESCE(department, ''),
+			COALESCE(type, ''),
+			COALESCE(TO_CHAR("from", 'YYYY-MM-DD'), ''),
+			COALESCE(TO_CHAR(leave_to, 'YYYY-MM-DD'), ''),
+			COALESCE(no_of_days, ''),
+			COALESCE(duration_type, ''),
+			COALESCE(status, ''),
+			COALESCE(reason, ''),
+			COALESCE(note, ''),
+			COALESCE(TO_CHAR(requested_on, 'YYYY-MM-DD'), ''),
+			COALESCE(approved_by, ''),
+			COALESCE(TO_CHAR(approval_date, 'YYYY-MM-DD'), '')
+		FROM public.leaves
+		ORDER BY requested_on DESC, name
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("failed to fetch leave requests: %w", err)
+	}
+	defer rows.Close()
+
+	var list []*LeaveRequest
+	for rows.Next() {
+		var lr LeaveRequest
+		if err := rows.Scan(
+			&lr.ID, &lr.Img, &lr.Name, &lr.EmployeeID, &lr.Department, &lr.Type,
+			&lr.From, &lr.LeaveTo, &lr.NoOfDays, &lr.DurationType, &lr.Status,
+			&lr.Reason, &lr.Note, &lr.RequestedOn, &lr.ApprovedBy, &lr.ApprovalDate,
+		); err != nil {
+			return nil, fmt.Errorf("failed to scan leave request row: %w", err)
+		}
+		list = append(list, &lr)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("row iteration error: %w", err)
+	}
+	if list == nil {
+		list = []*LeaveRequest{}
+	}
+	return list, nil
+}
+
+// LeaveBalances is the resolver for the leaveBalances field.
+func (r *queryResolver) LeaveBalances(ctx context.Context) ([]*LeaveBalance, error) {
+	db := r.DB
+
+	rows, err := db.QueryContext(ctx, `
+		SELECT
+			id,
+			COALESCE(img, ''),
+			COALESCE(name, ''),
+			COALESCE(prev, ''),
+			COALESCE(current, ''),
+			COALESCE(total, ''),
+			COALESCE(used, ''),
+			COALESCE(accepted, ''),
+			COALESCE(rejected, ''),
+			COALESCE(expired, ''),
+			COALESCE(carry_over, '')
+		FROM public.leave_balance
+		ORDER BY name
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("failed to fetch leave balances: %w", err)
+	}
+	defer rows.Close()
+
+	var list []*LeaveBalance
+	for rows.Next() {
+		var lb LeaveBalance
+		if err := rows.Scan(
+			&lb.ID, &lb.Img, &lb.Name, &lb.Prev, &lb.Current, &lb.Total,
+			&lb.Used, &lb.Accepted, &lb.Rejected, &lb.Expired, &lb.CarryOver,
+		); err != nil {
+			return nil, fmt.Errorf("failed to scan leave balance row: %w", err)
+		}
+		list = append(list, &lb)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("row iteration error: %w", err)
+	}
+	if list == nil {
+		list = []*LeaveBalance{}
+	}
+	return list, nil
+}
+
+// LeaveTypesList is the resolver for the leaveTypesList field.
+func (r *queryResolver) LeaveTypesList(ctx context.Context) ([]*LeaveTypes, error) {
+	db := r.DB
+
+	rows, err := db.QueryContext(ctx, `
+		SELECT id, leave_name, leave_unit, type, status, note,
+		       COALESCE(duration, 0), created_by, carry_over,
+		       notification_period, COALESCE(max_leaves, 0), COALESCE(annual_limit, 0)
+		FROM public.leave_types
+		ORDER BY leave_name
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("failed to query leave types: %w", err)
+	}
+	defer rows.Close()
+
+	var list []*LeaveTypes
+	for rows.Next() {
+		var lt LeaveTypes
+		if err := rows.Scan(
+			&lt.ID, &lt.LeaveName, &lt.LeaveUnit, &lt.Type, &lt.Status, &lt.Note,
+			&lt.Duration, &lt.CreatedBy, &lt.CarryOver, &lt.NotificationPeriod,
+			&lt.MaxLeaves, &lt.AnnualLimit,
+		); err != nil {
+			return nil, fmt.Errorf("failed to scan leave types row: %w", err)
+		}
+		list = append(list, &lt)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("row iteration error: %w", err)
+	}
+	if list == nil {
+		list = []*LeaveTypes{}
+	}
+	return list, nil
+}
+
+// Holidays is the resolver for the holidays field.
+func (r *queryResolver) Holidays(ctx context.Context) ([]*Holiday, error) {
+	db := r.DB
+
+	rows, err := db.QueryContext(ctx, `
+		SELECT id,
+		       COALESCE(holiday_name, ''),
+		       COALESCE(TO_CHAR(date, 'YYYY-MM-DD'), ''),
+		       COALESCE(location, ''),
+		       COALESCE(shift, ''),
+		       COALESCE(details, ''),
+		       COALESCE(holiday_type, ''),
+		       COALESCE(created_by, ''),
+		       COALESCE(TO_CHAR(creation_date, 'YYYY-MM-DD'), ''),
+		       COALESCE(approval_status, '')
+		FROM public.holidays
+		ORDER BY date DESC
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("failed to query holidays: %w", err)
+	}
+	defer rows.Close()
+
+	var list []*Holiday
+	for rows.Next() {
+		var h Holiday
+		if err := rows.Scan(
+			&h.ID, &h.HolidayName, &h.Date, &h.Location, &h.Shift,
+			&h.Details, &h.HolidayType, &h.CreatedBy, &h.CreationDate, &h.ApprovalStatus,
+		); err != nil {
+			return nil, fmt.Errorf("failed to scan holiday row: %w", err)
+		}
+		list = append(list, &h)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("row iteration error: %w", err)
+	}
+	if list == nil {
+		list = []*Holiday{}
+	}
+	return list, nil
+}
+
+// TodaysAttendanceList is the resolver for the todaysAttendanceList field.
+func (r *queryResolver) TodaysAttendanceList(ctx context.Context) ([]*TodaysAttendance, error) {
+	db := r.DB
+
+	rows, err := db.QueryContext(ctx, `
+		SELECT id, COALESCE(img, ''), COALESCE(name, ''), COALESCE(first_in, ''), COALESCE(break, ''), COALESCE(last_out, ''), COALESCE(total, ''), COALESCE(status, ''), COALESCE(shift, '')
+		FROM public.todays_attendance
+		ORDER BY name
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("failed to query todays attendance: %w", err)
+	}
+	defer rows.Close()
+
+	var list []*TodaysAttendance
+	for rows.Next() {
+		var ta TodaysAttendance
+		if err := rows.Scan(
+			&ta.ID, &ta.Img, &ta.Name, &ta.FirstIn, &ta.Break,
+			&ta.LastOut, &ta.Total, &ta.Status, &ta.Shift,
+		); err != nil {
+			return nil, fmt.Errorf("failed to scan todays attendance row: %w", err)
+		}
+		list = append(list, &ta)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("row iteration error: %w", err)
+	}
+	if list == nil {
+		list = []*TodaysAttendance{}
+	}
+	return list, nil
+}
+
+// EmployeeSalaryList is the resolver for the employeeSalaryList field.
+func (r *queryResolver) EmployeeSalaryList(ctx context.Context) ([]*EmployeeSalary, error) {
+	db := r.DB
+
+	rows, err := db.QueryContext(ctx, `
+		SELECT
+			id, COALESCE(img, ''), COALESCE(role, ''), COALESCE(email, ''),
+			COALESCE(payslip, ''), COALESCE(department, ''), COALESCE(emp_id::text, ''),
+			COALESCE(name, ''), COALESCE(salary, ''), COALESCE(bonus, ''),
+			COALESCE(deductions, ''), COALESCE(net_salary, '')
+		FROM public.employee_salary
+		ORDER BY name
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("failed to query employee salary: %w", err)
+	}
+	defer rows.Close()
+
+	var list []*EmployeeSalary
+	for rows.Next() {
+		var es EmployeeSalary
+		if err := rows.Scan(
+			&es.ID, &es.Img, &es.Role, &es.Email,
+			&es.Payslip, &es.Department, &es.EmpID,
+			&es.Name, &es.Salary, &es.Bonus,
+			&es.Deductions, &es.NetSalary,
+		); err != nil {
+			return nil, fmt.Errorf("failed to scan employee salary row: %w", err)
+		}
+		list = append(list, &es)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("row iteration error: %w", err)
+	}
+	if list == nil {
+		list = []*EmployeeSalary{}
 	}
 	return list, nil
 }
