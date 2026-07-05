@@ -2,6 +2,50 @@
 
 package graph
 
+type AcademicClassCustom struct {
+	ID           string `json:"id"`
+	ClassName    string `json:"className"`
+	Section      string `json:"section"`
+	AcademicYear string `json:"academicYear"`
+	Teacher      string `json:"teacher"`
+	Status       string `json:"status"`
+	StudentCount string `json:"studentCount"`
+	RoomNumber   string `json:"roomNumber"`
+}
+
+type AcademicReportCustom struct {
+	ID           string `json:"id"`
+	Img          string `json:"img"`
+	ReportType   string `json:"reportType"`
+	ClassName    string `json:"className"`
+	Subject      string `json:"subject"`
+	AcademicYear string `json:"academicYear"`
+	Term         string `json:"term"`
+	GeneratedBy  string `json:"generatedBy"`
+	Date         string `json:"date"`
+	Status       string `json:"status"`
+}
+
+type AcademicSubjectCustom struct {
+	ID            string `json:"id"`
+	SubjectName   string `json:"subjectName"`
+	SubjectCode   string `json:"subjectCode"`
+	SubjectType   string `json:"subjectType"`
+	Status        string `json:"status"`
+	Prerequisites string `json:"prerequisites"`
+	Credits       string `json:"credits"`
+}
+
+type AcademicYearCustom struct {
+	ID           string `json:"id"`
+	AcademicYear string `json:"academicYear"`
+	Status       string `json:"status"`
+	StartDate    string `json:"startDate"`
+	EndDate      string `json:"endDate"`
+	Description  string `json:"description"`
+	Department   string `json:"department"`
+}
+
 type AdmissionInquiry struct {
 	InquiryID          string `json:"inquiryId"`
 	StudentName        string `json:"studentName"`
@@ -21,6 +65,19 @@ type AdmissionInquiry struct {
 	Img                string `json:"img"`
 }
 
+type Announcement struct {
+	ID               string `json:"id"`
+	Img              string `json:"img"`
+	Title            string `json:"title"`
+	AnnouncementType string `json:"announcementType"`
+	PostedBy         string `json:"postedBy"`
+	StartDate        string `json:"startDate"`
+	EndDate          string `json:"endDate"`
+	Status           string `json:"status"`
+	Description      string `json:"description"`
+	Priority         string `json:"priority"`
+}
+
 type AssignClassTeacher struct {
 	ID               string  `json:"id"`
 	TeacherID        string  `json:"teacherId"`
@@ -36,6 +93,31 @@ type AssignClassTeacher struct {
 	AcademicYear     string  `json:"academicYear"`
 	ClassTiming      string  `json:"classTiming"`
 	RoomNumber       string  `json:"roomNumber"`
+}
+
+type AssignmentCustom struct {
+	ID             string `json:"id"`
+	ClassName      string `json:"className"`
+	SubjectName    string `json:"subjectName"`
+	TeacherName    string `json:"teacherName"`
+	AssignmentDate string `json:"assignmentDate"`
+	Status         string `json:"status"`
+	Title          string `json:"title"`
+	Deadline       string `json:"deadline"`
+	Details        string `json:"details"`
+}
+
+type AttendanceReportCustom struct {
+	ID                   string  `json:"id"`
+	Img                  string  `json:"img"`
+	ReportType           string  `json:"reportType"`
+	ClassName            string  `json:"className"`
+	DateFrom             string  `json:"dateFrom"`
+	DateTo               string  `json:"dateTo"`
+	AttendancePercentage float64 `json:"attendancePercentage"`
+	GeneratedBy          string  `json:"generatedBy"`
+	Date                 string  `json:"date"`
+	Status               string  `json:"status"`
 }
 
 type BookStatus struct {
@@ -59,6 +141,24 @@ type ClassInfo struct {
 	ClassCode string `json:"classCode"`
 }
 
+type ClassList struct {
+	ClassID       string `json:"classId"`
+	ClassName     string `json:"className"`
+	ClassCode     string `json:"classCode"`
+	TeacherID     string `json:"teacherId"`
+	StartDate     string `json:"startDate"`
+	EndDate       string `json:"endDate"`
+	RoomNumber    string `json:"roomNumber"`
+	Schedule      string `json:"schedule"`
+	Semester      string `json:"semester"`
+	ClassCapacity int    `json:"classCapacity"`
+	Status        string `json:"status"`
+	Description   string `json:"description"`
+	ClassType     string `json:"classType"`
+	CreatedAt     string `json:"createdAt"`
+	UpdatedAt     string `json:"updatedAt"`
+}
+
 type Complaint struct {
 	ComplaintID           string `json:"complaintId"`
 	ComplaintDate         string `json:"complaintDate"`
@@ -79,6 +179,57 @@ type Complaint struct {
 	Feedback              string `json:"feedback"`
 }
 
+type CourseCurriculumCustom struct {
+	ID                string `json:"id"`
+	CourseName        string `json:"courseName"`
+	ClassName         string `json:"className"`
+	SubjectName       string `json:"subjectName"`
+	Description       string `json:"description"`
+	Status            string `json:"status"`
+	Duration          string `json:"duration"`
+	ReferenceMaterial string `json:"referenceMaterial"`
+}
+
+type CreateAcademicClassCustomInput struct {
+	ClassName    string `json:"className"`
+	Section      string `json:"section"`
+	AcademicYear string `json:"academicYear"`
+	Teacher      string `json:"teacher"`
+	Status       string `json:"status"`
+	StudentCount string `json:"studentCount"`
+	RoomNumber   string `json:"roomNumber"`
+}
+
+type CreateAcademicReportCustomInput struct {
+	Img          string `json:"img"`
+	ReportType   string `json:"reportType"`
+	ClassName    string `json:"className"`
+	Subject      string `json:"subject"`
+	AcademicYear string `json:"academicYear"`
+	Term         string `json:"term"`
+	GeneratedBy  string `json:"generatedBy"`
+	Date         string `json:"date"`
+	Status       string `json:"status"`
+}
+
+type CreateAcademicSubjectCustomInput struct {
+	SubjectName   string `json:"subjectName"`
+	SubjectCode   string `json:"subjectCode"`
+	SubjectType   string `json:"subjectType"`
+	Status        string `json:"status"`
+	Prerequisites string `json:"prerequisites"`
+	Credits       string `json:"credits"`
+}
+
+type CreateAcademicYearCustomInput struct {
+	AcademicYear string `json:"academicYear"`
+	Status       string `json:"status"`
+	StartDate    string `json:"startDate"`
+	EndDate      string `json:"endDate"`
+	Description  string `json:"description"`
+	Department   string `json:"department"`
+}
+
 type CreateAdmissionInquiryInput struct {
 	StudentName        string  `json:"studentName"`
 	GuardianName       string  `json:"guardianName"`
@@ -97,6 +248,18 @@ type CreateAdmissionInquiryInput struct {
 	Img                *string `json:"img,omitempty"`
 }
 
+type CreateAnnouncementInput struct {
+	Img              string `json:"img"`
+	Title            string `json:"title"`
+	AnnouncementType string `json:"announcementType"`
+	PostedBy         string `json:"postedBy"`
+	StartDate        string `json:"startDate"`
+	EndDate          string `json:"endDate"`
+	Status           string `json:"status"`
+	Description      string `json:"description"`
+	Priority         string `json:"priority"`
+}
+
 type CreateAssignClassTeacherInput struct {
 	TeacherID        string  `json:"teacherId"`
 	TeacherName      string  `json:"teacherName"`
@@ -113,6 +276,29 @@ type CreateAssignClassTeacherInput struct {
 	RoomNumber       string  `json:"roomNumber"`
 }
 
+type CreateAssignmentCustomInput struct {
+	ClassName      string `json:"className"`
+	SubjectName    string `json:"subjectName"`
+	TeacherName    string `json:"teacherName"`
+	AssignmentDate string `json:"assignmentDate"`
+	Status         string `json:"status"`
+	Title          string `json:"title"`
+	Deadline       string `json:"deadline"`
+	Details        string `json:"details"`
+}
+
+type CreateAttendanceReportCustomInput struct {
+	Img                  string  `json:"img"`
+	ReportType           string  `json:"reportType"`
+	ClassName            string  `json:"className"`
+	DateFrom             string  `json:"dateFrom"`
+	DateTo               string  `json:"dateTo"`
+	AttendancePercentage float64 `json:"attendancePercentage"`
+	GeneratedBy          string  `json:"generatedBy"`
+	Date                 string  `json:"date"`
+	Status               string  `json:"status"`
+}
+
 type CreateBookStatusInput struct {
 	BookID             string `json:"bookID"`
 	BookName           string `json:"bookName"`
@@ -125,6 +311,23 @@ type CreateBookStatusInput struct {
 	Condition          string `json:"condition"`
 	ReturnDate         string `json:"returnDate"`
 	Notes              string `json:"notes"`
+}
+
+type CreateClassListInput struct {
+	ClassName     string `json:"className"`
+	ClassCode     string `json:"classCode"`
+	TeacherID     string `json:"teacherId"`
+	StartDate     string `json:"startDate"`
+	EndDate       string `json:"endDate"`
+	RoomNumber    string `json:"roomNumber"`
+	Schedule      string `json:"schedule"`
+	Semester      string `json:"semester"`
+	ClassCapacity int    `json:"classCapacity"`
+	Status        string `json:"status"`
+	Description   string `json:"description"`
+	ClassType     string `json:"classType"`
+	CreatedAt     string `json:"createdAt"`
+	UpdatedAt     string `json:"updatedAt"`
 }
 
 type CreateComplaintInput struct {
@@ -142,6 +345,36 @@ type CreateComplaintInput struct {
 	ResolutionDate        *string `json:"resolutionDate,omitempty"`
 	PriorityLevel         string  `json:"priorityLevel"`
 	Feedback              *string `json:"feedback,omitempty"`
+}
+
+type CreateCourseCurriculumCustomInput struct {
+	CourseName        string `json:"courseName"`
+	ClassName         string `json:"className"`
+	SubjectName       string `json:"subjectName"`
+	Description       string `json:"description"`
+	Status            string `json:"status"`
+	Duration          string `json:"duration"`
+	ReferenceMaterial string `json:"referenceMaterial"`
+}
+
+type CreateCustomReportCustomInput struct {
+	ReportName  string `json:"reportName"`
+	Description string `json:"description"`
+	Category    string `json:"category"`
+	CreatedBy   string `json:"createdBy"`
+	Date        string `json:"date"`
+	Status      string `json:"status"`
+}
+
+type CreateDepartmentCustomInput struct {
+	Img             string `json:"img"`
+	DepartmentName  string `json:"department_name"`
+	Hod             string `json:"hod"`
+	Phone           string `json:"phone"`
+	Email           string `json:"email"`
+	StudentCapacity string `json:"student_capacity"`
+	EstablishedYear string `json:"establishedYear"`
+	TotalFaculty    string `json:"totalFaculty"`
 }
 
 type CreateEmployeeSalaryInput struct {
@@ -171,6 +404,19 @@ type CreateEntranceExamInput struct {
 	Description  *string `json:"description,omitempty"`
 }
 
+type CreateExamReportCustomInput struct {
+	Img            string  `json:"img"`
+	ExamName       string  `json:"examName"`
+	ClassName      string  `json:"className"`
+	Subject        string  `json:"subject"`
+	ExamDate       string  `json:"examDate"`
+	PassPercentage float64 `json:"passPercentage"`
+	AverageMarks   float64 `json:"averageMarks"`
+	GeneratedBy    string  `json:"generatedBy"`
+	Date           string  `json:"date"`
+	Status         string  `json:"status"`
+}
+
 type CreateExamScheduleInput struct {
 	ExamType  string `json:"examType"`
 	Course    string `json:"course"`
@@ -187,6 +433,61 @@ type CreateExamTypeInput struct {
 	ExamCode    string  `json:"examCode"`
 	Description *string `json:"description,omitempty"`
 	Status      string  `json:"status"`
+}
+
+type CreateFeeReportCustomInput struct {
+	Img         string  `json:"img"`
+	ReportType  string  `json:"reportType"`
+	FeeCategory string  `json:"feeCategory"`
+	DateFrom    string  `json:"dateFrom"`
+	DateTo      string  `json:"dateTo"`
+	TotalAmount float64 `json:"totalAmount"`
+	GeneratedBy string  `json:"generatedBy"`
+	Date        string  `json:"date"`
+	Status      string  `json:"status"`
+}
+
+type CreateFeesDiscountInput struct {
+	DiscountType       string  `json:"discountType"`
+	DiscountAmount     float64 `json:"discountAmount"`
+	DiscountPercentage float64 `json:"discountPercentage"`
+	DiscountCode       string  `json:"discountCode"`
+	StartDate          string  `json:"startDate"`
+	EndDate            string  `json:"endDate"`
+	AppliedDate        string  `json:"appliedDate"`
+	Status             string  `json:"status"`
+	Remarks            string  `json:"remarks"`
+}
+
+type CreateFeesInput struct {
+	RollNo         string `json:"rollNo"`
+	StudentName    string `json:"studentName"`
+	Class          string `json:"class"`
+	FeesType       string `json:"feesType"`
+	InvoiceNo      string `json:"invoiceNo"`
+	PaymentDueDate string `json:"paymentDueDate"`
+	PaymentDate    string `json:"paymentDate"`
+	PaymentType    string `json:"paymentType"`
+	Status         string `json:"status"`
+	Amount         string `json:"amount"`
+	LateFee        string `json:"lateFee"`
+	Discount       string `json:"discount"`
+	CreatedAt      string `json:"createdAt"`
+	UpdatedAt      string `json:"updatedAt"`
+	Notes          string `json:"notes"`
+}
+
+type CreateFeesTypeInput struct {
+	FeeTypeName       string  `json:"feeTypeName"`
+	Category          string  `json:"category"`
+	Description       string  `json:"description"`
+	Amount            float64 `json:"amount"`
+	ApplicableClasses string  `json:"applicableClasses"`
+	Frequency         string  `json:"frequency"`
+	Status            string  `json:"status"`
+	CreatedBy         string  `json:"createdBy"`
+	CreatedDate       string  `json:"createdDate"`
+	LastUpdated       string  `json:"lastUpdated"`
 }
 
 type CreateHallAllocationInput struct {
@@ -207,6 +508,72 @@ type CreateHolidayInput struct {
 	CreatedBy      string `json:"createdBy"`
 	CreationDate   string `json:"creationDate"`
 	ApprovalStatus string `json:"approvalStatus"`
+}
+
+type CreateHostelAllocationCustomInput struct {
+	Img            string `json:"img"`
+	StudentName    string `json:"student_name"`
+	RollNo         string `json:"roll_no"`
+	HostelName     string `json:"hostel_name"`
+	RoomNo         string `json:"room_no"`
+	RoomType       string `json:"room_type"`
+	AllocationDate string `json:"allocation_date"`
+	Status         string `json:"status"`
+}
+
+type CreateHostelAttendanceCustomInput struct {
+	Img            string `json:"img"`
+	StudentName    string `json:"student_name"`
+	RollNo         string `json:"roll_no"`
+	HostelName     string `json:"hostel_name"`
+	RoomNo         string `json:"room_no"`
+	AttendanceDate string `json:"attendance_date"`
+	Status         string `json:"status"`
+	Note           string `json:"note"`
+}
+
+type CreateHostelFeeCustomInput struct {
+	Img           string  `json:"img"`
+	StudentName   string  `json:"student_name"`
+	RollNo        string  `json:"roll_no"`
+	HostelName    string  `json:"hostel_name"`
+	RoomNo        string  `json:"room_no"`
+	FeeType       string  `json:"fee_type"`
+	Amount        float64 `json:"amount"`
+	PaymentDate   string  `json:"payment_date"`
+	PaymentStatus string  `json:"payment_status"`
+}
+
+type CreateHostelRoomCustomInput struct {
+	RoomNumber          string  `json:"roomNumber"`
+	RoomType            string  `json:"roomType"`
+	Floor               int     `json:"floor"`
+	Capacity            int     `json:"capacity"`
+	OccupiedStatus      string  `json:"occupiedStatus"`
+	CurrentOccupants    int     `json:"currentOccupants"`
+	PriceFees           float64 `json:"priceFees"`
+	RoomCondition       string  `json:"roomCondition"`
+	DateAssigned        string  `json:"dateAssigned"`
+	RoomSupervisorStaff string  `json:"roomSupervisorStaff"`
+	HostelBlock         string  `json:"hostelBlock"`
+	CheckInDate         string  `json:"checkInDate"`
+	CheckOutDate        string  `json:"checkOutDate"`
+	RoomTypeCode        string  `json:"roomTypeCode"`
+	RoomDescription     string  `json:"roomDescription"`
+}
+
+type CreateHostelRoomTypeCustomInput struct {
+	RoomTypeName    string  `json:"roomTypeName"`
+	Capacity        int     `json:"capacity"`
+	RoomCategory    string  `json:"roomCategory"`
+	RoomDescription string  `json:"roomDescription"`
+	RoomPrice       float64 `json:"roomPrice"`
+	RoomFacilities  string  `json:"roomFacilities"`
+	RoomArea        float64 `json:"roomArea"`
+	RoomCondition   string  `json:"roomCondition"`
+	RoomTypeCode    string  `json:"roomTypeCode"`
+	Status          string  `json:"status"`
+	MaxOccupants    int     `json:"maxOccupants"`
 }
 
 type CreateIssueReturnInput struct {
@@ -264,6 +631,18 @@ type CreateLeaveTypesInput struct {
 	AnnualLimit        int    `json:"annualLimit"`
 }
 
+type CreateLessonPlanningCustomInput struct {
+	TopicName      string `json:"topicName"`
+	LessonName     string `json:"lessonName"`
+	ClassName      string `json:"className"`
+	SubjectName    string `json:"subjectName"`
+	TeacherName    string `json:"teacherName"`
+	LessonDate     string `json:"lessonDate"`
+	Status         string `json:"status"`
+	Objectives     string `json:"objectives"`
+	TeachingMethod string `json:"teachingMethod"`
+}
+
 type CreateLibraryAssetInput struct {
 	No            string `json:"no"`
 	Title         string `json:"title"`
@@ -305,6 +684,18 @@ type CreateMeritListInput struct {
 	Rank            int     `json:"rank"`
 	Course          string  `json:"course"`
 	SelectionStatus string  `json:"selectionStatus"`
+}
+
+type CreateNoticeBoardInput struct {
+	Img            string `json:"img"`
+	Title          string `json:"title"`
+	PostedBy       string `json:"postedBy"`
+	Department     string `json:"department"`
+	Date           string `json:"date"`
+	Priority       string `json:"priority"`
+	Status         string `json:"status"`
+	Description    string `json:"description"`
+	TargetAudience string `json:"targetAudience"`
 }
 
 type CreateOnlineApplicationInput struct {
@@ -351,6 +742,15 @@ type CreateSeatAllocationInput struct {
 	FeesPaid         bool   `json:"feesPaid"`
 }
 
+type CreateSessionCustomInput struct {
+	SessionName string `json:"sessionName"`
+	StartDate   string `json:"startDate"`
+	EndDate     string `json:"endDate"`
+	Status      string `json:"status"`
+	Instructor  string `json:"instructor"`
+	Room        string `json:"room"`
+}
+
 type CreateStaffAttendanceInput struct {
 	Img              string `json:"img"`
 	Name             string `json:"name"`
@@ -386,6 +786,18 @@ type CreateStaffInput struct {
 	Role        string `json:"role"`
 	DateOfBirth string `json:"dateOfBirth"`
 	Gender      string `json:"gender"`
+}
+
+type CreateStudentAllocationInput struct {
+	StudentName    string `json:"studentName"`
+	StudentID      string `json:"studentId"`
+	ClassSection   string `json:"classSection"`
+	RouteName      string `json:"routeName"`
+	VehicleNo      string `json:"vehicleNo"`
+	StopPoint      string `json:"stopPoint"`
+	AllocationDate string `json:"allocationDate"`
+	Status         string `json:"status"`
+	Img            string `json:"img"`
 }
 
 type CreateStudentAttendanceInfoInput struct {
@@ -506,6 +918,39 @@ type CreateTodaysAttendanceInput struct {
 	Shift   string `json:"shift"`
 }
 
+type CreateTransportFeeInput struct {
+	StudentName   string `json:"studentName"`
+	StudentID     string `json:"studentId"`
+	ClassSection  string `json:"classSection"`
+	RouteName     string `json:"routeName"`
+	Amount        string `json:"amount"`
+	PaymentDate   string `json:"paymentDate"`
+	PaymentMethod string `json:"paymentMethod"`
+	Status        string `json:"status"`
+	Img           string `json:"img"`
+}
+
+type CreateTransportRouteInput struct {
+	RouteName  string `json:"routeName"`
+	StartPoint string `json:"startPoint"`
+	EndPoint   string `json:"endPoint"`
+	Distance   string `json:"distance"`
+	VehicleNo  string `json:"vehicleNo"`
+	RouteFees  string `json:"routeFees"`
+	Status     string `json:"status"`
+}
+
+type CreateVehicleInput struct {
+	VehicleNo     string `json:"vehicleNo"`
+	VehicleModel  string `json:"vehicleModel"`
+	YearMade      string `json:"yearMade"`
+	DriverName    string `json:"driverName"`
+	DriverLicense string `json:"driverLicense"`
+	VehicleType   string `json:"vehicleType"`
+	Status        string `json:"status"`
+	Img           string `json:"img"`
+}
+
 type CreateVisitorInput struct {
 	VisitorName             string  `json:"visitorName"`
 	VisitDate               string  `json:"visitDate"`
@@ -519,6 +964,28 @@ type CreateVisitorInput struct {
 	IDProofType             *string `json:"idProofType,omitempty"`
 	IDProofNumber           *string `json:"idProofNumber,omitempty"`
 	Notes                   *string `json:"notes,omitempty"`
+}
+
+type CustomReportCustom struct {
+	ID          string `json:"id"`
+	ReportName  string `json:"reportName"`
+	Description string `json:"description"`
+	Category    string `json:"category"`
+	CreatedBy   string `json:"createdBy"`
+	Date        string `json:"date"`
+	Status      string `json:"status"`
+}
+
+type DepartmentCustom struct {
+	ID              string `json:"id"`
+	Img             string `json:"img"`
+	DepartmentName  string `json:"department_name"`
+	Hod             string `json:"hod"`
+	Phone           string `json:"phone"`
+	Email           string `json:"email"`
+	StudentCapacity string `json:"student_capacity"`
+	EstablishedYear string `json:"establishedYear"`
+	TotalFaculty    string `json:"totalFaculty"`
 }
 
 type EmployeeSalary struct {
@@ -550,6 +1017,20 @@ type EntranceExam struct {
 	Description  *string `json:"description,omitempty"`
 }
 
+type ExamReportCustom struct {
+	ID             string  `json:"id"`
+	Img            string  `json:"img"`
+	ExamName       string  `json:"examName"`
+	ClassName      string  `json:"className"`
+	Subject        string  `json:"subject"`
+	ExamDate       string  `json:"examDate"`
+	PassPercentage float64 `json:"passPercentage"`
+	AverageMarks   float64 `json:"averageMarks"`
+	GeneratedBy    string  `json:"generatedBy"`
+	Date           string  `json:"date"`
+	Status         string  `json:"status"`
+}
+
 type ExamSchedule struct {
 	ID        string `json:"id"`
 	ExamType  string `json:"examType"`
@@ -568,6 +1049,65 @@ type ExamType struct {
 	ExamCode    string  `json:"examCode"`
 	Description *string `json:"description,omitempty"`
 	Status      string  `json:"status"`
+}
+
+type FeeReportCustom struct {
+	ID          string  `json:"id"`
+	Img         string  `json:"img"`
+	ReportType  string  `json:"reportType"`
+	FeeCategory string  `json:"feeCategory"`
+	DateFrom    string  `json:"dateFrom"`
+	DateTo      string  `json:"dateTo"`
+	TotalAmount float64 `json:"totalAmount"`
+	GeneratedBy string  `json:"generatedBy"`
+	Date        string  `json:"date"`
+	Status      string  `json:"status"`
+}
+
+type Fees struct {
+	ID             string `json:"id"`
+	RollNo         string `json:"rollNo"`
+	StudentName    string `json:"studentName"`
+	Class          string `json:"class"`
+	FeesType       string `json:"feesType"`
+	InvoiceNo      string `json:"invoiceNo"`
+	PaymentDueDate string `json:"paymentDueDate"`
+	PaymentDate    string `json:"paymentDate"`
+	PaymentType    string `json:"paymentType"`
+	Status         string `json:"status"`
+	Amount         string `json:"amount"`
+	LateFee        string `json:"lateFee"`
+	Discount       string `json:"discount"`
+	CreatedAt      string `json:"createdAt"`
+	UpdatedAt      string `json:"updatedAt"`
+	Notes          string `json:"notes"`
+}
+
+type FeesDiscount struct {
+	DiscountID         string  `json:"discountId"`
+	DiscountType       string  `json:"discountType"`
+	DiscountAmount     float64 `json:"discountAmount"`
+	DiscountPercentage float64 `json:"discountPercentage"`
+	DiscountCode       string  `json:"discountCode"`
+	StartDate          string  `json:"startDate"`
+	EndDate            string  `json:"endDate"`
+	AppliedDate        string  `json:"appliedDate"`
+	Status             string  `json:"status"`
+	Remarks            string  `json:"remarks"`
+}
+
+type FeesType struct {
+	FeeTypeID         string  `json:"feeTypeId"`
+	FeeTypeName       string  `json:"feeTypeName"`
+	Category          string  `json:"category"`
+	Description       string  `json:"description"`
+	Amount            float64 `json:"amount"`
+	ApplicableClasses string  `json:"applicableClasses"`
+	Frequency         string  `json:"frequency"`
+	Status            string  `json:"status"`
+	CreatedBy         string  `json:"createdBy"`
+	CreatedDate       string  `json:"createdDate"`
+	LastUpdated       string  `json:"lastUpdated"`
 }
 
 type HallAllocation struct {
@@ -590,6 +1130,79 @@ type Holiday struct {
 	CreatedBy      string `json:"createdBy"`
 	CreationDate   string `json:"creationDate"`
 	ApprovalStatus string `json:"approvalStatus"`
+}
+
+type HostelAllocationCustom struct {
+	ID             string `json:"id"`
+	Img            string `json:"img"`
+	StudentName    string `json:"student_name"`
+	RollNo         string `json:"roll_no"`
+	HostelName     string `json:"hostel_name"`
+	RoomNo         string `json:"room_no"`
+	RoomType       string `json:"room_type"`
+	AllocationDate string `json:"allocation_date"`
+	Status         string `json:"status"`
+}
+
+type HostelAttendanceCustom struct {
+	ID             string `json:"id"`
+	Img            string `json:"img"`
+	StudentName    string `json:"student_name"`
+	RollNo         string `json:"roll_no"`
+	HostelName     string `json:"hostel_name"`
+	RoomNo         string `json:"room_no"`
+	AttendanceDate string `json:"attendance_date"`
+	Status         string `json:"status"`
+	Note           string `json:"note"`
+}
+
+type HostelFeeCustom struct {
+	ID            string  `json:"id"`
+	Img           string  `json:"img"`
+	StudentName   string  `json:"student_name"`
+	RollNo        string  `json:"roll_no"`
+	HostelName    string  `json:"hostel_name"`
+	RoomNo        string  `json:"room_no"`
+	FeeType       string  `json:"fee_type"`
+	Amount        float64 `json:"amount"`
+	PaymentDate   string  `json:"payment_date"`
+	PaymentStatus string  `json:"payment_status"`
+}
+
+type HostelRoomCustom struct {
+	RoomID              string  `json:"roomId"`
+	RoomNumber          string  `json:"roomNumber"`
+	RoomType            string  `json:"roomType"`
+	Floor               int     `json:"floor"`
+	Capacity            int     `json:"capacity"`
+	OccupiedStatus      string  `json:"occupiedStatus"`
+	CurrentOccupants    int     `json:"currentOccupants"`
+	PriceFees           float64 `json:"priceFees"`
+	RoomCondition       string  `json:"roomCondition"`
+	DateAssigned        string  `json:"dateAssigned"`
+	RoomSupervisorStaff string  `json:"roomSupervisorStaff"`
+	HostelBlock         string  `json:"hostelBlock"`
+	CheckInDate         string  `json:"checkInDate"`
+	CheckOutDate        string  `json:"checkOutDate"`
+	RoomTypeCode        string  `json:"roomTypeCode"`
+	RoomDescription     string  `json:"roomDescription"`
+}
+
+type HostelRoomTypeCustom struct {
+	RoomTypeID      string  `json:"roomTypeId"`
+	RoomTypeName    string  `json:"roomTypeName"`
+	Capacity        int     `json:"capacity"`
+	RoomCategory    string  `json:"roomCategory"`
+	RoomDescription string  `json:"roomDescription"`
+	RoomPrice       float64 `json:"roomPrice"`
+	RoomFacilities  string  `json:"roomFacilities"`
+	RoomArea        float64 `json:"roomArea"`
+	RoomCondition   string  `json:"roomCondition"`
+	RoomTypeCode    string  `json:"roomTypeCode"`
+	CreatedAt       string  `json:"createdAt"`
+	UpdatedAt       string  `json:"updatedAt"`
+	Status          string  `json:"status"`
+	MaxOccupants    int     `json:"maxOccupants"`
 }
 
 type IssueReturn struct {
@@ -651,6 +1264,19 @@ type LeaveTypes struct {
 	AnnualLimit        int    `json:"annualLimit"`
 }
 
+type LessonPlanningCustom struct {
+	ID             string `json:"id"`
+	TopicName      string `json:"topicName"`
+	LessonName     string `json:"lessonName"`
+	ClassName      string `json:"className"`
+	SubjectName    string `json:"subjectName"`
+	TeacherName    string `json:"teacherName"`
+	LessonDate     string `json:"lessonDate"`
+	Status         string `json:"status"`
+	Objectives     string `json:"objectives"`
+	TeachingMethod string `json:"teachingMethod"`
+}
+
 type LibraryAsset struct {
 	ID            string `json:"id"`
 	No            string `json:"no"`
@@ -708,6 +1334,19 @@ type MeritList struct {
 	SelectionStatus string  `json:"selectionStatus"`
 }
 
+type NoticeBoard struct {
+	ID             string `json:"id"`
+	Img            string `json:"img"`
+	Title          string `json:"title"`
+	PostedBy       string `json:"postedBy"`
+	Department     string `json:"department"`
+	Date           string `json:"date"`
+	Priority       string `json:"priority"`
+	Status         string `json:"status"`
+	Description    string `json:"description"`
+	TargetAudience string `json:"targetAudience"`
+}
+
 type OnlineApplication struct {
 	ID                string `json:"id"`
 	Img               string `json:"img"`
@@ -756,6 +1395,16 @@ type SeatAllocation struct {
 	FeesPaid         bool   `json:"feesPaid"`
 }
 
+type SessionCustom struct {
+	ID          string `json:"id"`
+	SessionName string `json:"sessionName"`
+	StartDate   string `json:"startDate"`
+	EndDate     string `json:"endDate"`
+	Status      string `json:"status"`
+	Instructor  string `json:"instructor"`
+	Room        string `json:"room"`
+}
+
 type Staff struct {
 	ID          string `json:"id"`
 	Img         string `json:"img"`
@@ -793,6 +1442,19 @@ type StaffAttendance struct {
 	Remarks          string `json:"remarks"`
 	AttendanceStatus string `json:"attendanceStatus"`
 	Department       string `json:"department"`
+}
+
+type StudentAllocation struct {
+	ID             string `json:"id"`
+	StudentName    string `json:"studentName"`
+	StudentID      string `json:"studentId"`
+	ClassSection   string `json:"classSection"`
+	RouteName      string `json:"routeName"`
+	VehicleNo      string `json:"vehicleNo"`
+	StopPoint      string `json:"stopPoint"`
+	AllocationDate string `json:"allocationDate"`
+	Status         string `json:"status"`
+	Img            string `json:"img"`
 }
 
 type StudentAttendanceInfo struct {
@@ -921,6 +1583,74 @@ type TodaysAttendance struct {
 	Shift   string `json:"shift"`
 }
 
+type TransportFee struct {
+	ID            string `json:"id"`
+	StudentName   string `json:"studentName"`
+	StudentID     string `json:"studentId"`
+	ClassSection  string `json:"classSection"`
+	RouteName     string `json:"routeName"`
+	Amount        string `json:"amount"`
+	PaymentDate   string `json:"paymentDate"`
+	PaymentMethod string `json:"paymentMethod"`
+	Status        string `json:"status"`
+	Img           string `json:"img"`
+}
+
+type TransportRoute struct {
+	ID         string `json:"id"`
+	RouteName  string `json:"routeName"`
+	StartPoint string `json:"startPoint"`
+	EndPoint   string `json:"endPoint"`
+	Distance   string `json:"distance"`
+	VehicleNo  string `json:"vehicleNo"`
+	RouteFees  string `json:"routeFees"`
+	Status     string `json:"status"`
+}
+
+type UpdateAcademicClassCustomInput struct {
+	ID           string `json:"id"`
+	ClassName    string `json:"className"`
+	Section      string `json:"section"`
+	AcademicYear string `json:"academicYear"`
+	Teacher      string `json:"teacher"`
+	Status       string `json:"status"`
+	StudentCount string `json:"studentCount"`
+	RoomNumber   string `json:"roomNumber"`
+}
+
+type UpdateAcademicReportCustomInput struct {
+	ID           string `json:"id"`
+	Img          string `json:"img"`
+	ReportType   string `json:"reportType"`
+	ClassName    string `json:"className"`
+	Subject      string `json:"subject"`
+	AcademicYear string `json:"academicYear"`
+	Term         string `json:"term"`
+	GeneratedBy  string `json:"generatedBy"`
+	Date         string `json:"date"`
+	Status       string `json:"status"`
+}
+
+type UpdateAcademicSubjectCustomInput struct {
+	ID            string `json:"id"`
+	SubjectName   string `json:"subjectName"`
+	SubjectCode   string `json:"subjectCode"`
+	SubjectType   string `json:"subjectType"`
+	Status        string `json:"status"`
+	Prerequisites string `json:"prerequisites"`
+	Credits       string `json:"credits"`
+}
+
+type UpdateAcademicYearCustomInput struct {
+	ID           string `json:"id"`
+	AcademicYear string `json:"academicYear"`
+	Status       string `json:"status"`
+	StartDate    string `json:"startDate"`
+	EndDate      string `json:"endDate"`
+	Description  string `json:"description"`
+	Department   string `json:"department"`
+}
+
 type UpdateAdmissionInquiryInput struct {
 	InquiryID          string  `json:"inquiryId"`
 	StudentName        string  `json:"studentName"`
@@ -940,6 +1670,19 @@ type UpdateAdmissionInquiryInput struct {
 	Img                *string `json:"img,omitempty"`
 }
 
+type UpdateAnnouncementInput struct {
+	ID               string `json:"id"`
+	Img              string `json:"img"`
+	Title            string `json:"title"`
+	AnnouncementType string `json:"announcementType"`
+	PostedBy         string `json:"postedBy"`
+	StartDate        string `json:"startDate"`
+	EndDate          string `json:"endDate"`
+	Status           string `json:"status"`
+	Description      string `json:"description"`
+	Priority         string `json:"priority"`
+}
+
 type UpdateAssignClassTeacherInput struct {
 	ID               string  `json:"id"`
 	TeacherID        string  `json:"teacherId"`
@@ -957,6 +1700,31 @@ type UpdateAssignClassTeacherInput struct {
 	RoomNumber       string  `json:"roomNumber"`
 }
 
+type UpdateAssignmentCustomInput struct {
+	ID             string `json:"id"`
+	ClassName      string `json:"className"`
+	SubjectName    string `json:"subjectName"`
+	TeacherName    string `json:"teacherName"`
+	AssignmentDate string `json:"assignmentDate"`
+	Status         string `json:"status"`
+	Title          string `json:"title"`
+	Deadline       string `json:"deadline"`
+	Details        string `json:"details"`
+}
+
+type UpdateAttendanceReportCustomInput struct {
+	ID                   string  `json:"id"`
+	Img                  string  `json:"img"`
+	ReportType           string  `json:"reportType"`
+	ClassName            string  `json:"className"`
+	DateFrom             string  `json:"dateFrom"`
+	DateTo               string  `json:"dateTo"`
+	AttendancePercentage float64 `json:"attendancePercentage"`
+	GeneratedBy          string  `json:"generatedBy"`
+	Date                 string  `json:"date"`
+	Status               string  `json:"status"`
+}
+
 type UpdateBookStatusInput struct {
 	BookStatusID       string `json:"bookStatusID"`
 	BookID             string `json:"bookID"`
@@ -970,6 +1738,24 @@ type UpdateBookStatusInput struct {
 	Condition          string `json:"condition"`
 	ReturnDate         string `json:"returnDate"`
 	Notes              string `json:"notes"`
+}
+
+type UpdateClassListInput struct {
+	ClassID       string `json:"classId"`
+	ClassName     string `json:"className"`
+	ClassCode     string `json:"classCode"`
+	TeacherID     string `json:"teacherId"`
+	StartDate     string `json:"startDate"`
+	EndDate       string `json:"endDate"`
+	RoomNumber    string `json:"roomNumber"`
+	Schedule      string `json:"schedule"`
+	Semester      string `json:"semester"`
+	ClassCapacity int    `json:"classCapacity"`
+	Status        string `json:"status"`
+	Description   string `json:"description"`
+	ClassType     string `json:"classType"`
+	CreatedAt     string `json:"createdAt"`
+	UpdatedAt     string `json:"updatedAt"`
 }
 
 type UpdateComplaintInput struct {
@@ -988,6 +1774,39 @@ type UpdateComplaintInput struct {
 	ResolutionDate        *string `json:"resolutionDate,omitempty"`
 	PriorityLevel         string  `json:"priorityLevel"`
 	Feedback              *string `json:"feedback,omitempty"`
+}
+
+type UpdateCourseCurriculumCustomInput struct {
+	ID                string `json:"id"`
+	CourseName        string `json:"courseName"`
+	ClassName         string `json:"className"`
+	SubjectName       string `json:"subjectName"`
+	Description       string `json:"description"`
+	Status            string `json:"status"`
+	Duration          string `json:"duration"`
+	ReferenceMaterial string `json:"referenceMaterial"`
+}
+
+type UpdateCustomReportCustomInput struct {
+	ID          string `json:"id"`
+	ReportName  string `json:"reportName"`
+	Description string `json:"description"`
+	Category    string `json:"category"`
+	CreatedBy   string `json:"createdBy"`
+	Date        string `json:"date"`
+	Status      string `json:"status"`
+}
+
+type UpdateDepartmentCustomInput struct {
+	ID              string `json:"id"`
+	Img             string `json:"img"`
+	DepartmentName  string `json:"department_name"`
+	Hod             string `json:"hod"`
+	Phone           string `json:"phone"`
+	Email           string `json:"email"`
+	StudentCapacity string `json:"student_capacity"`
+	EstablishedYear string `json:"establishedYear"`
+	TotalFaculty    string `json:"totalFaculty"`
 }
 
 type UpdateEmployeeSalaryInput struct {
@@ -1019,6 +1838,20 @@ type UpdateEntranceExamInput struct {
 	Description  *string `json:"description,omitempty"`
 }
 
+type UpdateExamReportCustomInput struct {
+	ID             string  `json:"id"`
+	Img            string  `json:"img"`
+	ExamName       string  `json:"examName"`
+	ClassName      string  `json:"className"`
+	Subject        string  `json:"subject"`
+	ExamDate       string  `json:"examDate"`
+	PassPercentage float64 `json:"passPercentage"`
+	AverageMarks   float64 `json:"averageMarks"`
+	GeneratedBy    string  `json:"generatedBy"`
+	Date           string  `json:"date"`
+	Status         string  `json:"status"`
+}
+
 type UpdateExamScheduleInput struct {
 	ID        string `json:"id"`
 	ExamType  string `json:"examType"`
@@ -1037,6 +1870,65 @@ type UpdateExamTypeInput struct {
 	ExamCode    string  `json:"examCode"`
 	Description *string `json:"description,omitempty"`
 	Status      string  `json:"status"`
+}
+
+type UpdateFeeReportCustomInput struct {
+	ID          string  `json:"id"`
+	Img         string  `json:"img"`
+	ReportType  string  `json:"reportType"`
+	FeeCategory string  `json:"feeCategory"`
+	DateFrom    string  `json:"dateFrom"`
+	DateTo      string  `json:"dateTo"`
+	TotalAmount float64 `json:"totalAmount"`
+	GeneratedBy string  `json:"generatedBy"`
+	Date        string  `json:"date"`
+	Status      string  `json:"status"`
+}
+
+type UpdateFeesDiscountInput struct {
+	DiscountID         string  `json:"discountId"`
+	DiscountType       string  `json:"discountType"`
+	DiscountAmount     float64 `json:"discountAmount"`
+	DiscountPercentage float64 `json:"discountPercentage"`
+	DiscountCode       string  `json:"discountCode"`
+	StartDate          string  `json:"startDate"`
+	EndDate            string  `json:"endDate"`
+	AppliedDate        string  `json:"appliedDate"`
+	Status             string  `json:"status"`
+	Remarks            string  `json:"remarks"`
+}
+
+type UpdateFeesInput struct {
+	ID             string `json:"id"`
+	RollNo         string `json:"rollNo"`
+	StudentName    string `json:"studentName"`
+	Class          string `json:"class"`
+	FeesType       string `json:"feesType"`
+	InvoiceNo      string `json:"invoiceNo"`
+	PaymentDueDate string `json:"paymentDueDate"`
+	PaymentDate    string `json:"paymentDate"`
+	PaymentType    string `json:"paymentType"`
+	Status         string `json:"status"`
+	Amount         string `json:"amount"`
+	LateFee        string `json:"lateFee"`
+	Discount       string `json:"discount"`
+	CreatedAt      string `json:"createdAt"`
+	UpdatedAt      string `json:"updatedAt"`
+	Notes          string `json:"notes"`
+}
+
+type UpdateFeesTypeInput struct {
+	FeeTypeID         string  `json:"feeTypeId"`
+	FeeTypeName       string  `json:"feeTypeName"`
+	Category          string  `json:"category"`
+	Description       string  `json:"description"`
+	Amount            float64 `json:"amount"`
+	ApplicableClasses string  `json:"applicableClasses"`
+	Frequency         string  `json:"frequency"`
+	Status            string  `json:"status"`
+	CreatedBy         string  `json:"createdBy"`
+	CreatedDate       string  `json:"createdDate"`
+	LastUpdated       string  `json:"lastUpdated"`
 }
 
 type UpdateHallAllocationInput struct {
@@ -1059,6 +1951,77 @@ type UpdateHolidayInput struct {
 	CreatedBy      string `json:"createdBy"`
 	CreationDate   string `json:"creationDate"`
 	ApprovalStatus string `json:"approvalStatus"`
+}
+
+type UpdateHostelAllocationCustomInput struct {
+	ID             string `json:"id"`
+	Img            string `json:"img"`
+	StudentName    string `json:"student_name"`
+	RollNo         string `json:"roll_no"`
+	HostelName     string `json:"hostel_name"`
+	RoomNo         string `json:"room_no"`
+	RoomType       string `json:"room_type"`
+	AllocationDate string `json:"allocation_date"`
+	Status         string `json:"status"`
+}
+
+type UpdateHostelAttendanceCustomInput struct {
+	ID             string `json:"id"`
+	Img            string `json:"img"`
+	StudentName    string `json:"student_name"`
+	RollNo         string `json:"roll_no"`
+	HostelName     string `json:"hostel_name"`
+	RoomNo         string `json:"room_no"`
+	AttendanceDate string `json:"attendance_date"`
+	Status         string `json:"status"`
+	Note           string `json:"note"`
+}
+
+type UpdateHostelFeeCustomInput struct {
+	ID            string  `json:"id"`
+	Img           string  `json:"img"`
+	StudentName   string  `json:"student_name"`
+	RollNo        string  `json:"roll_no"`
+	HostelName    string  `json:"hostel_name"`
+	RoomNo        string  `json:"room_no"`
+	FeeType       string  `json:"fee_type"`
+	Amount        float64 `json:"amount"`
+	PaymentDate   string  `json:"payment_date"`
+	PaymentStatus string  `json:"payment_status"`
+}
+
+type UpdateHostelRoomCustomInput struct {
+	RoomID              string  `json:"roomId"`
+	RoomNumber          string  `json:"roomNumber"`
+	RoomType            string  `json:"roomType"`
+	Floor               int     `json:"floor"`
+	Capacity            int     `json:"capacity"`
+	OccupiedStatus      string  `json:"occupiedStatus"`
+	CurrentOccupants    int     `json:"currentOccupants"`
+	PriceFees           float64 `json:"priceFees"`
+	RoomCondition       string  `json:"roomCondition"`
+	DateAssigned        string  `json:"dateAssigned"`
+	RoomSupervisorStaff string  `json:"roomSupervisorStaff"`
+	HostelBlock         string  `json:"hostelBlock"`
+	CheckInDate         string  `json:"checkInDate"`
+	CheckOutDate        string  `json:"checkOutDate"`
+	RoomTypeCode        string  `json:"roomTypeCode"`
+	RoomDescription     string  `json:"roomDescription"`
+}
+
+type UpdateHostelRoomTypeCustomInput struct {
+	RoomTypeID      string  `json:"roomTypeId"`
+	RoomTypeName    string  `json:"roomTypeName"`
+	Capacity        int     `json:"capacity"`
+	RoomCategory    string  `json:"roomCategory"`
+	RoomDescription string  `json:"roomDescription"`
+	RoomPrice       float64 `json:"roomPrice"`
+	RoomFacilities  string  `json:"roomFacilities"`
+	RoomArea        float64 `json:"roomArea"`
+	RoomCondition   string  `json:"roomCondition"`
+	RoomTypeCode    string  `json:"roomTypeCode"`
+	Status          string  `json:"status"`
+	MaxOccupants    int     `json:"maxOccupants"`
 }
 
 type UpdateIssueReturnInput struct {
@@ -1120,6 +2083,19 @@ type UpdateLeaveTypesInput struct {
 	AnnualLimit        int    `json:"annualLimit"`
 }
 
+type UpdateLessonPlanningCustomInput struct {
+	ID             string `json:"id"`
+	TopicName      string `json:"topicName"`
+	LessonName     string `json:"lessonName"`
+	ClassName      string `json:"className"`
+	SubjectName    string `json:"subjectName"`
+	TeacherName    string `json:"teacherName"`
+	LessonDate     string `json:"lessonDate"`
+	Status         string `json:"status"`
+	Objectives     string `json:"objectives"`
+	TeachingMethod string `json:"teachingMethod"`
+}
+
 type UpdateLibraryAssetInput struct {
 	ID            string `json:"id"`
 	No            string `json:"no"`
@@ -1165,6 +2141,19 @@ type UpdateMeritListInput struct {
 	Rank            int     `json:"rank"`
 	Course          string  `json:"course"`
 	SelectionStatus string  `json:"selectionStatus"`
+}
+
+type UpdateNoticeBoardInput struct {
+	ID             string `json:"id"`
+	Img            string `json:"img"`
+	Title          string `json:"title"`
+	PostedBy       string `json:"postedBy"`
+	Department     string `json:"department"`
+	Date           string `json:"date"`
+	Priority       string `json:"priority"`
+	Status         string `json:"status"`
+	Description    string `json:"description"`
+	TargetAudience string `json:"targetAudience"`
 }
 
 type UpdateOnlineApplicationInput struct {
@@ -1215,6 +2204,16 @@ type UpdateSeatAllocationInput struct {
 	FeesPaid         bool   `json:"feesPaid"`
 }
 
+type UpdateSessionCustomInput struct {
+	ID          string `json:"id"`
+	SessionName string `json:"sessionName"`
+	StartDate   string `json:"startDate"`
+	EndDate     string `json:"endDate"`
+	Status      string `json:"status"`
+	Instructor  string `json:"instructor"`
+	Room        string `json:"room"`
+}
+
 type UpdateStaffAttendanceInput struct {
 	ID               string `json:"id"`
 	Img              string `json:"img"`
@@ -1252,6 +2251,19 @@ type UpdateStaffInput struct {
 	Role        string `json:"role"`
 	DateOfBirth string `json:"dateOfBirth"`
 	Gender      string `json:"gender"`
+}
+
+type UpdateStudentAllocationInput struct {
+	ID             string `json:"id"`
+	StudentName    string `json:"studentName"`
+	StudentID      string `json:"studentId"`
+	ClassSection   string `json:"classSection"`
+	RouteName      string `json:"routeName"`
+	VehicleNo      string `json:"vehicleNo"`
+	StopPoint      string `json:"stopPoint"`
+	AllocationDate string `json:"allocationDate"`
+	Status         string `json:"status"`
+	Img            string `json:"img"`
 }
 
 type UpdateStudentAttendanceInfoInput struct {
@@ -1380,6 +2392,42 @@ type UpdateTodaysAttendanceInput struct {
 	Shift   string `json:"shift"`
 }
 
+type UpdateTransportFeeInput struct {
+	ID            string `json:"id"`
+	StudentName   string `json:"studentName"`
+	StudentID     string `json:"studentId"`
+	ClassSection  string `json:"classSection"`
+	RouteName     string `json:"routeName"`
+	Amount        string `json:"amount"`
+	PaymentDate   string `json:"paymentDate"`
+	PaymentMethod string `json:"paymentMethod"`
+	Status        string `json:"status"`
+	Img           string `json:"img"`
+}
+
+type UpdateTransportRouteInput struct {
+	ID         string `json:"id"`
+	RouteName  string `json:"routeName"`
+	StartPoint string `json:"startPoint"`
+	EndPoint   string `json:"endPoint"`
+	Distance   string `json:"distance"`
+	VehicleNo  string `json:"vehicleNo"`
+	RouteFees  string `json:"routeFees"`
+	Status     string `json:"status"`
+}
+
+type UpdateVehicleInput struct {
+	ID            string `json:"id"`
+	VehicleNo     string `json:"vehicleNo"`
+	VehicleModel  string `json:"vehicleModel"`
+	YearMade      string `json:"yearMade"`
+	DriverName    string `json:"driverName"`
+	DriverLicense string `json:"driverLicense"`
+	VehicleType   string `json:"vehicleType"`
+	Status        string `json:"status"`
+	Img           string `json:"img"`
+}
+
 type UpdateVisitorInput struct {
 	VisitorID               string  `json:"visitorId"`
 	VisitorName             string  `json:"visitorName"`
@@ -1394,6 +2442,18 @@ type UpdateVisitorInput struct {
 	IDProofType             *string `json:"idProofType,omitempty"`
 	IDProofNumber           *string `json:"idProofNumber,omitempty"`
 	Notes                   *string `json:"notes,omitempty"`
+}
+
+type Vehicle struct {
+	ID            string `json:"id"`
+	VehicleNo     string `json:"vehicleNo"`
+	VehicleModel  string `json:"vehicleModel"`
+	YearMade      string `json:"yearMade"`
+	DriverName    string `json:"driverName"`
+	DriverLicense string `json:"driverLicense"`
+	VehicleType   string `json:"vehicleType"`
+	Status        string `json:"status"`
+	Img           string `json:"img"`
 }
 
 type Visitor struct {

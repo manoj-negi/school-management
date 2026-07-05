@@ -37,3 +37,12 @@ models:
   Cursor:
     model:
       - entgo.io/contrib/entgql.Cursor
+  Driver:
+    model:
+      - go-seed/graph.Driver
+  CreateDriverInput:
+    model:
+      - go-seed/graph.CreateDriverInput
+  UpdateDriverInput:
+    model:
+      - go-seed/graph.UpdateDriverInput

@@ -2965,6 +2965,2093 @@ func (r *mutationResolver) DeleteEmployeeSalary(ctx context.Context, id string) 
 	return id, nil
 }
 
+// CreateVehicle is the resolver for the createVehicle field.
+func (r *mutationResolver) CreateVehicle(ctx context.Context, input CreateVehicleInput) (*Vehicle, error) {
+	db := r.DB
+
+	id := uuid.New().String()
+
+	_, err := db.ExecContext(ctx, `
+		INSERT INTO public.vehicles (
+			id, vehicle_no, vehicle_model, year_made, driver_name, driver_license, vehicle_type, status, img
+		) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+	`,
+		id, input.VehicleNo, input.VehicleModel, input.YearMade, input.DriverName,
+		input.DriverLicense, input.VehicleType, input.Status, input.Img,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to insert vehicle: %w", err)
+	}
+
+	return &Vehicle{
+		ID:            id,
+		VehicleNo:     input.VehicleNo,
+		VehicleModel:  input.VehicleModel,
+		YearMade:      input.YearMade,
+		DriverName:    input.DriverName,
+		DriverLicense: input.DriverLicense,
+		VehicleType:   input.VehicleType,
+		Status:        input.Status,
+		Img:           input.Img,
+	}, nil
+}
+
+// UpdateVehicle is the resolver for the updateVehicle field.
+func (r *mutationResolver) UpdateVehicle(ctx context.Context, input UpdateVehicleInput) (*Vehicle, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, `
+		UPDATE public.vehicles SET
+			vehicle_no = $1, vehicle_model = $2, year_made = $3, driver_name = $4,
+			driver_license = $5, vehicle_type = $6, status = $7, img = $8
+		WHERE id = $9
+	`,
+		input.VehicleNo, input.VehicleModel, input.YearMade, input.DriverName,
+		input.DriverLicense, input.VehicleType, input.Status, input.Img, input.ID,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to update vehicle: %w", err)
+	}
+
+	return &Vehicle{
+		ID:            input.ID,
+		VehicleNo:     input.VehicleNo,
+		VehicleModel:  input.VehicleModel,
+		YearMade:      input.YearMade,
+		DriverName:    input.DriverName,
+		DriverLicense: input.DriverLicense,
+		VehicleType:   input.VehicleType,
+		Status:        input.Status,
+		Img:           input.Img,
+	}, nil
+}
+
+// DeleteVehicle is the resolver for the deleteVehicle field.
+func (r *mutationResolver) DeleteVehicle(ctx context.Context, id string) (string, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, "DELETE FROM public.vehicles WHERE id = $1", id)
+	if err != nil {
+		return "", fmt.Errorf("failed to delete vehicle: %w", err)
+	}
+
+	return id, nil
+}
+
+// CreateTransportRoute is the resolver for the createTransportRoute field.
+func (r *mutationResolver) CreateTransportRoute(ctx context.Context, input CreateTransportRouteInput) (*TransportRoute, error) {
+	db := r.DB
+
+	id := uuid.New().String()
+
+	_, err := db.ExecContext(ctx, `
+		INSERT INTO public.transport_routes (
+			id, route_name, start_point, end_point, distance, vehicle_no, route_fees, status
+		) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+	`,
+		id, input.RouteName, input.StartPoint, input.EndPoint, input.Distance,
+		input.VehicleNo, input.RouteFees, input.Status,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to insert transport route: %w", err)
+	}
+
+	return &TransportRoute{
+		ID:         id,
+		RouteName:  input.RouteName,
+		StartPoint: input.StartPoint,
+		EndPoint:   input.EndPoint,
+		Distance:   input.Distance,
+		VehicleNo:  input.VehicleNo,
+		RouteFees:  input.RouteFees,
+		Status:     input.Status,
+	}, nil
+}
+
+// UpdateTransportRoute is the resolver for the updateTransportRoute field.
+func (r *mutationResolver) UpdateTransportRoute(ctx context.Context, input UpdateTransportRouteInput) (*TransportRoute, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, `
+		UPDATE public.transport_routes SET
+			route_name = $1, start_point = $2, end_point = $3, distance = $4,
+			vehicle_no = $5, route_fees = $6, status = $7
+		WHERE id = $8
+	`,
+		input.RouteName, input.StartPoint, input.EndPoint, input.Distance,
+		input.VehicleNo, input.RouteFees, input.Status, input.ID,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to update transport route: %w", err)
+	}
+
+	return &TransportRoute{
+		ID:         input.ID,
+		RouteName:  input.RouteName,
+		StartPoint: input.StartPoint,
+		EndPoint:   input.EndPoint,
+		Distance:   input.Distance,
+		VehicleNo:  input.VehicleNo,
+		RouteFees:  input.RouteFees,
+		Status:     input.Status,
+	}, nil
+}
+
+// DeleteTransportRoute is the resolver for the deleteTransportRoute field.
+func (r *mutationResolver) DeleteTransportRoute(ctx context.Context, id string) (string, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, "DELETE FROM public.transport_routes WHERE id = $1", id)
+	if err != nil {
+		return "", fmt.Errorf("failed to delete transport route: %w", err)
+	}
+
+	return id, nil
+}
+
+// CreateDriver is the resolver for the createDriver field.
+func (r *mutationResolver) CreateDriver(ctx context.Context, input CreateDriverInput) (*Driver, error) {
+	db := r.DB
+
+	id := uuid.New().String()
+
+	_, err := db.ExecContext(ctx, `
+		INSERT INTO public.drivers (
+			id, driver_name, license_no, phone, joining_date, address, experience, status, img
+		) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+	`,
+		id, input.DriverName, input.LicenseNo, input.Phone, input.JoiningDate,
+		input.Address, input.Experience, input.Status, input.Img,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to insert driver: %w", err)
+	}
+
+	return &Driver{
+		ID:          id,
+		DriverName:  input.DriverName,
+		LicenseNo:   input.LicenseNo,
+		Phone:       input.Phone,
+		JoiningDate: input.JoiningDate,
+		Address:     input.Address,
+		Experience:  input.Experience,
+		Status:      input.Status,
+		Img:         input.Img,
+	}, nil
+}
+
+// UpdateDriver is the resolver for the updateDriver field.
+func (r *mutationResolver) UpdateDriver(ctx context.Context, input UpdateDriverInput) (*Driver, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, `
+		UPDATE public.drivers SET
+			driver_name = $1, license_no = $2, phone = $3, joining_date = $4,
+			address = $5, experience = $6, status = $7, img = $8
+		WHERE id = $9
+	`,
+		input.DriverName, input.LicenseNo, input.Phone, input.JoiningDate,
+		input.Address, input.Experience, input.Status, input.Img, input.ID,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to update driver: %w", err)
+	}
+
+	return &Driver{
+		ID:          input.ID,
+		DriverName:  input.DriverName,
+		LicenseNo:   input.LicenseNo,
+		Phone:       input.Phone,
+		JoiningDate: input.JoiningDate,
+		Address:     input.Address,
+		Experience:  input.Experience,
+		Status:      input.Status,
+		Img:         input.Img,
+	}, nil
+}
+
+// DeleteDriver is the resolver for the deleteDriver field.
+func (r *mutationResolver) DeleteDriver(ctx context.Context, id string) (string, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, "DELETE FROM public.drivers WHERE id = $1", id)
+	if err != nil {
+		return "", fmt.Errorf("failed to delete driver: %w", err)
+	}
+
+	return id, nil
+}
+
+// CreateStudentAllocation is the resolver for the createStudentAllocation field.
+func (r *mutationResolver) CreateStudentAllocation(ctx context.Context, input CreateStudentAllocationInput) (*StudentAllocation, error) {
+	db := r.DB
+
+	id := uuid.New().String()
+
+	_, err := db.ExecContext(ctx, `
+		INSERT INTO public.student_allocations (
+			id, student_name, student_id, class_section, route_name, vehicle_no, stop_point, allocation_date, status, img
+		) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+	`,
+		id, input.StudentName, input.StudentID, input.ClassSection, input.RouteName,
+		input.VehicleNo, input.StopPoint, input.AllocationDate, input.Status, input.Img,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to insert student allocation: %w", err)
+	}
+
+	return &StudentAllocation{
+		ID:             id,
+		StudentName:    input.StudentName,
+		StudentID:      input.StudentID,
+		ClassSection:   input.ClassSection,
+		RouteName:      input.RouteName,
+		VehicleNo:      input.VehicleNo,
+		StopPoint:      input.StopPoint,
+		AllocationDate: input.AllocationDate,
+		Status:         input.Status,
+		Img:            input.Img,
+	}, nil
+}
+
+// UpdateStudentAllocation is the resolver for the updateStudentAllocation field.
+func (r *mutationResolver) UpdateStudentAllocation(ctx context.Context, input UpdateStudentAllocationInput) (*StudentAllocation, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, `
+		UPDATE public.student_allocations SET
+			student_name = $1, student_id = $2, class_section = $3, route_name = $4,
+			vehicle_no = $5, stop_point = $6, allocation_date = $7, status = $8, img = $9
+		WHERE id = $10
+	`,
+		input.StudentName, input.StudentID, input.ClassSection, input.RouteName,
+		input.VehicleNo, input.StopPoint, input.AllocationDate, input.Status, input.Img, input.ID,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to update student allocation: %w", err)
+	}
+
+	return &StudentAllocation{
+		ID:             input.ID,
+		StudentName:    input.StudentName,
+		StudentID:      input.StudentID,
+		ClassSection:   input.ClassSection,
+		RouteName:      input.RouteName,
+		VehicleNo:      input.VehicleNo,
+		StopPoint:      input.StopPoint,
+		AllocationDate: input.AllocationDate,
+		Status:         input.Status,
+		Img:            input.Img,
+	}, nil
+}
+
+// DeleteStudentAllocation is the resolver for the deleteStudentAllocation field.
+func (r *mutationResolver) DeleteStudentAllocation(ctx context.Context, id string) (string, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, "DELETE FROM public.student_allocations WHERE id = $1", id)
+	if err != nil {
+		return "", fmt.Errorf("failed to delete student allocation: %w", err)
+	}
+
+	return id, nil
+}
+
+// CreateTransportFee is the resolver for the createTransportFee field.
+func (r *mutationResolver) CreateTransportFee(ctx context.Context, input CreateTransportFeeInput) (*TransportFee, error) {
+	db := r.DB
+
+	id := uuid.New().String()
+
+	_, err := db.ExecContext(ctx, `
+		INSERT INTO public.transport_fees (
+			id, student_name, student_id, class_section, route_name, amount, payment_date, payment_method, status, img
+		) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+	`,
+		id, input.StudentName, input.StudentID, input.ClassSection, input.RouteName,
+		input.Amount, input.PaymentDate, input.PaymentMethod, input.Status, input.Img,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to insert transport fee: %w", err)
+	}
+
+	return &TransportFee{
+		ID:            id,
+		StudentName:   input.StudentName,
+		StudentID:     input.StudentID,
+		ClassSection:  input.ClassSection,
+		RouteName:     input.RouteName,
+		Amount:        input.Amount,
+		PaymentDate:   input.PaymentDate,
+		PaymentMethod: input.PaymentMethod,
+		Status:        input.Status,
+		Img:           input.Img,
+	}, nil
+}
+
+// UpdateTransportFee is the resolver for the updateTransportFee field.
+func (r *mutationResolver) UpdateTransportFee(ctx context.Context, input UpdateTransportFeeInput) (*TransportFee, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, `
+		UPDATE public.transport_fees SET
+			student_name = $1, student_id = $2, class_section = $3, route_name = $4,
+			amount = $5, payment_date = $6, payment_method = $7, status = $8, img = $9
+		WHERE id = $10
+	`,
+		input.StudentName, input.StudentID, input.ClassSection, input.RouteName,
+		input.Amount, input.PaymentDate, input.PaymentMethod, input.Status, input.Img, input.ID,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to update transport fee: %w", err)
+	}
+
+	return &TransportFee{
+		ID:            input.ID,
+		StudentName:   input.StudentName,
+		StudentID:     input.StudentID,
+		ClassSection:  input.ClassSection,
+		RouteName:     input.RouteName,
+		Amount:        input.Amount,
+		PaymentDate:   input.PaymentDate,
+		PaymentMethod: input.PaymentMethod,
+		Status:        input.Status,
+		Img:           input.Img,
+	}, nil
+}
+
+// DeleteTransportFee is the resolver for the deleteTransportFee field.
+func (r *mutationResolver) DeleteTransportFee(ctx context.Context, id string) (string, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, "DELETE FROM public.transport_fees WHERE id = $1", id)
+	if err != nil {
+		return "", fmt.Errorf("failed to delete transport fee: %w", err)
+	}
+
+	return id, nil
+}
+
+// CreateNoticeBoard is the resolver for the createNoticeBoard field.
+func (r *mutationResolver) CreateNoticeBoard(ctx context.Context, input CreateNoticeBoardInput) (*NoticeBoard, error) {
+	db := r.DB
+
+	id := uuid.New().String()
+
+	_, err := db.ExecContext(ctx, `
+		INSERT INTO public.notice_boards (
+			id, img, title, posted_by, department, date, priority, status, description, target_audience
+		) VALUES ($1, $2, $3, $4, $5, NULLIF($6,'')::timestamp, $7, $8, $9, $10)
+	`,
+		id, input.Img, input.Title, input.PostedBy, input.Department,
+		input.Date, input.Priority, input.Status, input.Description, input.TargetAudience,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to insert notice board: %w", err)
+	}
+
+	return &NoticeBoard{
+		ID:             id,
+		Img:            input.Img,
+		Title:          input.Title,
+		PostedBy:       input.PostedBy,
+		Department:     input.Department,
+		Date:           input.Date,
+		Priority:       input.Priority,
+		Status:         input.Status,
+		Description:    input.Description,
+		TargetAudience: input.TargetAudience,
+	}, nil
+}
+
+// UpdateNoticeBoard is the resolver for the updateNoticeBoard field.
+func (r *mutationResolver) UpdateNoticeBoard(ctx context.Context, input UpdateNoticeBoardInput) (*NoticeBoard, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, `
+		UPDATE public.notice_boards SET
+			img = $1, title = $2, posted_by = $3, department = $4,
+			date = NULLIF($5,'')::timestamp, priority = $6, status = $7,
+			description = $8, target_audience = $9
+		WHERE id = $10
+	`,
+		input.Img, input.Title, input.PostedBy, input.Department,
+		input.Date, input.Priority, input.Status, input.Description, input.TargetAudience, input.ID,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to update notice board: %w", err)
+	}
+
+	return &NoticeBoard{
+		ID:             input.ID,
+		Img:            input.Img,
+		Title:          input.Title,
+		PostedBy:       input.PostedBy,
+		Department:     input.Department,
+		Date:           input.Date,
+		Priority:       input.Priority,
+		Status:         input.Status,
+		Description:    input.Description,
+		TargetAudience: input.TargetAudience,
+	}, nil
+}
+
+// DeleteNoticeBoard is the resolver for the deleteNoticeBoard field.
+func (r *mutationResolver) DeleteNoticeBoard(ctx context.Context, id string) (string, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, "DELETE FROM public.notice_boards WHERE id = $1", id)
+	if err != nil {
+		return "", fmt.Errorf("failed to delete notice board: %w", err)
+	}
+
+	return id, nil
+}
+
+// CreateAnnouncement is the resolver for the createAnnouncement field.
+func (r *mutationResolver) CreateAnnouncement(ctx context.Context, input CreateAnnouncementInput) (*Announcement, error) {
+	db := r.DB
+
+	id := uuid.New().String()
+
+	_, err := db.ExecContext(ctx, `
+		INSERT INTO public.announcements (
+			id, img, title, announcement_type, posted_by, start_date, end_date, status, description, priority
+		) VALUES ($1, $2, $3, $4, $5, NULLIF($6,'')::timestamp, NULLIF($7,'')::timestamp, $8, $9, $10)
+	`,
+		id, input.Img, input.Title, input.AnnouncementType, input.PostedBy,
+		input.StartDate, input.EndDate, input.Status, input.Description, input.Priority,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to insert announcement: %w", err)
+	}
+
+	return &Announcement{
+		ID:               id,
+		Img:              input.Img,
+		Title:            input.Title,
+		AnnouncementType: input.AnnouncementType,
+		PostedBy:         input.PostedBy,
+		StartDate:        input.StartDate,
+		EndDate:          input.EndDate,
+		Status:           input.Status,
+		Description:      input.Description,
+		Priority:         input.Priority,
+	}, nil
+}
+
+// UpdateAnnouncement is the resolver for the updateAnnouncement field.
+func (r *mutationResolver) UpdateAnnouncement(ctx context.Context, input UpdateAnnouncementInput) (*Announcement, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, `
+		UPDATE public.announcements SET
+			img = $1, title = $2, announcement_type = $3, posted_by = $4,
+			start_date = NULLIF($5,'')::timestamp, end_date = NULLIF($6,'')::timestamp,
+			status = $7, description = $8, priority = $9
+		WHERE id = $10
+	`,
+		input.Img, input.Title, input.AnnouncementType, input.PostedBy,
+		input.StartDate, input.EndDate, input.Status, input.Description, input.Priority, input.ID,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to update announcement: %w", err)
+	}
+
+	return &Announcement{
+		ID:               input.ID,
+		Img:              input.Img,
+		Title:            input.Title,
+		AnnouncementType: input.AnnouncementType,
+		PostedBy:         input.PostedBy,
+		StartDate:        input.StartDate,
+		EndDate:          input.EndDate,
+		Status:           input.Status,
+		Description:      input.Description,
+		Priority:         input.Priority,
+	}, nil
+}
+
+// DeleteAnnouncement is the resolver for the deleteAnnouncement field.
+func (r *mutationResolver) DeleteAnnouncement(ctx context.Context, id string) (string, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, "DELETE FROM public.announcements WHERE id = $1", id)
+	if err != nil {
+		return "", fmt.Errorf("failed to delete announcement: %w", err)
+	}
+
+	return id, nil
+}
+
+// CreateFees is the resolver for the createFees field.
+func (r *mutationResolver) CreateFees(ctx context.Context, input CreateFeesInput) (*Fees, error) {
+	db := r.DB
+
+	id := uuid.New().String()
+
+	_, err := db.ExecContext(ctx, `
+		INSERT INTO public.all_fees (
+			id, roll_no, student_name, class, fees_type, invoice_no, payment_due_date, payment_date, payment_type, status, amount, late_fee, discount, created_at, updated_at, notes
+		) VALUES ($1, $2, $3, $4, $5, $6, NULLIF($7,'')::timestamp, NULLIF($8,'')::timestamp, $9, $10, $11, $12, $13, NULLIF($14,'')::timestamp, NULLIF($15,'')::timestamp, $16)
+	`,
+		id, input.RollNo, input.StudentName, input.Class, input.FeesType, input.InvoiceNo,
+		input.PaymentDueDate, input.PaymentDate, input.PaymentType, input.Status, input.Amount,
+		input.LateFee, input.Discount, input.CreatedAt, input.UpdatedAt, input.Notes,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to insert fees: %w", err)
+	}
+
+	return &Fees{
+		ID:             id,
+		RollNo:         input.RollNo,
+		StudentName:    input.StudentName,
+		Class:          input.Class,
+		FeesType:       input.FeesType,
+		InvoiceNo:      input.InvoiceNo,
+		PaymentDueDate: input.PaymentDueDate,
+		PaymentDate:    input.PaymentDate,
+		PaymentType:    input.PaymentType,
+		Status:         input.Status,
+		Amount:         input.Amount,
+		LateFee:        input.LateFee,
+		Discount:       input.Discount,
+		CreatedAt:      input.CreatedAt,
+		UpdatedAt:      input.UpdatedAt,
+		Notes:          input.Notes,
+	}, nil
+}
+
+// UpdateFees is the resolver for the updateFees field.
+func (r *mutationResolver) UpdateFees(ctx context.Context, input UpdateFeesInput) (*Fees, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, `
+		UPDATE public.all_fees SET
+			roll_no = $1, student_name = $2, class = $3, fees_type = $4,
+			invoice_no = $5, payment_due_date = NULLIF($6,'')::timestamp, payment_date = NULLIF($7,'')::timestamp,
+			payment_type = $8, status = $9, amount = $10, late_fee = $11,
+			discount = $12, created_at = NULLIF($13,'')::timestamp, updated_at = NULLIF($14,'')::timestamp, notes = $15
+		WHERE id = $16
+	`,
+		input.RollNo, input.StudentName, input.Class, input.FeesType, input.InvoiceNo,
+		input.PaymentDueDate, input.PaymentDate, input.PaymentType, input.Status, input.Amount,
+		input.LateFee, input.Discount, input.CreatedAt, input.UpdatedAt, input.Notes, input.ID,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to update fees: %w", err)
+	}
+
+	return &Fees{
+		ID:             input.ID,
+		RollNo:         input.RollNo,
+		StudentName:    input.StudentName,
+		Class:          input.Class,
+		FeesType:       input.FeesType,
+		InvoiceNo:      input.InvoiceNo,
+		PaymentDueDate: input.PaymentDueDate,
+		PaymentDate:    input.PaymentDate,
+		PaymentType:    input.PaymentType,
+		Status:         input.Status,
+		Amount:         input.Amount,
+		LateFee:        input.LateFee,
+		Discount:       input.Discount,
+		CreatedAt:      input.CreatedAt,
+		UpdatedAt:      input.UpdatedAt,
+		Notes:          input.Notes,
+	}, nil
+}
+
+// DeleteFees is the resolver for the deleteFees field.
+func (r *mutationResolver) DeleteFees(ctx context.Context, id string) (string, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, "DELETE FROM public.all_fees WHERE id = $1", id)
+	if err != nil {
+		return "", fmt.Errorf("failed to delete fees: %w", err)
+	}
+
+	return id, nil
+}
+
+// CreateFeesType is the resolver for the createFeesType field.
+func (r *mutationResolver) CreateFeesType(ctx context.Context, input CreateFeesTypeInput) (*FeesType, error) {
+	db := r.DB
+
+	id := uuid.New().String()
+
+	_, err := db.ExecContext(ctx, `
+		INSERT INTO public.fees_types (
+			fee_type_id, fee_type_name, category, description, amount, applicable_classes, frequency, status, created_by, created_date, last_updated
+		) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, NULLIF($10,'')::timestamp, NULLIF($11,'')::timestamp)
+	`,
+		id, input.FeeTypeName, input.Category, input.Description, input.Amount,
+		input.ApplicableClasses, input.Frequency, input.Status, input.CreatedBy, input.CreatedDate, input.LastUpdated,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to insert fees type: %w", err)
+	}
+
+	return &FeesType{
+		FeeTypeID:         id,
+		FeeTypeName:       input.FeeTypeName,
+		Category:          input.Category,
+		Description:       input.Description,
+		Amount:            input.Amount,
+		ApplicableClasses: input.ApplicableClasses,
+		Frequency:         input.Frequency,
+		Status:            input.Status,
+		CreatedBy:         input.CreatedBy,
+		CreatedDate:       input.CreatedDate,
+		LastUpdated:       input.LastUpdated,
+	}, nil
+}
+
+// UpdateFeesType is the resolver for the updateFeesType field.
+func (r *mutationResolver) UpdateFeesType(ctx context.Context, input UpdateFeesTypeInput) (*FeesType, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, `
+		UPDATE public.fees_types SET
+			fee_type_name = $1, category = $2, description = $3, amount = $4,
+			applicable_classes = $5, frequency = $6, status = $7, created_by = $8,
+			created_date = NULLIF($9,'')::timestamp, last_updated = NULLIF($10,'')::timestamp
+		WHERE fee_type_id = $11
+	`,
+		input.FeeTypeName, input.Category, input.Description, input.Amount,
+		input.ApplicableClasses, input.Frequency, input.Status, input.CreatedBy, input.CreatedDate, input.LastUpdated, input.FeeTypeID,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to update fees type: %w", err)
+	}
+
+	return &FeesType{
+		FeeTypeID:         input.FeeTypeID,
+		FeeTypeName:       input.FeeTypeName,
+		Category:          input.Category,
+		Description:       input.Description,
+		Amount:            input.Amount,
+		ApplicableClasses: input.ApplicableClasses,
+		Frequency:         input.Frequency,
+		Status:            input.Status,
+		CreatedBy:         input.CreatedBy,
+		CreatedDate:       input.CreatedDate,
+		LastUpdated:       input.LastUpdated,
+	}, nil
+}
+
+// DeleteFeesType is the resolver for the deleteFeesType field.
+func (r *mutationResolver) DeleteFeesType(ctx context.Context, id string) (string, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, "DELETE FROM public.fees_types WHERE fee_type_id = $1", id)
+	if err != nil {
+		return "", fmt.Errorf("failed to delete fees type: %w", err)
+	}
+
+	return id, nil
+}
+
+// CreateFeesDiscount is the resolver for the createFeesDiscount field.
+func (r *mutationResolver) CreateFeesDiscount(ctx context.Context, input CreateFeesDiscountInput) (*FeesDiscount, error) {
+	db := r.DB
+
+	id := uuid.New().String()
+
+	_, err := db.ExecContext(ctx, `
+		INSERT INTO public.fees_discounts (
+			discount_id, discount_type, discount_amount, discount_percentage, discount_code, start_date, end_date, applied_date, status, remarks
+		) VALUES ($1, $2, $3, $4, $5, NULLIF($6,'')::timestamp, NULLIF($7,'')::timestamp, NULLIF($8,'')::timestamp, $9, $10)
+	`,
+		id, input.DiscountType, input.DiscountAmount, input.DiscountPercentage, input.DiscountCode,
+		input.StartDate, input.EndDate, input.AppliedDate, input.Status, input.Remarks,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to insert fees discount: %w", err)
+	}
+
+	return &FeesDiscount{
+		DiscountID:         id,
+		DiscountType:       input.DiscountType,
+		DiscountAmount:     input.DiscountAmount,
+		DiscountPercentage: input.DiscountPercentage,
+		DiscountCode:       input.DiscountCode,
+		StartDate:          input.StartDate,
+		EndDate:            input.EndDate,
+		AppliedDate:        input.AppliedDate,
+		Status:             input.Status,
+		Remarks:            input.Remarks,
+	}, nil
+}
+
+// UpdateFeesDiscount is the resolver for the updateFeesDiscount field.
+func (r *mutationResolver) UpdateFeesDiscount(ctx context.Context, input UpdateFeesDiscountInput) (*FeesDiscount, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, `
+		UPDATE public.fees_discounts SET
+			discount_type = $1, discount_amount = $2, discount_percentage = $3,
+			discount_code = $4, start_date = NULLIF($5,'')::timestamp, end_date = NULLIF($6,'')::timestamp,
+			applied_date = NULLIF($7,'')::timestamp, status = $8, remarks = $9
+		WHERE discount_id = $10
+	`,
+		input.DiscountType, input.DiscountAmount, input.DiscountPercentage, input.DiscountCode,
+		input.StartDate, input.EndDate, input.AppliedDate, input.Status, input.Remarks, input.DiscountID,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to update fees discount: %w", err)
+	}
+
+	return &FeesDiscount{
+		DiscountID:         input.DiscountID,
+		DiscountType:       input.DiscountType,
+		DiscountAmount:     input.DiscountAmount,
+		DiscountPercentage: input.DiscountPercentage,
+		DiscountCode:       input.DiscountCode,
+		StartDate:          input.StartDate,
+		EndDate:            input.EndDate,
+		AppliedDate:        input.AppliedDate,
+		Status:             input.Status,
+		Remarks:            input.Remarks,
+	}, nil
+}
+
+// DeleteFeesDiscount is the resolver for the deleteFeesDiscount field.
+func (r *mutationResolver) DeleteFeesDiscount(ctx context.Context, id string) (string, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, "DELETE FROM public.fees_discounts WHERE discount_id = $1", id)
+	if err != nil {
+		return "", fmt.Errorf("failed to delete fees discount: %w", err)
+	}
+
+	return id, nil
+}
+
+// CreateClassList is the resolver for the createClassList field.
+func (r *mutationResolver) CreateClassList(ctx context.Context, input CreateClassListInput) (*ClassList, error) {
+	db := r.DB
+
+	id := uuid.New().String()
+
+	_, err := db.ExecContext(ctx, `
+		INSERT INTO public.classes (
+			class_id, class_name, class_code, teacher_id, start_date, end_date,
+			room_number, schedule, semester, class_capacity, status,
+			description, class_type, created_at, updated_at
+		) VALUES ($1, $2, $3, $4, NULLIF($5,'')::timestamp, NULLIF($6,'')::timestamp,
+			$7, $8, $9, $10, $11, $12, $13, NULLIF($14,'')::timestamp, NULLIF($15,'')::timestamp)
+	`,
+		id, input.ClassName, input.ClassCode, input.TeacherID,
+		input.StartDate, input.EndDate, input.RoomNumber, input.Schedule,
+		input.Semester, input.ClassCapacity, input.Status, input.Description,
+		input.ClassType, input.CreatedAt, input.UpdatedAt,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to insert class: %w", err)
+	}
+
+	return &ClassList{
+		ClassID:       id,
+		ClassName:     input.ClassName,
+		ClassCode:     input.ClassCode,
+		TeacherID:     input.TeacherID,
+		StartDate:     input.StartDate,
+		EndDate:       input.EndDate,
+		RoomNumber:    input.RoomNumber,
+		Schedule:      input.Schedule,
+		Semester:      input.Semester,
+		ClassCapacity: input.ClassCapacity,
+		Status:        input.Status,
+		Description:   input.Description,
+		ClassType:     input.ClassType,
+		CreatedAt:     input.CreatedAt,
+		UpdatedAt:     input.UpdatedAt,
+	}, nil
+}
+
+// UpdateClassList is the resolver for the updateClassList field.
+func (r *mutationResolver) UpdateClassList(ctx context.Context, input UpdateClassListInput) (*ClassList, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, `
+		UPDATE public.classes SET
+			class_name = $1, class_code = $2, teacher_id = $3,
+			start_date = NULLIF($4,'')::timestamp, end_date = NULLIF($5,'')::timestamp,
+			room_number = $6, schedule = $7, semester = $8,
+			class_capacity = $9, status = $10, description = $11,
+			class_type = $12, created_at = NULLIF($13,'')::timestamp, updated_at = NULLIF($14,'')::timestamp
+		WHERE class_id = $15
+	`,
+		input.ClassName, input.ClassCode, input.TeacherID,
+		input.StartDate, input.EndDate, input.RoomNumber, input.Schedule,
+		input.Semester, input.ClassCapacity, input.Status, input.Description,
+		input.ClassType, input.CreatedAt, input.UpdatedAt, input.ClassID,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to update class: %w", err)
+	}
+
+	return &ClassList{
+		ClassID:       input.ClassID,
+		ClassName:     input.ClassName,
+		ClassCode:     input.ClassCode,
+		TeacherID:     input.TeacherID,
+		StartDate:     input.StartDate,
+		EndDate:       input.EndDate,
+		RoomNumber:    input.RoomNumber,
+		Schedule:      input.Schedule,
+		Semester:      input.Semester,
+		ClassCapacity: input.ClassCapacity,
+		Status:        input.Status,
+		Description:   input.Description,
+		ClassType:     input.ClassType,
+		CreatedAt:     input.CreatedAt,
+		UpdatedAt:     input.UpdatedAt,
+	}, nil
+}
+
+// DeleteClassList is the resolver for the deleteClassList field.
+func (r *mutationResolver) DeleteClassList(ctx context.Context, id string) (string, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, "DELETE FROM public.classes WHERE class_id = $1", id)
+	if err != nil {
+		return "", fmt.Errorf("failed to delete class: %w", err)
+	}
+
+	return id, nil
+}
+
+// CreateAcademicYear is the resolver for the createAcademicYear field.
+func (r *mutationResolver) CreateAcademicYear(ctx context.Context, input CreateAcademicYearCustomInput) (*AcademicYearCustom, error) {
+	db := r.DB
+	id := uuid.New().String()
+
+	_, err := db.ExecContext(ctx, `
+		INSERT INTO public.academic_years (
+			id, academic_year, status, start_date, end_date, description, department
+		) VALUES ($1, $2, $3, NULLIF($4,'')::timestamp, NULLIF($5,'')::timestamp, $6, $7)
+	`, id, input.AcademicYear, input.Status, input.StartDate, input.EndDate, input.Description, input.Department)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create academic year: %w", err)
+	}
+
+	return &AcademicYearCustom{
+		ID:           id,
+		AcademicYear: input.AcademicYear,
+		Status:       input.Status,
+		StartDate:    input.StartDate,
+		EndDate:      input.EndDate,
+		Description:  input.Description,
+		Department:   input.Department,
+	}, nil
+}
+
+// UpdateAcademicYear is the resolver for the updateAcademicYear field.
+func (r *mutationResolver) UpdateAcademicYear(ctx context.Context, input UpdateAcademicYearCustomInput) (*AcademicYearCustom, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, `
+		UPDATE public.academic_years SET
+			academic_year = $1, status = $2,
+			start_date = NULLIF($3,'')::timestamp, end_date = NULLIF($4,'')::timestamp,
+			description = $5, department = $6
+		WHERE id = $7
+	`, input.AcademicYear, input.Status, input.StartDate, input.EndDate, input.Description, input.Department, input.ID)
+	if err != nil {
+		return nil, fmt.Errorf("failed to update academic year: %w", err)
+	}
+
+	return &AcademicYearCustom{
+		ID:           input.ID,
+		AcademicYear: input.AcademicYear,
+		Status:       input.Status,
+		StartDate:    input.StartDate,
+		EndDate:      input.EndDate,
+		Description:  input.Description,
+		Department:   input.Department,
+	}, nil
+}
+
+// DeleteAcademicYear is the resolver for the deleteAcademicYear field.
+func (r *mutationResolver) DeleteAcademicYear(ctx context.Context, id string) (string, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, "DELETE FROM public.academic_years WHERE id = $1", id)
+	if err != nil {
+		return "", fmt.Errorf("failed to delete academic year: %w", err)
+	}
+
+	return id, nil
+}
+
+// CreateSession is the resolver for the createSession field.
+func (r *mutationResolver) CreateSession(ctx context.Context, input CreateSessionCustomInput) (*SessionCustom, error) {
+	db := r.DB
+	id := uuid.New().String()
+
+	_, err := db.ExecContext(ctx, `
+		INSERT INTO public.sessions (
+			id, session_name, start_date, end_date, status, instructor, room
+		) VALUES ($1, $2, NULLIF($3,'')::timestamp, NULLIF($4,'')::timestamp, $5, $6, $7)
+	`, id, input.SessionName, input.StartDate, input.EndDate, input.Status, input.Instructor, input.Room)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create session: %w", err)
+	}
+
+	return &SessionCustom{
+		ID:          id,
+		SessionName: input.SessionName,
+		StartDate:   input.StartDate,
+		EndDate:     input.EndDate,
+		Status:      input.Status,
+		Instructor:  input.Instructor,
+		Room:        input.Room,
+	}, nil
+}
+
+// UpdateSession is the resolver for the updateSession field.
+func (r *mutationResolver) UpdateSession(ctx context.Context, input UpdateSessionCustomInput) (*SessionCustom, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, `
+		UPDATE public.sessions SET
+			session_name = $1, start_date = NULLIF($2,'')::timestamp, end_date = NULLIF($3,'')::timestamp,
+			status = $4, instructor = $5, room = $6
+		WHERE id = $7
+	`, input.SessionName, input.StartDate, input.EndDate, input.Status, input.Instructor, input.Room, input.ID)
+	if err != nil {
+		return nil, fmt.Errorf("failed to update session: %w", err)
+	}
+
+	return &SessionCustom{
+		ID:          input.ID,
+		SessionName: input.SessionName,
+		StartDate:   input.StartDate,
+		EndDate:     input.EndDate,
+		Status:      input.Status,
+		Instructor:  input.Instructor,
+		Room:        input.Room,
+	}, nil
+}
+
+// DeleteSession is the resolver for the deleteSession field.
+func (r *mutationResolver) DeleteSession(ctx context.Context, id string) (string, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, "DELETE FROM public.sessions WHERE id = $1", id)
+	if err != nil {
+		return "", fmt.Errorf("failed to delete session: %w", err)
+	}
+
+	return id, nil
+}
+
+// CreateAcademicClass is the resolver for the createAcademicClass field.
+func (r *mutationResolver) CreateAcademicClass(ctx context.Context, input CreateAcademicClassCustomInput) (*AcademicClassCustom, error) {
+	db := r.DB
+	id := uuid.New().String()
+
+	_, err := db.ExecContext(ctx, `
+		INSERT INTO public.academic_classes (
+			id, class_name, section, academic_year, teacher, status, student_count, room_number
+		) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+	`, id, input.ClassName, input.Section, input.AcademicYear, input.Teacher, input.Status, input.StudentCount, input.RoomNumber)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create academic class: %w", err)
+	}
+
+	return &AcademicClassCustom{
+		ID:           id,
+		ClassName:    input.ClassName,
+		Section:      input.Section,
+		AcademicYear: input.AcademicYear,
+		Teacher:      input.Teacher,
+		Status:       input.Status,
+		StudentCount: input.StudentCount,
+		RoomNumber:   input.RoomNumber,
+	}, nil
+}
+
+// UpdateAcademicClass is the resolver for the updateAcademicClass field.
+func (r *mutationResolver) UpdateAcademicClass(ctx context.Context, input UpdateAcademicClassCustomInput) (*AcademicClassCustom, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, `
+		UPDATE public.academic_classes SET
+			class_name = $1, section = $2, academic_year = $3, teacher = $4,
+			status = $5, student_count = $6, room_number = $7
+		WHERE id = $8
+	`, input.ClassName, input.Section, input.AcademicYear, input.Teacher, input.Status, input.StudentCount, input.RoomNumber, input.ID)
+	if err != nil {
+		return nil, fmt.Errorf("failed to update academic class: %w", err)
+	}
+
+	return &AcademicClassCustom{
+		ID:           input.ID,
+		ClassName:    input.ClassName,
+		Section:      input.Section,
+		AcademicYear: input.AcademicYear,
+		Teacher:      input.Teacher,
+		Status:       input.Status,
+		StudentCount: input.StudentCount,
+		RoomNumber:   input.RoomNumber,
+	}, nil
+}
+
+// DeleteAcademicClass is the resolver for the deleteAcademicClass field.
+func (r *mutationResolver) DeleteAcademicClass(ctx context.Context, id string) (string, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, "DELETE FROM public.academic_classes WHERE id = $1", id)
+	if err != nil {
+		return "", fmt.Errorf("failed to delete academic class: %w", err)
+	}
+
+	return id, nil
+}
+
+// CreateAcademicSubject is the resolver for the createAcademicSubject field.
+func (r *mutationResolver) CreateAcademicSubject(ctx context.Context, input CreateAcademicSubjectCustomInput) (*AcademicSubjectCustom, error) {
+	db := r.DB
+	id := uuid.New().String()
+
+	_, err := db.ExecContext(ctx, `
+		INSERT INTO public.academic_subjects (
+			id, subject_name, subject_code, subject_type, status, prerequisites, credits
+		) VALUES ($1, $2, $3, $4, $5, $6, $7)
+	`, id, input.SubjectName, input.SubjectCode, input.SubjectType, input.Status, input.Prerequisites, input.Credits)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create academic subject: %w", err)
+	}
+
+	return &AcademicSubjectCustom{
+		ID:            id,
+		SubjectName:   input.SubjectName,
+		SubjectCode:   input.SubjectCode,
+		SubjectType:   input.SubjectType,
+		Status:        input.Status,
+		Prerequisites: input.Prerequisites,
+		Credits:       input.Credits,
+	}, nil
+}
+
+// UpdateAcademicSubject is the resolver for the updateAcademicSubject field.
+func (r *mutationResolver) UpdateAcademicSubject(ctx context.Context, input UpdateAcademicSubjectCustomInput) (*AcademicSubjectCustom, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, `
+		UPDATE public.academic_subjects SET
+			subject_name = $1, subject_code = $2, subject_type = $3,
+			status = $4, prerequisites = $5, credits = $6
+		WHERE id = $7
+	`, input.SubjectName, input.SubjectCode, input.SubjectType, input.Status, input.Prerequisites, input.Credits, input.ID)
+	if err != nil {
+		return nil, fmt.Errorf("failed to update academic subject: %w", err)
+	}
+
+	return &AcademicSubjectCustom{
+		ID:            input.ID,
+		SubjectName:   input.SubjectName,
+		SubjectCode:   input.SubjectCode,
+		SubjectType:   input.SubjectType,
+		Status:        input.Status,
+		Prerequisites: input.Prerequisites,
+		Credits:       input.Credits,
+	}, nil
+}
+
+// DeleteAcademicSubject is the resolver for the deleteAcademicSubject field.
+func (r *mutationResolver) DeleteAcademicSubject(ctx context.Context, id string) (string, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, "DELETE FROM public.academic_subjects WHERE id = $1", id)
+	if err != nil {
+		return "", fmt.Errorf("failed to delete academic subject: %w", err)
+	}
+
+	return id, nil
+}
+
+// CreateCourseCurriculum is the resolver for the createCourseCurriculum field.
+func (r *mutationResolver) CreateCourseCurriculum(ctx context.Context, input CreateCourseCurriculumCustomInput) (*CourseCurriculumCustom, error) {
+	db := r.DB
+	id := uuid.New().String()
+
+	_, err := db.ExecContext(ctx, `
+		INSERT INTO public.course_curriculums (
+			id, course_name, class_name, subject_name, description, status, duration, reference_material
+		) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+	`, id, input.CourseName, input.ClassName, input.SubjectName, input.Description, input.Status, input.Duration, input.ReferenceMaterial)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create course curriculum: %w", err)
+	}
+
+	return &CourseCurriculumCustom{
+		ID:                id,
+		CourseName:        input.CourseName,
+		ClassName:         input.ClassName,
+		SubjectName:       input.SubjectName,
+		Description:       input.Description,
+		Status:            input.Status,
+		Duration:          input.Duration,
+		ReferenceMaterial: input.ReferenceMaterial,
+	}, nil
+}
+
+// UpdateCourseCurriculum is the resolver for the updateCourseCurriculum field.
+func (r *mutationResolver) UpdateCourseCurriculum(ctx context.Context, input UpdateCourseCurriculumCustomInput) (*CourseCurriculumCustom, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, `
+		UPDATE public.course_curriculums SET
+			course_name = $1, class_name = $2, subject_name = $3,
+			description = $4, status = $5, duration = $6, reference_material = $7
+		WHERE id = $8
+	`, input.CourseName, input.ClassName, input.SubjectName, input.Description, input.Status, input.Duration, input.ReferenceMaterial, input.ID)
+	if err != nil {
+		return nil, fmt.Errorf("failed to update course curriculum: %w", err)
+	}
+
+	return &CourseCurriculumCustom{
+		ID:                input.ID,
+		CourseName:        input.CourseName,
+		ClassName:         input.ClassName,
+		SubjectName:       input.SubjectName,
+		Description:       input.Description,
+		Status:            input.Status,
+		Duration:          input.Duration,
+		ReferenceMaterial: input.ReferenceMaterial,
+	}, nil
+}
+
+// DeleteCourseCurriculum is the resolver for the deleteCourseCurriculum field.
+func (r *mutationResolver) DeleteCourseCurriculum(ctx context.Context, id string) (string, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, "DELETE FROM public.course_curriculums WHERE id = $1", id)
+	if err != nil {
+		return "", fmt.Errorf("failed to delete course curriculum: %w", err)
+	}
+
+	return id, nil
+}
+
+// CreateAssignment is the resolver for the createAssignment field.
+func (r *mutationResolver) CreateAssignment(ctx context.Context, input CreateAssignmentCustomInput) (*AssignmentCustom, error) {
+	db := r.DB
+	id := uuid.New().String()
+
+	_, err := db.ExecContext(ctx, `
+		INSERT INTO public.assignments (
+			id, class_name, subject_name, teacher_name, assignment_date, status, title, deadline, details
+		) VALUES ($1, $2, $3, $4, NULLIF($5,'')::timestamp, $6, $7, NULLIF($8,'')::timestamp, $9)
+	`, id, input.ClassName, input.SubjectName, input.TeacherName, input.AssignmentDate, input.Status, input.Title, input.Deadline, input.Details)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create assignment: %w", err)
+	}
+
+	return &AssignmentCustom{
+		ID:             id,
+		ClassName:      input.ClassName,
+		SubjectName:    input.SubjectName,
+		TeacherName:    input.TeacherName,
+		AssignmentDate: input.AssignmentDate,
+		Status:         input.Status,
+		Title:          input.Title,
+		Deadline:       input.Deadline,
+		Details:        input.Details,
+	}, nil
+}
+
+// UpdateAssignment is the resolver for the updateAssignment field.
+func (r *mutationResolver) UpdateAssignment(ctx context.Context, input UpdateAssignmentCustomInput) (*AssignmentCustom, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, `
+		UPDATE public.assignments SET
+			class_name = $1, subject_name = $2, teacher_name = $3,
+			assignment_date = NULLIF($4,'')::timestamp, status = $5, title = $6,
+			deadline = NULLIF($7,'')::timestamp, details = $8
+		WHERE id = $9
+	`, input.ClassName, input.SubjectName, input.TeacherName, input.AssignmentDate, input.Status, input.Title, input.Deadline, input.Details, input.ID)
+	if err != nil {
+		return nil, fmt.Errorf("failed to update assignment: %w", err)
+	}
+
+	return &AssignmentCustom{
+		ID:             input.ID,
+		ClassName:      input.ClassName,
+		SubjectName:    input.SubjectName,
+		TeacherName:    input.TeacherName,
+		AssignmentDate: input.AssignmentDate,
+		Status:         input.Status,
+		Title:          input.Title,
+		Deadline:       input.Deadline,
+		Details:        input.Details,
+	}, nil
+}
+
+// DeleteAssignment is the resolver for the deleteAssignment field.
+func (r *mutationResolver) DeleteAssignment(ctx context.Context, id string) (string, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, "DELETE FROM public.assignments WHERE id = $1", id)
+	if err != nil {
+		return "", fmt.Errorf("failed to delete assignment: %w", err)
+	}
+
+	return id, nil
+}
+
+// CreateLessonPlanning is the resolver for the createLessonPlanning field.
+func (r *mutationResolver) CreateLessonPlanning(ctx context.Context, input CreateLessonPlanningCustomInput) (*LessonPlanningCustom, error) {
+	db := r.DB
+	id := uuid.New().String()
+
+	_, err := db.ExecContext(ctx, `
+		INSERT INTO public.lesson_plannings (
+			id, topic_name, lesson_name, class_name, subject_name, teacher_name, lesson_date, status, objectives, teaching_method
+		) VALUES ($1, $2, $3, $4, $5, $6, NULLIF($7,'')::timestamp, $8, $9, $10)
+	`, id, input.TopicName, input.LessonName, input.ClassName, input.SubjectName, input.TeacherName, input.LessonDate, input.Status, input.Objectives, input.TeachingMethod)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create lesson planning: %w", err)
+	}
+
+	return &LessonPlanningCustom{
+		ID:             id,
+		TopicName:      input.TopicName,
+		LessonName:     input.LessonName,
+		ClassName:      input.ClassName,
+		SubjectName:    input.SubjectName,
+		TeacherName:    input.TeacherName,
+		LessonDate:     input.LessonDate,
+		Status:         input.Status,
+		Objectives:     input.Objectives,
+		TeachingMethod: input.TeachingMethod,
+	}, nil
+}
+
+// UpdateLessonPlanning is the resolver for the updateLessonPlanning field.
+func (r *mutationResolver) UpdateLessonPlanning(ctx context.Context, input UpdateLessonPlanningCustomInput) (*LessonPlanningCustom, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, `
+		UPDATE public.lesson_plannings SET
+			topic_name = $1, lesson_name = $2, class_name = $3, subject_name = $4,
+			teacher_name = $5, lesson_date = NULLIF($6,'')::timestamp, status = $7, objectives = $8, teaching_method = $9
+		WHERE id = $10
+	`, input.TopicName, input.LessonName, input.ClassName, input.SubjectName, input.TeacherName, input.LessonDate, input.Status, input.Objectives, input.TeachingMethod, input.ID)
+	if err != nil {
+		return nil, fmt.Errorf("failed to update lesson planning: %w", err)
+	}
+
+	return &LessonPlanningCustom{
+		ID:             input.ID,
+		TopicName:      input.TopicName,
+		LessonName:     input.LessonName,
+		ClassName:      input.ClassName,
+		SubjectName:    input.SubjectName,
+		TeacherName:    input.TeacherName,
+		LessonDate:     input.LessonDate,
+		Status:         input.Status,
+		Objectives:     input.Objectives,
+		TeachingMethod: input.TeachingMethod,
+	}, nil
+}
+
+// DeleteLessonPlanning is the resolver for the deleteLessonPlanning field.
+func (r *mutationResolver) DeleteLessonPlanning(ctx context.Context, id string) (string, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, "DELETE FROM public.lesson_plannings WHERE id = $1", id)
+	if err != nil {
+		return "", fmt.Errorf("failed to delete lesson planning: %w", err)
+	}
+
+	return id, nil
+}
+
+// CreateHostelRoom is the resolver for the createHostelRoom field.
+func (r *mutationResolver) CreateHostelRoom(ctx context.Context, input CreateHostelRoomCustomInput) (*HostelRoomCustom, error) {
+	db := r.DB
+	id := uuid.New().String()
+
+	_, err := db.ExecContext(ctx, `
+		INSERT INTO public.hostel_room_lists (
+			room_id, room_number, room_type, floor, capacity, occupied_status, current_occupants,
+			price_fees, room_condition, date_assigned, room_supervisor_staff, hostel_block,
+			check_in_date, check_out_date, room_type_code, room_description
+		) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, NULLIF($10,'')::timestamp, $11, $12, NULLIF($13,'')::timestamp, NULLIF($14,'')::timestamp, $15, $16)
+	`, id, input.RoomNumber, input.RoomType, input.Floor, input.Capacity, input.OccupiedStatus, input.CurrentOccupants,
+		input.PriceFees, input.RoomCondition, input.DateAssigned, input.RoomSupervisorStaff, input.HostelBlock,
+		input.CheckInDate, input.CheckOutDate, input.RoomTypeCode, input.RoomDescription)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create hostel room: %w", err)
+	}
+
+	return &HostelRoomCustom{
+		RoomID:              id,
+		RoomNumber:          input.RoomNumber,
+		RoomType:            input.RoomType,
+		Floor:               input.Floor,
+		Capacity:            input.Capacity,
+		OccupiedStatus:      input.OccupiedStatus,
+		CurrentOccupants:    input.CurrentOccupants,
+		PriceFees:           input.PriceFees,
+		RoomCondition:       input.RoomCondition,
+		DateAssigned:        input.DateAssigned,
+		RoomSupervisorStaff: input.RoomSupervisorStaff,
+		HostelBlock:         input.HostelBlock,
+		CheckInDate:         input.CheckInDate,
+		CheckOutDate:        input.CheckOutDate,
+		RoomTypeCode:        input.RoomTypeCode,
+		RoomDescription:     input.RoomDescription,
+	}, nil
+}
+
+// UpdateHostelRoom is the resolver for the updateHostelRoom field.
+func (r *mutationResolver) UpdateHostelRoom(ctx context.Context, input UpdateHostelRoomCustomInput) (*HostelRoomCustom, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, `
+		UPDATE public.hostel_room_lists SET
+			room_number = $1, room_type = $2, floor = $3, capacity = $4, occupied_status = $5,
+			current_occupants = $6, price_fees = $7, room_condition = $8, date_assigned = NULLIF($9,'')::timestamp,
+			room_supervisor_staff = $10, hostel_block = $11, check_in_date = NULLIF($12,'')::timestamp,
+			check_out_date = NULLIF($13,'')::timestamp, room_type_code = $14, room_description = $15
+		WHERE room_id = $16
+	`, input.RoomNumber, input.RoomType, input.Floor, input.Capacity, input.OccupiedStatus,
+		input.CurrentOccupants, input.PriceFees, input.RoomCondition, input.DateAssigned,
+		input.RoomSupervisorStaff, input.HostelBlock, input.CheckInDate, input.CheckOutDate,
+		input.RoomTypeCode, input.RoomDescription, input.RoomID)
+	if err != nil {
+		return nil, fmt.Errorf("failed to update hostel room: %w", err)
+	}
+
+	return &HostelRoomCustom{
+		RoomID:              input.RoomID,
+		RoomNumber:          input.RoomNumber,
+		RoomType:            input.RoomType,
+		Floor:               input.Floor,
+		Capacity:            input.Capacity,
+		OccupiedStatus:      input.OccupiedStatus,
+		CurrentOccupants:    input.CurrentOccupants,
+		PriceFees:           input.PriceFees,
+		RoomCondition:       input.RoomCondition,
+		DateAssigned:        input.DateAssigned,
+		RoomSupervisorStaff: input.RoomSupervisorStaff,
+		HostelBlock:         input.HostelBlock,
+		CheckInDate:         input.CheckInDate,
+		CheckOutDate:        input.CheckOutDate,
+		RoomTypeCode:        input.RoomTypeCode,
+		RoomDescription:     input.RoomDescription,
+	}, nil
+}
+
+// DeleteHostelRoom is the resolver for the deleteHostelRoom field.
+func (r *mutationResolver) DeleteHostelRoom(ctx context.Context, id string) (string, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, "DELETE FROM public.hostel_room_lists WHERE room_id = $1", id)
+	if err != nil {
+		return "", fmt.Errorf("failed to delete hostel room: %w", err)
+	}
+
+	return id, nil
+}
+
+// CreateHostelRoomType is the resolver for the createHostelRoomType field.
+func (r *mutationResolver) CreateHostelRoomType(ctx context.Context, input CreateHostelRoomTypeCustomInput) (*HostelRoomTypeCustom, error) {
+	db := r.DB
+	id := uuid.New().String()
+	now := time.Now().Format("2006-01-02 15:04:05")
+
+	_, err := db.ExecContext(ctx, `
+		INSERT INTO public.hostel_room_types (
+			room_type_id, room_type_name, capacity, room_category, room_description, room_price,
+			room_facilities, room_area, room_condition, room_type_code, created_at, updated_at,
+			status, max_occupants
+		) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11::timestamp, $12::timestamp, $13, $14)
+	`, id, input.RoomTypeName, input.Capacity, input.RoomCategory, input.RoomDescription, input.RoomPrice,
+		input.RoomFacilities, input.RoomArea, input.RoomCondition, input.RoomTypeCode, now, now,
+		input.Status, input.MaxOccupants)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create hostel room type: %w", err)
+	}
+
+	return &HostelRoomTypeCustom{
+		RoomTypeID:      id,
+		RoomTypeName:    input.RoomTypeName,
+		Capacity:        input.Capacity,
+		RoomCategory:    input.RoomCategory,
+		RoomDescription: input.RoomDescription,
+		RoomPrice:       input.RoomPrice,
+		RoomFacilities:  input.RoomFacilities,
+		RoomArea:        input.RoomArea,
+		RoomCondition:   input.RoomCondition,
+		RoomTypeCode:    input.RoomTypeCode,
+		CreatedAt:       now,
+		UpdatedAt:       now,
+		Status:          input.Status,
+		MaxOccupants:    input.MaxOccupants,
+	}, nil
+}
+
+// UpdateHostelRoomType is the resolver for the updateHostelRoomType field.
+func (r *mutationResolver) UpdateHostelRoomType(ctx context.Context, input UpdateHostelRoomTypeCustomInput) (*HostelRoomTypeCustom, error) {
+	db := r.DB
+	now := time.Now().Format("2006-01-02 15:04:05")
+
+	_, err := db.ExecContext(ctx, `
+		UPDATE public.hostel_room_types SET
+			room_type_name = $1, capacity = $2, room_category = $3, room_description = $4,
+			room_price = $5, room_facilities = $6, room_area = $7, room_condition = $8,
+			room_type_code = $9, updated_at = $10::timestamp, status = $11, max_occupants = $12
+		WHERE room_type_id = $13
+	`, input.RoomTypeName, input.Capacity, input.RoomCategory, input.RoomDescription, input.RoomPrice,
+		input.RoomFacilities, input.RoomArea, input.RoomCondition, input.RoomTypeCode, now,
+		input.Status, input.MaxOccupants, input.RoomTypeID)
+	if err != nil {
+		return nil, fmt.Errorf("failed to update hostel room type: %w", err)
+	}
+
+	return &HostelRoomTypeCustom{
+		RoomTypeID:      input.RoomTypeID,
+		RoomTypeName:    input.RoomTypeName,
+		Capacity:        input.Capacity,
+		RoomCategory:    input.RoomCategory,
+		RoomDescription: input.RoomDescription,
+		RoomPrice:       input.RoomPrice,
+		RoomFacilities:  input.RoomFacilities,
+		RoomArea:        input.RoomArea,
+		RoomCondition:   input.RoomCondition,
+		RoomTypeCode:    input.RoomTypeCode,
+		UpdatedAt:       now,
+		Status:          input.Status,
+		MaxOccupants:    input.MaxOccupants,
+	}, nil
+}
+
+// DeleteHostelRoomType is the resolver for the deleteHostelRoomType field.
+func (r *mutationResolver) DeleteHostelRoomType(ctx context.Context, id string) (string, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, "DELETE FROM public.hostel_room_types WHERE room_type_id = $1", id)
+	if err != nil {
+		return "", fmt.Errorf("failed to delete hostel room type: %w", err)
+	}
+
+	return id, nil
+}
+
+// CreateHostelAllocation is the resolver for the createHostelAllocation field.
+func (r *mutationResolver) CreateHostelAllocation(ctx context.Context, input CreateHostelAllocationCustomInput) (*HostelAllocationCustom, error) {
+	db := r.DB
+	id := uuid.New().String()
+
+	_, err := db.ExecContext(ctx, `
+		INSERT INTO public.hostel_allocations (
+			id, img, student_name, roll_no, hostel_name, room_no, room_type, allocation_date, status
+		) VALUES ($1, $2, $3, $4, $5, $6, $7, NULLIF($8,'')::timestamp, $9)
+	`, id, input.Img, input.StudentName, input.RollNo, input.HostelName, input.RoomNo, input.RoomType, input.AllocationDate, input.Status)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create hostel allocation: %w", err)
+	}
+
+	return &HostelAllocationCustom{
+		ID:             id,
+		Img:            input.Img,
+		StudentName:    input.StudentName,
+		RollNo:         input.RollNo,
+		HostelName:     input.HostelName,
+		RoomNo:         input.RoomNo,
+		RoomType:       input.RoomType,
+		AllocationDate: input.AllocationDate,
+		Status:         input.Status,
+	}, nil
+}
+
+// UpdateHostelAllocation is the resolver for the updateHostelAllocation field.
+func (r *mutationResolver) UpdateHostelAllocation(ctx context.Context, input UpdateHostelAllocationCustomInput) (*HostelAllocationCustom, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, `
+		UPDATE public.hostel_allocations SET
+			img = $1, student_name = $2, roll_no = $3, hostel_name = $4,
+			room_no = $5, room_type = $6, allocation_date = NULLIF($7,'')::timestamp, status = $8
+		WHERE id = $9
+	`, input.Img, input.StudentName, input.RollNo, input.HostelName, input.RoomNo, input.RoomType, input.AllocationDate, input.Status, input.ID)
+	if err != nil {
+		return nil, fmt.Errorf("failed to update hostel allocation: %w", err)
+	}
+
+	return &HostelAllocationCustom{
+		ID:             input.ID,
+		Img:            input.Img,
+		StudentName:    input.StudentName,
+		RollNo:         input.RollNo,
+		HostelName:     input.HostelName,
+		RoomNo:         input.RoomNo,
+		RoomType:       input.RoomType,
+		AllocationDate: input.AllocationDate,
+		Status:         input.Status,
+	}, nil
+}
+
+// DeleteHostelAllocation is the resolver for the deleteHostelAllocation field.
+func (r *mutationResolver) DeleteHostelAllocation(ctx context.Context, id string) (string, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, "DELETE FROM public.hostel_allocations WHERE id = $1", id)
+	if err != nil {
+		return "", fmt.Errorf("failed to delete hostel allocation: %w", err)
+	}
+
+	return id, nil
+}
+
+// CreateHostelAttendance is the resolver for the createHostelAttendance field.
+func (r *mutationResolver) CreateHostelAttendance(ctx context.Context, input CreateHostelAttendanceCustomInput) (*HostelAttendanceCustom, error) {
+	db := r.DB
+	id := uuid.New().String()
+
+	_, err := db.ExecContext(ctx, `
+		INSERT INTO public.hostel_attendances (
+			id, img, student_name, roll_no, hostel_name, room_no, attendance_date, status, note
+		) VALUES ($1, $2, $3, $4, $5, $6, NULLIF($7,'')::timestamp, $8, $9)
+	`, id, input.Img, input.StudentName, input.RollNo, input.HostelName, input.RoomNo, input.AttendanceDate, input.Status, input.Note)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create hostel attendance: %w", err)
+	}
+
+	return &HostelAttendanceCustom{
+		ID:             id,
+		Img:            input.Img,
+		StudentName:    input.StudentName,
+		RollNo:         input.RollNo,
+		HostelName:     input.HostelName,
+		RoomNo:         input.RoomNo,
+		AttendanceDate: input.AttendanceDate,
+		Status:         input.Status,
+		Note:           input.Note,
+	}, nil
+}
+
+// UpdateHostelAttendance is the resolver for the updateHostelAttendance field.
+func (r *mutationResolver) UpdateHostelAttendance(ctx context.Context, input UpdateHostelAttendanceCustomInput) (*HostelAttendanceCustom, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, `
+		UPDATE public.hostel_attendances SET
+			img = $1, student_name = $2, roll_no = $3, hostel_name = $4,
+			room_no = $5, attendance_date = NULLIF($6,'')::timestamp, status = $7, note = $8
+		WHERE id = $9
+	`, input.Img, input.StudentName, input.RollNo, input.HostelName, input.RoomNo, input.AttendanceDate, input.Status, input.Note, input.ID)
+	if err != nil {
+		return nil, fmt.Errorf("failed to update hostel attendance: %w", err)
+	}
+
+	return &HostelAttendanceCustom{
+		ID:             input.ID,
+		Img:            input.Img,
+		StudentName:    input.StudentName,
+		RollNo:         input.RollNo,
+		HostelName:     input.HostelName,
+		RoomNo:         input.RoomNo,
+		AttendanceDate: input.AttendanceDate,
+		Status:         input.Status,
+		Note:           input.Note,
+	}, nil
+}
+
+// DeleteHostelAttendance is the resolver for the deleteHostelAttendance field.
+func (r *mutationResolver) DeleteHostelAttendance(ctx context.Context, id string) (string, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, "DELETE FROM public.hostel_attendances WHERE id = $1", id)
+	if err != nil {
+		return "", fmt.Errorf("failed to delete hostel attendance: %w", err)
+	}
+
+	return id, nil
+}
+
+// CreateHostelFee is the resolver for the createHostelFee field.
+func (r *mutationResolver) CreateHostelFee(ctx context.Context, input CreateHostelFeeCustomInput) (*HostelFeeCustom, error) {
+	db := r.DB
+	id := uuid.New().String()
+
+	_, err := db.ExecContext(ctx, `
+		INSERT INTO public.hostel_fees (
+			id, img, student_name, roll_no, hostel_name, room_no, fee_type, amount, payment_date, payment_status
+		) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, NULLIF($9,'')::timestamp, $10)
+	`, id, input.Img, input.StudentName, input.RollNo, input.HostelName, input.RoomNo, input.FeeType, input.Amount, input.PaymentDate, input.PaymentStatus)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create hostel fee: %w", err)
+	}
+
+	return &HostelFeeCustom{
+		ID:            id,
+		Img:           input.Img,
+		StudentName:   input.StudentName,
+		RollNo:        input.RollNo,
+		HostelName:    input.HostelName,
+		RoomNo:        input.RoomNo,
+		FeeType:       input.FeeType,
+		Amount:        input.Amount,
+		PaymentDate:   input.PaymentDate,
+		PaymentStatus: input.PaymentStatus,
+	}, nil
+}
+
+// UpdateHostelFee is the resolver for the updateHostelFee field.
+func (r *mutationResolver) UpdateHostelFee(ctx context.Context, input UpdateHostelFeeCustomInput) (*HostelFeeCustom, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, `
+		UPDATE public.hostel_fees SET
+			img = $1, student_name = $2, roll_no = $3, hostel_name = $4,
+			room_no = $5, fee_type = $6, amount = $7, payment_date = NULLIF($8,'')::timestamp, payment_status = $9
+		WHERE id = $10
+	`, input.Img, input.StudentName, input.RollNo, input.HostelName, input.RoomNo, input.FeeType, input.Amount, input.PaymentDate, input.PaymentStatus, input.ID)
+	if err != nil {
+		return nil, fmt.Errorf("failed to update hostel fee: %w", err)
+	}
+
+	return &HostelFeeCustom{
+		ID:            input.ID,
+		Img:           input.Img,
+		StudentName:   input.StudentName,
+		RollNo:        input.RollNo,
+		HostelName:    input.HostelName,
+		RoomNo:        input.RoomNo,
+		FeeType:       input.FeeType,
+		Amount:        input.Amount,
+		PaymentDate:   input.PaymentDate,
+		PaymentStatus: input.PaymentStatus,
+	}, nil
+}
+
+// DeleteHostelFee is the resolver for the deleteHostelFee field.
+func (r *mutationResolver) DeleteHostelFee(ctx context.Context, id string) (string, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, "DELETE FROM public.hostel_fees WHERE id = $1", id)
+	if err != nil {
+		return "", fmt.Errorf("failed to delete hostel fee: %w", err)
+	}
+
+	return id, nil
+}
+
+// CreateDepartment is the resolver for the createDepartment field.
+func (r *mutationResolver) CreateDepartment(ctx context.Context, input CreateDepartmentCustomInput) (*DepartmentCustom, error) {
+	db := r.DB
+	id := uuid.New().String()
+
+	_, err := db.ExecContext(ctx, `
+		INSERT INTO public.departments (
+			id, img, department_name, hod, phone, email, student_capacity, established_year, total_faculty
+		) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+	`, id, input.Img, input.DepartmentName, input.Hod, input.Phone, input.Email, input.StudentCapacity, input.EstablishedYear, input.TotalFaculty)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create department: %w", err)
+	}
+
+	return &DepartmentCustom{
+		ID:              id,
+		Img:             input.Img,
+		DepartmentName:  input.DepartmentName,
+		Hod:             input.Hod,
+		Phone:           input.Phone,
+		Email:           input.Email,
+		StudentCapacity: input.StudentCapacity,
+		EstablishedYear: input.EstablishedYear,
+		TotalFaculty:    input.TotalFaculty,
+	}, nil
+}
+
+// UpdateDepartment is the resolver for the updateDepartment field.
+func (r *mutationResolver) UpdateDepartment(ctx context.Context, input UpdateDepartmentCustomInput) (*DepartmentCustom, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, `
+		UPDATE public.departments SET
+			img = $1, department_name = $2, hod = $3, phone = $4,
+			email = $5, student_capacity = $6, established_year = $7, total_faculty = $8
+		WHERE id = $9
+	`, input.Img, input.DepartmentName, input.Hod, input.Phone, input.Email, input.StudentCapacity, input.EstablishedYear, input.TotalFaculty, input.ID)
+	if err != nil {
+		return nil, fmt.Errorf("failed to update department: %w", err)
+	}
+
+	return &DepartmentCustom{
+		ID:              input.ID,
+		Img:             input.Img,
+		DepartmentName:  input.DepartmentName,
+		Hod:             input.Hod,
+		Phone:           input.Phone,
+		Email:           input.Email,
+		StudentCapacity: input.StudentCapacity,
+		EstablishedYear: input.EstablishedYear,
+		TotalFaculty:    input.TotalFaculty,
+	}, nil
+}
+
+// DeleteDepartment is the resolver for the deleteDepartment field.
+func (r *mutationResolver) DeleteDepartment(ctx context.Context, id string) (string, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, "DELETE FROM public.departments WHERE id = $1", id)
+	if err != nil {
+		return "", fmt.Errorf("failed to delete department: %w", err)
+	}
+
+	return id, nil
+}
+
+// CreateAcademicReport is the resolver for the createAcademicReport field.
+func (r *mutationResolver) CreateAcademicReport(ctx context.Context, input CreateAcademicReportCustomInput) (*AcademicReportCustom, error) {
+	db := r.DB
+	id := uuid.New().String()
+
+	_, err := db.ExecContext(ctx, `
+		INSERT INTO public.academic_reports (
+			id, img, report_type, class_name, subject, academic_year, term, generated_by, date, status
+		) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, NULLIF($9,'')::timestamp, $10)
+	`, id, input.Img, input.ReportType, input.ClassName, input.Subject, input.AcademicYear, input.Term, input.GeneratedBy, input.Date, input.Status)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create academic report: %w", err)
+	}
+
+	return &AcademicReportCustom{
+		ID:           id,
+		Img:          input.Img,
+		ReportType:   input.ReportType,
+		ClassName:    input.ClassName,
+		Subject:      input.Subject,
+		AcademicYear: input.AcademicYear,
+		Term:         input.Term,
+		GeneratedBy:  input.GeneratedBy,
+		Date:         input.Date,
+		Status:       input.Status,
+	}, nil
+}
+
+// UpdateAcademicReport is the resolver for the updateAcademicReport field.
+func (r *mutationResolver) UpdateAcademicReport(ctx context.Context, input UpdateAcademicReportCustomInput) (*AcademicReportCustom, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, `
+		UPDATE public.academic_reports SET
+			img = $1, report_type = $2, class_name = $3, subject = $4,
+			academic_year = $5, term = $6, generated_by = $7, date = NULLIF($8,'')::timestamp, status = $9
+		WHERE id = $10
+	`, input.Img, input.ReportType, input.ClassName, input.Subject, input.AcademicYear, input.Term, input.GeneratedBy, input.Date, input.Status, input.ID)
+	if err != nil {
+		return nil, fmt.Errorf("failed to update academic report: %w", err)
+	}
+
+	return &AcademicReportCustom{
+		ID:           input.ID,
+		Img:          input.Img,
+		ReportType:   input.ReportType,
+		ClassName:    input.ClassName,
+		Subject:      input.Subject,
+		AcademicYear: input.AcademicYear,
+		Term:         input.Term,
+		GeneratedBy:  input.GeneratedBy,
+		Date:         input.Date,
+		Status:       input.Status,
+	}, nil
+}
+
+// DeleteAcademicReport is the resolver for the deleteAcademicReport field.
+func (r *mutationResolver) DeleteAcademicReport(ctx context.Context, id string) (string, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, "DELETE FROM public.academic_reports WHERE id = $1", id)
+	if err != nil {
+		return "", fmt.Errorf("failed to delete academic report: %w", err)
+	}
+
+	return id, nil
+}
+
+// CreateAttendanceReport is the resolver for the createAttendanceReport field.
+func (r *mutationResolver) CreateAttendanceReport(ctx context.Context, input CreateAttendanceReportCustomInput) (*AttendanceReportCustom, error) {
+	db := r.DB
+	id := uuid.New().String()
+
+	_, err := db.ExecContext(ctx, `
+		INSERT INTO public.attendance_reports (
+			id, img, report_type, class_name, date_from, date_to, attendance_percentage, generated_by, date, status
+		) VALUES ($1, $2, $3, $4, NULLIF($5,'')::timestamp, NULLIF($6,'')::timestamp, $7, $8, NULLIF($9,'')::timestamp, $10)
+	`, id, input.Img, input.ReportType, input.ClassName, input.DateFrom, input.DateTo, input.AttendancePercentage, input.GeneratedBy, input.Date, input.Status)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create attendance report: %w", err)
+	}
+
+	return &AttendanceReportCustom{
+		ID:                   id,
+		Img:                  input.Img,
+		ReportType:           input.ReportType,
+		ClassName:            input.ClassName,
+		DateFrom:             input.DateFrom,
+		DateTo:               input.DateTo,
+		AttendancePercentage: input.AttendancePercentage,
+		GeneratedBy:          input.GeneratedBy,
+		Date:                 input.Date,
+		Status:               input.Status,
+	}, nil
+}
+
+// UpdateAttendanceReport is the resolver for the updateAttendanceReport field.
+func (r *mutationResolver) UpdateAttendanceReport(ctx context.Context, input UpdateAttendanceReportCustomInput) (*AttendanceReportCustom, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, `
+		UPDATE public.attendance_reports SET
+			img = $1, report_type = $2, class_name = $3, date_from = NULLIF($4,'')::timestamp,
+			date_to = NULLIF($5,'')::timestamp, attendance_percentage = $6, generated_by = $7,
+			date = NULLIF($8,'')::timestamp, status = $9
+		WHERE id = $10
+	`, input.Img, input.ReportType, input.ClassName, input.DateFrom, input.DateTo, input.AttendancePercentage, input.GeneratedBy, input.Date, input.Status, input.ID)
+	if err != nil {
+		return nil, fmt.Errorf("failed to update attendance report: %w", err)
+	}
+
+	return &AttendanceReportCustom{
+		ID:                   input.ID,
+		Img:                  input.Img,
+		ReportType:           input.ReportType,
+		ClassName:            input.ClassName,
+		DateFrom:             input.DateFrom,
+		DateTo:               input.DateTo,
+		AttendancePercentage: input.AttendancePercentage,
+		GeneratedBy:          input.GeneratedBy,
+		Date:                 input.Date,
+		Status:               input.Status,
+	}, nil
+}
+
+// DeleteAttendanceReport is the resolver for the deleteAttendanceReport field.
+func (r *mutationResolver) DeleteAttendanceReport(ctx context.Context, id string) (string, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, "DELETE FROM public.attendance_reports WHERE id = $1", id)
+	if err != nil {
+		return "", fmt.Errorf("failed to delete attendance report: %w", err)
+	}
+
+	return id, nil
+}
+
+// CreateFeeReport is the resolver for the createFeeReport field.
+func (r *mutationResolver) CreateFeeReport(ctx context.Context, input CreateFeeReportCustomInput) (*FeeReportCustom, error) {
+	db := r.DB
+	id := uuid.New().String()
+
+	_, err := db.ExecContext(ctx, `
+		INSERT INTO public.fee_reports (
+			id, img, report_type, fee_category, date_from, date_to, total_amount, generated_by, date, status
+		) VALUES ($1, $2, $3, $4, NULLIF($5,'')::timestamp, NULLIF($6,'')::timestamp, $7, $8, NULLIF($9,'')::timestamp, $10)
+	`, id, input.Img, input.ReportType, input.FeeCategory, input.DateFrom, input.DateTo, input.TotalAmount, input.GeneratedBy, input.Date, input.Status)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create fee report: %w", err)
+	}
+
+	return &FeeReportCustom{
+		ID:          id,
+		Img:         input.Img,
+		ReportType:  input.ReportType,
+		FeeCategory: input.FeeCategory,
+		DateFrom:    input.DateFrom,
+		DateTo:      input.DateTo,
+		TotalAmount: input.TotalAmount,
+		GeneratedBy: input.GeneratedBy,
+		Date:        input.Date,
+		Status:      input.Status,
+	}, nil
+}
+
+// UpdateFeeReport is the resolver for the updateFeeReport field.
+func (r *mutationResolver) UpdateFeeReport(ctx context.Context, input UpdateFeeReportCustomInput) (*FeeReportCustom, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, `
+		UPDATE public.fee_reports SET
+			img = $1, report_type = $2, fee_category = $3, date_from = NULLIF($4,'')::timestamp,
+			date_to = NULLIF($5,'')::timestamp, total_amount = $6, generated_by = $7,
+			date = NULLIF($8,'')::timestamp, status = $9
+		WHERE id = $10
+	`, input.Img, input.ReportType, input.FeeCategory, input.DateFrom, input.DateTo, input.TotalAmount, input.GeneratedBy, input.Date, input.Status, input.ID)
+	if err != nil {
+		return nil, fmt.Errorf("failed to update fee report: %w", err)
+	}
+
+	return &FeeReportCustom{
+		ID:          input.ID,
+		Img:         input.Img,
+		ReportType:  input.ReportType,
+		FeeCategory: input.FeeCategory,
+		DateFrom:    input.DateFrom,
+		DateTo:      input.DateTo,
+		TotalAmount: input.TotalAmount,
+		GeneratedBy: input.GeneratedBy,
+		Date:        input.Date,
+		Status:      input.Status,
+	}, nil
+}
+
+// DeleteFeeReport is the resolver for the deleteFeeReport field.
+func (r *mutationResolver) DeleteFeeReport(ctx context.Context, id string) (string, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, "DELETE FROM public.fee_reports WHERE id = $1", id)
+	if err != nil {
+		return "", fmt.Errorf("failed to delete fee report: %w", err)
+	}
+
+	return id, nil
+}
+
+// CreateExamReport is the resolver for the createExamReport field.
+func (r *mutationResolver) CreateExamReport(ctx context.Context, input CreateExamReportCustomInput) (*ExamReportCustom, error) {
+	db := r.DB
+	id := uuid.New().String()
+
+	_, err := db.ExecContext(ctx, `
+		INSERT INTO public.exam_reports (
+			id, img, exam_name, class_name, subject, exam_date, pass_percentage, average_marks, generated_by, date, status
+		) VALUES ($1, $2, $3, $4, $5, NULLIF($6,'')::timestamp, $7, $8, $9, NULLIF($10,'')::timestamp, $11)
+	`, id, input.Img, input.ExamName, input.ClassName, input.Subject, input.ExamDate, input.PassPercentage, input.AverageMarks, input.GeneratedBy, input.Date, input.Status)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create exam report: %w", err)
+	}
+
+	return &ExamReportCustom{
+		ID:             id,
+		Img:            input.Img,
+		ExamName:       input.ExamName,
+		ClassName:      input.ClassName,
+		Subject:        input.Subject,
+		ExamDate:       input.ExamDate,
+		PassPercentage: input.PassPercentage,
+		AverageMarks:   input.AverageMarks,
+		GeneratedBy:    input.GeneratedBy,
+		Date:           input.Date,
+		Status:         input.Status,
+	}, nil
+}
+
+// UpdateExamReport is the resolver for the updateExamReport field.
+func (r *mutationResolver) UpdateExamReport(ctx context.Context, input UpdateExamReportCustomInput) (*ExamReportCustom, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, `
+		UPDATE public.exam_reports SET
+			img = $1, exam_name = $2, class_name = $3, subject = $4,
+			exam_date = NULLIF($5,'')::timestamp, pass_percentage = $6, average_marks = $7,
+			generated_by = $8, date = NULLIF($9,'')::timestamp, status = $10
+		WHERE id = $11
+	`, input.Img, input.ExamName, input.ClassName, input.Subject, input.ExamDate, input.PassPercentage, input.AverageMarks, input.GeneratedBy, input.Date, input.Status, input.ID)
+	if err != nil {
+		return nil, fmt.Errorf("failed to update exam report: %w", err)
+	}
+
+	return &ExamReportCustom{
+		ID:             input.ID,
+		Img:            input.Img,
+		ExamName:       input.ExamName,
+		ClassName:      input.ClassName,
+		Subject:        input.Subject,
+		ExamDate:       input.ExamDate,
+		PassPercentage: input.PassPercentage,
+		AverageMarks:   input.AverageMarks,
+		GeneratedBy:    input.GeneratedBy,
+		Date:           input.Date,
+		Status:         input.Status,
+	}, nil
+}
+
+// DeleteExamReport is the resolver for the deleteExamReport field.
+func (r *mutationResolver) DeleteExamReport(ctx context.Context, id string) (string, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, "DELETE FROM public.exam_reports WHERE id = $1", id)
+	if err != nil {
+		return "", fmt.Errorf("failed to delete exam report: %w", err)
+	}
+
+	return id, nil
+}
+
+// CreateCustomReport is the resolver for the createCustomReport field.
+func (r *mutationResolver) CreateCustomReport(ctx context.Context, input CreateCustomReportCustomInput) (*CustomReportCustom, error) {
+	db := r.DB
+	id := uuid.New().String()
+
+	_, err := db.ExecContext(ctx, `
+		INSERT INTO public.custom_reports (
+			id, report_name, description, category, created_by, date, status
+		) VALUES ($1, $2, $3, $4, $5, NULLIF($6,'')::timestamp, $7)
+	`, id, input.ReportName, input.Description, input.Category, input.CreatedBy, input.Date, input.Status)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create custom report: %w", err)
+	}
+
+	return &CustomReportCustom{
+		ID:          id,
+		ReportName:  input.ReportName,
+		Description: input.Description,
+		Category:    input.Category,
+		CreatedBy:   input.CreatedBy,
+		Date:        input.Date,
+		Status:      input.Status,
+	}, nil
+}
+
+// UpdateCustomReport is the resolver for the updateCustomReport field.
+func (r *mutationResolver) UpdateCustomReport(ctx context.Context, input UpdateCustomReportCustomInput) (*CustomReportCustom, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, `
+		UPDATE public.custom_reports SET
+			report_name = $1, description = $2, category = $3,
+			created_by = $4, date = NULLIF($5,'')::timestamp, status = $6
+		WHERE id = $7
+	`, input.ReportName, input.Description, input.Category, input.CreatedBy, input.Date, input.Status, input.ID)
+	if err != nil {
+		return nil, fmt.Errorf("failed to update custom report: %w", err)
+	}
+
+	return &CustomReportCustom{
+		ID:          input.ID,
+		ReportName:  input.ReportName,
+		Description: input.Description,
+		Category:    input.Category,
+		CreatedBy:   input.CreatedBy,
+		Date:        input.Date,
+		Status:      input.Status,
+	}, nil
+}
+
+// DeleteCustomReport is the resolver for the deleteCustomReport field.
+func (r *mutationResolver) DeleteCustomReport(ctx context.Context, id string) (string, error) {
+	db := r.DB
+
+	_, err := db.ExecContext(ctx, "DELETE FROM public.custom_reports WHERE id = $1", id)
+	if err != nil {
+		return "", fmt.Errorf("failed to delete custom report: %w", err)
+	}
+
+	return id, nil
+}
+
 // AdmissionInquiries is the resolver for the admissionInquiries field.
 func (r *queryResolver) AdmissionInquiries(ctx context.Context) ([]*AdmissionInquiry, error) {
 	db := r.DB
@@ -3269,30 +5356,48 @@ func (r *queryResolver) AssignClassTeacherList(ctx context.Context) ([]*AssignCl
 }
 
 // ClassList is the resolver for the classList field.
-func (r *queryResolver) ClassList(ctx context.Context) ([]*ClassInfo, error) {
+func (r *queryResolver) ClassList(ctx context.Context) ([]*ClassList, error) {
 	db := r.DB
 
 	rows, err := db.QueryContext(ctx, `
-		SELECT class_id, COALESCE(class_name, ''), COALESCE(class_code, '')
-		FROM public.class_list
+		SELECT
+			class_id, COALESCE(class_name, ''), COALESCE(class_code, ''),
+			COALESCE(teacher_id, ''),
+			COALESCE(TO_CHAR(start_date, 'YYYY-MM-DD'), ''),
+			COALESCE(TO_CHAR(end_date, 'YYYY-MM-DD'), ''),
+			COALESCE(room_number, ''), COALESCE(schedule, ''),
+			COALESCE(semester, ''), COALESCE(class_capacity, 0),
+			COALESCE(status, ''), COALESCE(description, ''),
+			COALESCE(class_type, ''),
+			COALESCE(TO_CHAR(created_at, 'YYYY-MM-DD'), ''),
+			COALESCE(TO_CHAR(updated_at, 'YYYY-MM-DD'), '')
+		FROM public.classes
+		ORDER BY class_name
 	`)
 	if err != nil {
-		return nil, fmt.Errorf("failed to query class_list: %w", err)
+		return nil, fmt.Errorf("failed to query classes: %w", err)
 	}
 	defer rows.Close()
 
-	var list []*ClassInfo
+	var list []*ClassList
 	for rows.Next() {
-		var classID, className, classCode string
-		err := rows.Scan(&classID, &className, &classCode)
-		if err != nil {
+		var cl ClassList
+		if err := rows.Scan(
+			&cl.ClassID, &cl.ClassName, &cl.ClassCode,
+			&cl.TeacherID, &cl.StartDate, &cl.EndDate,
+			&cl.RoomNumber, &cl.Schedule, &cl.Semester,
+			&cl.ClassCapacity, &cl.Status, &cl.Description,
+			&cl.ClassType, &cl.CreatedAt, &cl.UpdatedAt,
+		); err != nil {
 			return nil, fmt.Errorf("failed to scan class row: %w", err)
 		}
-		list = append(list, &ClassInfo{
-			ClassID:   classID,
-			ClassName: className,
-			ClassCode: classCode,
-		})
+		list = append(list, &cl)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("row iteration error: %w", err)
+	}
+	if list == nil {
+		list = []*ClassList{}
 	}
 	return list, nil
 }
@@ -4663,6 +6768,1084 @@ func (r *queryResolver) EmployeeSalaryList(ctx context.Context) ([]*EmployeeSala
 	}
 	if list == nil {
 		list = []*EmployeeSalary{}
+	}
+	return list, nil
+}
+
+// VehiclesList is the resolver for the vehiclesList field.
+func (r *queryResolver) VehiclesList(ctx context.Context) ([]*Vehicle, error) {
+	db := r.DB
+
+	rows, err := db.QueryContext(ctx, `
+		SELECT
+			id, COALESCE(vehicle_no, ''), COALESCE(vehicle_model, ''),
+			COALESCE(year_made, ''), COALESCE(driver_name, ''),
+			COALESCE(driver_license, ''), COALESCE(vehicle_type, ''),
+			COALESCE(status, ''), COALESCE(img, '')
+		FROM public.vehicles
+		ORDER BY vehicle_no
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("failed to query vehicles: %w", err)
+	}
+	defer rows.Close()
+
+	var list []*Vehicle
+	for rows.Next() {
+		var v Vehicle
+		if err := rows.Scan(
+			&v.ID, &v.VehicleNo, &v.VehicleModel,
+			&v.YearMade, &v.DriverName,
+			&v.DriverLicense, &v.VehicleType,
+			&v.Status, &v.Img,
+		); err != nil {
+			return nil, fmt.Errorf("failed to scan vehicle row: %w", err)
+		}
+		list = append(list, &v)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("row iteration error: %w", err)
+	}
+	if list == nil {
+		list = []*Vehicle{}
+	}
+	return list, nil
+}
+
+// TransportRoutesList is the resolver for the transportRoutesList field.
+func (r *queryResolver) TransportRoutesList(ctx context.Context) ([]*TransportRoute, error) {
+	db := r.DB
+
+	rows, err := db.QueryContext(ctx, `
+		SELECT
+			id, COALESCE(route_name, ''), COALESCE(start_point, ''), COALESCE(end_point, ''),
+			COALESCE(distance, ''), COALESCE(vehicle_no, ''), COALESCE(route_fees, ''),
+			COALESCE(status, '')
+		FROM public.transport_routes
+		ORDER BY route_name
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("failed to query transport routes: %w", err)
+	}
+	defer rows.Close()
+
+	var list []*TransportRoute
+	for rows.Next() {
+		var tr TransportRoute
+		if err := rows.Scan(
+			&tr.ID, &tr.RouteName, &tr.StartPoint, &tr.EndPoint,
+			&tr.Distance, &tr.VehicleNo, &tr.RouteFees,
+			&tr.Status,
+		); err != nil {
+			return nil, fmt.Errorf("failed to scan transport route row: %w", err)
+		}
+		list = append(list, &tr)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("row iteration error: %w", err)
+	}
+	if list == nil {
+		list = []*TransportRoute{}
+	}
+	return list, nil
+}
+
+// DriversList is the resolver for the driversList field.
+func (r *queryResolver) DriversList(ctx context.Context) ([]*Driver, error) {
+	db := r.DB
+
+	rows, err := db.QueryContext(ctx, `
+		SELECT
+			id, COALESCE(driver_name, ''), COALESCE(license_no, ''), COALESCE(phone, ''),
+			COALESCE(TO_CHAR(joining_date, 'YYYY-MM-DD'), ''), COALESCE(address, ''),
+			COALESCE(experience, ''), COALESCE(status, ''), COALESCE(img, '')
+		FROM public.drivers
+		ORDER BY driver_name
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("failed to query drivers: %w", err)
+	}
+	defer rows.Close()
+
+	var list []*Driver
+	for rows.Next() {
+		var d Driver
+		if err := rows.Scan(
+			&d.ID, &d.DriverName, &d.LicenseNo, &d.Phone,
+			&d.JoiningDate, &d.Address, &d.Experience, &d.Status, &d.Img,
+		); err != nil {
+			return nil, fmt.Errorf("failed to scan driver row: %w", err)
+		}
+		list = append(list, &d)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("row iteration error: %w", err)
+	}
+	if list == nil {
+		list = []*Driver{}
+	}
+	return list, nil
+}
+
+// StudentAllocationsList is the resolver for the studentAllocationsList field.
+func (r *queryResolver) StudentAllocationsList(ctx context.Context) ([]*StudentAllocation, error) {
+	db := r.DB
+
+	rows, err := db.QueryContext(ctx, `
+		SELECT
+			id, COALESCE(student_name, ''), COALESCE(student_id, ''), COALESCE(class_section, ''),
+			COALESCE(route_name, ''), COALESCE(vehicle_no, ''), COALESCE(stop_point, ''),
+			COALESCE(TO_CHAR(allocation_date, 'YYYY-MM-DD'), ''), COALESCE(status, ''), COALESCE(img, '')
+		FROM public.student_allocations
+		ORDER BY student_name
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("failed to query student allocations: %w", err)
+	}
+	defer rows.Close()
+
+	var list []*StudentAllocation
+	for rows.Next() {
+		var sa StudentAllocation
+		if err := rows.Scan(
+			&sa.ID, &sa.StudentName, &sa.StudentID, &sa.ClassSection,
+			&sa.RouteName, &sa.VehicleNo, &sa.StopPoint,
+			&sa.AllocationDate, &sa.Status, &sa.Img,
+		); err != nil {
+			return nil, fmt.Errorf("failed to scan student allocation row: %w", err)
+		}
+		list = append(list, &sa)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("row iteration error: %w", err)
+	}
+	if list == nil {
+		list = []*StudentAllocation{}
+	}
+	return list, nil
+}
+
+// TransportFeesList is the resolver for the transportFeesList field.
+func (r *queryResolver) TransportFeesList(ctx context.Context) ([]*TransportFee, error) {
+	db := r.DB
+
+	rows, err := db.QueryContext(ctx, `
+		SELECT
+			id, COALESCE(student_name, ''), COALESCE(student_id, ''), COALESCE(class_section, ''),
+			COALESCE(route_name, ''), COALESCE(amount, ''),
+			COALESCE(TO_CHAR(payment_date, 'YYYY-MM-DD'), ''), COALESCE(payment_method, ''),
+			COALESCE(status, ''), COALESCE(img, '')
+		FROM public.transport_fees
+		ORDER BY student_name
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("failed to query transport fees: %w", err)
+	}
+	defer rows.Close()
+
+	var list []*TransportFee
+	for rows.Next() {
+		var tf TransportFee
+		if err := rows.Scan(
+			&tf.ID, &tf.StudentName, &tf.StudentID, &tf.ClassSection,
+			&tf.RouteName, &tf.Amount, &tf.PaymentDate,
+			&tf.PaymentMethod, &tf.Status, &tf.Img,
+		); err != nil {
+			return nil, fmt.Errorf("failed to scan transport fee row: %w", err)
+		}
+		list = append(list, &tf)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("row iteration error: %w", err)
+	}
+	if list == nil {
+		list = []*TransportFee{}
+	}
+	return list, nil
+}
+
+// NoticeBoardsList is the resolver for the noticeBoardsList field.
+func (r *queryResolver) NoticeBoardsList(ctx context.Context) ([]*NoticeBoard, error) {
+	db := r.DB
+
+	rows, err := db.QueryContext(ctx, `
+		SELECT
+			id, COALESCE(img, ''), COALESCE(title, ''), COALESCE(posted_by, ''),
+			COALESCE(department, ''), COALESCE(TO_CHAR(date, 'YYYY-MM-DD'), ''),
+			COALESCE(priority, ''), COALESCE(status, ''), COALESCE(description, ''),
+			COALESCE(target_audience, '')
+		FROM public.notice_boards
+		ORDER BY date DESC
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("failed to query notice boards: %w", err)
+	}
+	defer rows.Close()
+
+	var list []*NoticeBoard
+	for rows.Next() {
+		var n NoticeBoard
+		if err := rows.Scan(
+			&n.ID, &n.Img, &n.Title, &n.PostedBy, &n.Department,
+			&n.Date, &n.Priority, &n.Status, &n.Description, &n.TargetAudience,
+		); err != nil {
+			return nil, fmt.Errorf("failed to scan notice board row: %w", err)
+		}
+		list = append(list, &n)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("row iteration error: %w", err)
+	}
+	if list == nil {
+		list = []*NoticeBoard{}
+	}
+	return list, nil
+}
+
+// AnnouncementsList is the resolver for the announcementsList field.
+func (r *queryResolver) AnnouncementsList(ctx context.Context) ([]*Announcement, error) {
+	db := r.DB
+
+	rows, err := db.QueryContext(ctx, `
+		SELECT
+			id, COALESCE(img, ''), COALESCE(title, ''), COALESCE(announcement_type, ''),
+			COALESCE(posted_by, ''), COALESCE(TO_CHAR(start_date, 'YYYY-MM-DD'), ''),
+			COALESCE(TO_CHAR(end_date, 'YYYY-MM-DD'), ''), COALESCE(status, ''),
+			COALESCE(description, ''), COALESCE(priority, '')
+		FROM public.announcements
+		ORDER BY start_date DESC
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("failed to query announcements: %w", err)
+	}
+	defer rows.Close()
+
+	var list []*Announcement
+	for rows.Next() {
+		var a Announcement
+		if err := rows.Scan(
+			&a.ID, &a.Img, &a.Title, &a.AnnouncementType, &a.PostedBy,
+			&a.StartDate, &a.EndDate, &a.Status, &a.Description, &a.Priority,
+		); err != nil {
+			return nil, fmt.Errorf("failed to scan announcement row: %w", err)
+		}
+		list = append(list, &a)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("row iteration error: %w", err)
+	}
+	if list == nil {
+		list = []*Announcement{}
+	}
+	return list, nil
+}
+
+// AllFeesList is the resolver for the allFeesList field.
+func (r *queryResolver) AllFeesList(ctx context.Context) ([]*Fees, error) {
+	db := r.DB
+
+	rows, err := db.QueryContext(ctx, `
+		SELECT
+			id, COALESCE(roll_no, ''), COALESCE(student_name, ''), COALESCE(class, ''),
+			COALESCE(fees_type, ''), COALESCE(invoice_no, ''),
+			COALESCE(TO_CHAR(payment_due_date, 'YYYY-MM-DD'), ''),
+			COALESCE(TO_CHAR(payment_date, 'YYYY-MM-DD'), ''),
+			COALESCE(payment_type, ''), COALESCE(status, ''), COALESCE(amount, ''),
+			COALESCE(late_fee, '0$'), COALESCE(discount, '0$'),
+			COALESCE(TO_CHAR(created_at, 'YYYY-MM-DD'), ''),
+			COALESCE(TO_CHAR(updated_at, 'YYYY-MM-DD'), ''),
+			COALESCE(notes, 'N/A')
+		FROM public.all_fees
+		ORDER BY student_name
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("failed to query all fees: %w", err)
+	}
+	defer rows.Close()
+
+	var list []*Fees
+	for rows.Next() {
+		var f Fees
+		if err := rows.Scan(
+			&f.ID, &f.RollNo, &f.StudentName, &f.Class,
+			&f.FeesType, &f.InvoiceNo, &f.PaymentDueDate, &f.PaymentDate,
+			&f.PaymentType, &f.Status, &f.Amount, &f.LateFee, &f.Discount,
+			&f.CreatedAt, &f.UpdatedAt, &f.Notes,
+		); err != nil {
+			return nil, fmt.Errorf("failed to scan fees row: %w", err)
+		}
+		list = append(list, &f)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("row iteration error: %w", err)
+	}
+	if list == nil {
+		list = []*Fees{}
+	}
+	return list, nil
+}
+
+// FeesTypesList is the resolver for the feesTypesList field.
+func (r *queryResolver) FeesTypesList(ctx context.Context) ([]*FeesType, error) {
+	db := r.DB
+
+	rows, err := db.QueryContext(ctx, `
+		SELECT
+			fee_type_id, COALESCE(fee_type_name, ''), COALESCE(category, ''),
+			COALESCE(description, ''), COALESCE(amount, 0.0), COALESCE(applicable_classes, ''),
+			COALESCE(frequency, ''), COALESCE(status, ''), COALESCE(created_by, ''),
+			COALESCE(TO_CHAR(created_date, 'YYYY-MM-DD'), ''),
+			COALESCE(TO_CHAR(last_updated, 'YYYY-MM-DD'), '')
+		FROM public.fees_types
+		ORDER BY fee_type_name
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("failed to query fees types: %w", err)
+	}
+	defer rows.Close()
+
+	var list []*FeesType
+	for rows.Next() {
+		var ft FeesType
+		if err := rows.Scan(
+			&ft.FeeTypeID, &ft.FeeTypeName, &ft.Category,
+			&ft.Description, &ft.Amount, &ft.ApplicableClasses,
+			&ft.Frequency, &ft.Status, &ft.CreatedBy,
+			&ft.CreatedDate, &ft.LastUpdated,
+		); err != nil {
+			return nil, fmt.Errorf("failed to scan fees type row: %w", err)
+		}
+		list = append(list, &ft)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("row iteration error: %w", err)
+	}
+	if list == nil {
+		list = []*FeesType{}
+	}
+	return list, nil
+}
+
+// FeesDiscountsList is the resolver for the feesDiscountsList field.
+func (r *queryResolver) FeesDiscountsList(ctx context.Context) ([]*FeesDiscount, error) {
+	db := r.DB
+
+	rows, err := db.QueryContext(ctx, `
+		SELECT
+			discount_id, COALESCE(discount_type, ''), COALESCE(discount_amount, 0.0),
+			COALESCE(discount_percentage, 0.0), COALESCE(discount_code, ''),
+			COALESCE(TO_CHAR(start_date, 'YYYY-MM-DD'), ''),
+			COALESCE(TO_CHAR(end_date, 'YYYY-MM-DD'), ''),
+			COALESCE(TO_CHAR(applied_date, 'YYYY-MM-DD'), ''),
+			COALESCE(status, ''), COALESCE(remarks, '')
+		FROM public.fees_discounts
+		ORDER BY discount_type
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("failed to query fees discounts: %w", err)
+	}
+	defer rows.Close()
+
+	var list []*FeesDiscount
+	for rows.Next() {
+		var fd FeesDiscount
+		if err := rows.Scan(
+			&fd.DiscountID, &fd.DiscountType, &fd.DiscountAmount,
+			&fd.DiscountPercentage, &fd.DiscountCode, &fd.StartDate,
+			&fd.EndDate, &fd.AppliedDate, &fd.Status, &fd.Remarks,
+		); err != nil {
+			return nil, fmt.Errorf("failed to scan fees discount row: %w", err)
+		}
+		list = append(list, &fd)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("row iteration error: %w", err)
+	}
+	if list == nil {
+		list = []*FeesDiscount{}
+	}
+	return list, nil
+}
+
+// AcademicYearList is the resolver for the academicYearList field.
+func (r *queryResolver) AcademicYearList(ctx context.Context) ([]*AcademicYearCustom, error) {
+	db := r.DB
+
+	rows, err := db.QueryContext(ctx, `
+		SELECT
+			id, COALESCE(academic_year, ''), COALESCE(status, ''),
+			COALESCE(TO_CHAR(start_date, 'YYYY-MM-DD'), ''),
+			COALESCE(TO_CHAR(end_date, 'YYYY-MM-DD'), ''),
+			COALESCE(description, ''), COALESCE(department, '')
+		FROM public.academic_years
+		ORDER BY academic_year DESC
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("failed to query academic years: %w", err)
+	}
+	defer rows.Close()
+
+	var list []*AcademicYearCustom
+	for rows.Next() {
+		var ay AcademicYearCustom
+		if err := rows.Scan(
+			&ay.ID, &ay.AcademicYear, &ay.Status,
+			&ay.StartDate, &ay.EndDate, &ay.Description,
+			&ay.Department,
+		); err != nil {
+			return nil, fmt.Errorf("failed to scan academic year: %w", err)
+		}
+		list = append(list, &ay)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("row iteration error: %w", err)
+	}
+	if list == nil {
+		list = []*AcademicYearCustom{}
+	}
+	return list, nil
+}
+
+// SessionsList is the resolver for the sessionsList field.
+func (r *queryResolver) SessionsList(ctx context.Context) ([]*SessionCustom, error) {
+	db := r.DB
+
+	rows, err := db.QueryContext(ctx, `
+		SELECT
+			id, COALESCE(session_name, ''),
+			COALESCE(TO_CHAR(start_date, 'YYYY-MM-DD'), ''),
+			COALESCE(TO_CHAR(end_date, 'YYYY-MM-DD'), ''),
+			COALESCE(status, ''), COALESCE(instructor, ''), COALESCE(room, '')
+		FROM public.sessions
+		ORDER BY session_name DESC
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("failed to query sessions: %w", err)
+	}
+	defer rows.Close()
+
+	var list []*SessionCustom
+	for rows.Next() {
+		var s SessionCustom
+		if err := rows.Scan(
+			&s.ID, &s.SessionName, &s.StartDate, &s.EndDate,
+			&s.Status, &s.Instructor, &s.Room,
+		); err != nil {
+			return nil, fmt.Errorf("failed to scan session: %w", err)
+		}
+		list = append(list, &s)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("row iteration error: %w", err)
+	}
+	if list == nil {
+		list = []*SessionCustom{}
+	}
+	return list, nil
+}
+
+// AcademicClassesList is the resolver for the academicClassesList field.
+func (r *queryResolver) AcademicClassesList(ctx context.Context) ([]*AcademicClassCustom, error) {
+	db := r.DB
+
+	rows, err := db.QueryContext(ctx, `
+		SELECT
+			id, COALESCE(class_name, ''), COALESCE(section, ''), COALESCE(academic_year, ''),
+			COALESCE(teacher, ''), COALESCE(status, ''), COALESCE(student_count, ''), COALESCE(room_number, '')
+		FROM public.academic_classes
+		ORDER BY class_name
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("failed to query academic classes: %w", err)
+	}
+	defer rows.Close()
+
+	var list []*AcademicClassCustom
+	for rows.Next() {
+		var c AcademicClassCustom
+		if err := rows.Scan(
+			&c.ID, &c.ClassName, &c.Section, &c.AcademicYear,
+			&c.Teacher, &c.Status, &c.StudentCount, &c.RoomNumber,
+		); err != nil {
+			return nil, fmt.Errorf("failed to scan academic class: %w", err)
+		}
+		list = append(list, &c)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("row iteration error: %w", err)
+	}
+	if list == nil {
+		list = []*AcademicClassCustom{}
+	}
+	return list, nil
+}
+
+// AcademicSubjectsList is the resolver for the academicSubjectsList field.
+func (r *queryResolver) AcademicSubjectsList(ctx context.Context) ([]*AcademicSubjectCustom, error) {
+	db := r.DB
+
+	rows, err := db.QueryContext(ctx, `
+		SELECT
+			id, COALESCE(subject_name, ''), COALESCE(subject_code, ''), COALESCE(subject_type, ''),
+			COALESCE(status, ''), COALESCE(prerequisites, ''), COALESCE(credits, '')
+		FROM public.academic_subjects
+		ORDER BY subject_name
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("failed to query academic subjects: %w", err)
+	}
+	defer rows.Close()
+
+	var list []*AcademicSubjectCustom
+	for rows.Next() {
+		var s AcademicSubjectCustom
+		if err := rows.Scan(
+			&s.ID, &s.SubjectName, &s.SubjectCode, &s.SubjectType,
+			&s.Status, &s.Prerequisites, &s.Credits,
+		); err != nil {
+			return nil, fmt.Errorf("failed to scan academic subject: %w", err)
+		}
+		list = append(list, &s)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("row iteration error: %w", err)
+	}
+	if list == nil {
+		list = []*AcademicSubjectCustom{}
+	}
+	return list, nil
+}
+
+// CourseCurriculumsList is the resolver for the courseCurriculumsList field.
+func (r *queryResolver) CourseCurriculumsList(ctx context.Context) ([]*CourseCurriculumCustom, error) {
+	db := r.DB
+
+	rows, err := db.QueryContext(ctx, `
+		SELECT
+			id, COALESCE(course_name, ''), COALESCE(class_name, ''), COALESCE(subject_name, ''),
+			COALESCE(description, ''), COALESCE(status, ''), COALESCE(duration, ''), COALESCE(reference_material, '')
+		FROM public.course_curriculums
+		ORDER BY course_name
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("failed to query course curriculums: %w", err)
+	}
+	defer rows.Close()
+
+	var list []*CourseCurriculumCustom
+	for rows.Next() {
+		var c CourseCurriculumCustom
+		if err := rows.Scan(
+			&c.ID, &c.CourseName, &c.ClassName, &c.SubjectName,
+			&c.Description, &c.Status, &c.Duration, &c.ReferenceMaterial,
+		); err != nil {
+			return nil, fmt.Errorf("failed to scan course curriculum: %w", err)
+		}
+		list = append(list, &c)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("row iteration error: %w", err)
+	}
+	if list == nil {
+		list = []*CourseCurriculumCustom{}
+	}
+	return list, nil
+}
+
+// AssignmentsList is the resolver for the assignmentsList field.
+func (r *queryResolver) AssignmentsList(ctx context.Context) ([]*AssignmentCustom, error) {
+	db := r.DB
+
+	rows, err := db.QueryContext(ctx, `
+		SELECT
+			id, COALESCE(class_name, ''), COALESCE(subject_name, ''), COALESCE(teacher_name, ''),
+			COALESCE(TO_CHAR(assignment_date, 'YYYY-MM-DD'), ''), COALESCE(status, ''),
+			COALESCE(title, ''), COALESCE(TO_CHAR(deadline, 'YYYY-MM-DD'), ''), COALESCE(details, '')
+		FROM public.assignments
+		ORDER BY assignment_date DESC
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("failed to query assignments: %w", err)
+	}
+	defer rows.Close()
+
+	var list []*AssignmentCustom
+	for rows.Next() {
+		var a AssignmentCustom
+		if err := rows.Scan(
+			&a.ID, &a.ClassName, &a.SubjectName, &a.TeacherName,
+			&a.AssignmentDate, &a.Status, &a.Title, &a.Deadline, &a.Details,
+		); err != nil {
+			return nil, fmt.Errorf("failed to scan assignment: %w", err)
+		}
+		list = append(list, &a)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("row iteration error: %w", err)
+	}
+	if list == nil {
+		list = []*AssignmentCustom{}
+	}
+	return list, nil
+}
+
+// LessonPlanningsList is the resolver for the lessonPlanningsList field.
+func (r *queryResolver) LessonPlanningsList(ctx context.Context) ([]*LessonPlanningCustom, error) {
+	db := r.DB
+
+	rows, err := db.QueryContext(ctx, `
+		SELECT
+			id, COALESCE(topic_name, ''), COALESCE(lesson_name, ''), COALESCE(class_name, ''),
+			COALESCE(subject_name, ''), COALESCE(teacher_name, ''), COALESCE(TO_CHAR(lesson_date, 'YYYY-MM-DD'), ''),
+			COALESCE(status, ''), COALESCE(objectives, ''), COALESCE(teaching_method, '')
+		FROM public.lesson_plannings
+		ORDER BY lesson_date DESC
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("failed to query lesson plannings: %w", err)
+	}
+	defer rows.Close()
+
+	var list []*LessonPlanningCustom
+	for rows.Next() {
+		var l LessonPlanningCustom
+		if err := rows.Scan(
+			&l.ID, &l.TopicName, &l.LessonName, &l.ClassName,
+			&l.SubjectName, &l.TeacherName, &l.LessonDate, &l.Status, &l.Objectives, &l.TeachingMethod,
+		); err != nil {
+			return nil, fmt.Errorf("failed to scan lesson planning: %w", err)
+		}
+		list = append(list, &l)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("row iteration error: %w", err)
+	}
+	if list == nil {
+		list = []*LessonPlanningCustom{}
+	}
+	return list, nil
+}
+
+// HostelRoomsList is the resolver for the hostelRoomsList field.
+func (r *queryResolver) HostelRoomsList(ctx context.Context) ([]*HostelRoomCustom, error) {
+	db := r.DB
+
+	rows, err := db.QueryContext(ctx, `
+		SELECT
+			room_id, COALESCE(room_number, ''), COALESCE(room_type, ''), COALESCE(floor, 0),
+			COALESCE(capacity, 0), COALESCE(occupied_status, ''), COALESCE(current_occupants, 0),
+			COALESCE(price_fees, 0.0), COALESCE(room_condition, ''), COALESCE(TO_CHAR(date_assigned, 'YYYY-MM-DD'), ''),
+			COALESCE(room_supervisor_staff, ''), COALESCE(hostel_block, ''), COALESCE(TO_CHAR(check_in_date, 'YYYY-MM-DD'), ''),
+			COALESCE(TO_CHAR(check_out_date, 'YYYY-MM-DD'), ''), COALESCE(room_type_code, ''), COALESCE(room_description, '')
+		FROM public.hostel_room_lists
+		ORDER BY room_number
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("failed to query hostel rooms list: %w", err)
+	}
+	defer rows.Close()
+
+	var list []*HostelRoomCustom
+	for rows.Next() {
+		var h HostelRoomCustom
+		if err := rows.Scan(
+			&h.RoomID, &h.RoomNumber, &h.RoomType, &h.Floor,
+			&h.Capacity, &h.OccupiedStatus, &h.CurrentOccupants, &h.PriceFees,
+			&h.RoomCondition, &h.DateAssigned, &h.RoomSupervisorStaff, &h.HostelBlock,
+			&h.CheckInDate, &h.CheckOutDate, &h.RoomTypeCode, &h.RoomDescription,
+		); err != nil {
+			return nil, fmt.Errorf("failed to scan hostel room: %w", err)
+		}
+		list = append(list, &h)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("row iteration error: %w", err)
+	}
+	if list == nil {
+		list = []*HostelRoomCustom{}
+	}
+	return list, nil
+}
+
+// HostelRoomTypesList is the resolver for the hostelRoomTypesList field.
+func (r *queryResolver) HostelRoomTypesList(ctx context.Context) ([]*HostelRoomTypeCustom, error) {
+	db := r.DB
+
+	rows, err := db.QueryContext(ctx, `
+		SELECT
+			room_type_id, COALESCE(room_type_name, ''), COALESCE(capacity, 0), COALESCE(room_category, ''),
+			COALESCE(room_description, ''), COALESCE(room_price, 0.0), COALESCE(room_facilities, ''),
+			COALESCE(room_area, 0.0), COALESCE(room_condition, ''), COALESCE(room_type_code, ''),
+			COALESCE(TO_CHAR(created_at, 'YYYY-MM-DD'), ''), COALESCE(TO_CHAR(updated_at, 'YYYY-MM-DD'), ''),
+			COALESCE(status, ''), COALESCE(max_occupants, 0)
+		FROM public.hostel_room_types
+		ORDER BY room_type_name
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("failed to query hostel room types: %w", err)
+	}
+	defer rows.Close()
+
+	var list []*HostelRoomTypeCustom
+	for rows.Next() {
+		var t HostelRoomTypeCustom
+		if err := rows.Scan(
+			&t.RoomTypeID, &t.RoomTypeName, &t.Capacity, &t.RoomCategory,
+			&t.RoomDescription, &t.RoomPrice, &t.RoomFacilities, &t.RoomArea,
+			&t.RoomCondition, &t.RoomTypeCode, &t.CreatedAt, &t.UpdatedAt,
+			&t.Status, &t.MaxOccupants,
+		); err != nil {
+			return nil, fmt.Errorf("failed to scan hostel room type: %w", err)
+		}
+		list = append(list, &t)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("row iteration error: %w", err)
+	}
+	if list == nil {
+		list = []*HostelRoomTypeCustom{}
+	}
+	return list, nil
+}
+
+// HostelAllocationsList is the resolver for the hostelAllocationsList field.
+func (r *queryResolver) HostelAllocationsList(ctx context.Context) ([]*HostelAllocationCustom, error) {
+	db := r.DB
+
+	rows, err := db.QueryContext(ctx, `
+		SELECT
+			id, COALESCE(img, ''), COALESCE(student_name, ''), COALESCE(roll_no, ''),
+			COALESCE(hostel_name, ''), COALESCE(room_no, ''), COALESCE(room_type, ''),
+			COALESCE(TO_CHAR(allocation_date, 'YYYY-MM-DD'), ''), COALESCE(status, '')
+		FROM public.hostel_allocations
+		ORDER BY allocation_date DESC
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("failed to query hostel allocations: %w", err)
+	}
+	defer rows.Close()
+
+	var list []*HostelAllocationCustom
+	for rows.Next() {
+		var a HostelAllocationCustom
+		if err := rows.Scan(
+			&a.ID, &a.Img, &a.StudentName, &a.RollNo,
+			&a.HostelName, &a.RoomNo, &a.RoomType, &a.AllocationDate, &a.Status,
+		); err != nil {
+			return nil, fmt.Errorf("failed to scan hostel allocation: %w", err)
+		}
+		list = append(list, &a)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("row iteration error: %w", err)
+	}
+	if list == nil {
+		list = []*HostelAllocationCustom{}
+	}
+	return list, nil
+}
+
+// HostelAttendancesList is the resolver for the hostelAttendancesList field.
+func (r *queryResolver) HostelAttendancesList(ctx context.Context) ([]*HostelAttendanceCustom, error) {
+	db := r.DB
+
+	rows, err := db.QueryContext(ctx, `
+		SELECT
+			id, COALESCE(img, ''), COALESCE(student_name, ''), COALESCE(roll_no, ''),
+			COALESCE(hostel_name, ''), COALESCE(room_no, ''), COALESCE(TO_CHAR(attendance_date, 'YYYY-MM-DD'), ''),
+			COALESCE(status, ''), COALESCE(note, '')
+		FROM public.hostel_attendances
+		ORDER BY attendance_date DESC
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("failed to query hostel attendances: %w", err)
+	}
+	defer rows.Close()
+
+	var list []*HostelAttendanceCustom
+	for rows.Next() {
+		var a HostelAttendanceCustom
+		if err := rows.Scan(
+			&a.ID, &a.Img, &a.StudentName, &a.RollNo,
+			&a.HostelName, &a.RoomNo, &a.AttendanceDate, &a.Status, &a.Note,
+		); err != nil {
+			return nil, fmt.Errorf("failed to scan hostel attendance: %w", err)
+		}
+		list = append(list, &a)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("row iteration error: %w", err)
+	}
+	if list == nil {
+		list = []*HostelAttendanceCustom{}
+	}
+	return list, nil
+}
+
+// HostelFeesList is the resolver for the hostelFeesList field.
+func (r *queryResolver) HostelFeesList(ctx context.Context) ([]*HostelFeeCustom, error) {
+	db := r.DB
+
+	rows, err := db.QueryContext(ctx, `
+		SELECT
+			id, COALESCE(img, ''), COALESCE(student_name, ''), COALESCE(roll_no, ''),
+			COALESCE(hostel_name, ''), COALESCE(room_no, ''), COALESCE(fee_type, ''),
+			COALESCE(amount, 0.0), COALESCE(TO_CHAR(payment_date, 'YYYY-MM-DD'), ''),
+			COALESCE(payment_status, '')
+		FROM public.hostel_fees
+		ORDER BY payment_date DESC
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("failed to query hostel fees: %w", err)
+	}
+	defer rows.Close()
+
+	var list []*HostelFeeCustom
+	for rows.Next() {
+		var f HostelFeeCustom
+		if err := rows.Scan(
+			&f.ID, &f.Img, &f.StudentName, &f.RollNo,
+			&f.HostelName, &f.RoomNo, &f.FeeType, &f.Amount,
+			&f.PaymentDate, &f.PaymentStatus,
+		); err != nil {
+			return nil, fmt.Errorf("failed to scan hostel fee: %w", err)
+		}
+		list = append(list, &f)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("row iteration error: %w", err)
+	}
+	if list == nil {
+		list = []*HostelFeeCustom{}
+	}
+	return list, nil
+}
+
+// DepartmentsList is the resolver for the departmentsList field.
+func (r *queryResolver) DepartmentsList(ctx context.Context) ([]*DepartmentCustom, error) {
+	db := r.DB
+
+	rows, err := db.QueryContext(ctx, `
+		SELECT
+			id, COALESCE(img, ''), COALESCE(department_name, ''), COALESCE(hod, ''),
+			COALESCE(phone, ''), COALESCE(email, ''), COALESCE(student_capacity, ''),
+			COALESCE(established_year, ''), COALESCE(total_faculty, '')
+		FROM public.departments
+		ORDER BY department_name
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("failed to query departments: %w", err)
+	}
+	defer rows.Close()
+
+	var list []*DepartmentCustom
+	for rows.Next() {
+		var d DepartmentCustom
+		if err := rows.Scan(
+			&d.ID, &d.Img, &d.DepartmentName, &d.Hod,
+			&d.Phone, &d.Email, &d.StudentCapacity,
+			&d.EstablishedYear, &d.TotalFaculty,
+		); err != nil {
+			return nil, fmt.Errorf("failed to scan department: %w", err)
+		}
+		list = append(list, &d)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("row iteration error: %w", err)
+	}
+	if list == nil {
+		list = []*DepartmentCustom{}
+	}
+	return list, nil
+}
+
+// AcademicReportsList is the resolver for the academicReportsList field.
+func (r *queryResolver) AcademicReportsList(ctx context.Context) ([]*AcademicReportCustom, error) {
+	db := r.DB
+
+	rows, err := db.QueryContext(ctx, `
+		SELECT
+			id, COALESCE(img, ''), COALESCE(report_type, ''), COALESCE(class_name, ''),
+			COALESCE(subject, ''), COALESCE(academic_year, ''), COALESCE(term, ''),
+			COALESCE(generated_by, ''), COALESCE(TO_CHAR(date, 'YYYY-MM-DD'), ''), COALESCE(status, '')
+		FROM public.academic_reports
+		ORDER BY date DESC
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("failed to query academic reports: %w", err)
+	}
+	defer rows.Close()
+
+	var list []*AcademicReportCustom
+	for rows.Next() {
+		var r AcademicReportCustom
+		if err := rows.Scan(
+			&r.ID, &r.Img, &r.ReportType, &r.ClassName,
+			&r.Subject, &r.AcademicYear, &r.Term, &r.GeneratedBy,
+			&r.Date, &r.Status,
+		); err != nil {
+			return nil, fmt.Errorf("failed to scan academic report: %w", err)
+		}
+		list = append(list, &r)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("row iteration error: %w", err)
+	}
+	if list == nil {
+		list = []*AcademicReportCustom{}
+	}
+	return list, nil
+}
+
+// AttendanceReportsList is the resolver for the attendanceReportsList field.
+func (r *queryResolver) AttendanceReportsList(ctx context.Context) ([]*AttendanceReportCustom, error) {
+	db := r.DB
+
+	rows, err := db.QueryContext(ctx, `
+		SELECT
+			id, COALESCE(img, ''), COALESCE(report_type, ''), COALESCE(class_name, ''),
+			COALESCE(TO_CHAR(date_from, 'YYYY-MM-DD'), ''), COALESCE(TO_CHAR(date_to, 'YYYY-MM-DD'), ''),
+			COALESCE(attendance_percentage, 0.0), COALESCE(generated_by, ''),
+			COALESCE(TO_CHAR(date, 'YYYY-MM-DD'), ''), COALESCE(status, '')
+		FROM public.attendance_reports
+		ORDER BY date DESC
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("failed to query attendance reports: %w", err)
+	}
+	defer rows.Close()
+
+	var list []*AttendanceReportCustom
+	for rows.Next() {
+		var r AttendanceReportCustom
+		if err := rows.Scan(
+			&r.ID, &r.Img, &r.ReportType, &r.ClassName,
+			&r.DateFrom, &r.DateTo, &r.AttendancePercentage, &r.GeneratedBy,
+			&r.Date, &r.Status,
+		); err != nil {
+			return nil, fmt.Errorf("failed to scan attendance report: %w", err)
+		}
+		list = append(list, &r)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("row iteration error: %w", err)
+	}
+	if list == nil {
+		list = []*AttendanceReportCustom{}
+	}
+	return list, nil
+}
+
+// FeeReportsList is the resolver for the feeReportsList field.
+func (r *queryResolver) FeeReportsList(ctx context.Context) ([]*FeeReportCustom, error) {
+	db := r.DB
+
+	rows, err := db.QueryContext(ctx, `
+		SELECT
+			id, COALESCE(img, ''), COALESCE(report_type, ''), COALESCE(fee_category, ''),
+			COALESCE(TO_CHAR(date_from, 'YYYY-MM-DD'), ''), COALESCE(TO_CHAR(date_to, 'YYYY-MM-DD'), ''),
+			COALESCE(total_amount, 0.0), COALESCE(generated_by, ''),
+			COALESCE(TO_CHAR(date, 'YYYY-MM-DD'), ''), COALESCE(status, '')
+		FROM public.fee_reports
+		ORDER BY date DESC
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("failed to query fee reports: %w", err)
+	}
+	defer rows.Close()
+
+	var list []*FeeReportCustom
+	for rows.Next() {
+		var r FeeReportCustom
+		if err := rows.Scan(
+			&r.ID, &r.Img, &r.ReportType, &r.FeeCategory,
+			&r.DateFrom, &r.DateTo, &r.TotalAmount, &r.GeneratedBy,
+			&r.Date, &r.Status,
+		); err != nil {
+			return nil, fmt.Errorf("failed to scan fee report: %w", err)
+		}
+		list = append(list, &r)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("row iteration error: %w", err)
+	}
+	if list == nil {
+		list = []*FeeReportCustom{}
+	}
+	return list, nil
+}
+
+// ExamReportsList is the resolver for the examReportsList field.
+func (r *queryResolver) ExamReportsList(ctx context.Context) ([]*ExamReportCustom, error) {
+	db := r.DB
+
+	rows, err := db.QueryContext(ctx, `
+		SELECT
+			id, COALESCE(img, ''), COALESCE(exam_name, ''), COALESCE(class_name, ''),
+			COALESCE(subject, ''), COALESCE(TO_CHAR(exam_date, 'YYYY-MM-DD'), ''),
+			COALESCE(pass_percentage, 0.0), COALESCE(average_marks, 0.0), COALESCE(generated_by, ''),
+			COALESCE(TO_CHAR(date, 'YYYY-MM-DD'), ''), COALESCE(status, '')
+		FROM public.exam_reports
+		ORDER BY date DESC
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("failed to query exam reports: %w", err)
+	}
+	defer rows.Close()
+
+	var list []*ExamReportCustom
+	for rows.Next() {
+		var r ExamReportCustom
+		if err := rows.Scan(
+			&r.ID, &r.Img, &r.ExamName, &r.ClassName,
+			&r.Subject, &r.ExamDate, &r.PassPercentage, &r.AverageMarks, &r.GeneratedBy,
+			&r.Date, &r.Status,
+		); err != nil {
+			return nil, fmt.Errorf("failed to scan exam report: %w", err)
+		}
+		list = append(list, &r)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("row iteration error: %w", err)
+	}
+	if list == nil {
+		list = []*ExamReportCustom{}
+	}
+	return list, nil
+}
+
+// CustomReportsList is the resolver for the customReportsList field.
+func (r *queryResolver) CustomReportsList(ctx context.Context) ([]*CustomReportCustom, error) {
+	db := r.DB
+
+	rows, err := db.QueryContext(ctx, `
+		SELECT
+			id, COALESCE(report_name, ''), COALESCE(description, ''), COALESCE(category, ''),
+			COALESCE(created_by, ''), COALESCE(TO_CHAR(date, 'YYYY-MM-DD'), ''), COALESCE(status, '')
+		FROM public.custom_reports
+		ORDER BY date DESC
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("failed to query custom reports: %w", err)
+	}
+	defer rows.Close()
+
+	var list []*CustomReportCustom
+	for rows.Next() {
+		var r CustomReportCustom
+		if err := rows.Scan(
+			&r.ID, &r.ReportName, &r.Description, &r.Category,
+			&r.CreatedBy, &r.Date, &r.Status,
+		); err != nil {
+			return nil, fmt.Errorf("failed to scan custom report: %w", err)
+		}
+		list = append(list, &r)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("row iteration error: %w", err)
+	}
+	if list == nil {
+		list = []*CustomReportCustom{}
 	}
 	return list, nil
 }

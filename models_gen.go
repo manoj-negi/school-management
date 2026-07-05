@@ -11,3 +11,627 @@ type LoginResponse struct {
 	Token string `json:"token"`
 	Role  string `json:"role"`
 }
+
+type SessionCustom struct {
+	ID          string `json:"id"`
+	SessionName string `json:"sessionName"`
+	StartDate   string `json:"startDate"`
+	EndDate     string `json:"endDate"`
+	Status      string `json:"status"`
+	Instructor  string `json:"instructor"`
+	Room        string `json:"room"`
+}
+
+type CreateSessionCustomInput struct {
+	SessionName string `json:"sessionName"`
+	StartDate   string `json:"startDate"`
+	EndDate     string `json:"endDate"`
+	Status      string `json:"status"`
+	Instructor  string `json:"instructor"`
+	Room        string `json:"room"`
+}
+
+type UpdateSessionCustomInput struct {
+	ID          string `json:"id"`
+	SessionName string `json:"sessionName"`
+	StartDate   string `json:"startDate"`
+	EndDate     string `json:"endDate"`
+	Status      string `json:"status"`
+	Instructor  string `json:"instructor"`
+	Room        string `json:"room"`
+}
+
+type AcademicClassCustom struct {
+	ID           string `json:"id"`
+	ClassName    string `json:"className"`
+	Section      string `json:"section"`
+	AcademicYear string `json:"academicYear"`
+	Teacher      string `json:"teacher"`
+	Status       string `json:"status"`
+	StudentCount string `json:"studentCount"`
+	RoomNumber   string `json:"roomNumber"`
+}
+
+type CreateAcademicClassCustomInput struct {
+	ClassName    string `json:"className"`
+	Section      string `json:"section"`
+	AcademicYear string `json:"academicYear"`
+	Teacher      string `json:"teacher"`
+	Status       string `json:"status"`
+	StudentCount string `json:"studentCount"`
+	RoomNumber   string `json:"roomNumber"`
+}
+
+type UpdateAcademicClassCustomInput struct {
+	ID           string `json:"id"`
+	ClassName    string `json:"className"`
+	Section      string `json:"section"`
+	AcademicYear string `json:"academicYear"`
+	Teacher      string `json:"teacher"`
+	Status       string `json:"status"`
+	StudentCount string `json:"studentCount"`
+	RoomNumber   string `json:"roomNumber"`
+}
+
+type AcademicSubjectCustom struct {
+	ID            string `json:"id"`
+	SubjectName   string `json:"subjectName"`
+	SubjectCode   string `json:"subjectCode"`
+	SubjectType   string `json:"subjectType"`
+	Status        string `json:"status"`
+	Prerequisites string `json:"prerequisites"`
+	Credits       string `json:"credits"`
+}
+
+type CreateAcademicSubjectCustomInput struct {
+	SubjectName   string `json:"subjectName"`
+	SubjectCode   string `json:"subjectCode"`
+	SubjectType   string `json:"subjectType"`
+	Status        string `json:"status"`
+	Prerequisites string `json:"prerequisites"`
+	Credits       string `json:"credits"`
+}
+
+type UpdateAcademicSubjectCustomInput struct {
+	ID            string `json:"id"`
+	SubjectName   string `json:"subjectName"`
+	SubjectCode   string `json:"subjectCode"`
+	SubjectType   string `json:"subjectType"`
+	Status        string `json:"status"`
+	Prerequisites string `json:"prerequisites"`
+	Credits       string `json:"credits"`
+}
+
+type CourseCurriculumCustom struct {
+	ID                string `json:"id"`
+	CourseName        string `json:"courseName"`
+	ClassName         string `json:"className"`
+	SubjectName       string `json:"subjectName"`
+	Description       string `json:"description"`
+	Status            string `json:"status"`
+	Duration          string `json:"duration"`
+	ReferenceMaterial string `json:"referenceMaterial"`
+}
+
+type CreateCourseCurriculumCustomInput struct {
+	CourseName        string `json:"courseName"`
+	ClassName         string `json:"className"`
+	SubjectName       string `json:"subjectName"`
+	Description       string `json:"description"`
+	Status            string `json:"status"`
+	Duration          string `json:"duration"`
+	ReferenceMaterial string `json:"referenceMaterial"`
+}
+
+type UpdateCourseCurriculumCustomInput struct {
+	ID                string `json:"id"`
+	CourseName        string `json:"courseName"`
+	ClassName         string `json:"className"`
+	SubjectName       string `json:"subjectName"`
+	Description       string `json:"description"`
+	Status            string `json:"status"`
+	Duration          string `json:"duration"`
+	ReferenceMaterial string `json:"referenceMaterial"`
+}
+
+type AssignmentCustom struct {
+	ID             string `json:"id"`
+	ClassName      string `json:"className"`
+	SubjectName    string `json:"subjectName"`
+	TeacherName    string `json:"teacherName"`
+	AssignmentDate string `json:"assignmentDate"`
+	Status         string `json:"status"`
+	Title          string `json:"title"`
+	Deadline       string `json:"deadline"`
+	Details        string `json:"details"`
+}
+
+type CreateAssignmentCustomInput struct {
+	ClassName      string `json:"className"`
+	SubjectName    string `json:"subjectName"`
+	TeacherName    string `json:"teacherName"`
+	AssignmentDate string `json:"assignmentDate"`
+	Status         string `json:"status"`
+	Title          string `json:"title"`
+	Deadline       string `json:"deadline"`
+	Details        string `json:"details"`
+}
+
+type UpdateAssignmentCustomInput struct {
+	ID             string `json:"id"`
+	ClassName      string `json:"className"`
+	SubjectName    string `json:"subjectName"`
+	TeacherName    string `json:"teacherName"`
+	AssignmentDate string `json:"assignmentDate"`
+	Status         string `json:"status"`
+	Title          string `json:"title"`
+	Deadline       string `json:"deadline"`
+	Details        string `json:"details"`
+}
+
+type LessonPlanningCustom struct {
+	ID             string `json:"id"`
+	TopicName      string `json:"topicName"`
+	LessonName     string `json:"lessonName"`
+	ClassName      string `json:"className"`
+	SubjectName    string `json:"subjectName"`
+	TeacherName    string `json:"teacherName"`
+	LessonDate     string `json:"lessonDate"`
+	Status         string `json:"status"`
+	Objectives     string `json:"objectives"`
+	TeachingMethod string `json:"teachingMethod"`
+}
+
+type CreateLessonPlanningCustomInput struct {
+	TopicName      string `json:"topicName"`
+	LessonName     string `json:"lessonName"`
+	ClassName      string `json:"className"`
+	SubjectName    string `json:"subjectName"`
+	TeacherName    string `json:"teacherName"`
+	LessonDate     string `json:"lessonDate"`
+	Status         string `json:"status"`
+	Objectives     string `json:"objectives"`
+	TeachingMethod string `json:"teachingMethod"`
+}
+
+type UpdateLessonPlanningCustomInput struct {
+	ID             string `json:"id"`
+	TopicName      string `json:"topicName"`
+	LessonName     string `json:"lessonName"`
+	ClassName      string `json:"className"`
+	SubjectName    string `json:"subjectName"`
+	TeacherName    string `json:"teacherName"`
+	LessonDate     string `json:"lessonDate"`
+	Status         string `json:"status"`
+	Objectives     string `json:"objectives"`
+	TeachingMethod string `json:"teachingMethod"`
+}
+
+type HostelRoomCustom struct {
+	RoomID              string  `json:"roomId"`
+	RoomNumber          string  `json:"roomNumber"`
+	RoomType            string  `json:"roomType"`
+	Floor               int     `json:"floor"`
+	Capacity            int     `json:"capacity"`
+	OccupiedStatus      string  `json:"occupiedStatus"`
+	CurrentOccupants    int     `json:"currentOccupants"`
+	PriceFees           float64 `json:"priceFees"`
+	RoomCondition       string  `json:"roomCondition"`
+	DateAssigned        string  `json:"dateAssigned"`
+	RoomSupervisorStaff string  `json:"roomSupervisorStaff"`
+	HostelBlock         string  `json:"hostelBlock"`
+	CheckInDate         string  `json:"checkInDate"`
+	CheckOutDate        string  `json:"checkOutDate"`
+	RoomTypeCode        string  `json:"roomTypeCode"`
+	RoomDescription     string  `json:"roomDescription"`
+}
+
+type CreateHostelRoomCustomInput struct {
+	RoomNumber          string  `json:"roomNumber"`
+	RoomType            string  `json:"roomType"`
+	Floor               int     `json:"floor"`
+	Capacity            int     `json:"capacity"`
+	OccupiedStatus      string  `json:"occupiedStatus"`
+	CurrentOccupants    int     `json:"currentOccupants"`
+	PriceFees           float64 `json:"priceFees"`
+	RoomCondition       string  `json:"roomCondition"`
+	DateAssigned        string  `json:"dateAssigned"`
+	RoomSupervisorStaff string  `json:"roomSupervisorStaff"`
+	HostelBlock         string  `json:"hostelBlock"`
+	CheckInDate         string  `json:"checkInDate"`
+	CheckOutDate        string  `json:"checkOutDate"`
+	RoomTypeCode        string  `json:"roomTypeCode"`
+	RoomDescription     string  `json:"roomDescription"`
+}
+
+type UpdateHostelRoomCustomInput struct {
+	RoomID              string  `json:"roomId"`
+	RoomNumber          string  `json:"roomNumber"`
+	RoomType            string  `json:"roomType"`
+	Floor               int     `json:"floor"`
+	Capacity            int     `json:"capacity"`
+	OccupiedStatus      string  `json:"occupiedStatus"`
+	CurrentOccupants    int     `json:"currentOccupants"`
+	PriceFees           float64 `json:"priceFees"`
+	RoomCondition       string  `json:"roomCondition"`
+	DateAssigned        string  `json:"dateAssigned"`
+	RoomSupervisorStaff string  `json:"roomSupervisorStaff"`
+	HostelBlock         string  `json:"hostelBlock"`
+	CheckInDate         string  `json:"checkInDate"`
+	CheckOutDate        string  `json:"checkOutDate"`
+	RoomTypeCode        string  `json:"roomTypeCode"`
+	RoomDescription     string  `json:"roomDescription"`
+}
+
+type HostelRoomTypeCustom struct {
+	RoomTypeID      string  `json:"roomTypeId"`
+	RoomTypeName    string  `json:"roomTypeName"`
+	Capacity        int     `json:"capacity"`
+	RoomCategory    string  `json:"roomCategory"`
+	RoomDescription string  `json:"roomDescription"`
+	RoomPrice       float64 `json:"roomPrice"`
+	RoomFacilities  string  `json:"roomFacilities"`
+	RoomArea        float64 `json:"roomArea"`
+	RoomCondition   string  `json:"roomCondition"`
+	RoomTypeCode    string  `json:"roomTypeCode"`
+	CreatedAt       string  `json:"createdAt"`
+	UpdatedAt       string  `json:"updatedAt"`
+	Status          string  `json:"status"`
+	MaxOccupants    int     `json:"maxOccupants"`
+}
+
+type CreateHostelRoomTypeCustomInput struct {
+	RoomTypeName    string  `json:"roomTypeName"`
+	Capacity        int     `json:"capacity"`
+	RoomCategory    string  `json:"roomCategory"`
+	RoomDescription string  `json:"roomDescription"`
+	RoomPrice       float64 `json:"roomPrice"`
+	RoomFacilities  string  `json:"roomFacilities"`
+	RoomArea        float64 `json:"roomArea"`
+	RoomCondition   string  `json:"roomCondition"`
+	RoomTypeCode    string  `json:"roomTypeCode"`
+	Status          string  `json:"status"`
+	MaxOccupants    int     `json:"maxOccupants"`
+}
+
+type UpdateHostelRoomTypeCustomInput struct {
+	RoomTypeID      string  `json:"roomTypeId"`
+	RoomTypeName    string  `json:"roomTypeName"`
+	Capacity        int     `json:"capacity"`
+	RoomCategory    string  `json:"roomCategory"`
+	RoomDescription string  `json:"roomDescription"`
+	RoomPrice       float64 `json:"roomPrice"`
+	RoomFacilities  string  `json:"roomFacilities"`
+	RoomArea        float64 `json:"roomArea"`
+	RoomCondition   string  `json:"roomCondition"`
+	RoomTypeCode    string  `json:"roomTypeCode"`
+	Status          string  `json:"status"`
+	MaxOccupants    int     `json:"maxOccupants"`
+}
+
+type HostelAllocationCustom struct {
+	ID             string `json:"id"`
+	Img            string `json:"img"`
+	StudentName    string `json:"student_name"`
+	RollNo         string `json:"roll_no"`
+	HostelName     string `json:"hostel_name"`
+	RoomNo         string `json:"room_no"`
+	RoomType       string `json:"room_type"`
+	AllocationDate string `json:"allocation_date"`
+	Status         string `json:"status"`
+}
+
+type CreateHostelAllocationCustomInput struct {
+	Img            string `json:"img"`
+	StudentName    string `json:"student_name"`
+	RollNo         string `json:"roll_no"`
+	HostelName     string `json:"hostel_name"`
+	RoomNo         string `json:"room_no"`
+	RoomType       string `json:"room_type"`
+	AllocationDate string `json:"allocation_date"`
+	Status         string `json:"status"`
+}
+
+type UpdateHostelAllocationCustomInput struct {
+	ID             string `json:"id"`
+	Img            string `json:"img"`
+	StudentName    string `json:"student_name"`
+	RollNo         string `json:"roll_no"`
+	HostelName     string `json:"hostel_name"`
+	RoomNo         string `json:"room_no"`
+	RoomType       string `json:"room_type"`
+	AllocationDate string `json:"allocation_date"`
+	Status         string `json:"status"`
+}
+
+type HostelAttendanceCustom struct {
+	ID             string `json:"id"`
+	Img            string `json:"img"`
+	StudentName    string `json:"student_name"`
+	RollNo         string `json:"roll_no"`
+	HostelName     string `json:"hostel_name"`
+	RoomNo         string `json:"room_no"`
+	AttendanceDate string `json:"attendance_date"`
+	Status         string `json:"status"`
+	Note           string `json:"note"`
+}
+
+type CreateHostelAttendanceCustomInput struct {
+	Img            string `json:"img"`
+	StudentName    string `json:"student_name"`
+	RollNo         string `json:"roll_no"`
+	HostelName     string `json:"hostel_name"`
+	RoomNo         string `json:"room_no"`
+	AttendanceDate string `json:"attendance_date"`
+	Status         string `json:"status"`
+	Note           string `json:"note"`
+}
+
+type UpdateHostelAttendanceCustomInput struct {
+	ID             string `json:"id"`
+	Img            string `json:"img"`
+	StudentName    string `json:"student_name"`
+	RollNo         string `json:"roll_no"`
+	HostelName     string `json:"hostel_name"`
+	RoomNo         string `json:"room_no"`
+	AttendanceDate string `json:"attendance_date"`
+	Status         string `json:"status"`
+	Note           string `json:"note"`
+}
+
+type HostelFeeCustom struct {
+	ID            string  `json:"id"`
+	Img           string  `json:"img"`
+	StudentName   string  `json:"student_name"`
+	RollNo        string  `json:"roll_no"`
+	HostelName    string  `json:"hostel_name"`
+	RoomNo        string  `json:"room_no"`
+	FeeType       string  `json:"fee_type"`
+	Amount        float64 `json:"amount"`
+	PaymentDate   string  `json:"payment_date"`
+	PaymentStatus string  `json:"payment_status"`
+}
+
+type CreateHostelFeeCustomInput struct {
+	Img           string  `json:"img"`
+	StudentName   string  `json:"student_name"`
+	RollNo        string  `json:"roll_no"`
+	HostelName    string  `json:"hostel_name"`
+	RoomNo        string  `json:"room_no"`
+	FeeType       string  `json:"fee_type"`
+	Amount        float64 `json:"amount"`
+	PaymentDate   string  `json:"payment_date"`
+	PaymentStatus string  `json:"payment_status"`
+}
+
+type UpdateHostelFeeCustomInput struct {
+	ID            string  `json:"id"`
+	Img           string  `json:"img"`
+	StudentName   string  `json:"student_name"`
+	RollNo        string  `json:"roll_no"`
+	HostelName    string  `json:"hostel_name"`
+	RoomNo        string  `json:"room_no"`
+	FeeType       string  `json:"fee_type"`
+	Amount        float64 `json:"amount"`
+	PaymentDate   string  `json:"payment_date"`
+	PaymentStatus string  `json:"payment_status"`
+}
+
+type DepartmentCustom struct {
+	ID              string `json:"id"`
+	Img             string `json:"img"`
+	DepartmentName  string `json:"department_name"`
+	Hod             string `json:"hod"`
+	Phone           string `json:"phone"`
+	Email           string `json:"email"`
+	StudentCapacity string `json:"student_capacity"`
+	EstablishedYear string `json:"establishedYear"`
+	TotalFaculty    string `json:"totalFaculty"`
+}
+
+type CreateDepartmentCustomInput struct {
+	Img             string `json:"img"`
+	DepartmentName  string `json:"department_name"`
+	Hod             string `json:"hod"`
+	Phone           string `json:"phone"`
+	Email           string `json:"email"`
+	StudentCapacity string `json:"student_capacity"`
+	EstablishedYear string `json:"establishedYear"`
+	TotalFaculty    string `json:"totalFaculty"`
+}
+
+type UpdateDepartmentCustomInput struct {
+	ID              string `json:"id"`
+	Img             string `json:"img"`
+	DepartmentName  string `json:"department_name"`
+	Hod             string `json:"hod"`
+	Phone           string `json:"phone"`
+	Email           string `json:"email"`
+	StudentCapacity string `json:"student_capacity"`
+	EstablishedYear string `json:"establishedYear"`
+	TotalFaculty    string `json:"totalFaculty"`
+}
+
+type AcademicReportCustom struct {
+	ID           string `json:"id"`
+	Img          string `json:"img"`
+	ReportType   string `json:"reportType"`
+	ClassName    string `json:"className"`
+	Subject      string `json:"subject"`
+	AcademicYear string `json:"academicYear"`
+	Term         string `json:"term"`
+	GeneratedBy  string `json:"generatedBy"`
+	Date         string `json:"date"`
+	Status       string `json:"status"`
+}
+
+type CreateAcademicReportCustomInput struct {
+	Img          string `json:"img"`
+	ReportType   string `json:"reportType"`
+	ClassName    string `json:"className"`
+	Subject      string `json:"subject"`
+	AcademicYear string `json:"academicYear"`
+	Term         string `json:"term"`
+	GeneratedBy  string `json:"generatedBy"`
+	Date         string `json:"date"`
+	Status       string `json:"status"`
+}
+
+type UpdateAcademicReportCustomInput struct {
+	ID           string `json:"id"`
+	Img          string `json:"img"`
+	ReportType   string `json:"reportType"`
+	ClassName    string `json:"className"`
+	Subject      string `json:"subject"`
+	AcademicYear string `json:"academicYear"`
+	Term         string `json:"term"`
+	GeneratedBy  string `json:"generatedBy"`
+	Date         string `json:"date"`
+	Status       string `json:"status"`
+}
+
+type AttendanceReportCustom struct {
+	ID                   string  `json:"id"`
+	Img                  string  `json:"img"`
+	ReportType           string  `json:"reportType"`
+	ClassName            string  `json:"className"`
+	DateFrom             string  `json:"dateFrom"`
+	DateTo               string  `json:"dateTo"`
+	AttendancePercentage float64 `json:"attendancePercentage"`
+	GeneratedBy          string  `json:"generatedBy"`
+	Date                 string  `json:"date"`
+	Status               string  `json:"status"`
+}
+
+type CreateAttendanceReportCustomInput struct {
+	Img                  string  `json:"img"`
+	ReportType           string  `json:"reportType"`
+	ClassName            string  `json:"className"`
+	DateFrom             string  `json:"dateFrom"`
+	DateTo               string  `json:"dateTo"`
+	AttendancePercentage float64 `json:"attendancePercentage"`
+	GeneratedBy          string  `json:"generatedBy"`
+	Date                 string  `json:"date"`
+	Status               string  `json:"status"`
+}
+
+type UpdateAttendanceReportCustomInput struct {
+	ID                   string  `json:"id"`
+	Img                  string  `json:"img"`
+	ReportType           string  `json:"reportType"`
+	ClassName            string  `json:"className"`
+	DateFrom             string  `json:"dateFrom"`
+	DateTo               string  `json:"dateTo"`
+	AttendancePercentage float64 `json:"attendancePercentage"`
+	GeneratedBy          string  `json:"generatedBy"`
+	Date                 string  `json:"date"`
+	Status               string  `json:"status"`
+}
+
+type FeeReportCustom struct {
+	ID          string  `json:"id"`
+	Img         string  `json:"img"`
+	ReportType  string  `json:"reportType"`
+	FeeCategory string  `json:"feeCategory"`
+	DateFrom    string  `json:"dateFrom"`
+	DateTo      string  `json:"dateTo"`
+	TotalAmount float64 `json:"totalAmount"`
+	GeneratedBy string  `json:"generatedBy"`
+	Date        string  `json:"date"`
+	Status      string  `json:"status"`
+}
+
+type CreateFeeReportCustomInput struct {
+	Img         string  `json:"img"`
+	ReportType  string  `json:"reportType"`
+	FeeCategory string  `json:"feeCategory"`
+	DateFrom    string  `json:"dateFrom"`
+	DateTo      string  `json:"dateTo"`
+	TotalAmount float64 `json:"totalAmount"`
+	GeneratedBy string  `json:"generatedBy"`
+	Date        string  `json:"date"`
+	Status      string  `json:"status"`
+}
+
+type UpdateFeeReportCustomInput struct {
+	ID          string  `json:"id"`
+	Img         string  `json:"img"`
+	ReportType  string  `json:"reportType"`
+	FeeCategory string  `json:"feeCategory"`
+	DateFrom    string  `json:"dateFrom"`
+	DateTo      string  `json:"dateTo"`
+	TotalAmount float64 `json:"totalAmount"`
+	GeneratedBy string  `json:"generatedBy"`
+	Date        string  `json:"date"`
+	Status      string  `json:"status"`
+}
+
+type ExamReportCustom struct {
+	ID             string  `json:"id"`
+	Img            string  `json:"img"`
+	ExamName       string  `json:"examName"`
+	ClassName      string  `json:"className"`
+	Subject        string  `json:"subject"`
+	ExamDate       string  `json:"examDate"`
+	PassPercentage float64 `json:"passPercentage"`
+	AverageMarks   float64 `json:"averageMarks"`
+	GeneratedBy    string  `json:"generatedBy"`
+	Date           string  `json:"date"`
+	Status         string  `json:"status"`
+}
+
+type CreateExamReportCustomInput struct {
+	Img            string  `json:"img"`
+	ExamName       string  `json:"examName"`
+	ClassName      string  `json:"className"`
+	Subject        string  `json:"subject"`
+	ExamDate       string  `json:"examDate"`
+	PassPercentage float64 `json:"passPercentage"`
+	AverageMarks   float64 `json:"averageMarks"`
+	GeneratedBy    string  `json:"generatedBy"`
+	Date           string  `json:"date"`
+	Status         string  `json:"status"`
+}
+
+type UpdateExamReportCustomInput struct {
+	ID             string  `json:"id"`
+	Img            string  `json:"img"`
+	ExamName       string  `json:"examName"`
+	ClassName      string  `json:"className"`
+	Subject        string  `json:"subject"`
+	ExamDate       string  `json:"examDate"`
+	PassPercentage float64 `json:"passPercentage"`
+	AverageMarks   float64 `json:"averageMarks"`
+	GeneratedBy    string  `json:"generatedBy"`
+	Date           string  `json:"date"`
+	Status         string  `json:"status"`
+}
+
+type CustomReportCustom struct {
+	ID          string `json:"id"`
+	ReportName  string `json:"reportName"`
+	Description string `json:"description"`
+	Category    string `json:"category"`
+	CreatedBy   string `json:"createdBy"`
+	Date        string `json:"date"`
+	Status      string `json:"status"`
+}
+
+type CreateCustomReportCustomInput struct {
+	ReportName  string `json:"reportName"`
+	Description string `json:"description"`
+	Category    string `json:"category"`
+	CreatedBy   string `json:"createdBy"`
+	Date        string `json:"date"`
+	Status      string `json:"status"`
+}
+
+type UpdateCustomReportCustomInput struct {
+	ID          string `json:"id"`
+	ReportName  string `json:"reportName"`
+	Description string `json:"description"`
+	Category    string `json:"category"`
+	CreatedBy   string `json:"createdBy"`
+	Date        string `json:"date"`
+	Status      string `json:"status"`
+}

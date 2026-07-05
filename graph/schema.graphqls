@@ -9,7 +9,7 @@ extend type Query {
   visitors: [Visitor!]!
   teachersList: [TeacherInfo!]!
   assignClassTeacherList: [AssignClassTeacher!]!
-  classList: [ClassInfo!]!
+  classList: [ClassList!]!
   studentsList: [StudentInfo!]!
   studentAttendanceList: [StudentAttendanceInfo!]!
   studentPromotionList: [StudentPromotionInfo!]!
@@ -38,6 +38,34 @@ extend type Query {
   holidays: [Holiday!]!
   todaysAttendanceList: [TodaysAttendance!]!
   employeeSalaryList: [EmployeeSalary!]!
+  vehiclesList: [Vehicle!]!
+  transportRoutesList: [TransportRoute!]!
+  driversList: [Driver!]!
+  studentAllocationsList: [StudentAllocation!]!
+  transportFeesList: [TransportFee!]!
+  noticeBoardsList: [NoticeBoard!]!
+  announcementsList: [Announcement!]!
+  allFeesList: [Fees!]!
+  feesTypesList: [FeesType!]!
+  feesDiscountsList: [FeesDiscount!]!
+  academicYearList: [AcademicYearCustom!]!
+  sessionsList: [SessionCustom!]!
+  academicClassesList: [AcademicClassCustom!]!
+  academicSubjectsList: [AcademicSubjectCustom!]!
+  courseCurriculumsList: [CourseCurriculumCustom!]!
+  assignmentsList: [AssignmentCustom!]!
+  lessonPlanningsList: [LessonPlanningCustom!]!
+  hostelRoomsList: [HostelRoomCustom!]!
+  hostelRoomTypesList: [HostelRoomTypeCustom!]!
+  hostelAllocationsList: [HostelAllocationCustom!]!
+  hostelAttendancesList: [HostelAttendanceCustom!]!
+  hostelFeesList: [HostelFeeCustom!]!
+  departmentsList: [DepartmentCustom!]!
+  academicReportsList: [AcademicReportCustom!]!
+  attendanceReportsList: [AttendanceReportCustom!]!
+  feeReportsList: [FeeReportCustom!]!
+  examReportsList: [ExamReportCustom!]!
+  customReportsList: [CustomReportCustom!]!
 }
 
 extend type Mutation {
@@ -141,6 +169,93 @@ extend type Mutation {
   createEmployeeSalary(input: CreateEmployeeSalaryInput!): EmployeeSalary!
   updateEmployeeSalary(input: UpdateEmployeeSalaryInput!): EmployeeSalary!
   deleteEmployeeSalary(id: String!): String!
+  createVehicle(input: CreateVehicleInput!): Vehicle!
+  updateVehicle(input: UpdateVehicleInput!): Vehicle!
+  deleteVehicle(id: String!): String!
+  createTransportRoute(input: CreateTransportRouteInput!): TransportRoute!
+  updateTransportRoute(input: UpdateTransportRouteInput!): TransportRoute!
+  deleteTransportRoute(id: String!): String!
+  createDriver(input: CreateDriverInput!): Driver!
+  updateDriver(input: UpdateDriverInput!): Driver!
+  deleteDriver(id: String!): String!
+  createStudentAllocation(input: CreateStudentAllocationInput!): StudentAllocation!
+  updateStudentAllocation(input: UpdateStudentAllocationInput!): StudentAllocation!
+  deleteStudentAllocation(id: String!): String!
+  createTransportFee(input: CreateTransportFeeInput!): TransportFee!
+  updateTransportFee(input: UpdateTransportFeeInput!): TransportFee!
+  deleteTransportFee(id: String!): String!
+  createNoticeBoard(input: CreateNoticeBoardInput!): NoticeBoard!
+  updateNoticeBoard(input: UpdateNoticeBoardInput!): NoticeBoard!
+  deleteNoticeBoard(id: String!): String!
+  createAnnouncement(input: CreateAnnouncementInput!): Announcement!
+  updateAnnouncement(input: UpdateAnnouncementInput!): Announcement!
+  deleteAnnouncement(id: String!): String!
+  createFees(input: CreateFeesInput!): Fees!
+  updateFees(input: UpdateFeesInput!): Fees!
+  deleteFees(id: String!): String!
+  createFeesType(input: CreateFeesTypeInput!): FeesType!
+  updateFeesType(input: UpdateFeesTypeInput!): FeesType!
+  deleteFeesType(id: String!): String!
+  createFeesDiscount(input: CreateFeesDiscountInput!): FeesDiscount!
+  updateFeesDiscount(input: UpdateFeesDiscountInput!): FeesDiscount!
+  deleteFeesDiscount(id: String!): String!
+  createClassList(input: CreateClassListInput!): ClassList!
+  updateClassList(input: UpdateClassListInput!): ClassList!
+  deleteClassList(id: String!): String!
+  createAcademicYear(input: CreateAcademicYearCustomInput!): AcademicYearCustom!
+  updateAcademicYear(input: UpdateAcademicYearCustomInput!): AcademicYearCustom!
+  deleteAcademicYear(id: String!): String!
+  createSession(input: CreateSessionCustomInput!): SessionCustom!
+  updateSession(input: UpdateSessionCustomInput!): SessionCustom!
+  deleteSession(id: String!): String!
+  createAcademicClass(input: CreateAcademicClassCustomInput!): AcademicClassCustom!
+  updateAcademicClass(input: UpdateAcademicClassCustomInput!): AcademicClassCustom!
+  deleteAcademicClass(id: String!): String!
+  createAcademicSubject(input: CreateAcademicSubjectCustomInput!): AcademicSubjectCustom!
+  updateAcademicSubject(input: UpdateAcademicSubjectCustomInput!): AcademicSubjectCustom!
+  deleteAcademicSubject(id: String!): String!
+  createCourseCurriculum(input: CreateCourseCurriculumCustomInput!): CourseCurriculumCustom!
+  updateCourseCurriculum(input: UpdateCourseCurriculumCustomInput!): CourseCurriculumCustom!
+  deleteCourseCurriculum(id: String!): String!
+  createAssignment(input: CreateAssignmentCustomInput!): AssignmentCustom!
+  updateAssignment(input: UpdateAssignmentCustomInput!): AssignmentCustom!
+  deleteAssignment(id: String!): String!
+  createLessonPlanning(input: CreateLessonPlanningCustomInput!): LessonPlanningCustom!
+  updateLessonPlanning(input: UpdateLessonPlanningCustomInput!): LessonPlanningCustom!
+  deleteLessonPlanning(id: String!): String!
+  createHostelRoom(input: CreateHostelRoomCustomInput!): HostelRoomCustom!
+  updateHostelRoom(input: UpdateHostelRoomCustomInput!): HostelRoomCustom!
+  deleteHostelRoom(id: String!): String!
+  createHostelRoomType(input: CreateHostelRoomTypeCustomInput!): HostelRoomTypeCustom!
+  updateHostelRoomType(input: UpdateHostelRoomTypeCustomInput!): HostelRoomTypeCustom!
+  deleteHostelRoomType(id: String!): String!
+  createHostelAllocation(input: CreateHostelAllocationCustomInput!): HostelAllocationCustom!
+  updateHostelAllocation(input: UpdateHostelAllocationCustomInput!): HostelAllocationCustom!
+  deleteHostelAllocation(id: String!): String!
+  createHostelAttendance(input: CreateHostelAttendanceCustomInput!): HostelAttendanceCustom!
+  updateHostelAttendance(input: UpdateHostelAttendanceCustomInput!): HostelAttendanceCustom!
+  deleteHostelAttendance(id: String!): String!
+  createHostelFee(input: CreateHostelFeeCustomInput!): HostelFeeCustom!
+  updateHostelFee(input: UpdateHostelFeeCustomInput!): HostelFeeCustom!
+  deleteHostelFee(id: String!): String!
+  createDepartment(input: CreateDepartmentCustomInput!): DepartmentCustom!
+  updateDepartment(input: UpdateDepartmentCustomInput!): DepartmentCustom!
+  deleteDepartment(id: String!): String!
+  createAcademicReport(input: CreateAcademicReportCustomInput!): AcademicReportCustom!
+  updateAcademicReport(input: UpdateAcademicReportCustomInput!): AcademicReportCustom!
+  deleteAcademicReport(id: String!): String!
+  createAttendanceReport(input: CreateAttendanceReportCustomInput!): AttendanceReportCustom!
+  updateAttendanceReport(input: UpdateAttendanceReportCustomInput!): AttendanceReportCustom!
+  deleteAttendanceReport(id: String!): String!
+  createFeeReport(input: CreateFeeReportCustomInput!): FeeReportCustom!
+  updateFeeReport(input: UpdateFeeReportCustomInput!): FeeReportCustom!
+  deleteFeeReport(id: String!): String!
+  createExamReport(input: CreateExamReportCustomInput!): ExamReportCustom!
+  updateExamReport(input: UpdateExamReportCustomInput!): ExamReportCustom!
+  deleteExamReport(id: String!): String!
+  createCustomReport(input: CreateCustomReportCustomInput!): CustomReportCustom!
+  updateCustomReport(input: UpdateCustomReportCustomInput!): CustomReportCustom!
+  deleteCustomReport(id: String!): String!
 }
 
 input UpdateAdmissionInquiryInput {
@@ -1558,4 +1673,1099 @@ input UpdateEmployeeSalaryInput {
   bonus: String!
   deductions: String!
   netSalary: String!
+}
+
+type Vehicle {
+  id: String!
+  vehicleNo: String!
+  vehicleModel: String!
+  yearMade: String!
+  driverName: String!
+  driverLicense: String!
+  vehicleType: String!
+  status: String!
+  img: String!
+}
+
+input CreateVehicleInput {
+  vehicleNo: String!
+  vehicleModel: String!
+  yearMade: String!
+  driverName: String!
+  driverLicense: String!
+  vehicleType: String!
+  status: String!
+  img: String!
+}
+
+input UpdateVehicleInput {
+  id: String!
+  vehicleNo: String!
+  vehicleModel: String!
+  yearMade: String!
+  driverName: String!
+  driverLicense: String!
+  vehicleType: String!
+  status: String!
+  img: String!
+}
+
+type TransportRoute {
+  id: String!
+  routeName: String!
+  startPoint: String!
+  endPoint: String!
+  distance: String!
+  vehicleNo: String!
+  routeFees: String!
+  status: String!
+}
+
+input CreateTransportRouteInput {
+  routeName: String!
+  startPoint: String!
+  endPoint: String!
+  distance: String!
+  vehicleNo: String!
+  routeFees: String!
+  status: String!
+}
+
+input UpdateTransportRouteInput {
+  id: String!
+  routeName: String!
+  startPoint: String!
+  endPoint: String!
+  distance: String!
+  vehicleNo: String!
+  routeFees: String!
+  status: String!
+}
+
+type Driver {
+  id: String!
+  driverName: String!
+  licenseNo: String!
+  phone: String!
+  joiningDate: String!
+  address: String!
+  experience: String!
+  status: String!
+  img: String!
+}
+
+input CreateDriverInput {
+  driverName: String!
+  licenseNo: String!
+  phone: String!
+  joiningDate: String!
+  address: String!
+  experience: String!
+  status: String!
+  img: String!
+}
+
+input UpdateDriverInput {
+  id: String!
+  driverName: String!
+  licenseNo: String!
+  phone: String!
+  joiningDate: String!
+  address: String!
+  experience: String!
+  status: String!
+  img: String!
+}
+
+type StudentAllocation {
+  id: String!
+  studentName: String!
+  studentId: String!
+  classSection: String!
+  routeName: String!
+  vehicleNo: String!
+  stopPoint: String!
+  allocationDate: String!
+  status: String!
+  img: String!
+}
+
+input CreateStudentAllocationInput {
+  studentName: String!
+  studentId: String!
+  classSection: String!
+  routeName: String!
+  vehicleNo: String!
+  stopPoint: String!
+  allocationDate: String!
+  status: String!
+  img: String!
+}
+
+input UpdateStudentAllocationInput {
+  id: String!
+  studentName: String!
+  studentId: String!
+  classSection: String!
+  routeName: String!
+  vehicleNo: String!
+  stopPoint: String!
+  allocationDate: String!
+  status: String!
+  img: String!
+}
+
+type TransportFee {
+  id: String!
+  studentName: String!
+  studentId: String!
+  classSection: String!
+  routeName: String!
+  amount: String!
+  paymentDate: String!
+  paymentMethod: String!
+  status: String!
+  img: String!
+}
+
+input CreateTransportFeeInput {
+  studentName: String!
+  studentId: String!
+  classSection: String!
+  routeName: String!
+  amount: String!
+  paymentDate: String!
+  paymentMethod: String!
+  status: String!
+  img: String!
+}
+
+input UpdateTransportFeeInput {
+  id: String!
+  studentName: String!
+  studentId: String!
+  classSection: String!
+  routeName: String!
+  amount: String!
+  paymentDate: String!
+  paymentMethod: String!
+  status: String!
+  img: String!
+}
+
+type NoticeBoard {
+  id: String!
+  img: String!
+  title: String!
+  postedBy: String!
+  department: String!
+  date: String!
+  priority: String!
+  status: String!
+  description: String!
+  targetAudience: String!
+}
+
+input CreateNoticeBoardInput {
+  img: String!
+  title: String!
+  postedBy: String!
+  department: String!
+  date: String!
+  priority: String!
+  status: String!
+  description: String!
+  targetAudience: String!
+}
+
+input UpdateNoticeBoardInput {
+  id: String!
+  img: String!
+  title: String!
+  postedBy: String!
+  department: String!
+  date: String!
+  priority: String!
+  status: String!
+  description: String!
+  targetAudience: String!
+}
+
+type Announcement {
+  id: String!
+  img: String!
+  title: String!
+  announcementType: String!
+  postedBy: String!
+  startDate: String!
+  endDate: String!
+  status: String!
+  description: String!
+  priority: String!
+}
+
+input CreateAnnouncementInput {
+  img: String!
+  title: String!
+  announcementType: String!
+  postedBy: String!
+  startDate: String!
+  endDate: String!
+  status: String!
+  description: String!
+  priority: String!
+}
+
+input UpdateAnnouncementInput {
+  id: String!
+  img: String!
+  title: String!
+  announcementType: String!
+  postedBy: String!
+  startDate: String!
+  endDate: String!
+  status: String!
+  description: String!
+  priority: String!
+}
+
+type Fees {
+  id: String!
+  rollNo: String!
+  studentName: String!
+  class: String!
+  feesType: String!
+  invoiceNo: String!
+  paymentDueDate: String!
+  paymentDate: String!
+  paymentType: String!
+  status: String!
+  amount: String!
+  lateFee: String!
+  discount: String!
+  createdAt: String!
+  updatedAt: String!
+  notes: String!
+}
+
+input CreateFeesInput {
+  rollNo: String!
+  studentName: String!
+  class: String!
+  feesType: String!
+  invoiceNo: String!
+  paymentDueDate: String!
+  paymentDate: String!
+  paymentType: String!
+  status: String!
+  amount: String!
+  lateFee: String!
+  discount: String!
+  createdAt: String!
+  updatedAt: String!
+  notes: String!
+}
+
+input UpdateFeesInput {
+  id: String!
+  rollNo: String!
+  studentName: String!
+  class: String!
+  feesType: String!
+  invoiceNo: String!
+  paymentDueDate: String!
+  paymentDate: String!
+  paymentType: String!
+  status: String!
+  amount: String!
+  lateFee: String!
+  discount: String!
+  createdAt: String!
+  updatedAt: String!
+  notes: String!
+}
+
+type FeesType {
+  feeTypeId: String!
+  feeTypeName: String!
+  category: String!
+  description: String!
+  amount: Float!
+  applicableClasses: String!
+  frequency: String!
+  status: String!
+  createdBy: String!
+  createdDate: String!
+  lastUpdated: String!
+}
+
+input CreateFeesTypeInput {
+  feeTypeName: String!
+  category: String!
+  description: String!
+  amount: Float!
+  applicableClasses: String!
+  frequency: String!
+  status: String!
+  createdBy: String!
+  createdDate: String!
+  lastUpdated: String!
+}
+
+input UpdateFeesTypeInput {
+  feeTypeId: String!
+  feeTypeName: String!
+  category: String!
+  description: String!
+  amount: Float!
+  applicableClasses: String!
+  frequency: String!
+  status: String!
+  createdBy: String!
+  createdDate: String!
+  lastUpdated: String!
+}
+
+type FeesDiscount {
+  discountId: String!
+  discountType: String!
+  discountAmount: Float!
+  discountPercentage: Float!
+  discountCode: String!
+  startDate: String!
+  endDate: String!
+  appliedDate: String!
+  status: String!
+  remarks: String!
+}
+
+input CreateFeesDiscountInput {
+  discountType: String!
+  discountAmount: Float!
+  discountPercentage: Float!
+  discountCode: String!
+  startDate: String!
+  endDate: String!
+  appliedDate: String!
+  status: String!
+  remarks: String!
+}
+
+input UpdateFeesDiscountInput {
+  discountId: String!
+  discountType: String!
+  discountAmount: Float!
+  discountPercentage: Float!
+  discountCode: String!
+  startDate: String!
+  endDate: String!
+  appliedDate: String!
+  status: String!
+  remarks: String!
+}
+
+type ClassList {
+  classId: String!
+  className: String!
+  classCode: String!
+  teacherId: String!
+  startDate: String!
+  endDate: String!
+  roomNumber: String!
+  schedule: String!
+  semester: String!
+  classCapacity: Int!
+  status: String!
+  description: String!
+  classType: String!
+  createdAt: String!
+  updatedAt: String!
+}
+
+input CreateClassListInput {
+  className: String!
+  classCode: String!
+  teacherId: String!
+  startDate: String!
+  endDate: String!
+  roomNumber: String!
+  schedule: String!
+  semester: String!
+  classCapacity: Int!
+  status: String!
+  description: String!
+  classType: String!
+  createdAt: String!
+  updatedAt: String!
+}
+
+input UpdateClassListInput {
+  classId: String!
+  className: String!
+  classCode: String!
+  teacherId: String!
+  startDate: String!
+  endDate: String!
+  roomNumber: String!
+  schedule: String!
+  semester: String!
+  classCapacity: Int!
+  status: String!
+  description: String!
+  classType: String!
+  createdAt: String!
+  updatedAt: String!
+}
+
+type AcademicYearCustom {
+  id: String!
+  academicYear: String!
+  status: String!
+  startDate: String!
+  endDate: String!
+  description: String!
+  department: String!
+}
+
+input CreateAcademicYearCustomInput {
+  academicYear: String!
+  status: String!
+  startDate: String!
+  endDate: String!
+  description: String!
+  department: String!
+}
+
+input UpdateAcademicYearCustomInput {
+  id: String!
+  academicYear: String!
+  status: String!
+  startDate: String!
+  endDate: String!
+  description: String!
+  department: String!
+}
+
+type SessionCustom {
+  id: String!
+  sessionName: String!
+  startDate: String!
+  endDate: String!
+  status: String!
+  instructor: String!
+  room: String!
+}
+
+input CreateSessionCustomInput {
+  sessionName: String!
+  startDate: String!
+  endDate: String!
+  status: String!
+  instructor: String!
+  room: String!
+}
+
+input UpdateSessionCustomInput {
+  id: String!
+  sessionName: String!
+  startDate: String!
+  endDate: String!
+  status: String!
+  instructor: String!
+  room: String!
+}
+
+type AcademicClassCustom {
+  id: String!
+  className: String!
+  section: String!
+  academicYear: String!
+  teacher: String!
+  status: String!
+  studentCount: String!
+  roomNumber: String!
+}
+
+input CreateAcademicClassCustomInput {
+  className: String!
+  section: String!
+  academicYear: String!
+  teacher: String!
+  status: String!
+  studentCount: String!
+  roomNumber: String!
+}
+
+input UpdateAcademicClassCustomInput {
+  id: String!
+  className: String!
+  section: String!
+  academicYear: String!
+  teacher: String!
+  status: String!
+  studentCount: String!
+  roomNumber: String!
+}
+
+type AcademicSubjectCustom {
+  id: String!
+  subjectName: String!
+  subjectCode: String!
+  subjectType: String!
+  status: String!
+  prerequisites: String!
+  credits: String!
+}
+
+input CreateAcademicSubjectCustomInput {
+  subjectName: String!
+  subjectCode: String!
+  subjectType: String!
+  status: String!
+  prerequisites: String!
+  credits: String!
+}
+
+input UpdateAcademicSubjectCustomInput {
+  id: String!
+  subjectName: String!
+  subjectCode: String!
+  subjectType: String!
+  status: String!
+  prerequisites: String!
+  credits: String!
+}
+
+type CourseCurriculumCustom {
+  id: String!
+  courseName: String!
+  className: String!
+  subjectName: String!
+  description: String!
+  status: String!
+  duration: String!
+  referenceMaterial: String!
+}
+
+input CreateCourseCurriculumCustomInput {
+  courseName: String!
+  className: String!
+  subjectName: String!
+  description: String!
+  status: String!
+  duration: String!
+  referenceMaterial: String!
+}
+
+input UpdateCourseCurriculumCustomInput {
+  id: String!
+  courseName: String!
+  className: String!
+  subjectName: String!
+  description: String!
+  status: String!
+  duration: String!
+  referenceMaterial: String!
+}
+
+type AssignmentCustom {
+  id: String!
+  className: String!
+  subjectName: String!
+  teacherName: String!
+  assignmentDate: String!
+  status: String!
+  title: String!
+  deadline: String!
+  details: String!
+}
+
+input CreateAssignmentCustomInput {
+  className: String!
+  subjectName: String!
+  teacherName: String!
+  assignmentDate: String!
+  status: String!
+  title: String!
+  deadline: String!
+  details: String!
+}
+
+input UpdateAssignmentCustomInput {
+  id: String!
+  className: String!
+  subjectName: String!
+  teacherName: String!
+  assignmentDate: String!
+  status: String!
+  title: String!
+  deadline: String!
+  details: String!
+}
+
+type LessonPlanningCustom {
+  id: String!
+  topicName: String!
+  lessonName: String!
+  className: String!
+  subjectName: String!
+  teacherName: String!
+  lessonDate: String!
+  status: String!
+  objectives: String!
+  teachingMethod: String!
+}
+
+input CreateLessonPlanningCustomInput {
+  topicName: String!
+  lessonName: String!
+  className: String!
+  subjectName: String!
+  teacherName: String!
+  lessonDate: String!
+  status: String!
+  objectives: String!
+  teachingMethod: String!
+}
+
+input UpdateLessonPlanningCustomInput {
+  id: String!
+  topicName: String!
+  lessonName: String!
+  className: String!
+  subjectName: String!
+  teacherName: String!
+  lessonDate: String!
+  status: String!
+  objectives: String!
+  teachingMethod: String!
+}
+
+type HostelRoomCustom {
+  roomId: String!
+  roomNumber: String!
+  roomType: String!
+  floor: Int!
+  capacity: Int!
+  occupiedStatus: String!
+  currentOccupants: Int!
+  priceFees: Float!
+  roomCondition: String!
+  dateAssigned: String!
+  roomSupervisorStaff: String!
+  hostelBlock: String!
+  checkInDate: String!
+  checkOutDate: String!
+  roomTypeCode: String!
+  roomDescription: String!
+}
+
+input CreateHostelRoomCustomInput {
+  roomNumber: String!
+  roomType: String!
+  floor: Int!
+  capacity: Int!
+  occupiedStatus: String!
+  currentOccupants: Int!
+  priceFees: Float!
+  roomCondition: String!
+  dateAssigned: String!
+  roomSupervisorStaff: String!
+  hostelBlock: String!
+  checkInDate: String!
+  checkOutDate: String!
+  roomTypeCode: String!
+  roomDescription: String!
+}
+
+input UpdateHostelRoomCustomInput {
+  roomId: String!
+  roomNumber: String!
+  roomType: String!
+  floor: Int!
+  capacity: Int!
+  occupiedStatus: String!
+  currentOccupants: Int!
+  priceFees: Float!
+  roomCondition: String!
+  dateAssigned: String!
+  roomSupervisorStaff: String!
+  hostelBlock: String!
+  checkInDate: String!
+  checkOutDate: String!
+  roomTypeCode: String!
+  roomDescription: String!
+}
+
+type HostelRoomTypeCustom {
+  roomTypeId: String!
+  roomTypeName: String!
+  capacity: Int!
+  roomCategory: String!
+  roomDescription: String!
+  roomPrice: Float!
+  roomFacilities: String!
+  roomArea: Float!
+  roomCondition: String!
+  roomTypeCode: String!
+  createdAt: String!
+  updatedAt: String!
+  status: String!
+  maxOccupants: Int!
+}
+
+input CreateHostelRoomTypeCustomInput {
+  roomTypeName: String!
+  capacity: Int!
+  roomCategory: String!
+  roomDescription: String!
+  roomPrice: Float!
+  roomFacilities: String!
+  roomArea: Float!
+  roomCondition: String!
+  roomTypeCode: String!
+  status: String!
+  maxOccupants: Int!
+}
+
+input UpdateHostelRoomTypeCustomInput {
+  roomTypeId: String!
+  roomTypeName: String!
+  capacity: Int!
+  roomCategory: String!
+  roomDescription: String!
+  roomPrice: Float!
+  roomFacilities: String!
+  roomArea: Float!
+  roomCondition: String!
+  roomTypeCode: String!
+  status: String!
+  maxOccupants: Int!
+}
+
+type HostelAllocationCustom {
+  id: String!
+  img: String!
+  student_name: String!
+  roll_no: String!
+  hostel_name: String!
+  room_no: String!
+  room_type: String!
+  allocation_date: String!
+  status: String!
+}
+
+input CreateHostelAllocationCustomInput {
+  img: String!
+  student_name: String!
+  roll_no: String!
+  hostel_name: String!
+  room_no: String!
+  room_type: String!
+  allocation_date: String!
+  status: String!
+}
+
+input UpdateHostelAllocationCustomInput {
+  id: String!
+  img: String!
+  student_name: String!
+  roll_no: String!
+  hostel_name: String!
+  room_no: String!
+  room_type: String!
+  allocation_date: String!
+  status: String!
+}
+
+type HostelAttendanceCustom {
+  id: String!
+  img: String!
+  student_name: String!
+  roll_no: String!
+  hostel_name: String!
+  room_no: String!
+  attendance_date: String!
+  status: String!
+  note: String!
+}
+
+input CreateHostelAttendanceCustomInput {
+  img: String!
+  student_name: String!
+  roll_no: String!
+  hostel_name: String!
+  room_no: String!
+  attendance_date: String!
+  status: String!
+  note: String!
+}
+
+input UpdateHostelAttendanceCustomInput {
+  id: String!
+  img: String!
+  student_name: String!
+  roll_no: String!
+  hostel_name: String!
+  room_no: String!
+  attendance_date: String!
+  status: String!
+  note: String!
+}
+
+type HostelFeeCustom {
+  id: String!
+  img: String!
+  student_name: String!
+  roll_no: String!
+  hostel_name: String!
+  room_no: String!
+  fee_type: String!
+  amount: Float!
+  payment_date: String!
+  payment_status: String!
+}
+
+input CreateHostelFeeCustomInput {
+  img: String!
+  student_name: String!
+  roll_no: String!
+  hostel_name: String!
+  room_no: String!
+  fee_type: String!
+  amount: Float!
+  payment_date: String!
+  payment_status: String!
+}
+
+input UpdateHostelFeeCustomInput {
+  id: String!
+  img: String!
+  student_name: String!
+  roll_no: String!
+  hostel_name: String!
+  room_no: String!
+  fee_type: String!
+  amount: Float!
+  payment_date: String!
+  payment_status: String!
+}
+
+type DepartmentCustom {
+  id: String!
+  img: String!
+  department_name: String!
+  hod: String!
+  phone: String!
+  email: String!
+  student_capacity: String!
+  establishedYear: String!
+  totalFaculty: String!
+}
+
+input CreateDepartmentCustomInput {
+  img: String!
+  department_name: String!
+  hod: String!
+  phone: String!
+  email: String!
+  student_capacity: String!
+  establishedYear: String!
+  totalFaculty: String!
+}
+
+input UpdateDepartmentCustomInput {
+  id: String!
+  img: String!
+  department_name: String!
+  hod: String!
+  phone: String!
+  email: String!
+  student_capacity: String!
+  establishedYear: String!
+  totalFaculty: String!
+}
+
+type AcademicReportCustom {
+  id: String!
+  img: String!
+  reportType: String!
+  className: String!
+  subject: String!
+  academicYear: String!
+  term: String!
+  generatedBy: String!
+  date: String!
+  status: String!
+}
+
+input CreateAcademicReportCustomInput {
+  img: String!
+  reportType: String!
+  className: String!
+  subject: String!
+  academicYear: String!
+  term: String!
+  generatedBy: String!
+  date: String!
+  status: String!
+}
+
+input UpdateAcademicReportCustomInput {
+  id: String!
+  img: String!
+  reportType: String!
+  className: String!
+  subject: String!
+  academicYear: String!
+  term: String!
+  generatedBy: String!
+  date: String!
+  status: String!
+}
+
+type AttendanceReportCustom {
+  id: String!
+  img: String!
+  reportType: String!
+  className: String!
+  dateFrom: String!
+  dateTo: String!
+  attendancePercentage: Float!
+  generatedBy: String!
+  date: String!
+  status: String!
+}
+
+input CreateAttendanceReportCustomInput {
+  img: String!
+  reportType: String!
+  className: String!
+  dateFrom: String!
+  dateTo: String!
+  attendancePercentage: Float!
+  generatedBy: String!
+  date: String!
+  status: String!
+}
+
+input UpdateAttendanceReportCustomInput {
+  id: String!
+  img: String!
+  reportType: String!
+  className: String!
+  dateFrom: String!
+  dateTo: String!
+  attendancePercentage: Float!
+  generatedBy: String!
+  date: String!
+  status: String!
+}
+
+type FeeReportCustom {
+  id: String!
+  img: String!
+  reportType: String!
+  feeCategory: String!
+  dateFrom: String!
+  dateTo: String!
+  totalAmount: Float!
+  generatedBy: String!
+  date: String!
+  status: String!
+}
+
+input CreateFeeReportCustomInput {
+  img: String!
+  reportType: String!
+  feeCategory: String!
+  dateFrom: String!
+  dateTo: String!
+  totalAmount: Float!
+  generatedBy: String!
+  date: String!
+  status: String!
+}
+
+input UpdateFeeReportCustomInput {
+  id: String!
+  img: String!
+  reportType: String!
+  feeCategory: String!
+  dateFrom: String!
+  dateTo: String!
+  totalAmount: Float!
+  generatedBy: String!
+  date: String!
+  status: String!
+}
+
+type ExamReportCustom {
+  id: String!
+  img: String!
+  examName: String!
+  className: String!
+  subject: String!
+  examDate: String!
+  passPercentage: Float!
+  averageMarks: Float!
+  generatedBy: String!
+  date: String!
+  status: String!
+}
+
+input CreateExamReportCustomInput {
+  img: String!
+  examName: String!
+  className: String!
+  subject: String!
+  examDate: String!
+  passPercentage: Float!
+  averageMarks: Float!
+  generatedBy: String!
+  date: String!
+  status: String!
+}
+
+input UpdateExamReportCustomInput {
+  id: String!
+  img: String!
+  examName: String!
+  className: String!
+  subject: String!
+  examDate: String!
+  passPercentage: Float!
+  averageMarks: Float!
+  generatedBy: String!
+  date: String!
+  status: String!
+}
+
+type CustomReportCustom {
+  id: String!
+  reportName: String!
+  description: String!
+  category: String!
+  createdBy: String!
+  date: String!
+  status: String!
+}
+
+input CreateCustomReportCustomInput {
+  reportName: String!
+  description: String!
+  category: String!
+  createdBy: String!
+  date: String!
+  status: String!
+}
+
+input UpdateCustomReportCustomInput {
+  id: String!
+  reportName: String!
+  description: String!
+  category: String!
+  createdBy: String!
+  date: String!
+  status: String!
 }
