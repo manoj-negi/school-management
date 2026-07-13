@@ -889,6 +889,77 @@ type CreateStudentPromotionInfoInput struct {
 	Status        *string `json:"status,omitempty"`
 }
 
+type CreateStudentStudyMaterialCustomInput struct {
+	Title       string `json:"title"`
+	Subject     string `json:"subject"`
+	Type        string `json:"type"`
+	Date        string `json:"date"`
+	DownloadURL string `json:"downloadUrl"`
+}
+
+type CreateTeacherAnnouncementCustomInput struct {
+	Title       string `json:"title"`
+	Date        string `json:"date"`
+	Target      string `json:"target"`
+	Description string `json:"description"`
+}
+
+type CreateTeacherAssignmentCustomInput struct {
+	Class        string `json:"class"`
+	Subject      string `json:"subject"`
+	Title        string `json:"title"`
+	AssignedDate string `json:"assignedDate"`
+	DueDate      string `json:"dueDate"`
+	Status       string `json:"status"`
+	Submissions  int    `json:"submissions"`
+}
+
+type CreateTeacherAttendanceSummaryCustomInput struct {
+	Class                string `json:"class"`
+	Subject              string `json:"subject"`
+	TotalStudents        int    `json:"totalStudents"`
+	Present              int    `json:"present"`
+	Absent               int    `json:"absent"`
+	OnLeave              int    `json:"onLeave"`
+	AttendancePercentage string `json:"attendancePercentage"`
+	Date                 string `json:"date"`
+}
+
+type CreateTeacherClassCustomInput struct {
+	ClassName string `json:"className"`
+	Subject   string `json:"subject"`
+	Time      string `json:"time"`
+	RoomNo    string `json:"roomNo"`
+}
+
+type CreateTeacherClassStudentCustomInput struct {
+	RollNo     string `json:"rollNo"`
+	Name       string `json:"name"`
+	Gender     string `json:"gender"`
+	ParentName string `json:"parentName"`
+	Mobile     string `json:"mobile"`
+	Email      string `json:"email"`
+	Address    string `json:"address"`
+}
+
+type CreateTeacherDailyAttendanceCustomInput struct {
+	RollNo      string `json:"rollNo"`
+	StudentName string `json:"studentName"`
+	Class       string `json:"class"`
+	Date        string `json:"date"`
+	Status      string `json:"status"`
+	Note        string `json:"note"`
+}
+
+type CreateTeacherGradeSubmissionCustomInput struct {
+	RollNo         string `json:"rollNo"`
+	StudentName    string `json:"studentName"`
+	AverageMarks   int    `json:"averageMarks"`
+	Grade          string `json:"grade"`
+	Status         string `json:"status"`
+	SubmissionDate string `json:"submissionDate"`
+}
+
 type CreateTeacherInfoInput struct {
 	Img                   *string `json:"img,omitempty"`
 	Name                  string  `json:"name"`
@@ -905,6 +976,110 @@ type CreateTeacherInfoInput struct {
 	Status                string  `json:"status"`
 	Birthdate             string  `json:"birthdate"`
 	Bio                   *string `json:"bio,omitempty"`
+}
+
+type CreateTeacherLeaveStatusCustomInput struct {
+	LeaveType string `json:"leaveType"`
+	StartDate string `json:"startDate"`
+	EndDate   string `json:"endDate"`
+	Days      int    `json:"days"`
+	ApplyDate string `json:"applyDate"`
+	Status    string `json:"status"`
+	Reason    string `json:"reason"`
+}
+
+type CreateTeacherLectureCustomInput struct {
+	SubjectName           string `json:"subjectName"`
+	Class                 string `json:"class"`
+	Date                  string `json:"date"`
+	Time                  string `json:"time"`
+	Status                string `json:"status"`
+	TeacherID             string `json:"teacher_id"`
+	SubjectID             string `json:"subject_id"`
+	StudentGroup          string `json:"student_group"`
+	Duration              int    `json:"duration"`
+	Location              string `json:"location"`
+	AttendanceCount       int    `json:"attendance_count"`
+	ReasonForCancellation string `json:"reason_for_cancellation"`
+}
+
+type CreateTeacherLessonPlanCustomInput struct {
+	Class         string `json:"class"`
+	Subject       string `json:"subject"`
+	Topic         string `json:"topic"`
+	Date          string `json:"date"`
+	Status        string `json:"status"`
+	LessonDetails string `json:"lessonDetails"`
+}
+
+type CreateTeacherMarksEntryCustomInput struct {
+	RollNo        string `json:"rollNo"`
+	StudentName   string `json:"studentName"`
+	Class         string `json:"class"`
+	Subject       string `json:"subject"`
+	MarksObtained int    `json:"marksObtained"`
+	MaxMarks      int    `json:"maxMarks"`
+	Status        string `json:"status"`
+}
+
+type CreateTeacherNoticeCustomInput struct {
+	Title    string `json:"title"`
+	Date     string `json:"date"`
+	Category string `json:"category"`
+	Details  string `json:"details"`
+}
+
+type CreateTeacherStudentAttendanceCustomInput struct {
+	RollNo  string `json:"rollNo"`
+	Name    string `json:"name"`
+	Date    string `json:"date"`
+	Status  string `json:"status"`
+	Remarks string `json:"remarks"`
+}
+
+type CreateTeacherStudentPerformanceCustomInput struct {
+	RollNo        string `json:"rollNo"`
+	Name          string `json:"name"`
+	Subject       string `json:"subject"`
+	InternalMarks int    `json:"internalMarks"`
+	ExternalMarks int    `json:"externalMarks"`
+	TotalMarks    int    `json:"totalMarks"`
+	Grade         string `json:"grade"`
+}
+
+type CreateTeacherStudyMaterialCustomInput struct {
+	Class      string `json:"class"`
+	Subject    string `json:"subject"`
+	Title      string `json:"title"`
+	Type       string `json:"type"`
+	UploadDate string `json:"uploadDate"`
+	FileURL    string `json:"fileUrl"`
+}
+
+type CreateTeacherSubstitutionRequestCustomInput struct {
+	Date     string `json:"date"`
+	TimeSlot string `json:"timeSlot"`
+	Class    string `json:"class"`
+	Subject  string `json:"subject"`
+	Reason   string `json:"reason"`
+	Status   string `json:"status"`
+}
+
+type CreateTeacherTimetableCustomInput struct {
+	Day      string `json:"day"`
+	TimeSlot string `json:"timeSlot"`
+	Subject  string `json:"subject"`
+	Class    string `json:"class"`
+	Room     string `json:"room"`
+}
+
+type CreateTodayScheduleCustomInput struct {
+	Subject  string `json:"subject"`
+	Class    string `json:"class"`
+	Time     string `json:"time"`
+	Duration string `json:"duration"`
+	Room     string `json:"room"`
+	Status   string `json:"status"`
 }
 
 type CreateTodaysAttendanceInput struct {
@@ -1552,6 +1727,85 @@ type StudentPromotionInfo struct {
 	Status        *string `json:"status,omitempty"`
 }
 
+type StudentStudyMaterialCustom struct {
+	ID          string `json:"id"`
+	Title       string `json:"title"`
+	Subject     string `json:"subject"`
+	Type        string `json:"type"`
+	Date        string `json:"date"`
+	DownloadURL string `json:"downloadUrl"`
+}
+
+type TeacherAnnouncementCustom struct {
+	ID          string `json:"id"`
+	Title       string `json:"title"`
+	Date        string `json:"date"`
+	Target      string `json:"target"`
+	Description string `json:"description"`
+}
+
+type TeacherAssignmentCustom struct {
+	ID           string `json:"id"`
+	Class        string `json:"class"`
+	Subject      string `json:"subject"`
+	Title        string `json:"title"`
+	AssignedDate string `json:"assignedDate"`
+	DueDate      string `json:"dueDate"`
+	Status       string `json:"status"`
+	Submissions  int    `json:"submissions"`
+}
+
+type TeacherAttendanceSummaryCustom struct {
+	ID                   string `json:"id"`
+	Class                string `json:"class"`
+	Subject              string `json:"subject"`
+	TotalStudents        int    `json:"totalStudents"`
+	Present              int    `json:"present"`
+	Absent               int    `json:"absent"`
+	OnLeave              int    `json:"onLeave"`
+	AttendancePercentage string `json:"attendancePercentage"`
+	Date                 string `json:"date"`
+}
+
+type TeacherClassCustom struct {
+	ID        string `json:"id"`
+	ClassName string `json:"className"`
+	Subject   string `json:"subject"`
+	Time      string `json:"time"`
+	RoomNo    string `json:"roomNo"`
+}
+
+type TeacherClassStudentCustom struct {
+	ID         string `json:"id"`
+	RollNo     string `json:"rollNo"`
+	Name       string `json:"name"`
+	Gender     string `json:"gender"`
+	ParentName string `json:"parentName"`
+	Mobile     string `json:"mobile"`
+	Email      string `json:"email"`
+	Address    string `json:"address"`
+}
+
+type TeacherDailyAttendanceCustom struct {
+	ID          string `json:"id"`
+	RollNo      string `json:"rollNo"`
+	StudentName string `json:"studentName"`
+	Class       string `json:"class"`
+	Date        string `json:"date"`
+	Status      string `json:"status"`
+	Note        string `json:"note"`
+}
+
+type TeacherGradeSubmissionCustom struct {
+	ID             string `json:"id"`
+	RollNo         string `json:"rollNo"`
+	StudentName    string `json:"studentName"`
+	AverageMarks   int    `json:"averageMarks"`
+	Grade          string `json:"grade"`
+	Status         string `json:"status"`
+	SubmissionDate string `json:"submissionDate"`
+}
+
 type TeacherInfo struct {
 	ID                    string  `json:"id"`
 	Img                   *string `json:"img,omitempty"`
@@ -1569,6 +1823,123 @@ type TeacherInfo struct {
 	Status                string  `json:"status"`
 	Birthdate             string  `json:"birthdate"`
 	Bio                   *string `json:"bio,omitempty"`
+}
+
+type TeacherLeaveStatusCustom struct {
+	ID        string `json:"id"`
+	LeaveType string `json:"leaveType"`
+	StartDate string `json:"startDate"`
+	EndDate   string `json:"endDate"`
+	Days      int    `json:"days"`
+	ApplyDate string `json:"applyDate"`
+	Status    string `json:"status"`
+	Reason    string `json:"reason"`
+}
+
+type TeacherLectureCustom struct {
+	ID                    string `json:"id"`
+	SubjectName           string `json:"subjectName"`
+	Class                 string `json:"class"`
+	Date                  string `json:"date"`
+	Time                  string `json:"time"`
+	Status                string `json:"status"`
+	TeacherID             string `json:"teacher_id"`
+	SubjectID             string `json:"subject_id"`
+	StudentGroup          string `json:"student_group"`
+	Duration              int    `json:"duration"`
+	Location              string `json:"location"`
+	AttendanceCount       int    `json:"attendance_count"`
+	CreatedAt             string `json:"created_at"`
+	UpdatedAt             string `json:"updated_at"`
+	ReasonForCancellation string `json:"reason_for_cancellation"`
+}
+
+type TeacherLessonPlanCustom struct {
+	ID            string `json:"id"`
+	Class         string `json:"class"`
+	Subject       string `json:"subject"`
+	Topic         string `json:"topic"`
+	Date          string `json:"date"`
+	Status        string `json:"status"`
+	LessonDetails string `json:"lessonDetails"`
+}
+
+type TeacherMarksEntryCustom struct {
+	ID            string `json:"id"`
+	RollNo        string `json:"rollNo"`
+	StudentName   string `json:"studentName"`
+	Class         string `json:"class"`
+	Subject       string `json:"subject"`
+	MarksObtained int    `json:"marksObtained"`
+	MaxMarks      int    `json:"maxMarks"`
+	Status        string `json:"status"`
+}
+
+type TeacherNoticeCustom struct {
+	ID       string `json:"id"`
+	Title    string `json:"title"`
+	Date     string `json:"date"`
+	Category string `json:"category"`
+	Details  string `json:"details"`
+}
+
+type TeacherStudentAttendanceCustom struct {
+	ID      string `json:"id"`
+	RollNo  string `json:"rollNo"`
+	Name    string `json:"name"`
+	Date    string `json:"date"`
+	Status  string `json:"status"`
+	Remarks string `json:"remarks"`
+}
+
+type TeacherStudentPerformanceCustom struct {
+	ID            string `json:"id"`
+	RollNo        string `json:"rollNo"`
+	Name          string `json:"name"`
+	Subject       string `json:"subject"`
+	InternalMarks int    `json:"internalMarks"`
+	ExternalMarks int    `json:"externalMarks"`
+	TotalMarks    int    `json:"totalMarks"`
+	Grade         string `json:"grade"`
+}
+
+type TeacherStudyMaterialCustom struct {
+	ID         string `json:"id"`
+	Class      string `json:"class"`
+	Subject    string `json:"subject"`
+	Title      string `json:"title"`
+	Type       string `json:"type"`
+	UploadDate string `json:"uploadDate"`
+	FileURL    string `json:"fileUrl"`
+}
+
+type TeacherSubstitutionRequestCustom struct {
+	ID       string `json:"id"`
+	Date     string `json:"date"`
+	TimeSlot string `json:"timeSlot"`
+	Class    string `json:"class"`
+	Subject  string `json:"subject"`
+	Reason   string `json:"reason"`
+	Status   string `json:"status"`
+}
+
+type TeacherTimetableCustom struct {
+	ID       string `json:"id"`
+	Day      string `json:"day"`
+	TimeSlot string `json:"timeSlot"`
+	Subject  string `json:"subject"`
+	Class    string `json:"class"`
+	Room     string `json:"room"`
+}
+
+type TodayScheduleCustom struct {
+	ID       string `json:"id"`
+	Subject  string `json:"subject"`
+	Class    string `json:"class"`
+	Time     string `json:"time"`
+	Duration string `json:"duration"`
+	Room     string `json:"room"`
+	Status   string `json:"status"`
 }
 
 type TodaysAttendance struct {
@@ -2361,6 +2732,85 @@ type UpdateStudentPromotionInfoInput struct {
 	Status        *string `json:"status,omitempty"`
 }
 
+type UpdateStudentStudyMaterialCustomInput struct {
+	ID          string `json:"id"`
+	Title       string `json:"title"`
+	Subject     string `json:"subject"`
+	Type        string `json:"type"`
+	Date        string `json:"date"`
+	DownloadURL string `json:"downloadUrl"`
+}
+
+type UpdateTeacherAnnouncementCustomInput struct {
+	ID          string `json:"id"`
+	Title       string `json:"title"`
+	Date        string `json:"date"`
+	Target      string `json:"target"`
+	Description string `json:"description"`
+}
+
+type UpdateTeacherAssignmentCustomInput struct {
+	ID           string `json:"id"`
+	Class        string `json:"class"`
+	Subject      string `json:"subject"`
+	Title        string `json:"title"`
+	AssignedDate string `json:"assignedDate"`
+	DueDate      string `json:"dueDate"`
+	Status       string `json:"status"`
+	Submissions  int    `json:"submissions"`
+}
+
+type UpdateTeacherAttendanceSummaryCustomInput struct {
+	ID                   string `json:"id"`
+	Class                string `json:"class"`
+	Subject              string `json:"subject"`
+	TotalStudents        int    `json:"totalStudents"`
+	Present              int    `json:"present"`
+	Absent               int    `json:"absent"`
+	OnLeave              int    `json:"onLeave"`
+	AttendancePercentage string `json:"attendancePercentage"`
+	Date                 string `json:"date"`
+}
+
+type UpdateTeacherClassCustomInput struct {
+	ID        string `json:"id"`
+	ClassName string `json:"className"`
+	Subject   string `json:"subject"`
+	Time      string `json:"time"`
+	RoomNo    string `json:"roomNo"`
+}
+
+type UpdateTeacherClassStudentCustomInput struct {
+	ID         string `json:"id"`
+	RollNo     string `json:"rollNo"`
+	Name       string `json:"name"`
+	Gender     string `json:"gender"`
+	ParentName string `json:"parentName"`
+	Mobile     string `json:"mobile"`
+	Email      string `json:"email"`
+	Address    string `json:"address"`
+}
+
+type UpdateTeacherDailyAttendanceCustomInput struct {
+	ID          string `json:"id"`
+	RollNo      string `json:"rollNo"`
+	StudentName string `json:"studentName"`
+	Class       string `json:"class"`
+	Date        string `json:"date"`
+	Status      string `json:"status"`
+	Note        string `json:"note"`
+}
+
+type UpdateTeacherGradeSubmissionCustomInput struct {
+	ID             string `json:"id"`
+	RollNo         string `json:"rollNo"`
+	StudentName    string `json:"studentName"`
+	AverageMarks   int    `json:"averageMarks"`
+	Grade          string `json:"grade"`
+	Status         string `json:"status"`
+	SubmissionDate string `json:"submissionDate"`
+}
+
 type UpdateTeacherInfoInput struct {
 	ID                    string  `json:"id"`
 	Img                   *string `json:"img,omitempty"`
@@ -2378,6 +2828,121 @@ type UpdateTeacherInfoInput struct {
 	Status                string  `json:"status"`
 	Birthdate             string  `json:"birthdate"`
 	Bio                   *string `json:"bio,omitempty"`
+}
+
+type UpdateTeacherLeaveStatusCustomInput struct {
+	ID        string `json:"id"`
+	LeaveType string `json:"leaveType"`
+	StartDate string `json:"startDate"`
+	EndDate   string `json:"endDate"`
+	Days      int    `json:"days"`
+	ApplyDate string `json:"applyDate"`
+	Status    string `json:"status"`
+	Reason    string `json:"reason"`
+}
+
+type UpdateTeacherLectureCustomInput struct {
+	ID                    string `json:"id"`
+	SubjectName           string `json:"subjectName"`
+	Class                 string `json:"class"`
+	Date                  string `json:"date"`
+	Time                  string `json:"time"`
+	Status                string `json:"status"`
+	TeacherID             string `json:"teacher_id"`
+	SubjectID             string `json:"subject_id"`
+	StudentGroup          string `json:"student_group"`
+	Duration              int    `json:"duration"`
+	Location              string `json:"location"`
+	AttendanceCount       int    `json:"attendance_count"`
+	ReasonForCancellation string `json:"reason_for_cancellation"`
+}
+
+type UpdateTeacherLessonPlanCustomInput struct {
+	ID            string `json:"id"`
+	Class         string `json:"class"`
+	Subject       string `json:"subject"`
+	Topic         string `json:"topic"`
+	Date          string `json:"date"`
+	Status        string `json:"status"`
+	LessonDetails string `json:"lessonDetails"`
+}
+
+type UpdateTeacherMarksEntryCustomInput struct {
+	ID            string `json:"id"`
+	RollNo        string `json:"rollNo"`
+	StudentName   string `json:"studentName"`
+	Class         string `json:"class"`
+	Subject       string `json:"subject"`
+	MarksObtained int    `json:"marksObtained"`
+	MaxMarks      int    `json:"maxMarks"`
+	Status        string `json:"status"`
+}
+
+type UpdateTeacherNoticeCustomInput struct {
+	ID       string `json:"id"`
+	Title    string `json:"title"`
+	Date     string `json:"date"`
+	Category string `json:"category"`
+	Details  string `json:"details"`
+}
+
+type UpdateTeacherStudentAttendanceCustomInput struct {
+	ID      string `json:"id"`
+	RollNo  string `json:"rollNo"`
+	Name    string `json:"name"`
+	Date    string `json:"date"`
+	Status  string `json:"status"`
+	Remarks string `json:"remarks"`
+}
+
+type UpdateTeacherStudentPerformanceCustomInput struct {
+	ID            string `json:"id"`
+	RollNo        string `json:"rollNo"`
+	Name          string `json:"name"`
+	Subject       string `json:"subject"`
+	InternalMarks int    `json:"internalMarks"`
+	ExternalMarks int    `json:"externalMarks"`
+	TotalMarks    int    `json:"totalMarks"`
+	Grade         string `json:"grade"`
+}
+
+type UpdateTeacherStudyMaterialCustomInput struct {
+	ID         string `json:"id"`
+	Class      string `json:"class"`
+	Subject    string `json:"subject"`
+	Title      string `json:"title"`
+	Type       string `json:"type"`
+	UploadDate string `json:"uploadDate"`
+	FileURL    string `json:"fileUrl"`
+}
+
+type UpdateTeacherSubstitutionRequestCustomInput struct {
+	ID       string `json:"id"`
+	Date     string `json:"date"`
+	TimeSlot string `json:"timeSlot"`
+	Class    string `json:"class"`
+	Subject  string `json:"subject"`
+	Reason   string `json:"reason"`
+	Status   string `json:"status"`
+}
+
+type UpdateTeacherTimetableCustomInput struct {
+	ID       string `json:"id"`
+	Day      string `json:"day"`
+	TimeSlot string `json:"timeSlot"`
+	Subject  string `json:"subject"`
+	Class    string `json:"class"`
+	Room     string `json:"room"`
+}
+
+type UpdateTodayScheduleCustomInput struct {
+	ID       string `json:"id"`
+	Subject  string `json:"subject"`
+	Class    string `json:"class"`
+	Time     string `json:"time"`
+	Duration string `json:"duration"`
+	Room     string `json:"room"`
+	Status   string `json:"status"`
 }
 
 type UpdateTodaysAttendanceInput struct {

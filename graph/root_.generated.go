@@ -751,193 +751,250 @@ type ComplexityRoot struct {
 	}
 
 	Mutation struct {
-		CreateAcademicClass       func(childComplexity int, input CreateAcademicClassCustomInput) int
-		CreateAcademicReport      func(childComplexity int, input CreateAcademicReportCustomInput) int
-		CreateAcademicSubject     func(childComplexity int, input CreateAcademicSubjectCustomInput) int
-		CreateAcademicYear        func(childComplexity int, input CreateAcademicYearCustomInput) int
-		CreateAdmissionInquiry    func(childComplexity int, input CreateAdmissionInquiryInput) int
-		CreateAnnouncement        func(childComplexity int, input CreateAnnouncementInput) int
-		CreateAssignClassTeacher  func(childComplexity int, input CreateAssignClassTeacherInput) int
-		CreateAssignment          func(childComplexity int, input CreateAssignmentCustomInput) int
-		CreateAttendanceReport    func(childComplexity int, input CreateAttendanceReportCustomInput) int
-		CreateBookStatus          func(childComplexity int, input CreateBookStatusInput) int
-		CreateClassList           func(childComplexity int, input CreateClassListInput) int
-		CreateComplaint           func(childComplexity int, input CreateComplaintInput) int
-		CreateCourseCurriculum    func(childComplexity int, input CreateCourseCurriculumCustomInput) int
-		CreateCustomReport        func(childComplexity int, input CreateCustomReportCustomInput) int
-		CreateDepartment          func(childComplexity int, input CreateDepartmentCustomInput) int
-		CreateDriver              func(childComplexity int, input CreateDriverInput) int
-		CreateEmployeeSalary      func(childComplexity int, input CreateEmployeeSalaryInput) int
-		CreateEntranceExam        func(childComplexity int, input CreateEntranceExamInput) int
-		CreateExamReport          func(childComplexity int, input CreateExamReportCustomInput) int
-		CreateExamSchedule        func(childComplexity int, input CreateExamScheduleInput) int
-		CreateExamType            func(childComplexity int, input CreateExamTypeInput) int
-		CreateFeeReport           func(childComplexity int, input CreateFeeReportCustomInput) int
-		CreateFees                func(childComplexity int, input CreateFeesInput) int
-		CreateFeesDiscount        func(childComplexity int, input CreateFeesDiscountInput) int
-		CreateFeesType            func(childComplexity int, input CreateFeesTypeInput) int
-		CreateHallAllocation      func(childComplexity int, input CreateHallAllocationInput) int
-		CreateHoliday             func(childComplexity int, input CreateHolidayInput) int
-		CreateHostelAllocation    func(childComplexity int, input CreateHostelAllocationCustomInput) int
-		CreateHostelAttendance    func(childComplexity int, input CreateHostelAttendanceCustomInput) int
-		CreateHostelFee           func(childComplexity int, input CreateHostelFeeCustomInput) int
-		CreateHostelRoom          func(childComplexity int, input CreateHostelRoomCustomInput) int
-		CreateHostelRoomType      func(childComplexity int, input CreateHostelRoomTypeCustomInput) int
-		CreateIssueReturn         func(childComplexity int, input CreateIssueReturnInput) int
-		CreateLeaveBalance        func(childComplexity int, input CreateLeaveBalanceInput) int
-		CreateLeaveRequest        func(childComplexity int, input CreateLeaveRequestInput) int
-		CreateLeaveTypes          func(childComplexity int, input CreateLeaveTypesInput) int
-		CreateLessonPlanning      func(childComplexity int, input CreateLessonPlanningCustomInput) int
-		CreateLibraryAsset        func(childComplexity int, input CreateLibraryAssetInput) int
-		CreateLibraryReport       func(childComplexity int, input CreateLibraryReportInput) int
-		CreateMarksEntry          func(childComplexity int, input CreateMarksEntryInput) int
-		CreateMeritList           func(childComplexity int, input CreateMeritListInput) int
-		CreateNoticeBoard         func(childComplexity int, input CreateNoticeBoardInput) int
-		CreateOnlineApplication   func(childComplexity int, input CreateOnlineApplicationInput) int
-		CreateReportCard          func(childComplexity int, input CreateReportCardInput) int
-		CreateResultGeneration    func(childComplexity int, input CreateResultGenerationInput) int
-		CreateSeatAllocation      func(childComplexity int, input CreateSeatAllocationInput) int
-		CreateSession             func(childComplexity int, input CreateSessionCustomInput) int
-		CreateStaff               func(childComplexity int, input CreateStaffInput) int
-		CreateStaffAttendance     func(childComplexity int, input CreateStaffAttendanceInput) int
-		CreateStudent             func(childComplexity int, input CreateStudentInfoInput) int
-		CreateStudentAllocation   func(childComplexity int, input CreateStudentAllocationInput) int
-		CreateStudentAttendance   func(childComplexity int, input CreateStudentAttendanceInfoInput) int
-		CreateStudentCertificate  func(childComplexity int, input CreateStudentCertificateInfoInput) int
-		CreateStudentDiscipline   func(childComplexity int, input CreateStudentDisciplineInfoInput) int
-		CreateStudentHealthRecord func(childComplexity int, input CreateStudentHealthRecordInfoInput) int
-		CreateStudentPromotion    func(childComplexity int, input CreateStudentPromotionInfoInput) int
-		CreateTeacher             func(childComplexity int, input CreateTeacherInfoInput) int
-		CreateTodaysAttendance    func(childComplexity int, input CreateTodaysAttendanceInput) int
-		CreateTransportFee        func(childComplexity int, input CreateTransportFeeInput) int
-		CreateTransportRoute      func(childComplexity int, input CreateTransportRouteInput) int
-		CreateVehicle             func(childComplexity int, input CreateVehicleInput) int
-		CreateVisitor             func(childComplexity int, input CreateVisitorInput) int
-		DeleteAcademicClass       func(childComplexity int, id string) int
-		DeleteAcademicReport      func(childComplexity int, id string) int
-		DeleteAcademicSubject     func(childComplexity int, id string) int
-		DeleteAcademicYear        func(childComplexity int, id string) int
-		DeleteAdmissionInquiry    func(childComplexity int, inquiryID string) int
-		DeleteAnnouncement        func(childComplexity int, id string) int
-		DeleteAssignClassTeacher  func(childComplexity int, id string) int
-		DeleteAssignment          func(childComplexity int, id string) int
-		DeleteAttendanceReport    func(childComplexity int, id string) int
-		DeleteBookStatus          func(childComplexity int, id string) int
-		DeleteClassList           func(childComplexity int, id string) int
-		DeleteComplaint           func(childComplexity int, complaintID string) int
-		DeleteCourseCurriculum    func(childComplexity int, id string) int
-		DeleteCustomReport        func(childComplexity int, id string) int
-		DeleteDepartment          func(childComplexity int, id string) int
-		DeleteDriver              func(childComplexity int, id string) int
-		DeleteEmployeeSalary      func(childComplexity int, id string) int
-		DeleteEntranceExam        func(childComplexity int, id string) int
-		DeleteExamReport          func(childComplexity int, id string) int
-		DeleteExamSchedule        func(childComplexity int, id string) int
-		DeleteExamType            func(childComplexity int, id string) int
-		DeleteFeeReport           func(childComplexity int, id string) int
-		DeleteFees                func(childComplexity int, id string) int
-		DeleteFeesDiscount        func(childComplexity int, id string) int
-		DeleteFeesType            func(childComplexity int, id string) int
-		DeleteHallAllocation      func(childComplexity int, id string) int
-		DeleteHoliday             func(childComplexity int, id string) int
-		DeleteHostelAllocation    func(childComplexity int, id string) int
-		DeleteHostelAttendance    func(childComplexity int, id string) int
-		DeleteHostelFee           func(childComplexity int, id string) int
-		DeleteHostelRoom          func(childComplexity int, id string) int
-		DeleteHostelRoomType      func(childComplexity int, id string) int
-		DeleteIssueReturn         func(childComplexity int, id string) int
-		DeleteLeaveBalance        func(childComplexity int, id string) int
-		DeleteLeaveRequest        func(childComplexity int, id string) int
-		DeleteLeaveTypes          func(childComplexity int, id string) int
-		DeleteLessonPlanning      func(childComplexity int, id string) int
-		DeleteLibraryAsset        func(childComplexity int, id string) int
-		DeleteLibraryReport       func(childComplexity int, id string) int
-		DeleteMarksEntry          func(childComplexity int, id string) int
-		DeleteMeritList           func(childComplexity int, id string) int
-		DeleteNoticeBoard         func(childComplexity int, id string) int
-		DeleteOnlineApplication   func(childComplexity int, id string) int
-		DeleteReportCard          func(childComplexity int, id string) int
-		DeleteResultGeneration    func(childComplexity int, id string) int
-		DeleteSeatAllocation      func(childComplexity int, id string) int
-		DeleteSession             func(childComplexity int, id string) int
-		DeleteStaff               func(childComplexity int, id string) int
-		DeleteStaffAttendance     func(childComplexity int, id string) int
-		DeleteStudent             func(childComplexity int, id string) int
-		DeleteStudentAllocation   func(childComplexity int, id string) int
-		DeleteStudentAttendance   func(childComplexity int, id string) int
-		DeleteStudentCertificate  func(childComplexity int, id string) int
-		DeleteStudentDiscipline   func(childComplexity int, id string) int
-		DeleteStudentHealthRecord func(childComplexity int, id string) int
-		DeleteStudentPromotion    func(childComplexity int, id string) int
-		DeleteTeacher             func(childComplexity int, id string) int
-		DeleteTodaysAttendance    func(childComplexity int, id string) int
-		DeleteTransportFee        func(childComplexity int, id string) int
-		DeleteTransportRoute      func(childComplexity int, id string) int
-		DeleteVehicle             func(childComplexity int, id string) int
-		DeleteVisitor             func(childComplexity int, visitorID string) int
-		Login                     func(childComplexity int, input LoginInput) int
-		UpdateAcademicClass       func(childComplexity int, input UpdateAcademicClassCustomInput) int
-		UpdateAcademicReport      func(childComplexity int, input UpdateAcademicReportCustomInput) int
-		UpdateAcademicSubject     func(childComplexity int, input UpdateAcademicSubjectCustomInput) int
-		UpdateAcademicYear        func(childComplexity int, input UpdateAcademicYearCustomInput) int
-		UpdateAdmissionInquiry    func(childComplexity int, input UpdateAdmissionInquiryInput) int
-		UpdateAnnouncement        func(childComplexity int, input UpdateAnnouncementInput) int
-		UpdateAssignClassTeacher  func(childComplexity int, input UpdateAssignClassTeacherInput) int
-		UpdateAssignment          func(childComplexity int, input UpdateAssignmentCustomInput) int
-		UpdateAttendanceReport    func(childComplexity int, input UpdateAttendanceReportCustomInput) int
-		UpdateBookStatus          func(childComplexity int, input UpdateBookStatusInput) int
-		UpdateClassList           func(childComplexity int, input UpdateClassListInput) int
-		UpdateComplaint           func(childComplexity int, input UpdateComplaintInput) int
-		UpdateCourseCurriculum    func(childComplexity int, input UpdateCourseCurriculumCustomInput) int
-		UpdateCustomReport        func(childComplexity int, input UpdateCustomReportCustomInput) int
-		UpdateDepartment          func(childComplexity int, input UpdateDepartmentCustomInput) int
-		UpdateDriver              func(childComplexity int, input UpdateDriverInput) int
-		UpdateEmployeeSalary      func(childComplexity int, input UpdateEmployeeSalaryInput) int
-		UpdateEntranceExam        func(childComplexity int, input UpdateEntranceExamInput) int
-		UpdateExamReport          func(childComplexity int, input UpdateExamReportCustomInput) int
-		UpdateExamSchedule        func(childComplexity int, input UpdateExamScheduleInput) int
-		UpdateExamType            func(childComplexity int, input UpdateExamTypeInput) int
-		UpdateFeeReport           func(childComplexity int, input UpdateFeeReportCustomInput) int
-		UpdateFees                func(childComplexity int, input UpdateFeesInput) int
-		UpdateFeesDiscount        func(childComplexity int, input UpdateFeesDiscountInput) int
-		UpdateFeesType            func(childComplexity int, input UpdateFeesTypeInput) int
-		UpdateHallAllocation      func(childComplexity int, input UpdateHallAllocationInput) int
-		UpdateHoliday             func(childComplexity int, input UpdateHolidayInput) int
-		UpdateHostelAllocation    func(childComplexity int, input UpdateHostelAllocationCustomInput) int
-		UpdateHostelAttendance    func(childComplexity int, input UpdateHostelAttendanceCustomInput) int
-		UpdateHostelFee           func(childComplexity int, input UpdateHostelFeeCustomInput) int
-		UpdateHostelRoom          func(childComplexity int, input UpdateHostelRoomCustomInput) int
-		UpdateHostelRoomType      func(childComplexity int, input UpdateHostelRoomTypeCustomInput) int
-		UpdateIssueReturn         func(childComplexity int, input UpdateIssueReturnInput) int
-		UpdateLeaveBalance        func(childComplexity int, input UpdateLeaveBalanceInput) int
-		UpdateLeaveRequest        func(childComplexity int, input UpdateLeaveRequestInput) int
-		UpdateLeaveTypes          func(childComplexity int, input UpdateLeaveTypesInput) int
-		UpdateLessonPlanning      func(childComplexity int, input UpdateLessonPlanningCustomInput) int
-		UpdateLibraryAsset        func(childComplexity int, input UpdateLibraryAssetInput) int
-		UpdateLibraryReport       func(childComplexity int, input UpdateLibraryReportInput) int
-		UpdateMarksEntry          func(childComplexity int, input UpdateMarksEntryInput) int
-		UpdateMeritList           func(childComplexity int, input UpdateMeritListInput) int
-		UpdateNoticeBoard         func(childComplexity int, input UpdateNoticeBoardInput) int
-		UpdateOnlineApplication   func(childComplexity int, input UpdateOnlineApplicationInput) int
-		UpdateReportCard          func(childComplexity int, input UpdateReportCardInput) int
-		UpdateResultGeneration    func(childComplexity int, input UpdateResultGenerationInput) int
-		UpdateSeatAllocation      func(childComplexity int, input UpdateSeatAllocationInput) int
-		UpdateSession             func(childComplexity int, input UpdateSessionCustomInput) int
-		UpdateStaff               func(childComplexity int, input UpdateStaffInput) int
-		UpdateStaffAttendance     func(childComplexity int, input UpdateStaffAttendanceInput) int
-		UpdateStudent             func(childComplexity int, input UpdateStudentInfoInput) int
-		UpdateStudentAllocation   func(childComplexity int, input UpdateStudentAllocationInput) int
-		UpdateStudentAttendance   func(childComplexity int, input UpdateStudentAttendanceInfoInput) int
-		UpdateStudentCertificate  func(childComplexity int, input UpdateStudentCertificateInfoInput) int
-		UpdateStudentDiscipline   func(childComplexity int, input UpdateStudentDisciplineInfoInput) int
-		UpdateStudentHealthRecord func(childComplexity int, input UpdateStudentHealthRecordInfoInput) int
-		UpdateStudentPromotion    func(childComplexity int, input UpdateStudentPromotionInfoInput) int
-		UpdateTeacher             func(childComplexity int, input UpdateTeacherInfoInput) int
-		UpdateTodaysAttendance    func(childComplexity int, input UpdateTodaysAttendanceInput) int
-		UpdateTransportFee        func(childComplexity int, input UpdateTransportFeeInput) int
-		UpdateTransportRoute      func(childComplexity int, input UpdateTransportRouteInput) int
-		UpdateVehicle             func(childComplexity int, input UpdateVehicleInput) int
-		UpdateVisitor             func(childComplexity int, input UpdateVisitorInput) int
+		CreateAcademicClass              func(childComplexity int, input CreateAcademicClassCustomInput) int
+		CreateAcademicReport             func(childComplexity int, input CreateAcademicReportCustomInput) int
+		CreateAcademicSubject            func(childComplexity int, input CreateAcademicSubjectCustomInput) int
+		CreateAcademicYear               func(childComplexity int, input CreateAcademicYearCustomInput) int
+		CreateAdmissionInquiry           func(childComplexity int, input CreateAdmissionInquiryInput) int
+		CreateAnnouncement               func(childComplexity int, input CreateAnnouncementInput) int
+		CreateAssignClassTeacher         func(childComplexity int, input CreateAssignClassTeacherInput) int
+		CreateAssignment                 func(childComplexity int, input CreateAssignmentCustomInput) int
+		CreateAttendanceReport           func(childComplexity int, input CreateAttendanceReportCustomInput) int
+		CreateBookStatus                 func(childComplexity int, input CreateBookStatusInput) int
+		CreateClassList                  func(childComplexity int, input CreateClassListInput) int
+		CreateComplaint                  func(childComplexity int, input CreateComplaintInput) int
+		CreateCourseCurriculum           func(childComplexity int, input CreateCourseCurriculumCustomInput) int
+		CreateCustomReport               func(childComplexity int, input CreateCustomReportCustomInput) int
+		CreateDepartment                 func(childComplexity int, input CreateDepartmentCustomInput) int
+		CreateDriver                     func(childComplexity int, input CreateDriverInput) int
+		CreateEmployeeSalary             func(childComplexity int, input CreateEmployeeSalaryInput) int
+		CreateEntranceExam               func(childComplexity int, input CreateEntranceExamInput) int
+		CreateExamReport                 func(childComplexity int, input CreateExamReportCustomInput) int
+		CreateExamSchedule               func(childComplexity int, input CreateExamScheduleInput) int
+		CreateExamType                   func(childComplexity int, input CreateExamTypeInput) int
+		CreateFeeReport                  func(childComplexity int, input CreateFeeReportCustomInput) int
+		CreateFees                       func(childComplexity int, input CreateFeesInput) int
+		CreateFeesDiscount               func(childComplexity int, input CreateFeesDiscountInput) int
+		CreateFeesType                   func(childComplexity int, input CreateFeesTypeInput) int
+		CreateHallAllocation             func(childComplexity int, input CreateHallAllocationInput) int
+		CreateHoliday                    func(childComplexity int, input CreateHolidayInput) int
+		CreateHostelAllocation           func(childComplexity int, input CreateHostelAllocationCustomInput) int
+		CreateHostelAttendance           func(childComplexity int, input CreateHostelAttendanceCustomInput) int
+		CreateHostelFee                  func(childComplexity int, input CreateHostelFeeCustomInput) int
+		CreateHostelRoom                 func(childComplexity int, input CreateHostelRoomCustomInput) int
+		CreateHostelRoomType             func(childComplexity int, input CreateHostelRoomTypeCustomInput) int
+		CreateIssueReturn                func(childComplexity int, input CreateIssueReturnInput) int
+		CreateLeaveBalance               func(childComplexity int, input CreateLeaveBalanceInput) int
+		CreateLeaveRequest               func(childComplexity int, input CreateLeaveRequestInput) int
+		CreateLeaveTypes                 func(childComplexity int, input CreateLeaveTypesInput) int
+		CreateLessonPlanning             func(childComplexity int, input CreateLessonPlanningCustomInput) int
+		CreateLibraryAsset               func(childComplexity int, input CreateLibraryAssetInput) int
+		CreateLibraryReport              func(childComplexity int, input CreateLibraryReportInput) int
+		CreateMarksEntry                 func(childComplexity int, input CreateMarksEntryInput) int
+		CreateMeritList                  func(childComplexity int, input CreateMeritListInput) int
+		CreateNoticeBoard                func(childComplexity int, input CreateNoticeBoardInput) int
+		CreateOnlineApplication          func(childComplexity int, input CreateOnlineApplicationInput) int
+		CreateReportCard                 func(childComplexity int, input CreateReportCardInput) int
+		CreateResultGeneration           func(childComplexity int, input CreateResultGenerationInput) int
+		CreateSeatAllocation             func(childComplexity int, input CreateSeatAllocationInput) int
+		CreateSession                    func(childComplexity int, input CreateSessionCustomInput) int
+		CreateStaff                      func(childComplexity int, input CreateStaffInput) int
+		CreateStaffAttendance            func(childComplexity int, input CreateStaffAttendanceInput) int
+		CreateStudent                    func(childComplexity int, input CreateStudentInfoInput) int
+		CreateStudentAllocation          func(childComplexity int, input CreateStudentAllocationInput) int
+		CreateStudentAttendance          func(childComplexity int, input CreateStudentAttendanceInfoInput) int
+		CreateStudentCertificate         func(childComplexity int, input CreateStudentCertificateInfoInput) int
+		CreateStudentDiscipline          func(childComplexity int, input CreateStudentDisciplineInfoInput) int
+		CreateStudentHealthRecord        func(childComplexity int, input CreateStudentHealthRecordInfoInput) int
+		CreateStudentPromotion           func(childComplexity int, input CreateStudentPromotionInfoInput) int
+		CreateStudentStudyMaterial       func(childComplexity int, input CreateStudentStudyMaterialCustomInput) int
+		CreateTeacher                    func(childComplexity int, input CreateTeacherInfoInput) int
+		CreateTeacherAnnouncement        func(childComplexity int, input CreateTeacherAnnouncementCustomInput) int
+		CreateTeacherAssignment          func(childComplexity int, input CreateTeacherAssignmentCustomInput) int
+		CreateTeacherAttendanceSummary   func(childComplexity int, input CreateTeacherAttendanceSummaryCustomInput) int
+		CreateTeacherClass               func(childComplexity int, input CreateTeacherClassCustomInput) int
+		CreateTeacherClassStudent        func(childComplexity int, input CreateTeacherClassStudentCustomInput) int
+		CreateTeacherDailyAttendance     func(childComplexity int, input CreateTeacherDailyAttendanceCustomInput) int
+		CreateTeacherGradeSubmission     func(childComplexity int, input CreateTeacherGradeSubmissionCustomInput) int
+		CreateTeacherLeaveStatus         func(childComplexity int, input CreateTeacherLeaveStatusCustomInput) int
+		CreateTeacherLecture             func(childComplexity int, input CreateTeacherLectureCustomInput) int
+		CreateTeacherLessonPlan          func(childComplexity int, input CreateTeacherLessonPlanCustomInput) int
+		CreateTeacherMarksEntry          func(childComplexity int, input CreateTeacherMarksEntryCustomInput) int
+		CreateTeacherNotice              func(childComplexity int, input CreateTeacherNoticeCustomInput) int
+		CreateTeacherStudentAttendance   func(childComplexity int, input CreateTeacherStudentAttendanceCustomInput) int
+		CreateTeacherStudentPerformance  func(childComplexity int, input CreateTeacherStudentPerformanceCustomInput) int
+		CreateTeacherStudyMaterial       func(childComplexity int, input CreateTeacherStudyMaterialCustomInput) int
+		CreateTeacherSubstitutionRequest func(childComplexity int, input CreateTeacherSubstitutionRequestCustomInput) int
+		CreateTeacherTimetable           func(childComplexity int, input CreateTeacherTimetableCustomInput) int
+		CreateTodaySchedule              func(childComplexity int, input CreateTodayScheduleCustomInput) int
+		CreateTodaysAttendance           func(childComplexity int, input CreateTodaysAttendanceInput) int
+		CreateTransportFee               func(childComplexity int, input CreateTransportFeeInput) int
+		CreateTransportRoute             func(childComplexity int, input CreateTransportRouteInput) int
+		CreateVehicle                    func(childComplexity int, input CreateVehicleInput) int
+		CreateVisitor                    func(childComplexity int, input CreateVisitorInput) int
+		DeleteAcademicClass              func(childComplexity int, id string) int
+		DeleteAcademicReport             func(childComplexity int, id string) int
+		DeleteAcademicSubject            func(childComplexity int, id string) int
+		DeleteAcademicYear               func(childComplexity int, id string) int
+		DeleteAdmissionInquiry           func(childComplexity int, inquiryID string) int
+		DeleteAnnouncement               func(childComplexity int, id string) int
+		DeleteAssignClassTeacher         func(childComplexity int, id string) int
+		DeleteAssignment                 func(childComplexity int, id string) int
+		DeleteAttendanceReport           func(childComplexity int, id string) int
+		DeleteBookStatus                 func(childComplexity int, id string) int
+		DeleteClassList                  func(childComplexity int, id string) int
+		DeleteComplaint                  func(childComplexity int, complaintID string) int
+		DeleteCourseCurriculum           func(childComplexity int, id string) int
+		DeleteCustomReport               func(childComplexity int, id string) int
+		DeleteDepartment                 func(childComplexity int, id string) int
+		DeleteDriver                     func(childComplexity int, id string) int
+		DeleteEmployeeSalary             func(childComplexity int, id string) int
+		DeleteEntranceExam               func(childComplexity int, id string) int
+		DeleteExamReport                 func(childComplexity int, id string) int
+		DeleteExamSchedule               func(childComplexity int, id string) int
+		DeleteExamType                   func(childComplexity int, id string) int
+		DeleteFeeReport                  func(childComplexity int, id string) int
+		DeleteFees                       func(childComplexity int, id string) int
+		DeleteFeesDiscount               func(childComplexity int, id string) int
+		DeleteFeesType                   func(childComplexity int, id string) int
+		DeleteHallAllocation             func(childComplexity int, id string) int
+		DeleteHoliday                    func(childComplexity int, id string) int
+		DeleteHostelAllocation           func(childComplexity int, id string) int
+		DeleteHostelAttendance           func(childComplexity int, id string) int
+		DeleteHostelFee                  func(childComplexity int, id string) int
+		DeleteHostelRoom                 func(childComplexity int, id string) int
+		DeleteHostelRoomType             func(childComplexity int, id string) int
+		DeleteIssueReturn                func(childComplexity int, id string) int
+		DeleteLeaveBalance               func(childComplexity int, id string) int
+		DeleteLeaveRequest               func(childComplexity int, id string) int
+		DeleteLeaveTypes                 func(childComplexity int, id string) int
+		DeleteLessonPlanning             func(childComplexity int, id string) int
+		DeleteLibraryAsset               func(childComplexity int, id string) int
+		DeleteLibraryReport              func(childComplexity int, id string) int
+		DeleteMarksEntry                 func(childComplexity int, id string) int
+		DeleteMeritList                  func(childComplexity int, id string) int
+		DeleteNoticeBoard                func(childComplexity int, id string) int
+		DeleteOnlineApplication          func(childComplexity int, id string) int
+		DeleteReportCard                 func(childComplexity int, id string) int
+		DeleteResultGeneration           func(childComplexity int, id string) int
+		DeleteSeatAllocation             func(childComplexity int, id string) int
+		DeleteSession                    func(childComplexity int, id string) int
+		DeleteStaff                      func(childComplexity int, id string) int
+		DeleteStaffAttendance            func(childComplexity int, id string) int
+		DeleteStudent                    func(childComplexity int, id string) int
+		DeleteStudentAllocation          func(childComplexity int, id string) int
+		DeleteStudentAttendance          func(childComplexity int, id string) int
+		DeleteStudentCertificate         func(childComplexity int, id string) int
+		DeleteStudentDiscipline          func(childComplexity int, id string) int
+		DeleteStudentHealthRecord        func(childComplexity int, id string) int
+		DeleteStudentPromotion           func(childComplexity int, id string) int
+		DeleteStudentStudyMaterial       func(childComplexity int, id string) int
+		DeleteTeacher                    func(childComplexity int, id string) int
+		DeleteTeacherAnnouncement        func(childComplexity int, id string) int
+		DeleteTeacherAssignment          func(childComplexity int, id string) int
+		DeleteTeacherAttendanceSummary   func(childComplexity int, id string) int
+		DeleteTeacherClass               func(childComplexity int, id string) int
+		DeleteTeacherClassStudent        func(childComplexity int, id string) int
+		DeleteTeacherDailyAttendance     func(childComplexity int, id string) int
+		DeleteTeacherGradeSubmission     func(childComplexity int, id string) int
+		DeleteTeacherLeaveStatus         func(childComplexity int, id string) int
+		DeleteTeacherLecture             func(childComplexity int, id string) int
+		DeleteTeacherLessonPlan          func(childComplexity int, id string) int
+		DeleteTeacherMarksEntry          func(childComplexity int, id string) int
+		DeleteTeacherNotice              func(childComplexity int, id string) int
+		DeleteTeacherStudentAttendance   func(childComplexity int, id string) int
+		DeleteTeacherStudentPerformance  func(childComplexity int, id string) int
+		DeleteTeacherStudyMaterial       func(childComplexity int, id string) int
+		DeleteTeacherSubstitutionRequest func(childComplexity int, id string) int
+		DeleteTeacherTimetable           func(childComplexity int, id string) int
+		DeleteTodaySchedule              func(childComplexity int, id string) int
+		DeleteTodaysAttendance           func(childComplexity int, id string) int
+		DeleteTransportFee               func(childComplexity int, id string) int
+		DeleteTransportRoute             func(childComplexity int, id string) int
+		DeleteVehicle                    func(childComplexity int, id string) int
+		DeleteVisitor                    func(childComplexity int, visitorID string) int
+		Login                            func(childComplexity int, input LoginInput) int
+		UpdateAcademicClass              func(childComplexity int, input UpdateAcademicClassCustomInput) int
+		UpdateAcademicReport             func(childComplexity int, input UpdateAcademicReportCustomInput) int
+		UpdateAcademicSubject            func(childComplexity int, input UpdateAcademicSubjectCustomInput) int
+		UpdateAcademicYear               func(childComplexity int, input UpdateAcademicYearCustomInput) int
+		UpdateAdmissionInquiry           func(childComplexity int, input UpdateAdmissionInquiryInput) int
+		UpdateAnnouncement               func(childComplexity int, input UpdateAnnouncementInput) int
+		UpdateAssignClassTeacher         func(childComplexity int, input UpdateAssignClassTeacherInput) int
+		UpdateAssignment                 func(childComplexity int, input UpdateAssignmentCustomInput) int
+		UpdateAttendanceReport           func(childComplexity int, input UpdateAttendanceReportCustomInput) int
+		UpdateBookStatus                 func(childComplexity int, input UpdateBookStatusInput) int
+		UpdateClassList                  func(childComplexity int, input UpdateClassListInput) int
+		UpdateComplaint                  func(childComplexity int, input UpdateComplaintInput) int
+		UpdateCourseCurriculum           func(childComplexity int, input UpdateCourseCurriculumCustomInput) int
+		UpdateCustomReport               func(childComplexity int, input UpdateCustomReportCustomInput) int
+		UpdateDepartment                 func(childComplexity int, input UpdateDepartmentCustomInput) int
+		UpdateDriver                     func(childComplexity int, input UpdateDriverInput) int
+		UpdateEmployeeSalary             func(childComplexity int, input UpdateEmployeeSalaryInput) int
+		UpdateEntranceExam               func(childComplexity int, input UpdateEntranceExamInput) int
+		UpdateExamReport                 func(childComplexity int, input UpdateExamReportCustomInput) int
+		UpdateExamSchedule               func(childComplexity int, input UpdateExamScheduleInput) int
+		UpdateExamType                   func(childComplexity int, input UpdateExamTypeInput) int
+		UpdateFeeReport                  func(childComplexity int, input UpdateFeeReportCustomInput) int
+		UpdateFees                       func(childComplexity int, input UpdateFeesInput) int
+		UpdateFeesDiscount               func(childComplexity int, input UpdateFeesDiscountInput) int
+		UpdateFeesType                   func(childComplexity int, input UpdateFeesTypeInput) int
+		UpdateHallAllocation             func(childComplexity int, input UpdateHallAllocationInput) int
+		UpdateHoliday                    func(childComplexity int, input UpdateHolidayInput) int
+		UpdateHostelAllocation           func(childComplexity int, input UpdateHostelAllocationCustomInput) int
+		UpdateHostelAttendance           func(childComplexity int, input UpdateHostelAttendanceCustomInput) int
+		UpdateHostelFee                  func(childComplexity int, input UpdateHostelFeeCustomInput) int
+		UpdateHostelRoom                 func(childComplexity int, input UpdateHostelRoomCustomInput) int
+		UpdateHostelRoomType             func(childComplexity int, input UpdateHostelRoomTypeCustomInput) int
+		UpdateIssueReturn                func(childComplexity int, input UpdateIssueReturnInput) int
+		UpdateLeaveBalance               func(childComplexity int, input UpdateLeaveBalanceInput) int
+		UpdateLeaveRequest               func(childComplexity int, input UpdateLeaveRequestInput) int
+		UpdateLeaveTypes                 func(childComplexity int, input UpdateLeaveTypesInput) int
+		UpdateLessonPlanning             func(childComplexity int, input UpdateLessonPlanningCustomInput) int
+		UpdateLibraryAsset               func(childComplexity int, input UpdateLibraryAssetInput) int
+		UpdateLibraryReport              func(childComplexity int, input UpdateLibraryReportInput) int
+		UpdateMarksEntry                 func(childComplexity int, input UpdateMarksEntryInput) int
+		UpdateMeritList                  func(childComplexity int, input UpdateMeritListInput) int
+		UpdateNoticeBoard                func(childComplexity int, input UpdateNoticeBoardInput) int
+		UpdateOnlineApplication          func(childComplexity int, input UpdateOnlineApplicationInput) int
+		UpdateReportCard                 func(childComplexity int, input UpdateReportCardInput) int
+		UpdateResultGeneration           func(childComplexity int, input UpdateResultGenerationInput) int
+		UpdateSeatAllocation             func(childComplexity int, input UpdateSeatAllocationInput) int
+		UpdateSession                    func(childComplexity int, input UpdateSessionCustomInput) int
+		UpdateStaff                      func(childComplexity int, input UpdateStaffInput) int
+		UpdateStaffAttendance            func(childComplexity int, input UpdateStaffAttendanceInput) int
+		UpdateStudent                    func(childComplexity int, input UpdateStudentInfoInput) int
+		UpdateStudentAllocation          func(childComplexity int, input UpdateStudentAllocationInput) int
+		UpdateStudentAttendance          func(childComplexity int, input UpdateStudentAttendanceInfoInput) int
+		UpdateStudentCertificate         func(childComplexity int, input UpdateStudentCertificateInfoInput) int
+		UpdateStudentDiscipline          func(childComplexity int, input UpdateStudentDisciplineInfoInput) int
+		UpdateStudentHealthRecord        func(childComplexity int, input UpdateStudentHealthRecordInfoInput) int
+		UpdateStudentPromotion           func(childComplexity int, input UpdateStudentPromotionInfoInput) int
+		UpdateStudentStudyMaterial       func(childComplexity int, input UpdateStudentStudyMaterialCustomInput) int
+		UpdateTeacher                    func(childComplexity int, input UpdateTeacherInfoInput) int
+		UpdateTeacherAnnouncement        func(childComplexity int, input UpdateTeacherAnnouncementCustomInput) int
+		UpdateTeacherAssignment          func(childComplexity int, input UpdateTeacherAssignmentCustomInput) int
+		UpdateTeacherAttendanceSummary   func(childComplexity int, input UpdateTeacherAttendanceSummaryCustomInput) int
+		UpdateTeacherClass               func(childComplexity int, input UpdateTeacherClassCustomInput) int
+		UpdateTeacherClassStudent        func(childComplexity int, input UpdateTeacherClassStudentCustomInput) int
+		UpdateTeacherDailyAttendance     func(childComplexity int, input UpdateTeacherDailyAttendanceCustomInput) int
+		UpdateTeacherGradeSubmission     func(childComplexity int, input UpdateTeacherGradeSubmissionCustomInput) int
+		UpdateTeacherLeaveStatus         func(childComplexity int, input UpdateTeacherLeaveStatusCustomInput) int
+		UpdateTeacherLecture             func(childComplexity int, input UpdateTeacherLectureCustomInput) int
+		UpdateTeacherLessonPlan          func(childComplexity int, input UpdateTeacherLessonPlanCustomInput) int
+		UpdateTeacherMarksEntry          func(childComplexity int, input UpdateTeacherMarksEntryCustomInput) int
+		UpdateTeacherNotice              func(childComplexity int, input UpdateTeacherNoticeCustomInput) int
+		UpdateTeacherStudentAttendance   func(childComplexity int, input UpdateTeacherStudentAttendanceCustomInput) int
+		UpdateTeacherStudentPerformance  func(childComplexity int, input UpdateTeacherStudentPerformanceCustomInput) int
+		UpdateTeacherStudyMaterial       func(childComplexity int, input UpdateTeacherStudyMaterialCustomInput) int
+		UpdateTeacherSubstitutionRequest func(childComplexity int, input UpdateTeacherSubstitutionRequestCustomInput) int
+		UpdateTeacherTimetable           func(childComplexity int, input UpdateTeacherTimetableCustomInput) int
+		UpdateTodaySchedule              func(childComplexity int, input UpdateTodayScheduleCustomInput) int
+		UpdateTodaysAttendance           func(childComplexity int, input UpdateTodaysAttendanceInput) int
+		UpdateTransportFee               func(childComplexity int, input UpdateTransportFeeInput) int
+		UpdateTransportRoute             func(childComplexity int, input UpdateTransportRouteInput) int
+		UpdateVehicle                    func(childComplexity int, input UpdateVehicleInput) int
+		UpdateVisitor                    func(childComplexity int, input UpdateVisitorInput) int
 	}
 
 	NoticeBoard struct {
@@ -983,87 +1040,106 @@ type ComplexityRoot struct {
 	}
 
 	Query struct {
-		AcademicClassesList     func(childComplexity int) int
-		AcademicReportsList     func(childComplexity int) int
-		AcademicSubjectsList    func(childComplexity int) int
-		AcademicYearList        func(childComplexity int) int
-		AcademicYears           func(childComplexity int) int
-		AdmissionInquiries      func(childComplexity int) int
-		AllAssets               func(childComplexity int) int
-		AllFeesList             func(childComplexity int) int
-		AnnouncementsList       func(childComplexity int) int
-		AssignClassTeacherList  func(childComplexity int) int
-		AssignmentsList         func(childComplexity int) int
-		AttendanceReportsList   func(childComplexity int) int
-		BookStatuses            func(childComplexity int) int
-		ClassList               func(childComplexity int) int
-		Classes                 func(childComplexity int) int
-		Complaints              func(childComplexity int) int
-		CourseCurriculumsList   func(childComplexity int) int
-		CustomReportsList       func(childComplexity int) int
-		Departments             func(childComplexity int) int
-		DepartmentsList         func(childComplexity int) int
-		DriversList             func(childComplexity int) int
-		EmployeeSalaryList      func(childComplexity int) int
-		Employees               func(childComplexity int) int
-		EntranceExams           func(childComplexity int) int
-		Events                  func(childComplexity int) int
-		ExamReportsList         func(childComplexity int) int
-		ExamSchedules           func(childComplexity int) int
-		ExamTypes               func(childComplexity int) int
-		Exams                   func(childComplexity int) int
-		FeePayments             func(childComplexity int) int
-		FeeReportsList          func(childComplexity int) int
-		FeeStructures           func(childComplexity int) int
-		FeesDiscountsList       func(childComplexity int) int
-		FeesTypesList           func(childComplexity int) int
-		HallAllocations         func(childComplexity int) int
-		Holidays                func(childComplexity int) int
-		HostelAllocationsList   func(childComplexity int) int
-		HostelAttendancesList   func(childComplexity int) int
-		HostelFeesList          func(childComplexity int) int
-		HostelRoomTypesList     func(childComplexity int) int
-		HostelRoomsList         func(childComplexity int) int
-		IssueReturns            func(childComplexity int) int
-		LeaveBalances           func(childComplexity int) int
-		LeaveRequests           func(childComplexity int) int
-		LeaveTypesList          func(childComplexity int) int
-		LessonPlanningsList     func(childComplexity int) int
-		LibraryReports          func(childComplexity int) int
-		MarksEntries            func(childComplexity int) int
-		MeritLists              func(childComplexity int) int
-		Node                    func(childComplexity int, id string) int
-		Nodes                   func(childComplexity int, ids []string) int
-		NoticeBoardsList        func(childComplexity int) int
-		OnlineApplications      func(childComplexity int) int
-		Permissions             func(childComplexity int) int
-		ReportCards             func(childComplexity int) int
-		ResultGenerations       func(childComplexity int) int
-		Roles                   func(childComplexity int) int
-		SeatAllocations         func(childComplexity int) int
-		SessionsList            func(childComplexity int) int
-		StaffAttendanceList     func(childComplexity int) int
-		StaffList               func(childComplexity int) int
-		StudentAllocationsList  func(childComplexity int) int
-		StudentAttendanceList   func(childComplexity int) int
-		StudentAttendances      func(childComplexity int) int
-		StudentCertificateList  func(childComplexity int) int
-		StudentDisciplineList   func(childComplexity int) int
-		StudentHealthRecordList func(childComplexity int) int
-		StudentPromotionList    func(childComplexity int) int
-		Students                func(childComplexity int) int
-		StudentsList            func(childComplexity int) int
-		Subjects                func(childComplexity int) int
-		Tasks                   func(childComplexity int) int
-		TeacherAttendances      func(childComplexity int) int
-		Teachers                func(childComplexity int) int
-		TeachersList            func(childComplexity int) int
-		TodaysAttendanceList    func(childComplexity int) int
-		TransportFeesList       func(childComplexity int) int
-		TransportRoutesList     func(childComplexity int) int
-		Users                   func(childComplexity int) int
-		VehiclesList            func(childComplexity int) int
-		Visitors                func(childComplexity int) int
+		AcademicClassesList             func(childComplexity int) int
+		AcademicReportsList             func(childComplexity int) int
+		AcademicSubjectsList            func(childComplexity int) int
+		AcademicYearList                func(childComplexity int) int
+		AcademicYears                   func(childComplexity int) int
+		AdmissionInquiries              func(childComplexity int) int
+		AllAssets                       func(childComplexity int) int
+		AllFeesList                     func(childComplexity int) int
+		AnnouncementsList               func(childComplexity int) int
+		AssignClassTeacherList          func(childComplexity int) int
+		AssignmentsList                 func(childComplexity int) int
+		AttendanceReportsList           func(childComplexity int) int
+		BookStatuses                    func(childComplexity int) int
+		ClassList                       func(childComplexity int) int
+		Classes                         func(childComplexity int) int
+		Complaints                      func(childComplexity int) int
+		CourseCurriculumsList           func(childComplexity int) int
+		CustomReportsList               func(childComplexity int) int
+		Departments                     func(childComplexity int) int
+		DepartmentsList                 func(childComplexity int) int
+		DriversList                     func(childComplexity int) int
+		EmployeeSalaryList              func(childComplexity int) int
+		Employees                       func(childComplexity int) int
+		EntranceExams                   func(childComplexity int) int
+		Events                          func(childComplexity int) int
+		ExamReportsList                 func(childComplexity int) int
+		ExamSchedules                   func(childComplexity int) int
+		ExamTypes                       func(childComplexity int) int
+		Exams                           func(childComplexity int) int
+		FeePayments                     func(childComplexity int) int
+		FeeReportsList                  func(childComplexity int) int
+		FeeStructures                   func(childComplexity int) int
+		FeesDiscountsList               func(childComplexity int) int
+		FeesTypesList                   func(childComplexity int) int
+		HallAllocations                 func(childComplexity int) int
+		Holidays                        func(childComplexity int) int
+		HostelAllocationsList           func(childComplexity int) int
+		HostelAttendancesList           func(childComplexity int) int
+		HostelFeesList                  func(childComplexity int) int
+		HostelRoomTypesList             func(childComplexity int) int
+		HostelRoomsList                 func(childComplexity int) int
+		IssueReturns                    func(childComplexity int) int
+		LeaveBalances                   func(childComplexity int) int
+		LeaveRequests                   func(childComplexity int) int
+		LeaveTypesList                  func(childComplexity int) int
+		LessonPlanningsList             func(childComplexity int) int
+		LibraryReports                  func(childComplexity int) int
+		MarksEntries                    func(childComplexity int) int
+		MeritLists                      func(childComplexity int) int
+		Node                            func(childComplexity int, id string) int
+		Nodes                           func(childComplexity int, ids []string) int
+		NoticeBoardsList                func(childComplexity int) int
+		OnlineApplications              func(childComplexity int) int
+		Permissions                     func(childComplexity int) int
+		ReportCards                     func(childComplexity int) int
+		ResultGenerations               func(childComplexity int) int
+		Roles                           func(childComplexity int) int
+		SeatAllocations                 func(childComplexity int) int
+		SessionsList                    func(childComplexity int) int
+		StaffAttendanceList             func(childComplexity int) int
+		StaffList                       func(childComplexity int) int
+		StudentAllocationsList          func(childComplexity int) int
+		StudentAttendanceList           func(childComplexity int) int
+		StudentAttendances              func(childComplexity int) int
+		StudentCertificateList          func(childComplexity int) int
+		StudentDisciplineList           func(childComplexity int) int
+		StudentHealthRecordList         func(childComplexity int) int
+		StudentPromotionList            func(childComplexity int) int
+		StudentStudyMaterialsList       func(childComplexity int) int
+		Students                        func(childComplexity int) int
+		StudentsList                    func(childComplexity int) int
+		Subjects                        func(childComplexity int) int
+		Tasks                           func(childComplexity int) int
+		TeacherAnnouncementsList        func(childComplexity int) int
+		TeacherAssignmentsList          func(childComplexity int) int
+		TeacherAttendanceSummariesList  func(childComplexity int) int
+		TeacherAttendances              func(childComplexity int) int
+		TeacherClassStudentsList        func(childComplexity int) int
+		TeacherClassesList              func(childComplexity int) int
+		TeacherDailyAttendancesList     func(childComplexity int) int
+		TeacherGradeSubmissionsList     func(childComplexity int) int
+		TeacherLeaveStatusesList        func(childComplexity int) int
+		TeacherLecturesList             func(childComplexity int) int
+		TeacherLessonPlansList          func(childComplexity int) int
+		TeacherMarksEntriesList         func(childComplexity int) int
+		TeacherNoticesList              func(childComplexity int) int
+		TeacherStudentAttendancesList   func(childComplexity int) int
+		TeacherStudentPerformancesList  func(childComplexity int) int
+		TeacherStudyMaterialsList       func(childComplexity int) int
+		TeacherSubstitutionRequestsList func(childComplexity int) int
+		TeacherTimetablesList           func(childComplexity int) int
+		Teachers                        func(childComplexity int) int
+		TeachersList                    func(childComplexity int) int
+		TodaySchedulesList              func(childComplexity int) int
+		TodaysAttendanceList            func(childComplexity int) int
+		TransportFeesList               func(childComplexity int) int
+		TransportRoutesList             func(childComplexity int) int
+		Users                           func(childComplexity int) int
+		VehiclesList                    func(childComplexity int) int
+		Visitors                        func(childComplexity int) int
 	}
 
 	ReportCard struct {
@@ -1295,6 +1371,15 @@ type ComplexityRoot struct {
 		TotalMarks    func(childComplexity int) int
 	}
 
+	StudentStudyMaterialCustom struct {
+		Date        func(childComplexity int) int
+		DownloadURL func(childComplexity int) int
+		ID          func(childComplexity int) int
+		Subject     func(childComplexity int) int
+		Title       func(childComplexity int) int
+		Type        func(childComplexity int) int
+	}
+
 	Subject struct {
 		Code        func(childComplexity int) int
 		Description func(childComplexity int) int
@@ -1335,6 +1420,25 @@ type ComplexityRoot struct {
 		UserID        func(childComplexity int) int
 	}
 
+	TeacherAnnouncementCustom struct {
+		Date        func(childComplexity int) int
+		Description func(childComplexity int) int
+		ID          func(childComplexity int) int
+		Target      func(childComplexity int) int
+		Title       func(childComplexity int) int
+	}
+
+	TeacherAssignmentCustom struct {
+		AssignedDate func(childComplexity int) int
+		Class        func(childComplexity int) int
+		DueDate      func(childComplexity int) int
+		ID           func(childComplexity int) int
+		Status       func(childComplexity int) int
+		Subject      func(childComplexity int) int
+		Submissions  func(childComplexity int) int
+		Title        func(childComplexity int) int
+	}
+
 	TeacherAttendance struct {
 		Date      func(childComplexity int) int
 		ID        func(childComplexity int) int
@@ -1342,6 +1446,57 @@ type ComplexityRoot struct {
 		Status    func(childComplexity int) int
 		Teacher   func(childComplexity int) int
 		TeacherID func(childComplexity int) int
+	}
+
+	TeacherAttendanceSummaryCustom struct {
+		Absent               func(childComplexity int) int
+		AttendancePercentage func(childComplexity int) int
+		Class                func(childComplexity int) int
+		Date                 func(childComplexity int) int
+		ID                   func(childComplexity int) int
+		OnLeave              func(childComplexity int) int
+		Present              func(childComplexity int) int
+		Subject              func(childComplexity int) int
+		TotalStudents        func(childComplexity int) int
+	}
+
+	TeacherClassCustom struct {
+		ClassName func(childComplexity int) int
+		ID        func(childComplexity int) int
+		RoomNo    func(childComplexity int) int
+		Subject   func(childComplexity int) int
+		Time      func(childComplexity int) int
+	}
+
+	TeacherClassStudentCustom struct {
+		Address    func(childComplexity int) int
+		Email      func(childComplexity int) int
+		Gender     func(childComplexity int) int
+		ID         func(childComplexity int) int
+		Mobile     func(childComplexity int) int
+		Name       func(childComplexity int) int
+		ParentName func(childComplexity int) int
+		RollNo     func(childComplexity int) int
+	}
+
+	TeacherDailyAttendanceCustom struct {
+		Class       func(childComplexity int) int
+		Date        func(childComplexity int) int
+		ID          func(childComplexity int) int
+		Note        func(childComplexity int) int
+		RollNo      func(childComplexity int) int
+		Status      func(childComplexity int) int
+		StudentName func(childComplexity int) int
+	}
+
+	TeacherGradeSubmissionCustom struct {
+		AverageMarks   func(childComplexity int) int
+		Grade          func(childComplexity int) int
+		ID             func(childComplexity int) int
+		RollNo         func(childComplexity int) int
+		Status         func(childComplexity int) int
+		StudentName    func(childComplexity int) int
+		SubmissionDate func(childComplexity int) int
 	}
 
 	TeacherInfo struct {
@@ -1361,6 +1516,123 @@ type ComplexityRoot struct {
 		Salary                func(childComplexity int) int
 		Status                func(childComplexity int) int
 		SubjectSpecialization func(childComplexity int) int
+	}
+
+	TeacherLeaveStatusCustom struct {
+		ApplyDate func(childComplexity int) int
+		Days      func(childComplexity int) int
+		EndDate   func(childComplexity int) int
+		ID        func(childComplexity int) int
+		LeaveType func(childComplexity int) int
+		Reason    func(childComplexity int) int
+		StartDate func(childComplexity int) int
+		Status    func(childComplexity int) int
+	}
+
+	TeacherLectureCustom struct {
+		AttendanceCount       func(childComplexity int) int
+		Class                 func(childComplexity int) int
+		CreatedAt             func(childComplexity int) int
+		Date                  func(childComplexity int) int
+		Duration              func(childComplexity int) int
+		ID                    func(childComplexity int) int
+		Location              func(childComplexity int) int
+		ReasonForCancellation func(childComplexity int) int
+		Status                func(childComplexity int) int
+		StudentGroup          func(childComplexity int) int
+		SubjectID             func(childComplexity int) int
+		SubjectName           func(childComplexity int) int
+		TeacherID             func(childComplexity int) int
+		Time                  func(childComplexity int) int
+		UpdatedAt             func(childComplexity int) int
+	}
+
+	TeacherLessonPlanCustom struct {
+		Class         func(childComplexity int) int
+		Date          func(childComplexity int) int
+		ID            func(childComplexity int) int
+		LessonDetails func(childComplexity int) int
+		Status        func(childComplexity int) int
+		Subject       func(childComplexity int) int
+		Topic         func(childComplexity int) int
+	}
+
+	TeacherMarksEntryCustom struct {
+		Class         func(childComplexity int) int
+		ID            func(childComplexity int) int
+		MarksObtained func(childComplexity int) int
+		MaxMarks      func(childComplexity int) int
+		RollNo        func(childComplexity int) int
+		Status        func(childComplexity int) int
+		StudentName   func(childComplexity int) int
+		Subject       func(childComplexity int) int
+	}
+
+	TeacherNoticeCustom struct {
+		Category func(childComplexity int) int
+		Date     func(childComplexity int) int
+		Details  func(childComplexity int) int
+		ID       func(childComplexity int) int
+		Title    func(childComplexity int) int
+	}
+
+	TeacherStudentAttendanceCustom struct {
+		Date    func(childComplexity int) int
+		ID      func(childComplexity int) int
+		Name    func(childComplexity int) int
+		Remarks func(childComplexity int) int
+		RollNo  func(childComplexity int) int
+		Status  func(childComplexity int) int
+	}
+
+	TeacherStudentPerformanceCustom struct {
+		ExternalMarks func(childComplexity int) int
+		Grade         func(childComplexity int) int
+		ID            func(childComplexity int) int
+		InternalMarks func(childComplexity int) int
+		Name          func(childComplexity int) int
+		RollNo        func(childComplexity int) int
+		Subject       func(childComplexity int) int
+		TotalMarks    func(childComplexity int) int
+	}
+
+	TeacherStudyMaterialCustom struct {
+		Class      func(childComplexity int) int
+		FileURL    func(childComplexity int) int
+		ID         func(childComplexity int) int
+		Subject    func(childComplexity int) int
+		Title      func(childComplexity int) int
+		Type       func(childComplexity int) int
+		UploadDate func(childComplexity int) int
+	}
+
+	TeacherSubstitutionRequestCustom struct {
+		Class    func(childComplexity int) int
+		Date     func(childComplexity int) int
+		ID       func(childComplexity int) int
+		Reason   func(childComplexity int) int
+		Status   func(childComplexity int) int
+		Subject  func(childComplexity int) int
+		TimeSlot func(childComplexity int) int
+	}
+
+	TeacherTimetableCustom struct {
+		Class    func(childComplexity int) int
+		Day      func(childComplexity int) int
+		ID       func(childComplexity int) int
+		Room     func(childComplexity int) int
+		Subject  func(childComplexity int) int
+		TimeSlot func(childComplexity int) int
+	}
+
+	TodayScheduleCustom struct {
+		Class    func(childComplexity int) int
+		Duration func(childComplexity int) int
+		ID       func(childComplexity int) int
+		Room     func(childComplexity int) int
+		Status   func(childComplexity int) int
+		Subject  func(childComplexity int) int
+		Time     func(childComplexity int) int
 	}
 
 	TodaysAttendance struct {
@@ -5154,6 +5426,17 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.CreateStudentPromotion(childComplexity, args["input"].(CreateStudentPromotionInfoInput)), true
+	case "Mutation.createStudentStudyMaterial":
+		if e.ComplexityRoot.Mutation.CreateStudentStudyMaterial == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_createStudentStudyMaterial_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.CreateStudentStudyMaterial(childComplexity, args["input"].(CreateStudentStudyMaterialCustomInput)), true
 	case "Mutation.createTeacher":
 		if e.ComplexityRoot.Mutation.CreateTeacher == nil {
 			break
@@ -5165,6 +5448,204 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.CreateTeacher(childComplexity, args["input"].(CreateTeacherInfoInput)), true
+	case "Mutation.createTeacherAnnouncement":
+		if e.ComplexityRoot.Mutation.CreateTeacherAnnouncement == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_createTeacherAnnouncement_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.CreateTeacherAnnouncement(childComplexity, args["input"].(CreateTeacherAnnouncementCustomInput)), true
+	case "Mutation.createTeacherAssignment":
+		if e.ComplexityRoot.Mutation.CreateTeacherAssignment == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_createTeacherAssignment_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.CreateTeacherAssignment(childComplexity, args["input"].(CreateTeacherAssignmentCustomInput)), true
+	case "Mutation.createTeacherAttendanceSummary":
+		if e.ComplexityRoot.Mutation.CreateTeacherAttendanceSummary == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_createTeacherAttendanceSummary_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.CreateTeacherAttendanceSummary(childComplexity, args["input"].(CreateTeacherAttendanceSummaryCustomInput)), true
+	case "Mutation.createTeacherClass":
+		if e.ComplexityRoot.Mutation.CreateTeacherClass == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_createTeacherClass_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.CreateTeacherClass(childComplexity, args["input"].(CreateTeacherClassCustomInput)), true
+	case "Mutation.createTeacherClassStudent":
+		if e.ComplexityRoot.Mutation.CreateTeacherClassStudent == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_createTeacherClassStudent_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.CreateTeacherClassStudent(childComplexity, args["input"].(CreateTeacherClassStudentCustomInput)), true
+	case "Mutation.createTeacherDailyAttendance":
+		if e.ComplexityRoot.Mutation.CreateTeacherDailyAttendance == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_createTeacherDailyAttendance_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.CreateTeacherDailyAttendance(childComplexity, args["input"].(CreateTeacherDailyAttendanceCustomInput)), true
+	case "Mutation.createTeacherGradeSubmission":
+		if e.ComplexityRoot.Mutation.CreateTeacherGradeSubmission == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_createTeacherGradeSubmission_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.CreateTeacherGradeSubmission(childComplexity, args["input"].(CreateTeacherGradeSubmissionCustomInput)), true
+	case "Mutation.createTeacherLeaveStatus":
+		if e.ComplexityRoot.Mutation.CreateTeacherLeaveStatus == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_createTeacherLeaveStatus_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.CreateTeacherLeaveStatus(childComplexity, args["input"].(CreateTeacherLeaveStatusCustomInput)), true
+	case "Mutation.createTeacherLecture":
+		if e.ComplexityRoot.Mutation.CreateTeacherLecture == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_createTeacherLecture_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.CreateTeacherLecture(childComplexity, args["input"].(CreateTeacherLectureCustomInput)), true
+	case "Mutation.createTeacherLessonPlan":
+		if e.ComplexityRoot.Mutation.CreateTeacherLessonPlan == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_createTeacherLessonPlan_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.CreateTeacherLessonPlan(childComplexity, args["input"].(CreateTeacherLessonPlanCustomInput)), true
+	case "Mutation.createTeacherMarksEntry":
+		if e.ComplexityRoot.Mutation.CreateTeacherMarksEntry == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_createTeacherMarksEntry_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.CreateTeacherMarksEntry(childComplexity, args["input"].(CreateTeacherMarksEntryCustomInput)), true
+	case "Mutation.createTeacherNotice":
+		if e.ComplexityRoot.Mutation.CreateTeacherNotice == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_createTeacherNotice_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.CreateTeacherNotice(childComplexity, args["input"].(CreateTeacherNoticeCustomInput)), true
+	case "Mutation.createTeacherStudentAttendance":
+		if e.ComplexityRoot.Mutation.CreateTeacherStudentAttendance == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_createTeacherStudentAttendance_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.CreateTeacherStudentAttendance(childComplexity, args["input"].(CreateTeacherStudentAttendanceCustomInput)), true
+	case "Mutation.createTeacherStudentPerformance":
+		if e.ComplexityRoot.Mutation.CreateTeacherStudentPerformance == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_createTeacherStudentPerformance_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.CreateTeacherStudentPerformance(childComplexity, args["input"].(CreateTeacherStudentPerformanceCustomInput)), true
+	case "Mutation.createTeacherStudyMaterial":
+		if e.ComplexityRoot.Mutation.CreateTeacherStudyMaterial == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_createTeacherStudyMaterial_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.CreateTeacherStudyMaterial(childComplexity, args["input"].(CreateTeacherStudyMaterialCustomInput)), true
+	case "Mutation.createTeacherSubstitutionRequest":
+		if e.ComplexityRoot.Mutation.CreateTeacherSubstitutionRequest == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_createTeacherSubstitutionRequest_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.CreateTeacherSubstitutionRequest(childComplexity, args["input"].(CreateTeacherSubstitutionRequestCustomInput)), true
+	case "Mutation.createTeacherTimetable":
+		if e.ComplexityRoot.Mutation.CreateTeacherTimetable == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_createTeacherTimetable_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.CreateTeacherTimetable(childComplexity, args["input"].(CreateTeacherTimetableCustomInput)), true
+	case "Mutation.createTodaySchedule":
+		if e.ComplexityRoot.Mutation.CreateTodaySchedule == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_createTodaySchedule_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.CreateTodaySchedule(childComplexity, args["input"].(CreateTodayScheduleCustomInput)), true
 	case "Mutation.createTodaysAttendance":
 		if e.ComplexityRoot.Mutation.CreateTodaysAttendance == nil {
 			break
@@ -5836,6 +6317,17 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.DeleteStudentPromotion(childComplexity, args["id"].(string)), true
+	case "Mutation.deleteStudentStudyMaterial":
+		if e.ComplexityRoot.Mutation.DeleteStudentStudyMaterial == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_deleteStudentStudyMaterial_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.DeleteStudentStudyMaterial(childComplexity, args["id"].(string)), true
 	case "Mutation.deleteTeacher":
 		if e.ComplexityRoot.Mutation.DeleteTeacher == nil {
 			break
@@ -5847,6 +6339,204 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.DeleteTeacher(childComplexity, args["id"].(string)), true
+	case "Mutation.deleteTeacherAnnouncement":
+		if e.ComplexityRoot.Mutation.DeleteTeacherAnnouncement == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_deleteTeacherAnnouncement_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.DeleteTeacherAnnouncement(childComplexity, args["id"].(string)), true
+	case "Mutation.deleteTeacherAssignment":
+		if e.ComplexityRoot.Mutation.DeleteTeacherAssignment == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_deleteTeacherAssignment_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.DeleteTeacherAssignment(childComplexity, args["id"].(string)), true
+	case "Mutation.deleteTeacherAttendanceSummary":
+		if e.ComplexityRoot.Mutation.DeleteTeacherAttendanceSummary == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_deleteTeacherAttendanceSummary_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.DeleteTeacherAttendanceSummary(childComplexity, args["id"].(string)), true
+	case "Mutation.deleteTeacherClass":
+		if e.ComplexityRoot.Mutation.DeleteTeacherClass == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_deleteTeacherClass_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.DeleteTeacherClass(childComplexity, args["id"].(string)), true
+	case "Mutation.deleteTeacherClassStudent":
+		if e.ComplexityRoot.Mutation.DeleteTeacherClassStudent == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_deleteTeacherClassStudent_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.DeleteTeacherClassStudent(childComplexity, args["id"].(string)), true
+	case "Mutation.deleteTeacherDailyAttendance":
+		if e.ComplexityRoot.Mutation.DeleteTeacherDailyAttendance == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_deleteTeacherDailyAttendance_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.DeleteTeacherDailyAttendance(childComplexity, args["id"].(string)), true
+	case "Mutation.deleteTeacherGradeSubmission":
+		if e.ComplexityRoot.Mutation.DeleteTeacherGradeSubmission == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_deleteTeacherGradeSubmission_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.DeleteTeacherGradeSubmission(childComplexity, args["id"].(string)), true
+	case "Mutation.deleteTeacherLeaveStatus":
+		if e.ComplexityRoot.Mutation.DeleteTeacherLeaveStatus == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_deleteTeacherLeaveStatus_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.DeleteTeacherLeaveStatus(childComplexity, args["id"].(string)), true
+	case "Mutation.deleteTeacherLecture":
+		if e.ComplexityRoot.Mutation.DeleteTeacherLecture == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_deleteTeacherLecture_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.DeleteTeacherLecture(childComplexity, args["id"].(string)), true
+	case "Mutation.deleteTeacherLessonPlan":
+		if e.ComplexityRoot.Mutation.DeleteTeacherLessonPlan == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_deleteTeacherLessonPlan_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.DeleteTeacherLessonPlan(childComplexity, args["id"].(string)), true
+	case "Mutation.deleteTeacherMarksEntry":
+		if e.ComplexityRoot.Mutation.DeleteTeacherMarksEntry == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_deleteTeacherMarksEntry_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.DeleteTeacherMarksEntry(childComplexity, args["id"].(string)), true
+	case "Mutation.deleteTeacherNotice":
+		if e.ComplexityRoot.Mutation.DeleteTeacherNotice == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_deleteTeacherNotice_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.DeleteTeacherNotice(childComplexity, args["id"].(string)), true
+	case "Mutation.deleteTeacherStudentAttendance":
+		if e.ComplexityRoot.Mutation.DeleteTeacherStudentAttendance == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_deleteTeacherStudentAttendance_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.DeleteTeacherStudentAttendance(childComplexity, args["id"].(string)), true
+	case "Mutation.deleteTeacherStudentPerformance":
+		if e.ComplexityRoot.Mutation.DeleteTeacherStudentPerformance == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_deleteTeacherStudentPerformance_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.DeleteTeacherStudentPerformance(childComplexity, args["id"].(string)), true
+	case "Mutation.deleteTeacherStudyMaterial":
+		if e.ComplexityRoot.Mutation.DeleteTeacherStudyMaterial == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_deleteTeacherStudyMaterial_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.DeleteTeacherStudyMaterial(childComplexity, args["id"].(string)), true
+	case "Mutation.deleteTeacherSubstitutionRequest":
+		if e.ComplexityRoot.Mutation.DeleteTeacherSubstitutionRequest == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_deleteTeacherSubstitutionRequest_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.DeleteTeacherSubstitutionRequest(childComplexity, args["id"].(string)), true
+	case "Mutation.deleteTeacherTimetable":
+		if e.ComplexityRoot.Mutation.DeleteTeacherTimetable == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_deleteTeacherTimetable_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.DeleteTeacherTimetable(childComplexity, args["id"].(string)), true
+	case "Mutation.deleteTodaySchedule":
+		if e.ComplexityRoot.Mutation.DeleteTodaySchedule == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_deleteTodaySchedule_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.DeleteTodaySchedule(childComplexity, args["id"].(string)), true
 	case "Mutation.deleteTodaysAttendance":
 		if e.ComplexityRoot.Mutation.DeleteTodaysAttendance == nil {
 			break
@@ -6529,6 +7219,17 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.UpdateStudentPromotion(childComplexity, args["input"].(UpdateStudentPromotionInfoInput)), true
+	case "Mutation.updateStudentStudyMaterial":
+		if e.ComplexityRoot.Mutation.UpdateStudentStudyMaterial == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updateStudentStudyMaterial_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.UpdateStudentStudyMaterial(childComplexity, args["input"].(UpdateStudentStudyMaterialCustomInput)), true
 	case "Mutation.updateTeacher":
 		if e.ComplexityRoot.Mutation.UpdateTeacher == nil {
 			break
@@ -6540,6 +7241,204 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.UpdateTeacher(childComplexity, args["input"].(UpdateTeacherInfoInput)), true
+	case "Mutation.updateTeacherAnnouncement":
+		if e.ComplexityRoot.Mutation.UpdateTeacherAnnouncement == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updateTeacherAnnouncement_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.UpdateTeacherAnnouncement(childComplexity, args["input"].(UpdateTeacherAnnouncementCustomInput)), true
+	case "Mutation.updateTeacherAssignment":
+		if e.ComplexityRoot.Mutation.UpdateTeacherAssignment == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updateTeacherAssignment_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.UpdateTeacherAssignment(childComplexity, args["input"].(UpdateTeacherAssignmentCustomInput)), true
+	case "Mutation.updateTeacherAttendanceSummary":
+		if e.ComplexityRoot.Mutation.UpdateTeacherAttendanceSummary == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updateTeacherAttendanceSummary_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.UpdateTeacherAttendanceSummary(childComplexity, args["input"].(UpdateTeacherAttendanceSummaryCustomInput)), true
+	case "Mutation.updateTeacherClass":
+		if e.ComplexityRoot.Mutation.UpdateTeacherClass == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updateTeacherClass_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.UpdateTeacherClass(childComplexity, args["input"].(UpdateTeacherClassCustomInput)), true
+	case "Mutation.updateTeacherClassStudent":
+		if e.ComplexityRoot.Mutation.UpdateTeacherClassStudent == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updateTeacherClassStudent_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.UpdateTeacherClassStudent(childComplexity, args["input"].(UpdateTeacherClassStudentCustomInput)), true
+	case "Mutation.updateTeacherDailyAttendance":
+		if e.ComplexityRoot.Mutation.UpdateTeacherDailyAttendance == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updateTeacherDailyAttendance_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.UpdateTeacherDailyAttendance(childComplexity, args["input"].(UpdateTeacherDailyAttendanceCustomInput)), true
+	case "Mutation.updateTeacherGradeSubmission":
+		if e.ComplexityRoot.Mutation.UpdateTeacherGradeSubmission == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updateTeacherGradeSubmission_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.UpdateTeacherGradeSubmission(childComplexity, args["input"].(UpdateTeacherGradeSubmissionCustomInput)), true
+	case "Mutation.updateTeacherLeaveStatus":
+		if e.ComplexityRoot.Mutation.UpdateTeacherLeaveStatus == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updateTeacherLeaveStatus_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.UpdateTeacherLeaveStatus(childComplexity, args["input"].(UpdateTeacherLeaveStatusCustomInput)), true
+	case "Mutation.updateTeacherLecture":
+		if e.ComplexityRoot.Mutation.UpdateTeacherLecture == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updateTeacherLecture_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.UpdateTeacherLecture(childComplexity, args["input"].(UpdateTeacherLectureCustomInput)), true
+	case "Mutation.updateTeacherLessonPlan":
+		if e.ComplexityRoot.Mutation.UpdateTeacherLessonPlan == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updateTeacherLessonPlan_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.UpdateTeacherLessonPlan(childComplexity, args["input"].(UpdateTeacherLessonPlanCustomInput)), true
+	case "Mutation.updateTeacherMarksEntry":
+		if e.ComplexityRoot.Mutation.UpdateTeacherMarksEntry == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updateTeacherMarksEntry_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.UpdateTeacherMarksEntry(childComplexity, args["input"].(UpdateTeacherMarksEntryCustomInput)), true
+	case "Mutation.updateTeacherNotice":
+		if e.ComplexityRoot.Mutation.UpdateTeacherNotice == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updateTeacherNotice_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.UpdateTeacherNotice(childComplexity, args["input"].(UpdateTeacherNoticeCustomInput)), true
+	case "Mutation.updateTeacherStudentAttendance":
+		if e.ComplexityRoot.Mutation.UpdateTeacherStudentAttendance == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updateTeacherStudentAttendance_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.UpdateTeacherStudentAttendance(childComplexity, args["input"].(UpdateTeacherStudentAttendanceCustomInput)), true
+	case "Mutation.updateTeacherStudentPerformance":
+		if e.ComplexityRoot.Mutation.UpdateTeacherStudentPerformance == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updateTeacherStudentPerformance_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.UpdateTeacherStudentPerformance(childComplexity, args["input"].(UpdateTeacherStudentPerformanceCustomInput)), true
+	case "Mutation.updateTeacherStudyMaterial":
+		if e.ComplexityRoot.Mutation.UpdateTeacherStudyMaterial == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updateTeacherStudyMaterial_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.UpdateTeacherStudyMaterial(childComplexity, args["input"].(UpdateTeacherStudyMaterialCustomInput)), true
+	case "Mutation.updateTeacherSubstitutionRequest":
+		if e.ComplexityRoot.Mutation.UpdateTeacherSubstitutionRequest == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updateTeacherSubstitutionRequest_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.UpdateTeacherSubstitutionRequest(childComplexity, args["input"].(UpdateTeacherSubstitutionRequestCustomInput)), true
+	case "Mutation.updateTeacherTimetable":
+		if e.ComplexityRoot.Mutation.UpdateTeacherTimetable == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updateTeacherTimetable_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.UpdateTeacherTimetable(childComplexity, args["input"].(UpdateTeacherTimetableCustomInput)), true
+	case "Mutation.updateTodaySchedule":
+		if e.ComplexityRoot.Mutation.UpdateTodaySchedule == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updateTodaySchedule_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.UpdateTodaySchedule(childComplexity, args["input"].(UpdateTodayScheduleCustomInput)), true
 	case "Mutation.updateTodaysAttendance":
 		if e.ComplexityRoot.Mutation.UpdateTodaysAttendance == nil {
 			break
@@ -7199,6 +8098,12 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Query.StudentPromotionList(childComplexity), true
+	case "Query.studentStudyMaterialsList":
+		if e.ComplexityRoot.Query.StudentStudyMaterialsList == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Query.StudentStudyMaterialsList(childComplexity), true
 	case "Query.students":
 		if e.ComplexityRoot.Query.Students == nil {
 			break
@@ -7223,12 +8128,114 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Query.Tasks(childComplexity), true
+	case "Query.teacherAnnouncementsList":
+		if e.ComplexityRoot.Query.TeacherAnnouncementsList == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Query.TeacherAnnouncementsList(childComplexity), true
+	case "Query.teacherAssignmentsList":
+		if e.ComplexityRoot.Query.TeacherAssignmentsList == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Query.TeacherAssignmentsList(childComplexity), true
+	case "Query.teacherAttendanceSummariesList":
+		if e.ComplexityRoot.Query.TeacherAttendanceSummariesList == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Query.TeacherAttendanceSummariesList(childComplexity), true
 	case "Query.teacherAttendances":
 		if e.ComplexityRoot.Query.TeacherAttendances == nil {
 			break
 		}
 
 		return e.ComplexityRoot.Query.TeacherAttendances(childComplexity), true
+	case "Query.teacherClassStudentsList":
+		if e.ComplexityRoot.Query.TeacherClassStudentsList == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Query.TeacherClassStudentsList(childComplexity), true
+	case "Query.teacherClassesList":
+		if e.ComplexityRoot.Query.TeacherClassesList == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Query.TeacherClassesList(childComplexity), true
+	case "Query.teacherDailyAttendancesList":
+		if e.ComplexityRoot.Query.TeacherDailyAttendancesList == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Query.TeacherDailyAttendancesList(childComplexity), true
+	case "Query.teacherGradeSubmissionsList":
+		if e.ComplexityRoot.Query.TeacherGradeSubmissionsList == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Query.TeacherGradeSubmissionsList(childComplexity), true
+	case "Query.teacherLeaveStatusesList":
+		if e.ComplexityRoot.Query.TeacherLeaveStatusesList == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Query.TeacherLeaveStatusesList(childComplexity), true
+	case "Query.teacherLecturesList":
+		if e.ComplexityRoot.Query.TeacherLecturesList == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Query.TeacherLecturesList(childComplexity), true
+	case "Query.teacherLessonPlansList":
+		if e.ComplexityRoot.Query.TeacherLessonPlansList == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Query.TeacherLessonPlansList(childComplexity), true
+	case "Query.teacherMarksEntriesList":
+		if e.ComplexityRoot.Query.TeacherMarksEntriesList == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Query.TeacherMarksEntriesList(childComplexity), true
+	case "Query.teacherNoticesList":
+		if e.ComplexityRoot.Query.TeacherNoticesList == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Query.TeacherNoticesList(childComplexity), true
+	case "Query.teacherStudentAttendancesList":
+		if e.ComplexityRoot.Query.TeacherStudentAttendancesList == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Query.TeacherStudentAttendancesList(childComplexity), true
+	case "Query.teacherStudentPerformancesList":
+		if e.ComplexityRoot.Query.TeacherStudentPerformancesList == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Query.TeacherStudentPerformancesList(childComplexity), true
+	case "Query.teacherStudyMaterialsList":
+		if e.ComplexityRoot.Query.TeacherStudyMaterialsList == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Query.TeacherStudyMaterialsList(childComplexity), true
+	case "Query.teacherSubstitutionRequestsList":
+		if e.ComplexityRoot.Query.TeacherSubstitutionRequestsList == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Query.TeacherSubstitutionRequestsList(childComplexity), true
+	case "Query.teacherTimetablesList":
+		if e.ComplexityRoot.Query.TeacherTimetablesList == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Query.TeacherTimetablesList(childComplexity), true
 	case "Query.teachers":
 		if e.ComplexityRoot.Query.Teachers == nil {
 			break
@@ -7241,6 +8248,12 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Query.TeachersList(childComplexity), true
+	case "Query.todaySchedulesList":
+		if e.ComplexityRoot.Query.TodaySchedulesList == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Query.TodaySchedulesList(childComplexity), true
 	case "Query.todaysAttendanceList":
 		if e.ComplexityRoot.Query.TodaysAttendanceList == nil {
 			break
@@ -8380,6 +9393,43 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 
 		return e.ComplexityRoot.StudentPromotionInfo.TotalMarks(childComplexity), true
 
+	case "StudentStudyMaterialCustom.date":
+		if e.ComplexityRoot.StudentStudyMaterialCustom.Date == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StudentStudyMaterialCustom.Date(childComplexity), true
+	case "StudentStudyMaterialCustom.downloadUrl":
+		if e.ComplexityRoot.StudentStudyMaterialCustom.DownloadURL == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StudentStudyMaterialCustom.DownloadURL(childComplexity), true
+	case "StudentStudyMaterialCustom.id":
+		if e.ComplexityRoot.StudentStudyMaterialCustom.ID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StudentStudyMaterialCustom.ID(childComplexity), true
+	case "StudentStudyMaterialCustom.subject":
+		if e.ComplexityRoot.StudentStudyMaterialCustom.Subject == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StudentStudyMaterialCustom.Subject(childComplexity), true
+	case "StudentStudyMaterialCustom.title":
+		if e.ComplexityRoot.StudentStudyMaterialCustom.Title == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StudentStudyMaterialCustom.Title(childComplexity), true
+	case "StudentStudyMaterialCustom.type":
+		if e.ComplexityRoot.StudentStudyMaterialCustom.Type == nil {
+			break
+		}
+
+		return e.ComplexityRoot.StudentStudyMaterialCustom.Type(childComplexity), true
+
 	case "Subject.code":
 		if e.ComplexityRoot.Subject.Code == nil {
 			break
@@ -8569,6 +9619,86 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 
 		return e.ComplexityRoot.Teacher.UserID(childComplexity), true
 
+	case "TeacherAnnouncementCustom.date":
+		if e.ComplexityRoot.TeacherAnnouncementCustom.Date == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherAnnouncementCustom.Date(childComplexity), true
+	case "TeacherAnnouncementCustom.description":
+		if e.ComplexityRoot.TeacherAnnouncementCustom.Description == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherAnnouncementCustom.Description(childComplexity), true
+	case "TeacherAnnouncementCustom.id":
+		if e.ComplexityRoot.TeacherAnnouncementCustom.ID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherAnnouncementCustom.ID(childComplexity), true
+	case "TeacherAnnouncementCustom.target":
+		if e.ComplexityRoot.TeacherAnnouncementCustom.Target == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherAnnouncementCustom.Target(childComplexity), true
+	case "TeacherAnnouncementCustom.title":
+		if e.ComplexityRoot.TeacherAnnouncementCustom.Title == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherAnnouncementCustom.Title(childComplexity), true
+
+	case "TeacherAssignmentCustom.assignedDate":
+		if e.ComplexityRoot.TeacherAssignmentCustom.AssignedDate == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherAssignmentCustom.AssignedDate(childComplexity), true
+	case "TeacherAssignmentCustom.class":
+		if e.ComplexityRoot.TeacherAssignmentCustom.Class == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherAssignmentCustom.Class(childComplexity), true
+	case "TeacherAssignmentCustom.dueDate":
+		if e.ComplexityRoot.TeacherAssignmentCustom.DueDate == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherAssignmentCustom.DueDate(childComplexity), true
+	case "TeacherAssignmentCustom.id":
+		if e.ComplexityRoot.TeacherAssignmentCustom.ID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherAssignmentCustom.ID(childComplexity), true
+	case "TeacherAssignmentCustom.status":
+		if e.ComplexityRoot.TeacherAssignmentCustom.Status == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherAssignmentCustom.Status(childComplexity), true
+	case "TeacherAssignmentCustom.subject":
+		if e.ComplexityRoot.TeacherAssignmentCustom.Subject == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherAssignmentCustom.Subject(childComplexity), true
+	case "TeacherAssignmentCustom.submissions":
+		if e.ComplexityRoot.TeacherAssignmentCustom.Submissions == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherAssignmentCustom.Submissions(childComplexity), true
+	case "TeacherAssignmentCustom.title":
+		if e.ComplexityRoot.TeacherAssignmentCustom.Title == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherAssignmentCustom.Title(childComplexity), true
+
 	case "TeacherAttendance.date":
 		if e.ComplexityRoot.TeacherAttendance.Date == nil {
 			break
@@ -8605,6 +9735,227 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.TeacherAttendance.TeacherID(childComplexity), true
+
+	case "TeacherAttendanceSummaryCustom.absent":
+		if e.ComplexityRoot.TeacherAttendanceSummaryCustom.Absent == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherAttendanceSummaryCustom.Absent(childComplexity), true
+	case "TeacherAttendanceSummaryCustom.attendancePercentage":
+		if e.ComplexityRoot.TeacherAttendanceSummaryCustom.AttendancePercentage == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherAttendanceSummaryCustom.AttendancePercentage(childComplexity), true
+	case "TeacherAttendanceSummaryCustom.class":
+		if e.ComplexityRoot.TeacherAttendanceSummaryCustom.Class == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherAttendanceSummaryCustom.Class(childComplexity), true
+	case "TeacherAttendanceSummaryCustom.date":
+		if e.ComplexityRoot.TeacherAttendanceSummaryCustom.Date == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherAttendanceSummaryCustom.Date(childComplexity), true
+	case "TeacherAttendanceSummaryCustom.id":
+		if e.ComplexityRoot.TeacherAttendanceSummaryCustom.ID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherAttendanceSummaryCustom.ID(childComplexity), true
+	case "TeacherAttendanceSummaryCustom.onLeave":
+		if e.ComplexityRoot.TeacherAttendanceSummaryCustom.OnLeave == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherAttendanceSummaryCustom.OnLeave(childComplexity), true
+	case "TeacherAttendanceSummaryCustom.present":
+		if e.ComplexityRoot.TeacherAttendanceSummaryCustom.Present == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherAttendanceSummaryCustom.Present(childComplexity), true
+	case "TeacherAttendanceSummaryCustom.subject":
+		if e.ComplexityRoot.TeacherAttendanceSummaryCustom.Subject == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherAttendanceSummaryCustom.Subject(childComplexity), true
+	case "TeacherAttendanceSummaryCustom.totalStudents":
+		if e.ComplexityRoot.TeacherAttendanceSummaryCustom.TotalStudents == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherAttendanceSummaryCustom.TotalStudents(childComplexity), true
+
+	case "TeacherClassCustom.className":
+		if e.ComplexityRoot.TeacherClassCustom.ClassName == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherClassCustom.ClassName(childComplexity), true
+	case "TeacherClassCustom.id":
+		if e.ComplexityRoot.TeacherClassCustom.ID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherClassCustom.ID(childComplexity), true
+	case "TeacherClassCustom.roomNo":
+		if e.ComplexityRoot.TeacherClassCustom.RoomNo == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherClassCustom.RoomNo(childComplexity), true
+	case "TeacherClassCustom.subject":
+		if e.ComplexityRoot.TeacherClassCustom.Subject == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherClassCustom.Subject(childComplexity), true
+	case "TeacherClassCustom.time":
+		if e.ComplexityRoot.TeacherClassCustom.Time == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherClassCustom.Time(childComplexity), true
+
+	case "TeacherClassStudentCustom.address":
+		if e.ComplexityRoot.TeacherClassStudentCustom.Address == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherClassStudentCustom.Address(childComplexity), true
+	case "TeacherClassStudentCustom.email":
+		if e.ComplexityRoot.TeacherClassStudentCustom.Email == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherClassStudentCustom.Email(childComplexity), true
+	case "TeacherClassStudentCustom.gender":
+		if e.ComplexityRoot.TeacherClassStudentCustom.Gender == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherClassStudentCustom.Gender(childComplexity), true
+	case "TeacherClassStudentCustom.id":
+		if e.ComplexityRoot.TeacherClassStudentCustom.ID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherClassStudentCustom.ID(childComplexity), true
+	case "TeacherClassStudentCustom.mobile":
+		if e.ComplexityRoot.TeacherClassStudentCustom.Mobile == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherClassStudentCustom.Mobile(childComplexity), true
+	case "TeacherClassStudentCustom.name":
+		if e.ComplexityRoot.TeacherClassStudentCustom.Name == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherClassStudentCustom.Name(childComplexity), true
+	case "TeacherClassStudentCustom.parentName":
+		if e.ComplexityRoot.TeacherClassStudentCustom.ParentName == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherClassStudentCustom.ParentName(childComplexity), true
+	case "TeacherClassStudentCustom.rollNo":
+		if e.ComplexityRoot.TeacherClassStudentCustom.RollNo == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherClassStudentCustom.RollNo(childComplexity), true
+
+	case "TeacherDailyAttendanceCustom.class":
+		if e.ComplexityRoot.TeacherDailyAttendanceCustom.Class == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherDailyAttendanceCustom.Class(childComplexity), true
+	case "TeacherDailyAttendanceCustom.date":
+		if e.ComplexityRoot.TeacherDailyAttendanceCustom.Date == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherDailyAttendanceCustom.Date(childComplexity), true
+	case "TeacherDailyAttendanceCustom.id":
+		if e.ComplexityRoot.TeacherDailyAttendanceCustom.ID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherDailyAttendanceCustom.ID(childComplexity), true
+	case "TeacherDailyAttendanceCustom.note":
+		if e.ComplexityRoot.TeacherDailyAttendanceCustom.Note == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherDailyAttendanceCustom.Note(childComplexity), true
+	case "TeacherDailyAttendanceCustom.rollNo":
+		if e.ComplexityRoot.TeacherDailyAttendanceCustom.RollNo == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherDailyAttendanceCustom.RollNo(childComplexity), true
+	case "TeacherDailyAttendanceCustom.status":
+		if e.ComplexityRoot.TeacherDailyAttendanceCustom.Status == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherDailyAttendanceCustom.Status(childComplexity), true
+	case "TeacherDailyAttendanceCustom.studentName":
+		if e.ComplexityRoot.TeacherDailyAttendanceCustom.StudentName == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherDailyAttendanceCustom.StudentName(childComplexity), true
+
+	case "TeacherGradeSubmissionCustom.averageMarks":
+		if e.ComplexityRoot.TeacherGradeSubmissionCustom.AverageMarks == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherGradeSubmissionCustom.AverageMarks(childComplexity), true
+	case "TeacherGradeSubmissionCustom.grade":
+		if e.ComplexityRoot.TeacherGradeSubmissionCustom.Grade == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherGradeSubmissionCustom.Grade(childComplexity), true
+	case "TeacherGradeSubmissionCustom.id":
+		if e.ComplexityRoot.TeacherGradeSubmissionCustom.ID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherGradeSubmissionCustom.ID(childComplexity), true
+	case "TeacherGradeSubmissionCustom.rollNo":
+		if e.ComplexityRoot.TeacherGradeSubmissionCustom.RollNo == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherGradeSubmissionCustom.RollNo(childComplexity), true
+	case "TeacherGradeSubmissionCustom.status":
+		if e.ComplexityRoot.TeacherGradeSubmissionCustom.Status == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherGradeSubmissionCustom.Status(childComplexity), true
+	case "TeacherGradeSubmissionCustom.studentName":
+		if e.ComplexityRoot.TeacherGradeSubmissionCustom.StudentName == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherGradeSubmissionCustom.StudentName(childComplexity), true
+	case "TeacherGradeSubmissionCustom.submissionDate":
+		if e.ComplexityRoot.TeacherGradeSubmissionCustom.SubmissionDate == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherGradeSubmissionCustom.SubmissionDate(childComplexity), true
 
 	case "TeacherInfo.address":
 		if e.ComplexityRoot.TeacherInfo.Address == nil {
@@ -8702,6 +10053,521 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.TeacherInfo.SubjectSpecialization(childComplexity), true
+
+	case "TeacherLeaveStatusCustom.applyDate":
+		if e.ComplexityRoot.TeacherLeaveStatusCustom.ApplyDate == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherLeaveStatusCustom.ApplyDate(childComplexity), true
+	case "TeacherLeaveStatusCustom.days":
+		if e.ComplexityRoot.TeacherLeaveStatusCustom.Days == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherLeaveStatusCustom.Days(childComplexity), true
+	case "TeacherLeaveStatusCustom.endDate":
+		if e.ComplexityRoot.TeacherLeaveStatusCustom.EndDate == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherLeaveStatusCustom.EndDate(childComplexity), true
+	case "TeacherLeaveStatusCustom.id":
+		if e.ComplexityRoot.TeacherLeaveStatusCustom.ID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherLeaveStatusCustom.ID(childComplexity), true
+	case "TeacherLeaveStatusCustom.leaveType":
+		if e.ComplexityRoot.TeacherLeaveStatusCustom.LeaveType == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherLeaveStatusCustom.LeaveType(childComplexity), true
+	case "TeacherLeaveStatusCustom.reason":
+		if e.ComplexityRoot.TeacherLeaveStatusCustom.Reason == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherLeaveStatusCustom.Reason(childComplexity), true
+	case "TeacherLeaveStatusCustom.startDate":
+		if e.ComplexityRoot.TeacherLeaveStatusCustom.StartDate == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherLeaveStatusCustom.StartDate(childComplexity), true
+	case "TeacherLeaveStatusCustom.status":
+		if e.ComplexityRoot.TeacherLeaveStatusCustom.Status == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherLeaveStatusCustom.Status(childComplexity), true
+
+	case "TeacherLectureCustom.attendance_count":
+		if e.ComplexityRoot.TeacherLectureCustom.AttendanceCount == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherLectureCustom.AttendanceCount(childComplexity), true
+	case "TeacherLectureCustom.class":
+		if e.ComplexityRoot.TeacherLectureCustom.Class == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherLectureCustom.Class(childComplexity), true
+	case "TeacherLectureCustom.created_at":
+		if e.ComplexityRoot.TeacherLectureCustom.CreatedAt == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherLectureCustom.CreatedAt(childComplexity), true
+	case "TeacherLectureCustom.date":
+		if e.ComplexityRoot.TeacherLectureCustom.Date == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherLectureCustom.Date(childComplexity), true
+	case "TeacherLectureCustom.duration":
+		if e.ComplexityRoot.TeacherLectureCustom.Duration == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherLectureCustom.Duration(childComplexity), true
+	case "TeacherLectureCustom.id":
+		if e.ComplexityRoot.TeacherLectureCustom.ID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherLectureCustom.ID(childComplexity), true
+	case "TeacherLectureCustom.location":
+		if e.ComplexityRoot.TeacherLectureCustom.Location == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherLectureCustom.Location(childComplexity), true
+	case "TeacherLectureCustom.reason_for_cancellation":
+		if e.ComplexityRoot.TeacherLectureCustom.ReasonForCancellation == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherLectureCustom.ReasonForCancellation(childComplexity), true
+	case "TeacherLectureCustom.status":
+		if e.ComplexityRoot.TeacherLectureCustom.Status == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherLectureCustom.Status(childComplexity), true
+	case "TeacherLectureCustom.student_group":
+		if e.ComplexityRoot.TeacherLectureCustom.StudentGroup == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherLectureCustom.StudentGroup(childComplexity), true
+	case "TeacherLectureCustom.subject_id":
+		if e.ComplexityRoot.TeacherLectureCustom.SubjectID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherLectureCustom.SubjectID(childComplexity), true
+	case "TeacherLectureCustom.subjectName":
+		if e.ComplexityRoot.TeacherLectureCustom.SubjectName == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherLectureCustom.SubjectName(childComplexity), true
+	case "TeacherLectureCustom.teacher_id":
+		if e.ComplexityRoot.TeacherLectureCustom.TeacherID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherLectureCustom.TeacherID(childComplexity), true
+	case "TeacherLectureCustom.time":
+		if e.ComplexityRoot.TeacherLectureCustom.Time == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherLectureCustom.Time(childComplexity), true
+	case "TeacherLectureCustom.updated_at":
+		if e.ComplexityRoot.TeacherLectureCustom.UpdatedAt == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherLectureCustom.UpdatedAt(childComplexity), true
+
+	case "TeacherLessonPlanCustom.class":
+		if e.ComplexityRoot.TeacherLessonPlanCustom.Class == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherLessonPlanCustom.Class(childComplexity), true
+	case "TeacherLessonPlanCustom.date":
+		if e.ComplexityRoot.TeacherLessonPlanCustom.Date == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherLessonPlanCustom.Date(childComplexity), true
+	case "TeacherLessonPlanCustom.id":
+		if e.ComplexityRoot.TeacherLessonPlanCustom.ID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherLessonPlanCustom.ID(childComplexity), true
+	case "TeacherLessonPlanCustom.lessonDetails":
+		if e.ComplexityRoot.TeacherLessonPlanCustom.LessonDetails == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherLessonPlanCustom.LessonDetails(childComplexity), true
+	case "TeacherLessonPlanCustom.status":
+		if e.ComplexityRoot.TeacherLessonPlanCustom.Status == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherLessonPlanCustom.Status(childComplexity), true
+	case "TeacherLessonPlanCustom.subject":
+		if e.ComplexityRoot.TeacherLessonPlanCustom.Subject == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherLessonPlanCustom.Subject(childComplexity), true
+	case "TeacherLessonPlanCustom.topic":
+		if e.ComplexityRoot.TeacherLessonPlanCustom.Topic == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherLessonPlanCustom.Topic(childComplexity), true
+
+	case "TeacherMarksEntryCustom.class":
+		if e.ComplexityRoot.TeacherMarksEntryCustom.Class == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherMarksEntryCustom.Class(childComplexity), true
+	case "TeacherMarksEntryCustom.id":
+		if e.ComplexityRoot.TeacherMarksEntryCustom.ID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherMarksEntryCustom.ID(childComplexity), true
+	case "TeacherMarksEntryCustom.marksObtained":
+		if e.ComplexityRoot.TeacherMarksEntryCustom.MarksObtained == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherMarksEntryCustom.MarksObtained(childComplexity), true
+	case "TeacherMarksEntryCustom.maxMarks":
+		if e.ComplexityRoot.TeacherMarksEntryCustom.MaxMarks == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherMarksEntryCustom.MaxMarks(childComplexity), true
+	case "TeacherMarksEntryCustom.rollNo":
+		if e.ComplexityRoot.TeacherMarksEntryCustom.RollNo == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherMarksEntryCustom.RollNo(childComplexity), true
+	case "TeacherMarksEntryCustom.status":
+		if e.ComplexityRoot.TeacherMarksEntryCustom.Status == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherMarksEntryCustom.Status(childComplexity), true
+	case "TeacherMarksEntryCustom.studentName":
+		if e.ComplexityRoot.TeacherMarksEntryCustom.StudentName == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherMarksEntryCustom.StudentName(childComplexity), true
+	case "TeacherMarksEntryCustom.subject":
+		if e.ComplexityRoot.TeacherMarksEntryCustom.Subject == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherMarksEntryCustom.Subject(childComplexity), true
+
+	case "TeacherNoticeCustom.category":
+		if e.ComplexityRoot.TeacherNoticeCustom.Category == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherNoticeCustom.Category(childComplexity), true
+	case "TeacherNoticeCustom.date":
+		if e.ComplexityRoot.TeacherNoticeCustom.Date == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherNoticeCustom.Date(childComplexity), true
+	case "TeacherNoticeCustom.details":
+		if e.ComplexityRoot.TeacherNoticeCustom.Details == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherNoticeCustom.Details(childComplexity), true
+	case "TeacherNoticeCustom.id":
+		if e.ComplexityRoot.TeacherNoticeCustom.ID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherNoticeCustom.ID(childComplexity), true
+	case "TeacherNoticeCustom.title":
+		if e.ComplexityRoot.TeacherNoticeCustom.Title == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherNoticeCustom.Title(childComplexity), true
+
+	case "TeacherStudentAttendanceCustom.date":
+		if e.ComplexityRoot.TeacherStudentAttendanceCustom.Date == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherStudentAttendanceCustom.Date(childComplexity), true
+	case "TeacherStudentAttendanceCustom.id":
+		if e.ComplexityRoot.TeacherStudentAttendanceCustom.ID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherStudentAttendanceCustom.ID(childComplexity), true
+	case "TeacherStudentAttendanceCustom.name":
+		if e.ComplexityRoot.TeacherStudentAttendanceCustom.Name == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherStudentAttendanceCustom.Name(childComplexity), true
+	case "TeacherStudentAttendanceCustom.remarks":
+		if e.ComplexityRoot.TeacherStudentAttendanceCustom.Remarks == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherStudentAttendanceCustom.Remarks(childComplexity), true
+	case "TeacherStudentAttendanceCustom.rollNo":
+		if e.ComplexityRoot.TeacherStudentAttendanceCustom.RollNo == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherStudentAttendanceCustom.RollNo(childComplexity), true
+	case "TeacherStudentAttendanceCustom.status":
+		if e.ComplexityRoot.TeacherStudentAttendanceCustom.Status == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherStudentAttendanceCustom.Status(childComplexity), true
+
+	case "TeacherStudentPerformanceCustom.externalMarks":
+		if e.ComplexityRoot.TeacherStudentPerformanceCustom.ExternalMarks == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherStudentPerformanceCustom.ExternalMarks(childComplexity), true
+	case "TeacherStudentPerformanceCustom.grade":
+		if e.ComplexityRoot.TeacherStudentPerformanceCustom.Grade == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherStudentPerformanceCustom.Grade(childComplexity), true
+	case "TeacherStudentPerformanceCustom.id":
+		if e.ComplexityRoot.TeacherStudentPerformanceCustom.ID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherStudentPerformanceCustom.ID(childComplexity), true
+	case "TeacherStudentPerformanceCustom.internalMarks":
+		if e.ComplexityRoot.TeacherStudentPerformanceCustom.InternalMarks == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherStudentPerformanceCustom.InternalMarks(childComplexity), true
+	case "TeacherStudentPerformanceCustom.name":
+		if e.ComplexityRoot.TeacherStudentPerformanceCustom.Name == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherStudentPerformanceCustom.Name(childComplexity), true
+	case "TeacherStudentPerformanceCustom.rollNo":
+		if e.ComplexityRoot.TeacherStudentPerformanceCustom.RollNo == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherStudentPerformanceCustom.RollNo(childComplexity), true
+	case "TeacherStudentPerformanceCustom.subject":
+		if e.ComplexityRoot.TeacherStudentPerformanceCustom.Subject == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherStudentPerformanceCustom.Subject(childComplexity), true
+	case "TeacherStudentPerformanceCustom.totalMarks":
+		if e.ComplexityRoot.TeacherStudentPerformanceCustom.TotalMarks == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherStudentPerformanceCustom.TotalMarks(childComplexity), true
+
+	case "TeacherStudyMaterialCustom.class":
+		if e.ComplexityRoot.TeacherStudyMaterialCustom.Class == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherStudyMaterialCustom.Class(childComplexity), true
+	case "TeacherStudyMaterialCustom.fileUrl":
+		if e.ComplexityRoot.TeacherStudyMaterialCustom.FileURL == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherStudyMaterialCustom.FileURL(childComplexity), true
+	case "TeacherStudyMaterialCustom.id":
+		if e.ComplexityRoot.TeacherStudyMaterialCustom.ID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherStudyMaterialCustom.ID(childComplexity), true
+	case "TeacherStudyMaterialCustom.subject":
+		if e.ComplexityRoot.TeacherStudyMaterialCustom.Subject == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherStudyMaterialCustom.Subject(childComplexity), true
+	case "TeacherStudyMaterialCustom.title":
+		if e.ComplexityRoot.TeacherStudyMaterialCustom.Title == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherStudyMaterialCustom.Title(childComplexity), true
+	case "TeacherStudyMaterialCustom.type":
+		if e.ComplexityRoot.TeacherStudyMaterialCustom.Type == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherStudyMaterialCustom.Type(childComplexity), true
+	case "TeacherStudyMaterialCustom.uploadDate":
+		if e.ComplexityRoot.TeacherStudyMaterialCustom.UploadDate == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherStudyMaterialCustom.UploadDate(childComplexity), true
+
+	case "TeacherSubstitutionRequestCustom.class":
+		if e.ComplexityRoot.TeacherSubstitutionRequestCustom.Class == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherSubstitutionRequestCustom.Class(childComplexity), true
+	case "TeacherSubstitutionRequestCustom.date":
+		if e.ComplexityRoot.TeacherSubstitutionRequestCustom.Date == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherSubstitutionRequestCustom.Date(childComplexity), true
+	case "TeacherSubstitutionRequestCustom.id":
+		if e.ComplexityRoot.TeacherSubstitutionRequestCustom.ID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherSubstitutionRequestCustom.ID(childComplexity), true
+	case "TeacherSubstitutionRequestCustom.reason":
+		if e.ComplexityRoot.TeacherSubstitutionRequestCustom.Reason == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherSubstitutionRequestCustom.Reason(childComplexity), true
+	case "TeacherSubstitutionRequestCustom.status":
+		if e.ComplexityRoot.TeacherSubstitutionRequestCustom.Status == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherSubstitutionRequestCustom.Status(childComplexity), true
+	case "TeacherSubstitutionRequestCustom.subject":
+		if e.ComplexityRoot.TeacherSubstitutionRequestCustom.Subject == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherSubstitutionRequestCustom.Subject(childComplexity), true
+	case "TeacherSubstitutionRequestCustom.timeSlot":
+		if e.ComplexityRoot.TeacherSubstitutionRequestCustom.TimeSlot == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherSubstitutionRequestCustom.TimeSlot(childComplexity), true
+
+	case "TeacherTimetableCustom.class":
+		if e.ComplexityRoot.TeacherTimetableCustom.Class == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherTimetableCustom.Class(childComplexity), true
+	case "TeacherTimetableCustom.day":
+		if e.ComplexityRoot.TeacherTimetableCustom.Day == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherTimetableCustom.Day(childComplexity), true
+	case "TeacherTimetableCustom.id":
+		if e.ComplexityRoot.TeacherTimetableCustom.ID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherTimetableCustom.ID(childComplexity), true
+	case "TeacherTimetableCustom.room":
+		if e.ComplexityRoot.TeacherTimetableCustom.Room == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherTimetableCustom.Room(childComplexity), true
+	case "TeacherTimetableCustom.subject":
+		if e.ComplexityRoot.TeacherTimetableCustom.Subject == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherTimetableCustom.Subject(childComplexity), true
+	case "TeacherTimetableCustom.timeSlot":
+		if e.ComplexityRoot.TeacherTimetableCustom.TimeSlot == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TeacherTimetableCustom.TimeSlot(childComplexity), true
+
+	case "TodayScheduleCustom.class":
+		if e.ComplexityRoot.TodayScheduleCustom.Class == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TodayScheduleCustom.Class(childComplexity), true
+	case "TodayScheduleCustom.duration":
+		if e.ComplexityRoot.TodayScheduleCustom.Duration == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TodayScheduleCustom.Duration(childComplexity), true
+	case "TodayScheduleCustom.id":
+		if e.ComplexityRoot.TodayScheduleCustom.ID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TodayScheduleCustom.ID(childComplexity), true
+	case "TodayScheduleCustom.room":
+		if e.ComplexityRoot.TodayScheduleCustom.Room == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TodayScheduleCustom.Room(childComplexity), true
+	case "TodayScheduleCustom.status":
+		if e.ComplexityRoot.TodayScheduleCustom.Status == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TodayScheduleCustom.Status(childComplexity), true
+	case "TodayScheduleCustom.subject":
+		if e.ComplexityRoot.TodayScheduleCustom.Subject == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TodayScheduleCustom.Subject(childComplexity), true
+	case "TodayScheduleCustom.time":
+		if e.ComplexityRoot.TodayScheduleCustom.Time == nil {
+			break
+		}
+
+		return e.ComplexityRoot.TodayScheduleCustom.Time(childComplexity), true
 
 	case "TodaysAttendance.break":
 		if e.ComplexityRoot.TodaysAttendance.Break == nil {
@@ -9153,11 +11019,30 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 		ec.unmarshalInputCreateStudentInfoInput,
 		ec.unmarshalInputCreateStudentInput,
 		ec.unmarshalInputCreateStudentPromotionInfoInput,
+		ec.unmarshalInputCreateStudentStudyMaterialCustomInput,
 		ec.unmarshalInputCreateSubjectInput,
 		ec.unmarshalInputCreateTaskInput,
+		ec.unmarshalInputCreateTeacherAnnouncementCustomInput,
+		ec.unmarshalInputCreateTeacherAssignmentCustomInput,
 		ec.unmarshalInputCreateTeacherAttendanceInput,
+		ec.unmarshalInputCreateTeacherAttendanceSummaryCustomInput,
+		ec.unmarshalInputCreateTeacherClassCustomInput,
+		ec.unmarshalInputCreateTeacherClassStudentCustomInput,
+		ec.unmarshalInputCreateTeacherDailyAttendanceCustomInput,
+		ec.unmarshalInputCreateTeacherGradeSubmissionCustomInput,
 		ec.unmarshalInputCreateTeacherInfoInput,
 		ec.unmarshalInputCreateTeacherInput,
+		ec.unmarshalInputCreateTeacherLeaveStatusCustomInput,
+		ec.unmarshalInputCreateTeacherLectureCustomInput,
+		ec.unmarshalInputCreateTeacherLessonPlanCustomInput,
+		ec.unmarshalInputCreateTeacherMarksEntryCustomInput,
+		ec.unmarshalInputCreateTeacherNoticeCustomInput,
+		ec.unmarshalInputCreateTeacherStudentAttendanceCustomInput,
+		ec.unmarshalInputCreateTeacherStudentPerformanceCustomInput,
+		ec.unmarshalInputCreateTeacherStudyMaterialCustomInput,
+		ec.unmarshalInputCreateTeacherSubstitutionRequestCustomInput,
+		ec.unmarshalInputCreateTeacherTimetableCustomInput,
+		ec.unmarshalInputCreateTodayScheduleCustomInput,
 		ec.unmarshalInputCreateTodaysAttendanceInput,
 		ec.unmarshalInputCreateTransportFeeInput,
 		ec.unmarshalInputCreateTransportRouteInput,
@@ -9247,11 +11132,30 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 		ec.unmarshalInputUpdateStudentInfoInput,
 		ec.unmarshalInputUpdateStudentInput,
 		ec.unmarshalInputUpdateStudentPromotionInfoInput,
+		ec.unmarshalInputUpdateStudentStudyMaterialCustomInput,
 		ec.unmarshalInputUpdateSubjectInput,
 		ec.unmarshalInputUpdateTaskInput,
+		ec.unmarshalInputUpdateTeacherAnnouncementCustomInput,
+		ec.unmarshalInputUpdateTeacherAssignmentCustomInput,
 		ec.unmarshalInputUpdateTeacherAttendanceInput,
+		ec.unmarshalInputUpdateTeacherAttendanceSummaryCustomInput,
+		ec.unmarshalInputUpdateTeacherClassCustomInput,
+		ec.unmarshalInputUpdateTeacherClassStudentCustomInput,
+		ec.unmarshalInputUpdateTeacherDailyAttendanceCustomInput,
+		ec.unmarshalInputUpdateTeacherGradeSubmissionCustomInput,
 		ec.unmarshalInputUpdateTeacherInfoInput,
 		ec.unmarshalInputUpdateTeacherInput,
+		ec.unmarshalInputUpdateTeacherLeaveStatusCustomInput,
+		ec.unmarshalInputUpdateTeacherLectureCustomInput,
+		ec.unmarshalInputUpdateTeacherLessonPlanCustomInput,
+		ec.unmarshalInputUpdateTeacherMarksEntryCustomInput,
+		ec.unmarshalInputUpdateTeacherNoticeCustomInput,
+		ec.unmarshalInputUpdateTeacherStudentAttendanceCustomInput,
+		ec.unmarshalInputUpdateTeacherStudentPerformanceCustomInput,
+		ec.unmarshalInputUpdateTeacherStudyMaterialCustomInput,
+		ec.unmarshalInputUpdateTeacherSubstitutionRequestCustomInput,
+		ec.unmarshalInputUpdateTeacherTimetableCustomInput,
+		ec.unmarshalInputUpdateTodayScheduleCustomInput,
 		ec.unmarshalInputUpdateTodaysAttendanceInput,
 		ec.unmarshalInputUpdateTransportFeeInput,
 		ec.unmarshalInputUpdateTransportRouteInput,
@@ -11186,6 +13090,24 @@ func (ec *executionContext) childFields_StudentPromotionInfo(ctx context.Context
 	return nil, fmt.Errorf("no field named %q was found under type StudentPromotionInfo", field.Name)
 }
 
+func (ec *executionContext) childFields_StudentStudyMaterialCustom(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+	switch field.Name {
+	case "id":
+		return ec.fieldContext_StudentStudyMaterialCustom_id(ctx, field)
+	case "title":
+		return ec.fieldContext_StudentStudyMaterialCustom_title(ctx, field)
+	case "subject":
+		return ec.fieldContext_StudentStudyMaterialCustom_subject(ctx, field)
+	case "type":
+		return ec.fieldContext_StudentStudyMaterialCustom_type(ctx, field)
+	case "date":
+		return ec.fieldContext_StudentStudyMaterialCustom_date(ctx, field)
+	case "downloadUrl":
+		return ec.fieldContext_StudentStudyMaterialCustom_downloadUrl(ctx, field)
+	}
+	return nil, fmt.Errorf("no field named %q was found under type StudentStudyMaterialCustom", field.Name)
+}
+
 func (ec *executionContext) childFields_Subject(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 	switch field.Name {
 	case "id":
@@ -11266,6 +13188,44 @@ func (ec *executionContext) childFields_Teacher(ctx context.Context, field graph
 	return nil, fmt.Errorf("no field named %q was found under type Teacher", field.Name)
 }
 
+func (ec *executionContext) childFields_TeacherAnnouncementCustom(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+	switch field.Name {
+	case "id":
+		return ec.fieldContext_TeacherAnnouncementCustom_id(ctx, field)
+	case "title":
+		return ec.fieldContext_TeacherAnnouncementCustom_title(ctx, field)
+	case "date":
+		return ec.fieldContext_TeacherAnnouncementCustom_date(ctx, field)
+	case "target":
+		return ec.fieldContext_TeacherAnnouncementCustom_target(ctx, field)
+	case "description":
+		return ec.fieldContext_TeacherAnnouncementCustom_description(ctx, field)
+	}
+	return nil, fmt.Errorf("no field named %q was found under type TeacherAnnouncementCustom", field.Name)
+}
+
+func (ec *executionContext) childFields_TeacherAssignmentCustom(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+	switch field.Name {
+	case "id":
+		return ec.fieldContext_TeacherAssignmentCustom_id(ctx, field)
+	case "class":
+		return ec.fieldContext_TeacherAssignmentCustom_class(ctx, field)
+	case "subject":
+		return ec.fieldContext_TeacherAssignmentCustom_subject(ctx, field)
+	case "title":
+		return ec.fieldContext_TeacherAssignmentCustom_title(ctx, field)
+	case "assignedDate":
+		return ec.fieldContext_TeacherAssignmentCustom_assignedDate(ctx, field)
+	case "dueDate":
+		return ec.fieldContext_TeacherAssignmentCustom_dueDate(ctx, field)
+	case "status":
+		return ec.fieldContext_TeacherAssignmentCustom_status(ctx, field)
+	case "submissions":
+		return ec.fieldContext_TeacherAssignmentCustom_submissions(ctx, field)
+	}
+	return nil, fmt.Errorf("no field named %q was found under type TeacherAssignmentCustom", field.Name)
+}
+
 func (ec *executionContext) childFields_TeacherAttendance(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 	switch field.Name {
 	case "id":
@@ -11282,6 +13242,108 @@ func (ec *executionContext) childFields_TeacherAttendance(ctx context.Context, f
 		return ec.fieldContext_TeacherAttendance_teacher(ctx, field)
 	}
 	return nil, fmt.Errorf("no field named %q was found under type TeacherAttendance", field.Name)
+}
+
+func (ec *executionContext) childFields_TeacherAttendanceSummaryCustom(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+	switch field.Name {
+	case "id":
+		return ec.fieldContext_TeacherAttendanceSummaryCustom_id(ctx, field)
+	case "class":
+		return ec.fieldContext_TeacherAttendanceSummaryCustom_class(ctx, field)
+	case "subject":
+		return ec.fieldContext_TeacherAttendanceSummaryCustom_subject(ctx, field)
+	case "totalStudents":
+		return ec.fieldContext_TeacherAttendanceSummaryCustom_totalStudents(ctx, field)
+	case "present":
+		return ec.fieldContext_TeacherAttendanceSummaryCustom_present(ctx, field)
+	case "absent":
+		return ec.fieldContext_TeacherAttendanceSummaryCustom_absent(ctx, field)
+	case "onLeave":
+		return ec.fieldContext_TeacherAttendanceSummaryCustom_onLeave(ctx, field)
+	case "attendancePercentage":
+		return ec.fieldContext_TeacherAttendanceSummaryCustom_attendancePercentage(ctx, field)
+	case "date":
+		return ec.fieldContext_TeacherAttendanceSummaryCustom_date(ctx, field)
+	}
+	return nil, fmt.Errorf("no field named %q was found under type TeacherAttendanceSummaryCustom", field.Name)
+}
+
+func (ec *executionContext) childFields_TeacherClassCustom(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+	switch field.Name {
+	case "id":
+		return ec.fieldContext_TeacherClassCustom_id(ctx, field)
+	case "className":
+		return ec.fieldContext_TeacherClassCustom_className(ctx, field)
+	case "subject":
+		return ec.fieldContext_TeacherClassCustom_subject(ctx, field)
+	case "time":
+		return ec.fieldContext_TeacherClassCustom_time(ctx, field)
+	case "roomNo":
+		return ec.fieldContext_TeacherClassCustom_roomNo(ctx, field)
+	}
+	return nil, fmt.Errorf("no field named %q was found under type TeacherClassCustom", field.Name)
+}
+
+func (ec *executionContext) childFields_TeacherClassStudentCustom(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+	switch field.Name {
+	case "id":
+		return ec.fieldContext_TeacherClassStudentCustom_id(ctx, field)
+	case "rollNo":
+		return ec.fieldContext_TeacherClassStudentCustom_rollNo(ctx, field)
+	case "name":
+		return ec.fieldContext_TeacherClassStudentCustom_name(ctx, field)
+	case "gender":
+		return ec.fieldContext_TeacherClassStudentCustom_gender(ctx, field)
+	case "parentName":
+		return ec.fieldContext_TeacherClassStudentCustom_parentName(ctx, field)
+	case "mobile":
+		return ec.fieldContext_TeacherClassStudentCustom_mobile(ctx, field)
+	case "email":
+		return ec.fieldContext_TeacherClassStudentCustom_email(ctx, field)
+	case "address":
+		return ec.fieldContext_TeacherClassStudentCustom_address(ctx, field)
+	}
+	return nil, fmt.Errorf("no field named %q was found under type TeacherClassStudentCustom", field.Name)
+}
+
+func (ec *executionContext) childFields_TeacherDailyAttendanceCustom(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+	switch field.Name {
+	case "id":
+		return ec.fieldContext_TeacherDailyAttendanceCustom_id(ctx, field)
+	case "rollNo":
+		return ec.fieldContext_TeacherDailyAttendanceCustom_rollNo(ctx, field)
+	case "studentName":
+		return ec.fieldContext_TeacherDailyAttendanceCustom_studentName(ctx, field)
+	case "class":
+		return ec.fieldContext_TeacherDailyAttendanceCustom_class(ctx, field)
+	case "date":
+		return ec.fieldContext_TeacherDailyAttendanceCustom_date(ctx, field)
+	case "status":
+		return ec.fieldContext_TeacherDailyAttendanceCustom_status(ctx, field)
+	case "note":
+		return ec.fieldContext_TeacherDailyAttendanceCustom_note(ctx, field)
+	}
+	return nil, fmt.Errorf("no field named %q was found under type TeacherDailyAttendanceCustom", field.Name)
+}
+
+func (ec *executionContext) childFields_TeacherGradeSubmissionCustom(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+	switch field.Name {
+	case "id":
+		return ec.fieldContext_TeacherGradeSubmissionCustom_id(ctx, field)
+	case "rollNo":
+		return ec.fieldContext_TeacherGradeSubmissionCustom_rollNo(ctx, field)
+	case "studentName":
+		return ec.fieldContext_TeacherGradeSubmissionCustom_studentName(ctx, field)
+	case "averageMarks":
+		return ec.fieldContext_TeacherGradeSubmissionCustom_averageMarks(ctx, field)
+	case "grade":
+		return ec.fieldContext_TeacherGradeSubmissionCustom_grade(ctx, field)
+	case "status":
+		return ec.fieldContext_TeacherGradeSubmissionCustom_status(ctx, field)
+	case "submissionDate":
+		return ec.fieldContext_TeacherGradeSubmissionCustom_submissionDate(ctx, field)
+	}
+	return nil, fmt.Errorf("no field named %q was found under type TeacherGradeSubmissionCustom", field.Name)
 }
 
 func (ec *executionContext) childFields_TeacherInfo(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
@@ -11320,6 +13382,240 @@ func (ec *executionContext) childFields_TeacherInfo(ctx context.Context, field g
 		return ec.fieldContext_TeacherInfo_bio(ctx, field)
 	}
 	return nil, fmt.Errorf("no field named %q was found under type TeacherInfo", field.Name)
+}
+
+func (ec *executionContext) childFields_TeacherLeaveStatusCustom(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+	switch field.Name {
+	case "id":
+		return ec.fieldContext_TeacherLeaveStatusCustom_id(ctx, field)
+	case "leaveType":
+		return ec.fieldContext_TeacherLeaveStatusCustom_leaveType(ctx, field)
+	case "startDate":
+		return ec.fieldContext_TeacherLeaveStatusCustom_startDate(ctx, field)
+	case "endDate":
+		return ec.fieldContext_TeacherLeaveStatusCustom_endDate(ctx, field)
+	case "days":
+		return ec.fieldContext_TeacherLeaveStatusCustom_days(ctx, field)
+	case "applyDate":
+		return ec.fieldContext_TeacherLeaveStatusCustom_applyDate(ctx, field)
+	case "status":
+		return ec.fieldContext_TeacherLeaveStatusCustom_status(ctx, field)
+	case "reason":
+		return ec.fieldContext_TeacherLeaveStatusCustom_reason(ctx, field)
+	}
+	return nil, fmt.Errorf("no field named %q was found under type TeacherLeaveStatusCustom", field.Name)
+}
+
+func (ec *executionContext) childFields_TeacherLectureCustom(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+	switch field.Name {
+	case "id":
+		return ec.fieldContext_TeacherLectureCustom_id(ctx, field)
+	case "subjectName":
+		return ec.fieldContext_TeacherLectureCustom_subjectName(ctx, field)
+	case "class":
+		return ec.fieldContext_TeacherLectureCustom_class(ctx, field)
+	case "date":
+		return ec.fieldContext_TeacherLectureCustom_date(ctx, field)
+	case "time":
+		return ec.fieldContext_TeacherLectureCustom_time(ctx, field)
+	case "status":
+		return ec.fieldContext_TeacherLectureCustom_status(ctx, field)
+	case "teacher_id":
+		return ec.fieldContext_TeacherLectureCustom_teacher_id(ctx, field)
+	case "subject_id":
+		return ec.fieldContext_TeacherLectureCustom_subject_id(ctx, field)
+	case "student_group":
+		return ec.fieldContext_TeacherLectureCustom_student_group(ctx, field)
+	case "duration":
+		return ec.fieldContext_TeacherLectureCustom_duration(ctx, field)
+	case "location":
+		return ec.fieldContext_TeacherLectureCustom_location(ctx, field)
+	case "attendance_count":
+		return ec.fieldContext_TeacherLectureCustom_attendance_count(ctx, field)
+	case "created_at":
+		return ec.fieldContext_TeacherLectureCustom_created_at(ctx, field)
+	case "updated_at":
+		return ec.fieldContext_TeacherLectureCustom_updated_at(ctx, field)
+	case "reason_for_cancellation":
+		return ec.fieldContext_TeacherLectureCustom_reason_for_cancellation(ctx, field)
+	}
+	return nil, fmt.Errorf("no field named %q was found under type TeacherLectureCustom", field.Name)
+}
+
+func (ec *executionContext) childFields_TeacherLessonPlanCustom(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+	switch field.Name {
+	case "id":
+		return ec.fieldContext_TeacherLessonPlanCustom_id(ctx, field)
+	case "class":
+		return ec.fieldContext_TeacherLessonPlanCustom_class(ctx, field)
+	case "subject":
+		return ec.fieldContext_TeacherLessonPlanCustom_subject(ctx, field)
+	case "topic":
+		return ec.fieldContext_TeacherLessonPlanCustom_topic(ctx, field)
+	case "date":
+		return ec.fieldContext_TeacherLessonPlanCustom_date(ctx, field)
+	case "status":
+		return ec.fieldContext_TeacherLessonPlanCustom_status(ctx, field)
+	case "lessonDetails":
+		return ec.fieldContext_TeacherLessonPlanCustom_lessonDetails(ctx, field)
+	}
+	return nil, fmt.Errorf("no field named %q was found under type TeacherLessonPlanCustom", field.Name)
+}
+
+func (ec *executionContext) childFields_TeacherMarksEntryCustom(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+	switch field.Name {
+	case "id":
+		return ec.fieldContext_TeacherMarksEntryCustom_id(ctx, field)
+	case "rollNo":
+		return ec.fieldContext_TeacherMarksEntryCustom_rollNo(ctx, field)
+	case "studentName":
+		return ec.fieldContext_TeacherMarksEntryCustom_studentName(ctx, field)
+	case "class":
+		return ec.fieldContext_TeacherMarksEntryCustom_class(ctx, field)
+	case "subject":
+		return ec.fieldContext_TeacherMarksEntryCustom_subject(ctx, field)
+	case "marksObtained":
+		return ec.fieldContext_TeacherMarksEntryCustom_marksObtained(ctx, field)
+	case "maxMarks":
+		return ec.fieldContext_TeacherMarksEntryCustom_maxMarks(ctx, field)
+	case "status":
+		return ec.fieldContext_TeacherMarksEntryCustom_status(ctx, field)
+	}
+	return nil, fmt.Errorf("no field named %q was found under type TeacherMarksEntryCustom", field.Name)
+}
+
+func (ec *executionContext) childFields_TeacherNoticeCustom(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+	switch field.Name {
+	case "id":
+		return ec.fieldContext_TeacherNoticeCustom_id(ctx, field)
+	case "title":
+		return ec.fieldContext_TeacherNoticeCustom_title(ctx, field)
+	case "date":
+		return ec.fieldContext_TeacherNoticeCustom_date(ctx, field)
+	case "category":
+		return ec.fieldContext_TeacherNoticeCustom_category(ctx, field)
+	case "details":
+		return ec.fieldContext_TeacherNoticeCustom_details(ctx, field)
+	}
+	return nil, fmt.Errorf("no field named %q was found under type TeacherNoticeCustom", field.Name)
+}
+
+func (ec *executionContext) childFields_TeacherStudentAttendanceCustom(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+	switch field.Name {
+	case "id":
+		return ec.fieldContext_TeacherStudentAttendanceCustom_id(ctx, field)
+	case "rollNo":
+		return ec.fieldContext_TeacherStudentAttendanceCustom_rollNo(ctx, field)
+	case "name":
+		return ec.fieldContext_TeacherStudentAttendanceCustom_name(ctx, field)
+	case "date":
+		return ec.fieldContext_TeacherStudentAttendanceCustom_date(ctx, field)
+	case "status":
+		return ec.fieldContext_TeacherStudentAttendanceCustom_status(ctx, field)
+	case "remarks":
+		return ec.fieldContext_TeacherStudentAttendanceCustom_remarks(ctx, field)
+	}
+	return nil, fmt.Errorf("no field named %q was found under type TeacherStudentAttendanceCustom", field.Name)
+}
+
+func (ec *executionContext) childFields_TeacherStudentPerformanceCustom(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+	switch field.Name {
+	case "id":
+		return ec.fieldContext_TeacherStudentPerformanceCustom_id(ctx, field)
+	case "rollNo":
+		return ec.fieldContext_TeacherStudentPerformanceCustom_rollNo(ctx, field)
+	case "name":
+		return ec.fieldContext_TeacherStudentPerformanceCustom_name(ctx, field)
+	case "subject":
+		return ec.fieldContext_TeacherStudentPerformanceCustom_subject(ctx, field)
+	case "internalMarks":
+		return ec.fieldContext_TeacherStudentPerformanceCustom_internalMarks(ctx, field)
+	case "externalMarks":
+		return ec.fieldContext_TeacherStudentPerformanceCustom_externalMarks(ctx, field)
+	case "totalMarks":
+		return ec.fieldContext_TeacherStudentPerformanceCustom_totalMarks(ctx, field)
+	case "grade":
+		return ec.fieldContext_TeacherStudentPerformanceCustom_grade(ctx, field)
+	}
+	return nil, fmt.Errorf("no field named %q was found under type TeacherStudentPerformanceCustom", field.Name)
+}
+
+func (ec *executionContext) childFields_TeacherStudyMaterialCustom(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+	switch field.Name {
+	case "id":
+		return ec.fieldContext_TeacherStudyMaterialCustom_id(ctx, field)
+	case "class":
+		return ec.fieldContext_TeacherStudyMaterialCustom_class(ctx, field)
+	case "subject":
+		return ec.fieldContext_TeacherStudyMaterialCustom_subject(ctx, field)
+	case "title":
+		return ec.fieldContext_TeacherStudyMaterialCustom_title(ctx, field)
+	case "type":
+		return ec.fieldContext_TeacherStudyMaterialCustom_type(ctx, field)
+	case "uploadDate":
+		return ec.fieldContext_TeacherStudyMaterialCustom_uploadDate(ctx, field)
+	case "fileUrl":
+		return ec.fieldContext_TeacherStudyMaterialCustom_fileUrl(ctx, field)
+	}
+	return nil, fmt.Errorf("no field named %q was found under type TeacherStudyMaterialCustom", field.Name)
+}
+
+func (ec *executionContext) childFields_TeacherSubstitutionRequestCustom(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+	switch field.Name {
+	case "id":
+		return ec.fieldContext_TeacherSubstitutionRequestCustom_id(ctx, field)
+	case "date":
+		return ec.fieldContext_TeacherSubstitutionRequestCustom_date(ctx, field)
+	case "timeSlot":
+		return ec.fieldContext_TeacherSubstitutionRequestCustom_timeSlot(ctx, field)
+	case "class":
+		return ec.fieldContext_TeacherSubstitutionRequestCustom_class(ctx, field)
+	case "subject":
+		return ec.fieldContext_TeacherSubstitutionRequestCustom_subject(ctx, field)
+	case "reason":
+		return ec.fieldContext_TeacherSubstitutionRequestCustom_reason(ctx, field)
+	case "status":
+		return ec.fieldContext_TeacherSubstitutionRequestCustom_status(ctx, field)
+	}
+	return nil, fmt.Errorf("no field named %q was found under type TeacherSubstitutionRequestCustom", field.Name)
+}
+
+func (ec *executionContext) childFields_TeacherTimetableCustom(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+	switch field.Name {
+	case "id":
+		return ec.fieldContext_TeacherTimetableCustom_id(ctx, field)
+	case "day":
+		return ec.fieldContext_TeacherTimetableCustom_day(ctx, field)
+	case "timeSlot":
+		return ec.fieldContext_TeacherTimetableCustom_timeSlot(ctx, field)
+	case "subject":
+		return ec.fieldContext_TeacherTimetableCustom_subject(ctx, field)
+	case "class":
+		return ec.fieldContext_TeacherTimetableCustom_class(ctx, field)
+	case "room":
+		return ec.fieldContext_TeacherTimetableCustom_room(ctx, field)
+	}
+	return nil, fmt.Errorf("no field named %q was found under type TeacherTimetableCustom", field.Name)
+}
+
+func (ec *executionContext) childFields_TodayScheduleCustom(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+	switch field.Name {
+	case "id":
+		return ec.fieldContext_TodayScheduleCustom_id(ctx, field)
+	case "subject":
+		return ec.fieldContext_TodayScheduleCustom_subject(ctx, field)
+	case "class":
+		return ec.fieldContext_TodayScheduleCustom_class(ctx, field)
+	case "time":
+		return ec.fieldContext_TodayScheduleCustom_time(ctx, field)
+	case "duration":
+		return ec.fieldContext_TodayScheduleCustom_duration(ctx, field)
+	case "room":
+		return ec.fieldContext_TodayScheduleCustom_room(ctx, field)
+	case "status":
+		return ec.fieldContext_TodayScheduleCustom_status(ctx, field)
+	}
+	return nil, fmt.Errorf("no field named %q was found under type TodayScheduleCustom", field.Name)
 }
 
 func (ec *executionContext) childFields_TodaysAttendance(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {

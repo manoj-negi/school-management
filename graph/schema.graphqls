@@ -66,6 +66,25 @@ extend type Query {
   feeReportsList: [FeeReportCustom!]!
   examReportsList: [ExamReportCustom!]!
   customReportsList: [CustomReportCustom!]!
+  todaySchedulesList: [TodayScheduleCustom!]!
+  teacherClassesList: [TeacherClassCustom!]!
+  teacherLessonPlansList: [TeacherLessonPlanCustom!]!
+  studentStudyMaterialsList: [StudentStudyMaterialCustom!]!
+  teacherStudyMaterialsList: [TeacherStudyMaterialCustom!]!
+  teacherAssignmentsList: [TeacherAssignmentCustom!]!
+  teacherClassStudentsList: [TeacherClassStudentCustom!]!
+  teacherStudentAttendancesList: [TeacherStudentAttendanceCustom!]!
+  teacherStudentPerformancesList: [TeacherStudentPerformanceCustom!]!
+  teacherMarksEntriesList: [TeacherMarksEntryCustom!]!
+  teacherGradeSubmissionsList: [TeacherGradeSubmissionCustom!]!
+  teacherTimetablesList: [TeacherTimetableCustom!]!
+  teacherSubstitutionRequestsList: [TeacherSubstitutionRequestCustom!]!
+  teacherNoticesList: [TeacherNoticeCustom!]!
+  teacherAnnouncementsList: [TeacherAnnouncementCustom!]!
+  teacherDailyAttendancesList: [TeacherDailyAttendanceCustom!]!
+  teacherAttendanceSummariesList: [TeacherAttendanceSummaryCustom!]!
+  teacherLeaveStatusesList: [TeacherLeaveStatusCustom!]!
+  teacherLecturesList: [TeacherLectureCustom!]!
 }
 
 extend type Mutation {
@@ -256,6 +275,63 @@ extend type Mutation {
   createCustomReport(input: CreateCustomReportCustomInput!): CustomReportCustom!
   updateCustomReport(input: UpdateCustomReportCustomInput!): CustomReportCustom!
   deleteCustomReport(id: String!): String!
+  createTodaySchedule(input: CreateTodayScheduleCustomInput!): TodayScheduleCustom!
+  updateTodaySchedule(input: UpdateTodayScheduleCustomInput!): TodayScheduleCustom!
+  deleteTodaySchedule(id: String!): String!
+  createTeacherClass(input: CreateTeacherClassCustomInput!): TeacherClassCustom!
+  updateTeacherClass(input: UpdateTeacherClassCustomInput!): TeacherClassCustom!
+  deleteTeacherClass(id: String!): String!
+  createTeacherLessonPlan(input: CreateTeacherLessonPlanCustomInput!): TeacherLessonPlanCustom!
+  updateTeacherLessonPlan(input: UpdateTeacherLessonPlanCustomInput!): TeacherLessonPlanCustom!
+  deleteTeacherLessonPlan(id: String!): String!
+  createStudentStudyMaterial(input: CreateStudentStudyMaterialCustomInput!): StudentStudyMaterialCustom!
+  updateStudentStudyMaterial(input: UpdateStudentStudyMaterialCustomInput!): StudentStudyMaterialCustom!
+  deleteStudentStudyMaterial(id: String!): String!
+  createTeacherStudyMaterial(input: CreateTeacherStudyMaterialCustomInput!): TeacherStudyMaterialCustom!
+  updateTeacherStudyMaterial(input: UpdateTeacherStudyMaterialCustomInput!): TeacherStudyMaterialCustom!
+  deleteTeacherStudyMaterial(id: String!): String!
+  createTeacherAssignment(input: CreateTeacherAssignmentCustomInput!): TeacherAssignmentCustom!
+  updateTeacherAssignment(input: UpdateTeacherAssignmentCustomInput!): TeacherAssignmentCustom!
+  deleteTeacherAssignment(id: String!): String!
+  createTeacherClassStudent(input: CreateTeacherClassStudentCustomInput!): TeacherClassStudentCustom!
+  updateTeacherClassStudent(input: UpdateTeacherClassStudentCustomInput!): TeacherClassStudentCustom!
+  deleteTeacherClassStudent(id: String!): String!
+  createTeacherStudentAttendance(input: CreateTeacherStudentAttendanceCustomInput!): TeacherStudentAttendanceCustom!
+  updateTeacherStudentAttendance(input: UpdateTeacherStudentAttendanceCustomInput!): TeacherStudentAttendanceCustom!
+  deleteTeacherStudentAttendance(id: String!): String!
+  createTeacherStudentPerformance(input: CreateTeacherStudentPerformanceCustomInput!): TeacherStudentPerformanceCustom!
+  updateTeacherStudentPerformance(input: UpdateTeacherStudentPerformanceCustomInput!): TeacherStudentPerformanceCustom!
+  deleteTeacherStudentPerformance(id: String!): String!
+  createTeacherMarksEntry(input: CreateTeacherMarksEntryCustomInput!): TeacherMarksEntryCustom!
+  updateTeacherMarksEntry(input: UpdateTeacherMarksEntryCustomInput!): TeacherMarksEntryCustom!
+  deleteTeacherMarksEntry(id: String!): String!
+  createTeacherGradeSubmission(input: CreateTeacherGradeSubmissionCustomInput!): TeacherGradeSubmissionCustom!
+  updateTeacherGradeSubmission(input: UpdateTeacherGradeSubmissionCustomInput!): TeacherGradeSubmissionCustom!
+  deleteTeacherGradeSubmission(id: String!): String!
+  createTeacherTimetable(input: CreateTeacherTimetableCustomInput!): TeacherTimetableCustom!
+  updateTeacherTimetable(input: UpdateTeacherTimetableCustomInput!): TeacherTimetableCustom!
+  deleteTeacherTimetable(id: String!): String!
+  createTeacherSubstitutionRequest(input: CreateTeacherSubstitutionRequestCustomInput!): TeacherSubstitutionRequestCustom!
+  updateTeacherSubstitutionRequest(input: UpdateTeacherSubstitutionRequestCustomInput!): TeacherSubstitutionRequestCustom!
+  deleteTeacherSubstitutionRequest(id: String!): String!
+  createTeacherNotice(input: CreateTeacherNoticeCustomInput!): TeacherNoticeCustom!
+  updateTeacherNotice(input: UpdateTeacherNoticeCustomInput!): TeacherNoticeCustom!
+  deleteTeacherNotice(id: String!): String!
+  createTeacherAnnouncement(input: CreateTeacherAnnouncementCustomInput!): TeacherAnnouncementCustom!
+  updateTeacherAnnouncement(input: UpdateTeacherAnnouncementCustomInput!): TeacherAnnouncementCustom!
+  deleteTeacherAnnouncement(id: String!): String!
+  createTeacherDailyAttendance(input: CreateTeacherDailyAttendanceCustomInput!): TeacherDailyAttendanceCustom!
+  updateTeacherDailyAttendance(input: UpdateTeacherDailyAttendanceCustomInput!): TeacherDailyAttendanceCustom!
+  deleteTeacherDailyAttendance(id: String!): String!
+  createTeacherAttendanceSummary(input: CreateTeacherAttendanceSummaryCustomInput!): TeacherAttendanceSummaryCustom!
+  updateTeacherAttendanceSummary(input: UpdateTeacherAttendanceSummaryCustomInput!): TeacherAttendanceSummaryCustom!
+  deleteTeacherAttendanceSummary(id: String!): String!
+  createTeacherLeaveStatus(input: CreateTeacherLeaveStatusCustomInput!): TeacherLeaveStatusCustom!
+  updateTeacherLeaveStatus(input: UpdateTeacherLeaveStatusCustomInput!): TeacherLeaveStatusCustom!
+  deleteTeacherLeaveStatus(id: String!): String!
+  createTeacherLecture(input: CreateTeacherLectureCustomInput!): TeacherLectureCustom!
+  updateTeacherLecture(input: UpdateTeacherLectureCustomInput!): TeacherLectureCustom!
+  deleteTeacherLecture(id: String!): String!
 }
 
 input UpdateAdmissionInquiryInput {
@@ -2768,4 +2844,569 @@ input UpdateCustomReportCustomInput {
   createdBy: String!
   date: String!
   status: String!
+}
+
+type TodayScheduleCustom {
+  id: String!
+  subject: String!
+  class: String!
+  time: String!
+  duration: String!
+  room: String!
+  status: String!
+}
+
+input CreateTodayScheduleCustomInput {
+  subject: String!
+  class: String!
+  time: String!
+  duration: String!
+  room: String!
+  status: String!
+}
+
+input UpdateTodayScheduleCustomInput {
+  id: String!
+  subject: String!
+  class: String!
+  time: String!
+  duration: String!
+  room: String!
+  status: String!
+}
+
+type TeacherClassCustom {
+  id: String!
+  className: String!
+  subject: String!
+  time: String!
+  roomNo: String!
+}
+
+input CreateTeacherClassCustomInput {
+  className: String!
+  subject: String!
+  time: String!
+  roomNo: String!
+}
+
+input UpdateTeacherClassCustomInput {
+  id: String!
+  className: String!
+  subject: String!
+  time: String!
+  roomNo: String!
+}
+
+type TeacherLessonPlanCustom {
+  id: String!
+  class: String!
+  subject: String!
+  topic: String!
+  date: String!
+  status: String!
+  lessonDetails: String!
+}
+
+input CreateTeacherLessonPlanCustomInput {
+  class: String!
+  subject: String!
+  topic: String!
+  date: String!
+  status: String!
+  lessonDetails: String!
+}
+
+input UpdateTeacherLessonPlanCustomInput {
+  id: String!
+  class: String!
+  subject: String!
+  topic: String!
+  date: String!
+  status: String!
+  lessonDetails: String!
+}
+
+type StudentStudyMaterialCustom {
+  id: String!
+  title: String!
+  subject: String!
+  type: String!
+  date: String!
+  downloadUrl: String!
+}
+
+input CreateStudentStudyMaterialCustomInput {
+  title: String!
+  subject: String!
+  type: String!
+  date: String!
+  downloadUrl: String!
+}
+
+input UpdateStudentStudyMaterialCustomInput {
+  id: String!
+  title: String!
+  subject: String!
+  type: String!
+  date: String!
+  downloadUrl: String!
+}
+
+type TeacherStudyMaterialCustom {
+  id: String!
+  class: String!
+  subject: String!
+  title: String!
+  type: String!
+  uploadDate: String!
+  fileUrl: String!
+}
+
+input CreateTeacherStudyMaterialCustomInput {
+  class: String!
+  subject: String!
+  title: String!
+  type: String!
+  uploadDate: String!
+  fileUrl: String!
+}
+
+input UpdateTeacherStudyMaterialCustomInput {
+  id: String!
+  class: String!
+  subject: String!
+  title: String!
+  type: String!
+  uploadDate: String!
+  fileUrl: String!
+}
+
+type TeacherAssignmentCustom {
+  id: String!
+  class: String!
+  subject: String!
+  title: String!
+  assignedDate: String!
+  dueDate: String!
+  status: String!
+  submissions: Int!
+}
+
+input CreateTeacherAssignmentCustomInput {
+  class: String!
+  subject: String!
+  title: String!
+  assignedDate: String!
+  dueDate: String!
+  status: String!
+  submissions: Int!
+}
+
+input UpdateTeacherAssignmentCustomInput {
+  id: String!
+  class: String!
+  subject: String!
+  title: String!
+  assignedDate: String!
+  dueDate: String!
+  status: String!
+  submissions: Int!
+}
+
+type TeacherClassStudentCustom {
+  id: String!
+  rollNo: String!
+  name: String!
+  gender: String!
+  parentName: String!
+  mobile: String!
+  email: String!
+  address: String!
+}
+
+input CreateTeacherClassStudentCustomInput {
+  rollNo: String!
+  name: String!
+  gender: String!
+  parentName: String!
+  mobile: String!
+  email: String!
+  address: String!
+}
+
+input UpdateTeacherClassStudentCustomInput {
+  id: String!
+  rollNo: String!
+  name: String!
+  gender: String!
+  parentName: String!
+  mobile: String!
+  email: String!
+  address: String!
+}
+
+type TeacherStudentAttendanceCustom {
+  id: String!
+  rollNo: String!
+  name: String!
+  date: String!
+  status: String!
+  remarks: String!
+}
+
+input CreateTeacherStudentAttendanceCustomInput {
+  rollNo: String!
+  name: String!
+  date: String!
+  status: String!
+  remarks: String!
+}
+
+input UpdateTeacherStudentAttendanceCustomInput {
+  id: String!
+  rollNo: String!
+  name: String!
+  date: String!
+  status: String!
+  remarks: String!
+}
+
+type TeacherStudentPerformanceCustom {
+  id: String!
+  rollNo: String!
+  name: String!
+  subject: String!
+  internalMarks: Int!
+  externalMarks: Int!
+  totalMarks: Int!
+  grade: String!
+}
+
+input CreateTeacherStudentPerformanceCustomInput {
+  rollNo: String!
+  name: String!
+  subject: String!
+  internalMarks: Int!
+  externalMarks: Int!
+  totalMarks: Int!
+  grade: String!
+}
+
+input UpdateTeacherStudentPerformanceCustomInput {
+  id: String!
+  rollNo: String!
+  name: String!
+  subject: String!
+  internalMarks: Int!
+  externalMarks: Int!
+  totalMarks: Int!
+  grade: String!
+}
+
+type TeacherMarksEntryCustom {
+  id: String!
+  rollNo: String!
+  studentName: String!
+  class: String!
+  subject: String!
+  marksObtained: Int!
+  maxMarks: Int!
+  status: String!
+}
+
+input CreateTeacherMarksEntryCustomInput {
+  rollNo: String!
+  studentName: String!
+  class: String!
+  subject: String!
+  marksObtained: Int!
+  maxMarks: Int!
+  status: String!
+}
+
+input UpdateTeacherMarksEntryCustomInput {
+  id: String!
+  rollNo: String!
+  studentName: String!
+  class: String!
+  subject: String!
+  marksObtained: Int!
+  maxMarks: Int!
+  status: String!
+}
+
+type TeacherGradeSubmissionCustom {
+  id: String!
+  rollNo: String!
+  studentName: String!
+  averageMarks: Int!
+  grade: String!
+  status: String!
+  submissionDate: String!
+}
+
+input CreateTeacherGradeSubmissionCustomInput {
+  rollNo: String!
+  studentName: String!
+  averageMarks: Int!
+  grade: String!
+  status: String!
+  submissionDate: String!
+}
+
+input UpdateTeacherGradeSubmissionCustomInput {
+  id: String!
+  rollNo: String!
+  studentName: String!
+  averageMarks: Int!
+  grade: String!
+  status: String!
+  submissionDate: String!
+}
+
+type TeacherTimetableCustom {
+  id: String!
+  day: String!
+  timeSlot: String!
+  subject: String!
+  class: String!
+  room: String!
+}
+
+input CreateTeacherTimetableCustomInput {
+  day: String!
+  timeSlot: String!
+  subject: String!
+  class: String!
+  room: String!
+}
+
+input UpdateTeacherTimetableCustomInput {
+  id: String!
+  day: String!
+  timeSlot: String!
+  subject: String!
+  class: String!
+  room: String!
+}
+
+type TeacherSubstitutionRequestCustom {
+  id: String!
+  date: String!
+  timeSlot: String!
+  class: String!
+  subject: String!
+  reason: String!
+  status: String!
+}
+
+input CreateTeacherSubstitutionRequestCustomInput {
+  date: String!
+  timeSlot: String!
+  class: String!
+  subject: String!
+  reason: String!
+  status: String!
+}
+
+input UpdateTeacherSubstitutionRequestCustomInput {
+  id: String!
+  date: String!
+  timeSlot: String!
+  class: String!
+  subject: String!
+  reason: String!
+  status: String!
+}
+
+type TeacherNoticeCustom {
+  id: String!
+  title: String!
+  date: String!
+  category: String!
+  details: String!
+}
+
+input CreateTeacherNoticeCustomInput {
+  title: String!
+  date: String!
+  category: String!
+  details: String!
+}
+
+input UpdateTeacherNoticeCustomInput {
+  id: String!
+  title: String!
+  date: String!
+  category: String!
+  details: String!
+}
+
+type TeacherAnnouncementCustom {
+  id: String!
+  title: String!
+  date: String!
+  target: String!
+  description: String!
+}
+
+input CreateTeacherAnnouncementCustomInput {
+  title: String!
+  date: String!
+  target: String!
+  description: String!
+}
+
+input UpdateTeacherAnnouncementCustomInput {
+  id: String!
+  title: String!
+  date: String!
+  target: String!
+  description: String!
+}
+
+type TeacherDailyAttendanceCustom {
+  id: String!
+  rollNo: String!
+  studentName: String!
+  class: String!
+  date: String!
+  status: String!
+  note: String!
+}
+
+input CreateTeacherDailyAttendanceCustomInput {
+  rollNo: String!
+  studentName: String!
+  class: String!
+  date: String!
+  status: String!
+  note: String!
+}
+
+input UpdateTeacherDailyAttendanceCustomInput {
+  id: String!
+  rollNo: String!
+  studentName: String!
+  class: String!
+  date: String!
+  status: String!
+  note: String!
+}
+
+type TeacherAttendanceSummaryCustom {
+  id: String!
+  class: String!
+  subject: String!
+  totalStudents: Int!
+  present: Int!
+  absent: Int!
+  onLeave: Int!
+  attendancePercentage: String!
+  date: String!
+}
+
+input CreateTeacherAttendanceSummaryCustomInput {
+  class: String!
+  subject: String!
+  totalStudents: Int!
+  present: Int!
+  absent: Int!
+  onLeave: Int!
+  attendancePercentage: String!
+  date: String!
+}
+
+input UpdateTeacherAttendanceSummaryCustomInput {
+  id: String!
+  class: String!
+  subject: String!
+  totalStudents: Int!
+  present: Int!
+  absent: Int!
+  onLeave: Int!
+  attendancePercentage: String!
+  date: String!
+}
+
+type TeacherLeaveStatusCustom {
+  id: String!
+  leaveType: String!
+  startDate: String!
+  endDate: String!
+  days: Int!
+  applyDate: String!
+  status: String!
+  reason: String!
+}
+
+input CreateTeacherLeaveStatusCustomInput {
+  leaveType: String!
+  startDate: String!
+  endDate: String!
+  days: Int!
+  applyDate: String!
+  status: String!
+  reason: String!
+}
+
+input UpdateTeacherLeaveStatusCustomInput {
+  id: String!
+  leaveType: String!
+  startDate: String!
+  endDate: String!
+  days: Int!
+  applyDate: String!
+  status: String!
+  reason: String!
+}
+
+type TeacherLectureCustom {
+  id: String!
+  subjectName: String!
+  class: String!
+  date: String!
+  time: String!
+  status: String!
+  teacher_id: String!
+  subject_id: String!
+  student_group: String!
+  duration: Int!
+  location: String!
+  attendance_count: Int!
+  created_at: String!
+  updated_at: String!
+  reason_for_cancellation: String!
+}
+
+input CreateTeacherLectureCustomInput {
+  subjectName: String!
+  class: String!
+  date: String!
+  time: String!
+  status: String!
+  teacher_id: String!
+  subject_id: String!
+  student_group: String!
+  duration: Int!
+  location: String!
+  attendance_count: Int!
+  reason_for_cancellation: String!
+}
+
+input UpdateTeacherLectureCustomInput {
+  id: String!
+  subjectName: String!
+  class: String!
+  date: String!
+  time: String!
+  status: String!
+  teacher_id: String!
+  subject_id: String!
+  student_group: String!
+  duration: Int!
+  location: String!
+  attendance_count: Int!
+  reason_for_cancellation: String!
 }
