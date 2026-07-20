@@ -85,6 +85,28 @@ extend type Query {
   teacherAttendanceSummariesList: [TeacherAttendanceSummaryCustom!]!
   teacherLeaveStatusesList: [TeacherLeaveStatusCustom!]!
   teacherLecturesList: [TeacherLectureCustom!]!
+  studentHomeworksList: [StudentHomeworkCustom!]!
+  studentTimetablesList: [StudentTimetableCustom!]!
+  studentSyllabusesList: [StudentSyllabusCustom!]!
+  teacherSubjectsTaughtList: [TeacherSubjectTaughtCustom!]!
+  studentHallTicketsList: [StudentHallTicketCustom!]!
+  studentResultsList: [StudentResultCustom!]!
+  studentReportCardsList: [StudentReportCardCustom!]!
+  studentMonthlySummariesList: [StudentMonthlySummaryCustom!]!
+  studentMyAttendancesList: [StudentMyAttendanceCustom!]!
+  studentLeaveRequestsList: [StudentLeaveRequestCustom!]!
+  studentFeeReceiptsList: [StudentFeeReceiptCustom!]!
+  studentDueFeesList: [StudentDueFeeCustom!]!
+  studentFeeDetailsList: [StudentFeeDetailCustom!]!
+  studentOnlinePaymentsList: [StudentOnlinePaymentCustom!]!
+  studentMyIssuedBooksList: [StudentMyIssuedBookCustom!]!
+  studentDueDatesList: [StudentDueDateCustom!]!
+  studentBookHistoryList: [StudentBookHistoryCustom!]!
+  studentMyRoutesList: [StudentMyRouteCustom!]!
+  studentVehicleDetailsList: [StudentVehicleDetailCustom!]!
+  studentHostelRoomDetailsList: [StudentHostelRoomDetailCustom!]!
+  studentHostelFeesList: [StudentHostelFeeCustom!]!
+  studentHostelComplaintsList: [StudentHostelComplaintCustom!]!
 }
 
 extend type Mutation {
@@ -332,6 +354,72 @@ extend type Mutation {
   createTeacherLecture(input: CreateTeacherLectureCustomInput!): TeacherLectureCustom!
   updateTeacherLecture(input: UpdateTeacherLectureCustomInput!): TeacherLectureCustom!
   deleteTeacherLecture(id: String!): String!
+  createStudentHomework(input: CreateStudentHomeworkCustomInput!): StudentHomeworkCustom!
+  updateStudentHomework(input: UpdateStudentHomeworkCustomInput!): StudentHomeworkCustom!
+  deleteStudentHomework(id: String!): String!
+  createStudentTimetable(input: CreateStudentTimetableCustomInput!): StudentTimetableCustom!
+  updateStudentTimetable(input: UpdateStudentTimetableCustomInput!): StudentTimetableCustom!
+  deleteStudentTimetable(id: String!): String!
+  createStudentSyllabus(input: CreateStudentSyllabusCustomInput!): StudentSyllabusCustom!
+  updateStudentSyllabus(input: UpdateStudentSyllabusCustomInput!): StudentSyllabusCustom!
+  deleteStudentSyllabus(id: String!): String!
+  createTeacherSubjectTaught(input: CreateTeacherSubjectTaughtCustomInput!): TeacherSubjectTaughtCustom!
+  updateTeacherSubjectTaught(input: UpdateTeacherSubjectTaughtCustomInput!): TeacherSubjectTaughtCustom!
+  deleteTeacherSubjectTaught(id: String!): String!
+  createStudentHallTicket(input: CreateStudentHallTicketCustomInput!): StudentHallTicketCustom!
+  updateStudentHallTicket(input: UpdateStudentHallTicketCustomInput!): StudentHallTicketCustom!
+  deleteStudentHallTicket(id: String!): String!
+  createStudentResult(input: CreateStudentResultCustomInput!): StudentResultCustom!
+  updateStudentResult(input: UpdateStudentResultCustomInput!): StudentResultCustom!
+  deleteStudentResult(id: String!): String!
+  createStudentReportCard(input: CreateStudentReportCardCustomInput!): StudentReportCardCustom!
+  updateStudentReportCard(input: UpdateStudentReportCardCustomInput!): StudentReportCardCustom!
+  deleteStudentReportCard(id: String!): String!
+  createStudentMonthlySummary(input: CreateStudentMonthlySummaryCustomInput!): StudentMonthlySummaryCustom!
+  updateStudentMonthlySummary(input: UpdateStudentMonthlySummaryCustomInput!): StudentMonthlySummaryCustom!
+  deleteStudentMonthlySummary(id: String!): String!
+  createStudentMyAttendance(input: CreateStudentMyAttendanceCustomInput!): StudentMyAttendanceCustom!
+  updateStudentMyAttendance(input: UpdateStudentMyAttendanceCustomInput!): StudentMyAttendanceCustom!
+  deleteStudentMyAttendance(id: String!): String!
+  createStudentLeaveRequest(input: CreateStudentLeaveRequestCustomInput!): StudentLeaveRequestCustom!
+  updateStudentLeaveRequest(input: UpdateStudentLeaveRequestCustomInput!): StudentLeaveRequestCustom!
+  deleteStudentLeaveRequest(id: String!): String!
+  createStudentFeeReceipt(input: CreateStudentFeeReceiptCustomInput!): StudentFeeReceiptCustom!
+  updateStudentFeeReceipt(input: UpdateStudentFeeReceiptCustomInput!): StudentFeeReceiptCustom!
+  deleteStudentFeeReceipt(id: String!): String!
+  createStudentDueFee(input: CreateStudentDueFeeCustomInput!): StudentDueFeeCustom!
+  updateStudentDueFee(input: UpdateStudentDueFeeCustomInput!): StudentDueFeeCustom!
+  deleteStudentDueFee(id: String!): String!
+  createStudentFeeDetail(input: CreateStudentFeeDetailCustomInput!): StudentFeeDetailCustom!
+  updateStudentFeeDetail(input: UpdateStudentFeeDetailCustomInput!): StudentFeeDetailCustom!
+  deleteStudentFeeDetail(id: String!): String!
+  createStudentOnlinePayment(input: CreateStudentOnlinePaymentCustomInput!): StudentOnlinePaymentCustom!
+  updateStudentOnlinePayment(input: UpdateStudentOnlinePaymentCustomInput!): StudentOnlinePaymentCustom!
+  deleteStudentOnlinePayment(id: String!): String!
+  createStudentMyIssuedBook(input: CreateStudentMyIssuedBookCustomInput!): StudentMyIssuedBookCustom!
+  updateStudentMyIssuedBook(input: UpdateStudentMyIssuedBookCustomInput!): StudentMyIssuedBookCustom!
+  deleteStudentMyIssuedBook(id: String!): String!
+  createStudentDueDate(input: CreateStudentDueDateCustomInput!): StudentDueDateCustom!
+  updateStudentDueDate(input: UpdateStudentDueDateCustomInput!): StudentDueDateCustom!
+  deleteStudentDueDate(id: String!): String!
+  createStudentBookHistory(input: CreateStudentBookHistoryCustomInput!): StudentBookHistoryCustom!
+  updateStudentBookHistory(input: UpdateStudentBookHistoryCustomInput!): StudentBookHistoryCustom!
+  deleteStudentBookHistory(id: String!): String!
+  createStudentMyRoute(input: CreateStudentMyRouteCustomInput!): StudentMyRouteCustom!
+  updateStudentMyRoute(input: UpdateStudentMyRouteCustomInput!): StudentMyRouteCustom!
+  deleteStudentMyRoute(id: String!): String!
+  createStudentVehicleDetail(input: CreateStudentVehicleDetailCustomInput!): StudentVehicleDetailCustom!
+  updateStudentVehicleDetail(input: UpdateStudentVehicleDetailCustomInput!): StudentVehicleDetailCustom!
+  deleteStudentVehicleDetail(id: String!): String!
+  createStudentHostelRoomDetail(input: CreateStudentHostelRoomDetailCustomInput!): StudentHostelRoomDetailCustom!
+  updateStudentHostelRoomDetail(input: UpdateStudentHostelRoomDetailCustomInput!): StudentHostelRoomDetailCustom!
+  deleteStudentHostelRoomDetail(id: String!): String!
+  createStudentHostelFee(input: CreateStudentHostelFeeCustomInput!): StudentHostelFeeCustom!
+  updateStudentHostelFee(input: UpdateStudentHostelFeeCustomInput!): StudentHostelFeeCustom!
+  deleteStudentHostelFee(id: String!): String!
+  createStudentHostelComplaint(input: CreateStudentHostelComplaintCustomInput!): StudentHostelComplaintCustom!
+  updateStudentHostelComplaint(input: UpdateStudentHostelComplaintCustomInput!): StudentHostelComplaintCustom!
+  deleteStudentHostelComplaint(id: String!): String!
 }
 
 input UpdateAdmissionInquiryInput {
@@ -3409,4 +3497,693 @@ input UpdateTeacherLectureCustomInput {
   location: String!
   attendance_count: Int!
   reason_for_cancellation: String!
+}
+
+type StudentHomeworkCustom {
+  id: String!
+  class: String!
+  section: String!
+  subject: String!
+  homeworkTitle: String!
+  assignedBy: String!
+  homeworkDate: String!
+  submissionDate: String!
+  evaluationDate: String!
+  status: String!
+  grade: String!
+  feedback: String!
+  attachments: String!
+  lateSubmission: Boolean!
+}
+
+input CreateStudentHomeworkCustomInput {
+  class: String!
+  section: String!
+  subject: String!
+  homeworkTitle: String!
+  assignedBy: String!
+  homeworkDate: String!
+  submissionDate: String!
+  evaluationDate: String!
+  status: String!
+  grade: String!
+  feedback: String!
+  attachments: String!
+  lateSubmission: Boolean!
+}
+
+input UpdateStudentHomeworkCustomInput {
+  id: String!
+  class: String!
+  section: String!
+  subject: String!
+  homeworkTitle: String!
+  assignedBy: String!
+  homeworkDate: String!
+  submissionDate: String!
+  evaluationDate: String!
+  status: String!
+  grade: String!
+  feedback: String!
+  attachments: String!
+  lateSubmission: Boolean!
+}
+
+type StudentTimetableCustom {
+  id: String!
+  day: String!
+  date_label: String!
+  subject: String!
+  time: String!
+  room: String!
+  teacher: String!
+  type: String!
+  color_class: String!
+  icon: String!
+}
+
+input CreateStudentTimetableCustomInput {
+  day: String!
+  date_label: String!
+  subject: String!
+  time: String!
+  room: String!
+  teacher: String!
+  type: String!
+  color_class: String!
+  icon: String!
+}
+
+input UpdateStudentTimetableCustomInput {
+  id: String!
+  day: String!
+  date_label: String!
+  subject: String!
+  time: String!
+  room: String!
+  teacher: String!
+  type: String!
+  color_class: String!
+  icon: String!
+}
+
+type StudentSyllabusCustom {
+  id: String!
+  subject: String!
+  class: String!
+  title: String!
+  type: String!
+  date: String!
+  download_url: String!
+}
+
+input CreateStudentSyllabusCustomInput {
+  subject: String!
+  class: String!
+  title: String!
+  type: String!
+  date: String!
+  download_url: String!
+}
+
+input UpdateStudentSyllabusCustomInput {
+  id: String!
+  subject: String!
+  class: String!
+  title: String!
+  type: String!
+  date: String!
+  download_url: String!
+}
+
+type TeacherSubjectTaughtCustom {
+  id: String!
+  subject_name: String!
+  class: String!
+  total_students: Int!
+}
+
+input CreateTeacherSubjectTaughtCustomInput {
+  subject_name: String!
+  class: String!
+  total_students: Int!
+}
+
+input UpdateTeacherSubjectTaughtCustomInput {
+  id: String!
+  subject_name: String!
+  class: String!
+  total_students: Int!
+}
+
+type StudentHallTicketCustom {
+  id: String!
+  exam_name: String!
+  subject: String!
+  exam_date: String!
+  start_time: String!
+  room_no: String!
+  roll_no: String!
+  download_url: String!
+}
+
+input CreateStudentHallTicketCustomInput {
+  exam_name: String!
+  subject: String!
+  exam_date: String!
+  start_time: String!
+  room_no: String!
+  roll_no: String!
+  download_url: String!
+}
+
+input UpdateStudentHallTicketCustomInput {
+  id: String!
+  exam_name: String!
+  subject: String!
+  exam_date: String!
+  start_time: String!
+  room_no: String!
+  roll_no: String!
+  download_url: String!
+}
+
+type StudentResultCustom {
+  id: String!
+  exam_name: String!
+  total_subjects: Int!
+  total_marks: Int!
+  obtained_marks: Int!
+  percentage: Float!
+  grade: String!
+  result_status: String!
+  published_date: String!
+}
+
+input CreateStudentResultCustomInput {
+  exam_name: String!
+  total_subjects: Int!
+  total_marks: Int!
+  obtained_marks: Int!
+  percentage: Float!
+  grade: String!
+  result_status: String!
+  published_date: String!
+}
+
+input UpdateStudentResultCustomInput {
+  id: String!
+  exam_name: String!
+  total_subjects: Int!
+  total_marks: Int!
+  obtained_marks: Int!
+  percentage: Float!
+  grade: String!
+  result_status: String!
+  published_date: String!
+}
+
+type StudentReportCardCustom {
+  id: String!
+  academic_year: String!
+  class_name: String!
+  exam_name: String!
+  total_marks: Int!
+  obtained_marks: Int!
+  percentage: Float!
+  grade: String!
+  result: String!
+  download_url: String!
+}
+
+input CreateStudentReportCardCustomInput {
+  academic_year: String!
+  class_name: String!
+  exam_name: String!
+  total_marks: Int!
+  obtained_marks: Int!
+  percentage: Float!
+  grade: String!
+  result: String!
+  download_url: String!
+}
+
+input UpdateStudentReportCardCustomInput {
+  id: String!
+  academic_year: String!
+  class_name: String!
+  exam_name: String!
+  total_marks: Int!
+  obtained_marks: Int!
+  percentage: Float!
+  grade: String!
+  result: String!
+  download_url: String!
+}
+
+type StudentMonthlySummaryCustom {
+  id: String!
+  month: String!
+  total_days: Int!
+  present: Int!
+  absent: Int!
+  late: Int!
+  half_day: Int!
+  percentage: Float!
+}
+
+input CreateStudentMonthlySummaryCustomInput {
+  month: String!
+  total_days: Int!
+  present: Int!
+  absent: Int!
+  late: Int!
+  half_day: Int!
+  percentage: Float!
+}
+
+input UpdateStudentMonthlySummaryCustomInput {
+  id: String!
+  month: String!
+  total_days: Int!
+  present: Int!
+  absent: Int!
+  late: Int!
+  half_day: Int!
+  percentage: Float!
+}
+
+type StudentMyAttendanceCustom {
+  id: String!
+  date: String!
+  status: String!
+  check_in: String!
+  check_out: String!
+  working_hours: String!
+  remarks: String!
+}
+
+input CreateStudentMyAttendanceCustomInput {
+  date: String!
+  status: String!
+  check_in: String!
+  check_out: String!
+  working_hours: String!
+  remarks: String!
+}
+
+input UpdateStudentMyAttendanceCustomInput {
+  id: String!
+  date: String!
+  status: String!
+  check_in: String!
+  check_out: String!
+  working_hours: String!
+  remarks: String!
+}
+
+type StudentLeaveRequestCustom {
+  id: String!
+  class_name: String!
+  section: String!
+  apply_date: String!
+  from_date: String!
+  to_date: String!
+  reason: String!
+  status: String!
+}
+
+input CreateStudentLeaveRequestCustomInput {
+  class_name: String!
+  section: String!
+  apply_date: String!
+  from_date: String!
+  to_date: String!
+  reason: String!
+  status: String!
+}
+
+input UpdateStudentLeaveRequestCustomInput {
+  id: String!
+  class_name: String!
+  section: String!
+  apply_date: String!
+  from_date: String!
+  to_date: String!
+  reason: String!
+  status: String!
+}
+
+type StudentFeeReceiptCustom {
+  id: String!
+  receipt_no: String!
+  fee_type: String!
+  payment_date: String!
+  paid_amount: Int!
+  payment_mode: String!
+  status: String!
+}
+
+input CreateStudentFeeReceiptCustomInput {
+  receipt_no: String!
+  fee_type: String!
+  payment_date: String!
+  paid_amount: Int!
+  payment_mode: String!
+  status: String!
+}
+
+input UpdateStudentFeeReceiptCustomInput {
+  id: String!
+  receipt_no: String!
+  fee_type: String!
+  payment_date: String!
+  paid_amount: Int!
+  payment_mode: String!
+  status: String!
+}
+
+type StudentDueFeeCustom {
+  id: String!
+  fee_type: String!
+  due_date: String!
+  total_amount: Int!
+  due_amount: Int!
+  late_fee: Int!
+  total_due: Int!
+}
+
+input CreateStudentDueFeeCustomInput {
+  fee_type: String!
+  due_date: String!
+  total_amount: Int!
+  due_amount: Int!
+  late_fee: Int!
+  total_due: Int!
+}
+
+input UpdateStudentDueFeeCustomInput {
+  id: String!
+  fee_type: String!
+  due_date: String!
+  total_amount: Int!
+  due_amount: Int!
+  late_fee: Int!
+  total_due: Int!
+}
+
+type StudentFeeDetailCustom {
+  id: String!
+  fee_type: String!
+  due_date: String!
+  amount: Int!
+  paid_amount: Int!
+  balance_amount: Int!
+  status: String!
+  payment_method: String!
+}
+
+input CreateStudentFeeDetailCustomInput {
+  fee_type: String!
+  due_date: String!
+  amount: Int!
+  paid_amount: Int!
+  balance_amount: Int!
+  status: String!
+  payment_method: String!
+}
+
+input UpdateStudentFeeDetailCustomInput {
+  id: String!
+  fee_type: String!
+  due_date: String!
+  amount: Int!
+  paid_amount: Int!
+  balance_amount: Int!
+  status: String!
+  payment_method: String!
+}
+
+type StudentOnlinePaymentCustom {
+  id: String!
+  transaction_id: String!
+  fee_type: String!
+  payment_date: String!
+  amount: Int!
+  payment_gateway: String!
+  status: String!
+}
+
+input CreateStudentOnlinePaymentCustomInput {
+  transaction_id: String!
+  fee_type: String!
+  payment_date: String!
+  amount: Int!
+  payment_gateway: String!
+  status: String!
+}
+
+input UpdateStudentOnlinePaymentCustomInput {
+  id: String!
+  transaction_id: String!
+  fee_type: String!
+  payment_date: String!
+  amount: Int!
+  payment_gateway: String!
+  status: String!
+}
+
+type StudentMyIssuedBookCustom {
+  id: String!
+  book_title: String!
+  author: String!
+  isbn_no: String!
+  issue_date: String!
+  due_date: String!
+  return_date: String!
+  status: String!
+}
+
+input CreateStudentMyIssuedBookCustomInput {
+  book_title: String!
+  author: String!
+  isbn_no: String!
+  issue_date: String!
+  due_date: String!
+  return_date: String!
+  status: String!
+}
+
+input UpdateStudentMyIssuedBookCustomInput {
+  id: String!
+  book_title: String!
+  author: String!
+  isbn_no: String!
+  issue_date: String!
+  due_date: String!
+  return_date: String!
+  status: String!
+}
+
+type StudentDueDateCustom {
+  id: String!
+  book_title: String!
+  isbn_no: String!
+  due_date: String!
+  days_remaining: Int!
+  fine_amount: Int!
+  status: String!
+}
+
+input CreateStudentDueDateCustomInput {
+  book_title: String!
+  isbn_no: String!
+  due_date: String!
+  days_remaining: Int!
+  fine_amount: Int!
+  status: String!
+}
+
+input UpdateStudentDueDateCustomInput {
+  id: String!
+  book_title: String!
+  isbn_no: String!
+  due_date: String!
+  days_remaining: Int!
+  fine_amount: Int!
+  status: String!
+}
+
+type StudentBookHistoryCustom {
+  id: String!
+  book_title: String!
+  author: String!
+  isbn_no: String!
+  issue_date: String!
+  return_date: String!
+  category: String!
+}
+
+input CreateStudentBookHistoryCustomInput {
+  book_title: String!
+  author: String!
+  isbn_no: String!
+  issue_date: String!
+  return_date: String!
+  category: String!
+}
+
+input UpdateStudentBookHistoryCustomInput {
+  id: String!
+  book_title: String!
+  author: String!
+  isbn_no: String!
+  issue_date: String!
+  return_date: String!
+  category: String!
+}
+
+type StudentMyRouteCustom {
+  id: String!
+  route_name: String!
+  stop_name: String!
+  pickup_time: String!
+  drop_time: String!
+  distance: String!
+  monthly_fees: Int!
+}
+
+input CreateStudentMyRouteCustomInput {
+  route_name: String!
+  stop_name: String!
+  pickup_time: String!
+  drop_time: String!
+  distance: String!
+  monthly_fees: Int!
+}
+
+input UpdateStudentMyRouteCustomInput {
+  id: String!
+  route_name: String!
+  stop_name: String!
+  pickup_time: String!
+  drop_time: String!
+  distance: String!
+  monthly_fees: Int!
+}
+
+type StudentVehicleDetailCustom {
+  id: String!
+  vehicle_no: String!
+  vehicle_model: String!
+  driver_name: String!
+  driver_contact: String!
+  vehicle_type: String!
+  capacity: Int!
+}
+
+input CreateStudentVehicleDetailCustomInput {
+  vehicle_no: String!
+  vehicle_model: String!
+  driver_name: String!
+  driver_contact: String!
+  vehicle_type: String!
+  capacity: Int!
+}
+
+input UpdateStudentVehicleDetailCustomInput {
+  id: String!
+  vehicle_no: String!
+  vehicle_model: String!
+  driver_name: String!
+  driver_contact: String!
+  vehicle_type: String!
+  capacity: Int!
+}
+
+type StudentHostelRoomDetailCustom {
+  id: String!
+  room_no: String!
+  room_type: String!
+  hostel_name: String!
+  no_of_beds: Int!
+  availability: String!
+  rent: Int!
+}
+
+input CreateStudentHostelRoomDetailCustomInput {
+  room_no: String!
+  room_type: String!
+  hostel_name: String!
+  no_of_beds: Int!
+  availability: String!
+  rent: Int!
+}
+
+input UpdateStudentHostelRoomDetailCustomInput {
+  id: String!
+  room_no: String!
+  room_type: String!
+  hostel_name: String!
+  no_of_beds: Int!
+  availability: String!
+  rent: Int!
+}
+
+type StudentHostelFeeCustom {
+  id: String!
+  invoice_no: String!
+  room_no: String!
+  hostel_name: String!
+  fee_type: String!
+  amount: Int!
+  date: String!
+  payment_status: String!
+}
+
+input CreateStudentHostelFeeCustomInput {
+  invoice_no: String!
+  room_no: String!
+  hostel_name: String!
+  fee_type: String!
+  amount: Int!
+  date: String!
+  payment_status: String!
+}
+
+input UpdateStudentHostelFeeCustomInput {
+  id: String!
+  invoice_no: String!
+  room_no: String!
+  hostel_name: String!
+  fee_type: String!
+  amount: Int!
+  date: String!
+  payment_status: String!
+}
+
+type StudentHostelComplaintCustom {
+  id: String!
+  complaint_title: String!
+  complaint_type: String!
+  date: String!
+  description: String!
+  status: String!
+}
+
+input CreateStudentHostelComplaintCustomInput {
+  complaint_title: String!
+  complaint_type: String!
+  date: String!
+  description: String!
+  status: String!
+}
+
+input UpdateStudentHostelComplaintCustomInput {
+  id: String!
+  complaint_title: String!
+  complaint_type: String!
+  date: String!
+  description: String!
+  status: String!
 }
