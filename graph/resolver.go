@@ -176,9 +176,9 @@ func resolveTeacherID(ctx context.Context, db *sql.DB, teacherID string, teacher
 		return sql.NullString{String: teacherID, Valid: true}, nil
 	}
 
-	// Not a valid UUID - search by teacher name
+	// Not a valid UUID - search by teacher name in users table
 	var existingID string
-	err = db.QueryRowContext(ctx, "SELECT id FROM public.teachers WHERE LOWER(name) = LOWER($1)", teacherName).Scan(&existingID)
+	err = db.QueryRowContext(ctx, "SELECT id FROM public.users WHERE LOWER(name) = LOWER($1) AND role = 'teacher'", teacherName).Scan(&existingID)
 	if err == nil {
 		return sql.NullString{String: existingID, Valid: true}, nil
 	}
@@ -188,11 +188,15 @@ func resolveTeacherID(ctx context.Context, db *sql.DB, teacherID string, teacher
 
 func autoGenerateTeacher(ctx context.Context, db *sql.DB, teacherName string) (sql.NullString, error) {
 	newID := uuid.New().String()
+	username := strings.ToLower(strings.ReplaceAll(teacherName, " ", "_")) + "_t" + newID[:4]
+	email := username + "@school.dev"
 	_, err := db.ExecContext(ctx, `
-		INSERT INTO public.teachers (
-			id, name, gender, email, department, mobile, degree, address, hire_date, salary, subject_specialization, experience_years, status, birthdate
-		) VALUES ($1, $2, 'male', $3, 'science', '1234567890', 'B.Sc', 'Address', NOW(), '0', 'General', 0, 'active', NOW())
-	`, newID, teacherName, strings.ToLower(strings.ReplaceAll(teacherName, " ", "."))+"@school.com")
+		INSERT INTO public.users (
+			id, username, email, password_hash, role, role_id, is_active,
+			name, gender, department, mobile, degree, address, hire_date, salary,
+			subject_specialization, experience_years, status, birthdate
+		) VALUES ($1, $2, $3, $4, 'teacher', '11d862c0-63db-3c73-a10c-2e62a402ebc1', true, $5, 'male', 'science', '1234567890', 'B.Sc', 'Address', NOW(), '0', 'General', 0, 'active', NOW())
+	`, newID, username, email, "$2a$10$TYqJVF887N6FI2pxBOKHeOYhvUAy75HjhL0yR68dysglkbx.0bD4O", teacherName)
 	if err != nil {
 		fmt.Printf("Warning: failed to auto-insert teacher %q: %v\n", teacherName, err)
 	}

@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"go-seed/ent/user"
 	"os"
+	"strings"
 	"time"
 
 	jwt "github.com/golang-jwt/jwt/v5"
@@ -536,14 +537,22 @@ func (r *mutationResolver) CreateTeacher(ctx context.Context, input CreateTeache
 	bio := parseNullString(input.Bio)
 
 	// Insert into public.teachers table
+	// Auto-generate username from name and a short ID fragment
+	usernameBase := strings.ToLower(strings.NewReplacer(" ", "_", ".", "_").Replace(input.Name))
+	username := usernameBase + "_t" + id[:4]
+	email := username + "@school.dev"
+	defaultPassword := "$2a$10$TYqJVF887N6FI2pxBOKHeOYhvUAy75HjhL0yR68dysglkbx.0bD4O"
+
 	_, err := db.ExecContext(ctx, `
-		INSERT INTO public.teachers (
-			id, img, name, gender, email, department, mobile, 
+		INSERT INTO public.users (
+			id, username, email, password_hash, role, role_id, is_active,
+			img, name, gender, department, mobile, 
 			degree, address, hire_date, salary, subject_specialization, 
 			experience_years, status, birthdate, bio
-		) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
+		) VALUES ($1, $2, $3, $4, 'teacher', '11d862c0-63db-3c73-a10c-2e62a402ebc1', true, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18)
 	`,
-		id, img, input.Name, input.Gender, input.Email, input.Department, input.Mobile,
+		id, username, email, defaultPassword,
+		img, input.Name, input.Gender, input.Department, input.Mobile,
 		input.Degree, input.Address, hireDate, input.Salary, input.SubjectSpecialization,
 		input.ExperienceYears, input.Status, birthdate, bio,
 	)
@@ -585,14 +594,14 @@ func (r *mutationResolver) UpdateTeacher(ctx context.Context, input UpdateTeache
 
 	// Update public.teachers table
 	_, err := db.ExecContext(ctx, `
-		UPDATE public.teachers SET
-			img = $1, name = $2, gender = $3, email = $4, department = $5, 
-			mobile = $6, degree = $7, address = $8, hire_date = $9, salary = $10, 
-			subject_specialization = $11, experience_years = $12, status = $13, 
-			birthdate = $14, bio = $15
-		WHERE id = $16
+		UPDATE public.users SET
+			img = $1, name = $2, gender = $3, department = $4, 
+			mobile = $5, degree = $6, address = $7, hire_date = $8, salary = $9, 
+			subject_specialization = $10, experience_years = $11, status = $12, 
+			birthdate = $13, bio = $14
+		WHERE id = $15 AND role = 'teacher'
 	`,
-		img, input.Name, input.Gender, input.Email, input.Department,
+		img, input.Name, input.Gender, input.Department,
 		input.Mobile, input.Degree, input.Address, hireDate, input.Salary,
 		input.SubjectSpecialization, input.ExperienceYears, input.Status,
 		birthdate, bio, input.ID,
@@ -625,7 +634,7 @@ func (r *mutationResolver) UpdateTeacher(ctx context.Context, input UpdateTeache
 func (r *mutationResolver) DeleteTeacher(ctx context.Context, id string) (string, error) {
 	db := r.DB
 
-	_, err := db.ExecContext(ctx, "DELETE FROM public.teachers WHERE id = $1", id)
+	_, err := db.ExecContext(ctx, "DELETE FROM public.users WHERE id = $1 AND role = 'teacher'", id)
 	if err != nil {
 		return "", fmt.Errorf("failed to delete teacher: %w", err)
 	}
@@ -765,15 +774,22 @@ func (r *mutationResolver) CreateStudent(ctx context.Context, input CreateStuden
 	enrollmentDate := parseRequiredDateString(input.EnrollmentDate)
 	img := parseNullString(input.Img)
 
+	// Auto-generate username from name + roll_no
+	username := strings.ToLower(strings.NewReplacer(" ", "_", ".", "_").Replace(input.Name)) + "_s" + input.RollNo
+	email := username + "@school.dev"
+	defaultPassword := "$2a$10$TYqJVF887N6FI2pxBOKHeOYhvUAy75HjhL0yR68dysglkbx.0bD4O"
+
 	_, err := db.ExecContext(ctx, `
-		INSERT INTO public.students (
-			id, img, gender, email, department, mobile, name, roll_no, 
+		INSERT INTO public.users (
+			id, username, email, password_hash, role, role_id, is_active,
+			img, gender, department, mobile, name, roll_no, 
 			date_of_birth, address, enrollment_date, graduation_year, 
 			parent_guardian_name, parent_guardian_mobile, status, 
 			profile_completion_status, scholarship_status
-		) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)
+		) VALUES ($1, $2, $3, $4, 'student', 'ab8589e5-0df0-3752-96a9-cb54c32de7b3', true, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19)
 	`,
-		id, img, input.Gender, input.Email, input.Department, input.Mobile, input.Name, input.RollNo,
+		id, username, email, defaultPassword,
+		img, input.Gender, input.Department, input.Mobile, input.Name, input.RollNo,
 		dateOfBirth, input.Address, enrollmentDate, input.GraduationYear,
 		input.ParentGuardianName, input.ParentGuardianMobile, input.Status,
 		input.ProfileCompletionStatus, input.ScholarshipStatus,
@@ -812,14 +828,14 @@ func (r *mutationResolver) UpdateStudent(ctx context.Context, input UpdateStuden
 	img := parseNullString(input.Img)
 
 	_, err := db.ExecContext(ctx, `
-		UPDATE public.students SET
-			img = $1, gender = $2, email = $3, department = $4, mobile = $5, name = $6, roll_no = $7,
-			date_of_birth = $8, address = $9, enrollment_date = $10, graduation_year = $11,
-			parent_guardian_name = $12, parent_guardian_mobile = $13, status = $14,
-			profile_completion_status = $15, scholarship_status = $16
-		WHERE id = $17
+		UPDATE public.users SET
+			img = $1, gender = $2, department = $3, mobile = $4, name = $5, roll_no = $6,
+			date_of_birth = $7, address = $8, enrollment_date = $9, graduation_year = $10,
+			parent_guardian_name = $11, parent_guardian_mobile = $12, status = $13,
+			profile_completion_status = $14, scholarship_status = $15
+		WHERE id = $16 AND role = 'student'
 	`,
-		img, input.Gender, input.Email, input.Department, input.Mobile, input.Name, input.RollNo,
+		img, input.Gender, input.Department, input.Mobile, input.Name, input.RollNo,
 		dateOfBirth, input.Address, enrollmentDate, input.GraduationYear,
 		input.ParentGuardianName, input.ParentGuardianMobile, input.Status,
 		input.ProfileCompletionStatus, input.ScholarshipStatus, input.ID,
@@ -853,7 +869,7 @@ func (r *mutationResolver) UpdateStudent(ctx context.Context, input UpdateStuden
 func (r *mutationResolver) DeleteStudent(ctx context.Context, id string) (string, error) {
 	db := r.DB
 
-	_, err := db.ExecContext(ctx, "DELETE FROM public.students WHERE id = $1", id)
+	_, err := db.ExecContext(ctx, "DELETE FROM public.users WHERE id = $1 AND role = 'student'", id)
 	if err != nil {
 		return "", fmt.Errorf("failed to delete student: %w", err)
 	}
@@ -7805,10 +7821,13 @@ func (r *queryResolver) TeachersList(ctx context.Context) ([]*TeacherInfo, error
 
 	rows, err := db.QueryContext(ctx, `
 		SELECT 
-			id, COALESCE(img, ''), name, gender, email, department, mobile, 
-			degree, address, hire_date, salary, subject_specialization, 
-			experience_years, status, birthdate, COALESCE(bio, '')
-		FROM public.teachers
+			id, COALESCE(img, ''), COALESCE(name,''), COALESCE(gender,''), COALESCE(email,''), 
+			COALESCE(department,''), COALESCE(mobile,''), 
+			COALESCE(degree,''), COALESCE(address,''), hire_date, COALESCE(salary,''), 
+			COALESCE(subject_specialization,''), 
+			COALESCE(experience_years,0), COALESCE(status,''), birthdate, COALESCE(bio, '')
+		FROM public.users
+		WHERE role = 'teacher'
 	`)
 	if err != nil {
 		return nil, fmt.Errorf("failed to query teachers: %w", err)
@@ -7983,7 +8002,8 @@ func (r *queryResolver) StudentsList(ctx context.Context) ([]*StudentInfo, error
 			COALESCE(parent_guardian_name, ''), COALESCE(parent_guardian_mobile, ''), 
 			COALESCE(status, ''), COALESCE(profile_completion_status, ''), 
 			COALESCE(scholarship_status, '')
-		FROM public.students
+		FROM public.users
+		WHERE role = 'student'
 	`)
 	if err != nil {
 		return nil, fmt.Errorf("failed to query students: %w", err)
